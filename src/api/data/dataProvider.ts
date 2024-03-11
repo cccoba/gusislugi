@@ -97,7 +97,9 @@ export const dataProvider = async (
 const getHeaders = (extraProps: IDataProviderExtraProps): Headers => {
     let params: any = {};
     if (!extraProps.withoutInterceptors) {
-        params["Authorization"] = "Bearer " + window.localStorage.getItem(getConst("auth-token-name"));
+        if (getConst("env-mode") === "development") {
+            params["Authorization"] = window.localStorage.getItem(getConst("auth-token-name"));
+        }
     }
     if (extraProps.requestType === "json") {
         params["Content-Type"] = "application/json; charset=utf-8";

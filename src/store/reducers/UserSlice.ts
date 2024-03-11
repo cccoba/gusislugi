@@ -63,8 +63,8 @@ export const userInit = createAsyncThunk("user/load", async (_, { dispatch, getS
         const { error, result } = webDataResultData<IFirstLoadView>(res);
         if (!error && !!result) {
             dispatch(setUserData(result));
-            if (authCookie !== result.user.hash) {
-                window.localStorage.setItem(getConst("auth-token-name"), result.user.hash);
+            if (authCookie !== result.token) {
+                window.localStorage.setItem(getConst("auth-token-name"), result.token);
             }
         } else {
         }

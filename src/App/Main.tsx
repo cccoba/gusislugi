@@ -24,7 +24,7 @@ interface IProps {
 interface IState {
     loaded: boolean;
 }
-class MainIndex1 extends React.Component<IProps, IState> {
+class MainIndex extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -84,4 +84,4 @@ const mapDispatchToProps = () => ({
     setDeviceSize,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps())(MainIndex1);
+export default connect(mapStateToProps, mapDispatchToProps())(MainIndex);
