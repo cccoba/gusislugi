@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "core";
+    src: url("../fonts/Core_Sans_M_35_Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "core-medium";
+    src: url("../fonts/Core_Sans_M_55_Medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* fallback */
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/materialicons_v141.woff2") format("woff2");
+}
+
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}

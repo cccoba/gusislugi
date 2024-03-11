@@ -1,0 +1,27 @@
+*,
+html,
+body {
+    font-family: "core", sans-serif;
+}
+html,
+body {
+    color: #111111;
+}
+.selectabled {
+    user-select: text;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.zoomImage {
+    width: 100%;
+}
+
+.SnackbarContent-root {
+    flex-wrap: nowrap !important;
+}
+
+.blueText {
+    color: #0088cc;
+}
