@@ -5,11 +5,12 @@ import { connect } from "react-redux";
 import Loader from "components/Loader";
 import lang from "lang";
 
-import { IUserData, userInit } from "store/reducers/UserSlice";
+import { userInit } from "store/reducers/UserSlice";
 import { deviceInit, setDeviceSize } from "store/reducers/DeviceSlice";
 import { RootState } from "store";
 
 import { deviceLoad } from "api/common/device";
+import { IUserData } from "api/interfaces/store/IUserData";
 
 import RouterPage from "./Router";
 
@@ -17,7 +18,7 @@ interface IProps {
     user: IUserData;
     deviceInit: Function;
     setDeviceSize: Function;
-    userInit: Function;
+    userInit: () => void;
     loaderShow: boolean;
     loaderText?: string;
 }

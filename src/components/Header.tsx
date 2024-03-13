@@ -50,8 +50,8 @@ export default function Header({ title = "", icon = null, backUrl = null }: IPro
             position="fixed"
             sx={{
                 ...appBarSx,
+                height: "60px",
                 display: "block",
-                backgroundImage: "url(./assets/images/header-bg.png)",
                 backgroundSize: "cover",
                 p: 0,
             }}

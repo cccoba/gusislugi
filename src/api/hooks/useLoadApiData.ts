@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import lang from "lang";
 
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { webDataResultData } from "api/data/dataProvider";
+import { webApiResultData } from "api/data/dataProvider";
 
 type LoadDataFunction<T, Args extends any[] = any[]> = (...args: Args) => Promise<IWebDataResult<T>>;
 
@@ -15,7 +15,7 @@ function useLoadApiData<T, Args extends any[] = any[]>(loadData: LoadDataFunctio
         try {
             setIsLoading(true);
             const res = await loadData(...args);
-            const { error, result } = webDataResultData<T>(res);
+            const { error, result } = webApiResultData<T>(res);
             if (error) {
                 throw error;
             }

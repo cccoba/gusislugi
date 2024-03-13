@@ -1,4 +1,4 @@
 export interface IWebDataResult<T> {
-    errors: string[];
+    error: string;
     result: T;
 }

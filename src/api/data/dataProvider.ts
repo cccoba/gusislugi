@@ -26,10 +26,10 @@ export const webApiResultError = (message: string) => {
     };
 };
 
-export const webDataResultData = <T>(data: IWebDataResult<T>): ICheckDataResult<T> => {
-    if (data.errors.length) {
+export const webApiResultData = <T>(data: IWebDataResult<T>): ICheckDataResult<T> => {
+    if (data.error) {
         return {
-            error: webApiResultError(data.errors.join(", ") || "error"),
+            error: webApiResultError(data.error),
             result: null,
         };
     }

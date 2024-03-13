@@ -5,12 +5,15 @@ import { Box, SxProps, Toolbar } from "@mui/material";
 import Header from "components/Header";
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
-import Login from "pages/Login";
+import Login from "pages/Users/Login";
 import NavigationMenu from "components/NavigationMenu";
 import Home from "pages/Home";
+import Registration from "pages/Users/Registration";
+import Profile from "pages/Users/Profile";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
+    const userIsRegister = useAppSelector((s) => !!s.user.user);
     const header = useAppSelector((s) => s.components.header);
     const deviceScreenName = useAppSelector((s) => s.device.screen.name);
     const deviceIsMobile = useAppSelector((s) => s.device.isMobile);
@@ -47,6 +50,26 @@ export default function RouterPage() {
             </Routes>
         );
     }
+    if (!userIsRegister) {
+        return (
+            <Routes>
+                <Route
+                    path="/registration"
+                    element={<Registration />}
+                />
+                <Route
+                    path="*"
+                    element={
+                        <Navigate
+                            to="/registration"
+                            replace
+                            state={{ from: location }}
+                        />
+                    }
+                />
+            </Routes>
+        );
+    }
 
     return (
         <Box sx={{ display: "flex", overflow: "hidden" }}>
@@ -68,8 +91,18 @@ export default function RouterPage() {
                             element={<Home />}
                         />
                         <Route
-                            path="/home/*"
-                            element={<Home />}
+                            path="/profile"
+                            element={<Profile />}
+                        />
+                        <Route
+                            path="*"
+                            element={
+                                <Navigate
+                                    to="/"
+                                    replace
+                                    state={{ from: location }}
+                                />
+                            }
                         />
                     </Routes>
                 </Box>

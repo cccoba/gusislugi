@@ -8,6 +8,7 @@ const getConst = (
         | "assets-images-path"
         | "bot-name"
         | "env-mode"
+        | "images-url"
 ): any => {
     switch (name) {
         case "auth-token-name":
@@ -16,6 +17,8 @@ const getConst = (
             return 280;
         case "api-url":
             return process.env.REACT_APP_API_URL;
+        case "images-url":
+            return process.env.REACT_APP_FILES_URL;
         case "app-version":
             return process.env.REACT_APP_VERSION;
         case "lang":

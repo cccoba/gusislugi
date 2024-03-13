@@ -20,5 +20,15 @@ const ruComponents = {
         isSelectValue: "Выберите значение из списка",
         pattern: "Поле содержит недопустимые символы",
     },
+    inputAutocomplete: {
+        noOptionsText: "Ничего не найдено",
+        insertSearchText: "Введите текст для поиска",
+        selectAll: "Все",
+    },
+    navigationMenu: {
+        home: "Главное",
+        profile: "Профиль",
+    },
+    userInfo: {},
 };
 export default ruComponents;

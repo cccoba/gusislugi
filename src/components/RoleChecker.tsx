@@ -18,7 +18,7 @@ export const checkUserRole = (roleIds: UserRolesEnum[], roleId?: UserRolesEnum):
 
 export default function RoleChecker({ roles = [], redirectLink = "/", children }: IProps) {
     const isLoading = useAppSelector((state) => state.user.isLoading);
-    const currentUserRoleId = useAppSelector((state) => state.user.roleId);
+    const currentUserRoleId = useAppSelector((state) => state.user.user?.roleId);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 

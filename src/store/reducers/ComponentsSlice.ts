@@ -1,28 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IComponentsData } from "api/interfaces/store/IComponentsData";
 
-export interface IComponentsData {
-    header: {
-        title: string | "";
-        icon: string | null;
-        backUrl: string | null;
-    };
-    menu: {
-        show: boolean;
-        filterText: string;
-        //data: IMenusItem[];
-    };
-    loader: {
-        show: boolean;
-        text?: string;
-    };
-    alert: {
-        title?: string;
-        text: string;
-        type?: "info" | "error" | "success";
-        show?: boolean;
-    };
-    redirect: null | { id?: any; page: string };
-}
 const COMPONENTS_INITIAL_STATE: IComponentsData = {
     header: {
         title: "",

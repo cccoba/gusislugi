@@ -1,6 +1,6 @@
 import { isMobile } from "react-device-detect";
 
-import { IDeviceData } from "store/reducers/DeviceSlice";
+import { IDeviceData } from "api/interfaces/store/IDeviceData";
 
 export const deviceLoad = (): IDeviceData => {
     const data: IDeviceData = {

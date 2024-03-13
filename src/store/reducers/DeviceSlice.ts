@@ -1,18 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { deviceGetScreenName, deviceGetScreenType } from "api/common/device";
+import { IDeviceData } from "api/interfaces/store/IDeviceData";
 
-export interface IDeviceData {
-    isMobile: boolean;
-    screen: {
-        size: {
-            width: number;
-            height: number;
-        };
-        type: "xs" | "sm" | "md" | "lg" | "xl";
-        name: "mobile" | "normal" | "big";
-    };
-}
 const DEVICE_INITIAL_STATE: IDeviceData = {
     isMobile: true,
     screen: {

@@ -38,6 +38,6 @@
     "start_url": "/gusislugi/",
     "scope": "/gusislugi/",
     "display": "standalone",
-    "theme_color": "#0088cc",
+    "theme_color": "#517da2",
     "background_color": "#ffffff"
 }
