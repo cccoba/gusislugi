@@ -1,7 +1,3 @@
-import { ICitizenshipDto } from "./ICitizenshipDto";
-import { INationalityDto } from "./INationalityDto";
-import { IRoleDto } from "./IRoleDto";
-
 export interface IUserDto {
     id: number;
     tgId?: number;
@@ -11,8 +7,8 @@ export interface IUserDto {
     lastName: string;
     firstName: string;
     fullName: string;
-    nationality?: INationalityDto;
-    citizenship?: ICitizenshipDto;
+    nationalityId?: number;
+    citizenshipId?: number;
     passport: string;
     image?: string;
     description: string;

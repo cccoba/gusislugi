@@ -60,6 +60,9 @@ export interface IFormFieldCounter extends IFormField {
     maxValue?: number;
     step?: number;
 }
+export interface IFormFieldImage extends IFormField {
+    type: "image";
+}
 export interface IFormGroup {
     title: string;
     name: string;
@@ -171,6 +174,9 @@ export default function Form({
                     case "counter":
                         newFields.push(field as IFormFieldCounter);
                         break;
+                    case "image":
+                        newFields.push(field as IFormFieldImage);
+                        break;
                     default:
                         newFields.push(field as IFormFieldText);
                 }
@@ -233,10 +239,11 @@ export default function Form({
                                           const variant = !!formField?.variant ? formField.variant : fieldsVariant;
                                           let sx: SxProps = {};
                                           if (variant === "outlined") {
-                                              sx = { ...columnSx, mb: 1 };
+                                              sx = { mb: 1 };
                                           } else {
-                                              sx = { ...columnSx, mt: index === 0 ? 0 : 2 };
+                                              sx = { mt: index === 0 ? 0 : 2 };
                                           }
+                                          sx = { ...sx, ...columnSx };
                                           if (!!formField?.hidden) {
                                               return null;
                                           }
@@ -261,10 +268,12 @@ export default function Form({
                           const variant = !!formField?.variant ? formField.variant : fieldsVariant;
                           let sx: SxProps = {};
                           if (variant === "outlined") {
-                              sx = { ...columnSx, mb: 1.5 };
+                              sx = { mb: 1.5 };
                           } else {
-                              sx = { ...columnSx, mt: index === 0 && columnCount === 1 ? 0 : 2 };
+                              sx = { mt: index === 0 && columnCount === 1 ? 0 : 2 };
                           }
+                          sx = { ...sx, ...columnSx };
+
                           if (!!formField?.hidden) {
                               return null;
                           }

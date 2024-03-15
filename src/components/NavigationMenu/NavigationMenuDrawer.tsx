@@ -3,11 +3,9 @@ import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper, Typography 
 import { NavLink, useNavigate } from "react-router-dom";
 
 import lang from "lang";
-import Image from "components/Image";
 import Icon from "components/Icon";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
-import { IDeviceData } from "api/interfaces/store/IDeviceData";
 import { getServerFileUrl } from "api/common/helper";
 import IconButton from "components/Icon/IconButton";
 import { menuToggle } from "store/reducers/ComponentsSlice";
@@ -92,10 +90,10 @@ function NavigationMenuDrawer() {
                                 py: 0.5,
                                 px: 2,
                             }}
+                            key={menu.name}
                         >
                             <NavLink
                                 to={menu.link}
-                                key={menu.name}
                                 style={{ textDecoration: "none", color: "#000", display: "flex" }}
                                 onClick={closeMenu}
                             >

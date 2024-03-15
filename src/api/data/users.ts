@@ -14,5 +14,8 @@ const UsersDataProvider = {
     registration: (data: IUserRegistrationDto): Promise<IWebDataResult<IUserDto>> => {
         return dataProvider(baseUrl + "registration", "post", data);
     },
+    updateUser: (user: IUserDto): Promise<IWebDataResult<IUserDto>> => {
+        return dataProvider(baseUrl + "updateUser", "post", user);
+    },
 };
 export default UsersDataProvider;

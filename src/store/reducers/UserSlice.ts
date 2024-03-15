@@ -4,7 +4,6 @@ import getConst from "api/common/getConst";
 import { users } from "api/data";
 import { IFirstLoadView } from "api/data/IFirstLoadView";
 import { webApiResultData } from "api/data/dataProvider";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
 import { IUserData } from "api/interfaces/store/IUserData";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 

@@ -7,9 +7,16 @@ import lang, { sprintf } from "lang";
 import { isGuid, isUrl } from "api/common/helper";
 import { checkDate } from "api/common/helper";
 
-import { Select, Switcher, InputAutocomplete, Counter } from "..";
+import { Select, Switcher, InputAutocomplete, Counter, InputImage } from "..";
 
-import { IFormField, IFormFieldCounter, IFormFieldSelect, IFormFieldSelectFiltered, IFormFieldText } from ".";
+import {
+    IFormField,
+    IFormFieldCounter,
+    IFormFieldImage,
+    IFormFieldSelect,
+    IFormFieldSelectFiltered,
+    IFormFieldText,
+} from ".";
 
 interface IProps extends IFormField {
     fieldsVariant: "filled" | "outlined" | "standard";
@@ -270,6 +277,35 @@ function FormInput({
                     }}
                 />
             );
+        case "image":
+            const imageProps = fieldParams as IFormFieldImage;
+            return (
+                <Controller
+                    key={name}
+                    name={name}
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => {
+                        return (
+                            <InputImage
+                                onChangeValue={(value: any) => {
+                                    onInputChange(name, value);
+                                }}
+                                value={field.value}
+                                fullWidth={fullWidth}
+                                disabled={disabled}
+                                label={title}
+                                variant={variant}
+                                error={fieldState.invalid}
+                                helperText={fieldState.error?.message}
+                                required={required}
+                                {...fieldProps}
+                                {...imageProps}
+                            />
+                        );
+                    }}
+                />
+            );
         default:
             const textFormField = fieldParams as IFormFieldText;
             if (!fieldProps) {
@@ -281,13 +317,6 @@ function FormInput({
                 }
                 fieldProps.inputProps.maxLength = textFormField.maxLength;
             }
-            if (type === "guid") {
-                if (!fieldProps?.inputProps) {
-                    fieldProps.inputProps = {};
-                }
-                fieldProps.inputProps.maxLength = 36;
-            }
-
             return (
                 <Controller
                     key={name}

@@ -20,15 +20,73 @@ const ruComponents = {
         isSelectValue: "Выберите значение из списка",
         pattern: "Поле содержит недопустимые символы",
     },
+    image: {
+        viewer: {
+            errors: {
+                load: "Не удалось загрузить изображение",
+            },
+            actions: {
+                download: "Скачать",
+                rotateRight: "Повернуть изображение  по часовой стрелке",
+                rotateLeft: "Повернуть изображение против часовой стрелки",
+                reset: "Сброс",
+                close: "Закрыть",
+            },
+        },
+        cropper: {
+            actions: {
+                rotateRight: "Повернуть изображение  по часовой стрелке",
+                rotateLeft: "Повернуть изображение против часовой стрелки",
+                reset: "Сброс",
+                save: "Сохранить",
+                close: "Закрыть",
+            },
+            selector: {
+                tooltip: "Обрезать изображение",
+                none: "Не обрезать",
+                vertical: "Вертикально  (3 : 4)",
+                horizontal: "Горизонтально (4 : 3)",
+                square: "Квадрат (1 : 1)",
+            },
+        },
+    },
     inputAutocomplete: {
         noOptionsText: "Ничего не найдено",
         insertSearchText: "Введите текст для поиска",
         selectAll: "Все",
     },
+    inputImage: {
+        addTitle: "Загрузить",
+        deleteTitle: "Удалить изображение?",
+        deleteText: "Вы уверены, что хотите удалить изображение?",
+    },
     navigationMenu: {
         home: "Главное",
         profile: "Профиль",
     },
-    userInfo: {},
+    uploader: {
+        imageUploader: {
+            add: "Загрузить изображение",
+            rotateLeft: "Повернуть влево",
+            rotateRight: "Повернуть вправо",
+            toCancel: "Отмена",
+            toSave: "Сохранить",
+            errors: {
+                uploadFile: "Не удалось загрузить файл",
+            },
+        },
+    },
+    userForm: {
+        image: "Фото",
+        lastName: "Фамилия",
+        firstName: "Имя",
+        nickname: "Позывной",
+        role: "Роль",
+        nationality: "Национальность",
+        citizenship: "Гражданство",
+        passport: "Паспорт",
+        registration: "Прописка",
+        description: "Секретно. не для всех",
+    },
 };
 export default ruComponents;

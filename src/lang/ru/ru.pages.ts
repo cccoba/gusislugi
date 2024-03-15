@@ -5,6 +5,13 @@ const ruPages = {
     },
     profile: {
         title: "Мой профиль",
+        userForm: "Общая информация",
+        success: {
+            updateUser: "Данные обновлены",
+        },
+        errors: {
+            updateUser: "Не удалось обновить данные!",
+        },
     },
     registration: {
         text: "Вы не зарегистрированы в системе. Введите:",
