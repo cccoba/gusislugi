@@ -83,14 +83,12 @@ function ClaimEdit({ userId = 0, id = 0, onCancel, onSave }: IProps) {
         return newFields;
     }, [userId]);
     return (
-        <>
-            <Form
-                fields={fields}
-                values={values}
-                onCancel={onCancel}
-                onSubmit={onSave}
-            />
-        </>
+        <Form
+            fields={fields}
+            values={values}
+            onCancel={onCancel}
+            onSubmit={onSave}
+        />
     );
 }
 export default ClaimEdit;

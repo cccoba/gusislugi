@@ -12,6 +12,7 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data/dataProvider";
 
 import ProfileClaims from "./Claims";
+import ProfileMessages from "pages/Users/Profile/Messages";
 
 const langPage = lang.pages.profile;
 
@@ -38,7 +39,12 @@ function Profile() {
                 {
                     id: "userClaims",
                     title: langPage.claims.title,
-                    child: <ProfileClaims userId={user.id} />,
+                    child: <ProfileClaims />,
+                },
+                {
+                    id: "userMessages",
+                    title: langPage.messages.title,
+                    child: <ProfileMessages />,
                 },
             ];
             return values;
@@ -79,7 +85,8 @@ function Profile() {
             {!!user && (
                 <>
                     <Accordion
-                        defaultActiveId="userClaims"
+                        autoMountAll
+                        defaultActiveId="userMessages"
                         values={accordionValues}
                     />
                 </>

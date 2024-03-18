@@ -16,11 +16,13 @@ export interface IAccordionItem {
     child?: ReactNode;
     titleAction?: ReactNode;
     sx?: SxProps;
+    autoMount?: boolean;
 }
 
 interface IProps {
     values: IAccordionItem[];
     defaultActiveId?: number | string;
+    autoMountAll?: boolean;
     titleVariant?:
         | "button"
         | "caption"
@@ -37,7 +39,17 @@ interface IProps {
         | "body2"
         | "overline";
 }
-function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0 }: IProps) {
+
+function getSlotProps(mountAll?: boolean, mount?: boolean) {
+    if (mountAll === true || mount === true) {
+        if (mount === true || (mountAll === true && typeof mount === "undefined")) {
+            return { transition: { unmountOnExit: true } };
+        }
+    }
+    return undefined;
+}
+
+function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0, autoMountAll = false }: IProps) {
     const [active, setActive] = useState(defaultActiveId);
     const onChange = (id: any) => {
         setActive(active === id ? 0 : id);
@@ -54,6 +66,7 @@ function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0 }: IP
                         onChange={() => onChange(v.id)}
                         expanded={active === v.id}
                         sx={v.sx}
+                        slotProps={getSlotProps(autoMountAll, v.autoMount)}
                     >
                         <AccordionSummary
                             expandIcon={<Icon name="down" />}

@@ -2,6 +2,7 @@ import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
+import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 
 import { dataProvider } from "./dataProvider";
 import { IFirstLoadView } from "./IFirstLoadView";
@@ -23,6 +24,9 @@ const UsersDataProvider = {
     },
     getClaims: (): Promise<IWebDataResult<IClaimDto[]>> => {
         return dataProvider(baseUrl + "getClaims");
+    },
+    getMessages: (): Promise<IWebDataResult<IMessageDto[]>> => {
+        return dataProvider(baseUrl + "getMessages");
     },
 };
 export default UsersDataProvider;

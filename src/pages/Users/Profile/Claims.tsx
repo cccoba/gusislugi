@@ -4,7 +4,6 @@ import { Confirm, IconButton, PageOrModal, Table } from "components";
 import { ITableField } from "components/Table";
 import lang, { getEnumTitle, sprintf } from "lang";
 
-import dateTime from "api/common/dateTime";
 import { enumGetValue } from "api/common/enumHelper";
 import { claims, users } from "api/data";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
@@ -14,13 +13,12 @@ import { SortOrderEnum } from "api/enums/SortOrderEnum";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { IConfirmProps } from "components/Confirm";
 import { webApiResultData } from "api/data/dataProvider";
-import { title } from "process";
+
 import ClaimEdit from "pages/Claims/ClaimEdit";
 import { useAppSelector } from "api/hooks/redux";
+import ClaimView from "pages/Claims/ClaimView";
 
-interface IProps {
-    userId: number;
-}
+interface IProps {}
 const langPage = lang.pages.profile.claims;
 const fields: ITableField[] = [
     { name: "id", title: langPage.fields.id },
@@ -29,11 +27,12 @@ const fields: ITableField[] = [
     { name: "date", title: langPage.fields.updatedDate, format: "date", width: "120px" },
     { name: "actions", title: langPage.fields.actions, format: "component", width: "50px" },
 ];
-function ProfileClaims({ userId }: IProps) {
+function ProfileClaims({}: IProps) {
     const { data = [], error, isLoading: usersIsLoading, refetch } = useLoadApiData(users.getClaims, []);
     const [deleteConfirm, setDeleteConfirm] = useState<null | IConfirmProps>(null);
     const { showError, showSuccess } = useNotifier();
     const [isLoading, setIsLoading] = useState(false);
+    const [selected, setSelected] = useState<null | IClaimDto>(null);
     const [showedAddModal, setShowedAddModal] = useState(false);
     const currentUserId = useAppSelector((u) => u.user.user?.id);
     useEffect(() => {
@@ -47,15 +46,13 @@ function ProfileClaims({ userId }: IProps) {
                 id: x.id,
                 title: x.title,
                 status: getEnumTitle("ClaimStatusEnum", enumGetValue(ClaimStatusEnum, x.status) || ""),
-                date: x.updatedDate
-                    ? new Date(x.updatedDate * 1000).toISOString()
-                    : new Date(x.addDate * 1000).toISOString(),
+                date: x.updatedDate ? x.updatedDate : x.addDate,
                 actions: (
                     <>
                         {x.status === ClaimStatusEnum.Created && (
                             <IconButton
                                 name="delete"
-                                onClick={() => toDeleteConfirm(x)}
+                                onClick={(e) => toDeleteConfirm(x, e)}
                                 size="small"
                                 color="error"
                             />
@@ -66,7 +63,8 @@ function ProfileClaims({ userId }: IProps) {
         }
         return [];
     }, [data]);
-    function toDeleteConfirm(row: IClaimDto) {
+    function toDeleteConfirm(row: IClaimDto, e: any) {
+        e.stopPropagation();
         setDeleteConfirm({
             open: true,
             title: langPage.deleteConfirm.title,
@@ -99,10 +97,15 @@ function ProfileClaims({ userId }: IProps) {
         }
         setDeleteConfirm(null);
     };
-    if (!userId || usersIsLoading) {
+    if (!currentUserId || usersIsLoading) {
         return null;
     }
-    const toSelect = (data: any) => {};
+    const showSelected = ({ id }: IClaimDto) => {
+        setSelected(data?.find((x) => x.id === id) || null);
+    };
+    const hideSelected = () => {
+        setSelected(null);
+    };
     const showAddModal = () => {
         setShowedAddModal(true);
     };
@@ -149,6 +152,18 @@ function ProfileClaims({ userId }: IProps) {
                     />
                 </PageOrModal>
             )}
+            {!!selected && (
+                <PageOrModal
+                    title={langPage.claim}
+                    modalProps={{
+                        onClose: hideSelected,
+                        withCloseButton: true,
+                        responsiveWidth: true,
+                    }}
+                >
+                    <ClaimView {...selected} />
+                </PageOrModal>
+            )}
             {deleteConfirm && (
                 <Confirm
                     {...deleteConfirm}
@@ -159,7 +174,7 @@ function ProfileClaims({ userId }: IProps) {
                 fields={fields}
                 values={values}
                 order={{ direction: SortOrderEnum.Descending, sort: "id" }}
-                onSelect={toSelect}
+                onSelect={showSelected}
                 noRecordsText={langPage.noRecordsText}
                 actions={[{ icon: "add", name: "add", onClick: showAddModal, color: "primary" }]}
             />

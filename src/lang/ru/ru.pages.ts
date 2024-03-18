@@ -10,6 +10,7 @@ const ruPages = {
                 description: "Описание",
                 resolution: "Результат",
                 uid: "Заявитель",
+                addDate: "Дата подачи",
             },
         },
     },
@@ -22,6 +23,7 @@ const ruPages = {
         userForm: "Общая информация",
         claims: {
             title: "Мои заявки",
+            claim: "Заявка",
             add: "Новая заявка",
             noRecordsText: "У вас нет заявок",
             fields: {
@@ -44,6 +46,9 @@ const ruPages = {
                 text: 'Вы уверены, что хотите удалить заявку "%s"?',
                 okText: "Да, удалить",
             },
+        },
+        messages: {
+            title: "Сообщения",
         },
         success: {
             updateUser: "Данные обновлены",
