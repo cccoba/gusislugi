@@ -17,10 +17,12 @@ export interface INavigationMenu {
     title: string;
     icon: string;
     link: string;
+    access?: string[];
 }
 const defMenuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
     { name: "profile", title: langPage.profile, icon: "person_pin", link: "/profile" },
+    { name: "claims", title: langPage.claims, icon: "warning", link: "/claims", access: ["isAdmin"] },
 ];
 
 function NavigationMenuDrawer() {
@@ -30,7 +32,16 @@ function NavigationMenuDrawer() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const menuList = useMemo<INavigationMenu[]>(() => {
-        return defMenuList.filter((x) => (isAuth ? x.name !== "login" : x.name !== "profile"));
+        return defMenuList.filter((x) => {
+            if (x.access?.length) {
+                for (const access of x.access) {
+                    if (isAuth && access === "isAdmin") {
+                        return true;
+                    }
+                }
+            }
+            return true;
+        });
     }, [isAuth]);
     const toProfile = () => {
         navigate("/profile");

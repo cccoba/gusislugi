@@ -63,6 +63,7 @@ const ruComponents = {
     navigationMenu: {
         home: "Главное",
         profile: "Профиль",
+        claims: "Заявки",
     },
     uploader: {
         imageUploader: {

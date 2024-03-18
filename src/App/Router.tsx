@@ -10,6 +10,8 @@ import NavigationMenu from "components/NavigationMenu";
 import Home from "pages/Home";
 import Registration from "pages/Users/Registration";
 import Profile from "pages/Users/Profile";
+import Claims from "pages/Claims";
+import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -93,6 +95,10 @@ export default function RouterPage() {
                         <Route
                             path="/profile"
                             element={<Profile />}
+                        />
+                        <Route
+                            path="/claims"
+                            element={<Claims roles={[UserRolesEnum.Claims]} />}
                         />
                         <Route
                             path="*"
