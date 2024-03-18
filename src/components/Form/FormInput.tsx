@@ -7,7 +7,7 @@ import lang, { sprintf } from "lang";
 import { isGuid, isUrl } from "api/common/helper";
 import { checkDate } from "api/common/helper";
 
-import { Select, Switcher, InputAutocomplete, Counter, InputImage } from "..";
+import { Select, Switcher, InputAutocomplete, Counter, InputImage, InputUser } from "..";
 
 import {
     IFormField,
@@ -76,6 +76,7 @@ function FormInput({
             switch (type) {
                 case "number":
                 case "counter":
+                case "user":
                     newRules.validate = (v: any) => {
                         if (!required && !v?.length) {
                             return true;
@@ -301,6 +302,33 @@ function FormInput({
                                 required={required}
                                 {...fieldProps}
                                 {...imageProps}
+                            />
+                        );
+                    }}
+                />
+            );
+        case "user":
+            return (
+                <Controller
+                    key={name}
+                    name={name}
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => {
+                        return (
+                            <InputUser
+                                onChangeValue={(value: any) => {
+                                    onInputChange(name, value);
+                                }}
+                                value={field.value}
+                                fullWidth={fullWidth}
+                                disabled={disabled}
+                                label={title}
+                                variant={variant}
+                                error={fieldState.invalid}
+                                helperText={fieldState.error?.message}
+                                required={required}
+                                {...fieldProps}
                             />
                         );
                     }}

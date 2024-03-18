@@ -6,9 +6,9 @@ import ImageUploader from "components/Uploader/ImageUploader";
 
 import { files } from "api/data";
 import { IInputProps } from "api/interfaces/components/IInputProps";
+import { useNotifier } from "api/hooks/useNotifier";
 
 import FormControl from "../FormControl";
-import { useNotifier } from "api/hooks/useNotifier";
 
 const langPage = lang.components.inputImage;
 
@@ -124,9 +124,11 @@ export default function InputImage({
                             {!readOnly && (
                                 <IconButton
                                     disabled={disabled}
+                                    tooltip={lang.delete}
                                     name="delete"
-                                    color="warning"
+                                    color="error"
                                     onClick={confirmDelete}
+                                    sx={{ position: "absolute", ml: -5 }}
                                 />
                             )}
                         </Box>

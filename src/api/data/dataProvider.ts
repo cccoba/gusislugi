@@ -39,7 +39,7 @@ export const webApiResultData = <T>(data: IWebDataResult<T>): ICheckDataResult<T
 
 export const dataProvider = async (
     url: string,
-    method: "get" | "post" | "put" | "delete",
+    method: "get" | "post" | "put" | "delete" = "get",
     data?: any,
     extraProps: IDataProviderExtraProps = {}
 ) => {

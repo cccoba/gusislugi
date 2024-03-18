@@ -88,5 +88,9 @@ const ruComponents = {
         registration: "Прописка",
         description: "Секретно. не для всех",
     },
+    table: {
+        loading: "Загрузка...",
+        rowsPerPage: "Записей на странице",
+    },
 };
 export default ruComponents;

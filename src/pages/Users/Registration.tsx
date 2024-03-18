@@ -11,7 +11,7 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { webApiResultData } from "api/data/dataProvider";
 import { useAppDispatch } from "api/hooks/redux";
-import { setUserData } from "store/reducers/UserSlice";
+import { setUserData, userInit } from "store/reducers/UserSlice";
 
 const langPage = lang.pages.registration;
 const fields: IFormField[] = [
@@ -34,12 +34,12 @@ function Registration() {
         users
             .registration(data)
             .then((res) => {
-                const { error, result } = webApiResultData<IUserDto>(res);
+                const { error, result } = webApiResultData<boolean>(res);
                 if (error) {
                     throw error;
                 }
                 if (result) {
-                    dispatch(setUserData(result));
+                    dispatch(userInit());
                     showSuccess(langPage.success.registration);
                 }
             })

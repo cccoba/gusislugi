@@ -10,6 +10,6 @@ export interface IUserDto {
     nationalityId?: number;
     citizenshipId?: number;
     passport: string;
-    image?: string;
+    image: string;
     description: string;
 }

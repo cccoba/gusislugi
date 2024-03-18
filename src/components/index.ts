@@ -1,4 +1,6 @@
 export { default as Accordion } from "./Accordion";
+export { default as CutText } from "./CutText";
+
 export { default as Icon } from "./Icon";
 export { default as IconButton } from "./Icon/IconButton";
 export { default as FabIcon } from "./Icon/FabIcon";
@@ -17,10 +19,13 @@ export { default as Link } from "./Link";
 export { default as Modal } from "./Modal";
 export { default as RawHtml } from "./RawHtml";
 export { default as Page } from "./Page";
+export { default as Table } from "./Table";
 export { default as PageOrModal } from "./Page/PageOrModal";
 export { default as RoleChecker } from "./RoleChecker";
 
+export { default as InputUser } from "./Inputs/Async/InputUser";
 export { default as Counter } from "./Inputs/Counter";
+export { default as InputSearch } from "./Inputs/InputSearch";
 export { default as Select } from "./Inputs/Select";
 export { default as InputImage } from "./Inputs/InputImage";
 

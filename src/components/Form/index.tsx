@@ -4,6 +4,7 @@ import { Box, SxProps, Typography } from "@mui/material";
 
 import lang from "lang";
 import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
+import { ISelectValue } from "components/Inputs/Select";
 
 import { useAppDispatch } from "api/hooks/redux";
 
@@ -11,7 +12,6 @@ import { Fieldset } from "..";
 
 import FormInput from "./FormInput";
 import FormButtons from "./FormButtons";
-import { ISelectValue } from "components/Inputs/Select";
 
 export interface IFormField {
     name: string;
@@ -63,16 +63,30 @@ export interface IFormFieldCounter extends IFormField {
 export interface IFormFieldImage extends IFormField {
     type: "image";
 }
+export interface IFormFieldUser extends IFormField {
+    type: "user";
+}
+
 export interface IFormGroup {
     title: string;
     name: string;
 }
+export type TFormField =
+    | IFormFieldText
+    | IFormFieldCounter
+    | IFormFieldEmail
+    | IFormFieldImage
+    | IFormFieldPassword
+    | IFormFieldSelect
+    | IFormFieldSelectFiltered
+    | IFormFieldSwitcher
+    | IFormFieldUser;
 interface IProps {
     onSubmit?: (values: any) => void;
     onCancel?: () => void;
     onInputChanged?: (values: any, errors: any) => void;
     onIsValidChanged?: (value: boolean) => void;
-    fields: any;
+    fields: TFormField[];
     values: any;
     title?: string;
     submitBtnType?: "cancel_save" | "save" | "fab" | "no";
@@ -176,6 +190,9 @@ export default function Form({
                         break;
                     case "image":
                         newFields.push(field as IFormFieldImage);
+                        break;
+                    case "user":
+                        newFields.push(field as IFormFieldUser);
                         break;
                     default:
                         newFields.push(field as IFormFieldText);

@@ -3,13 +3,15 @@ import { useMemo, useState } from "react";
 import lang from "lang";
 import { Accordion, Page } from "components";
 import { setUserData } from "store/reducers/UserSlice";
+import UserForm from "components/UserForm";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { users } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data/dataProvider";
-import UserForm from "components/UserForm";
+
+import ProfileClaims from "./Claims";
 
 const langPage = lang.pages.profile;
 
@@ -33,6 +35,11 @@ function Profile() {
                         />
                     ),
                 },
+                {
+                    id: "userClaims",
+                    title: langPage.claims.title,
+                    child: <ProfileClaims userId={user.id} />,
+                },
             ];
             return values;
         }
@@ -41,6 +48,9 @@ function Profile() {
 
     function toSaveUser(data: IUserDto) {
         setIsLoading(true);
+        if (!data.image) {
+            data.image = "";
+        }
         users
             .updateUser(data)
             .then((res) => {
@@ -69,7 +79,7 @@ function Profile() {
             {!!user && (
                 <>
                     <Accordion
-                        defaultActiveId="userInfo"
+                        defaultActiveId="userClaims"
                         values={accordionValues}
                     />
                 </>
