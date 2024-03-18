@@ -23,9 +23,10 @@ interface IProps {
 }
 const langPage = lang.pages.profile.claims;
 const fields: ITableField[] = [
+    { name: "id", title: langPage.fields.id },
     { name: "title", title: langPage.fields.title },
     { name: "status", title: langPage.fields.status },
-    { name: "updatedDate", title: langPage.fields.updatedDate, format: "date", width: "100px" },
+    { name: "date", title: langPage.fields.updatedDate, format: "date", width: "120px" },
     { name: "actions", title: langPage.fields.actions, format: "component", width: "50px" },
 ];
 function ProfileClaims({ userId }: IProps) {
@@ -46,7 +47,9 @@ function ProfileClaims({ userId }: IProps) {
                 id: x.id,
                 title: x.title,
                 status: getEnumTitle("ClaimStatusEnum", enumGetValue(ClaimStatusEnum, x.status) || ""),
-                updatedDate: new Date(x.updatedDate * 1000).toISOString(),
+                date: x.updatedDate
+                    ? new Date(x.updatedDate * 1000).toISOString()
+                    : new Date(x.addDate * 1000).toISOString(),
                 actions: (
                     <>
                         {x.status === ClaimStatusEnum.Created && (
@@ -76,7 +79,7 @@ function ProfileClaims({ userId }: IProps) {
         if (result && !!row?.id) {
             setIsLoading(true);
             claims
-                .removeClaim(row.id)
+                .remove(row.id)
                 .then((res) => {
                     const { error, result } = webApiResultData<boolean>(res);
                     if (error) {
@@ -107,7 +110,25 @@ function ProfileClaims({ userId }: IProps) {
         setShowedAddModal(false);
     };
     const toAdd = (data: IClaimDto) => {
-        console.log("toAdd", data);
+        setIsLoading(true);
+        claims
+            .add(data)
+            .then((res) => {
+                const { error, result } = webApiResultData<number>(res);
+                if (error) {
+                    throw error;
+                }
+                if (result) {
+                    setIsLoading(false);
+                    refetch();
+                    showSuccess(langPage.success.addClaim);
+                    hideAddModal();
+                }
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                showError(err?.name === "webApiResultError" ? err.message : langPage.errors.addClaim);
+            });
     };
     return (
         <>

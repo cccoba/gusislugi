@@ -7,7 +7,7 @@ import lang, { sprintf } from "lang";
 import { isGuid, isUrl } from "api/common/helper";
 import { checkDate } from "api/common/helper";
 
-import { Select, Switcher, InputAutocomplete, Counter, InputImage, InputUser } from "..";
+import { Select, Switcher, InputAutocomplete, Counter, InputImage, UserSelect } from "..";
 
 import {
     IFormField,
@@ -316,7 +316,7 @@ function FormInput({
                     rules={rules}
                     render={({ field, fieldState }) => {
                         return (
-                            <InputUser
+                            <UserSelect
                                 onChangeValue={(value: any) => {
                                     onInputChange(name, value);
                                 }}

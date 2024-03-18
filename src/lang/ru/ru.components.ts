@@ -88,6 +88,21 @@ const ruComponents = {
         registration: "Прописка",
         description: "Секретно. не для всех",
     },
+    userSelect: {
+        multiplePlaceholder: "Выберите пользователей",
+        list: {
+            title: "Добавить пользователей",
+            roles: "По роли",
+            allList: "По ФИО",
+            addBtn: "Добавить",
+            fields: {
+                fullName: "ФИО",
+                role: "Должность",
+                phone: "Телефон",
+                imageId: "Фото",
+            },
+        },
+    },
     table: {
         loading: "Загрузка...",
         rowsPerPage: "Записей на странице",

@@ -16,6 +16,8 @@ export { default as Form } from "./Form";
 export { default as Loader } from "./Loader";
 export { default as MenuList } from "./MenuList";
 export { default as Link } from "./Link";
+export { default as List } from "./List";
+
 export { default as Modal } from "./Modal";
 export { default as RawHtml } from "./RawHtml";
 export { default as Page } from "./Page";
@@ -23,7 +25,7 @@ export { default as Table } from "./Table";
 export { default as PageOrModal } from "./Page/PageOrModal";
 export { default as RoleChecker } from "./RoleChecker";
 
-export { default as InputUser } from "./Inputs/Async/InputUser";
+export { default as UserSelect } from "./Inputs/Async/UserSelect";
 export { default as Counter } from "./Inputs/Counter";
 export { default as InputSearch } from "./Inputs/InputSearch";
 export { default as Select } from "./Inputs/Select";

@@ -73,6 +73,7 @@ function ClaimEdit({ userId = 0, id = 0, onCancel, onSave }: IProps) {
             for (const field of newFields) {
                 switch (field.name) {
                     case "status":
+                    case "uid":
                     case "resolution":
                         field.hidden = true;
                         break;

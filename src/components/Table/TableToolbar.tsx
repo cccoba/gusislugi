@@ -10,7 +10,7 @@ export interface ITableToolbarAction {
     icon: string;
     onClick: any;
     color?: IconButtonProps["color"];
-    loading?: boolean;
+    disabled?: boolean;
 }
 
 interface IProps {
@@ -64,6 +64,7 @@ function TableToolbar({
                                         name={action.icon}
                                         onClick={() => onClick(action.onClick)}
                                         color={!!action?.color ? action.color : "primary"}
+                                        disabled={!!action?.disabled}
                                     />
                                 );
                             })}

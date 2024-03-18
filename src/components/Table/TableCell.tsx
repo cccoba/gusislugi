@@ -8,6 +8,7 @@ import dateTime from "api/common/dateTime";
 import { getFieldTitle } from "./TableHead";
 
 import { ITableField } from ".";
+import Image from "components/Image";
 
 interface IProps {
     value?: any;
@@ -42,6 +43,14 @@ function TableCell({ value = "", field, cursor = "", responsiveView }: IProps) {
             switch (field?.format) {
                 case "date":
                     return dateTime(value, field?.formatProps);
+                case "image":
+                    return (
+                        <Image
+                            image={value}
+                            width="32px"
+                            zoom
+                        />
+                    );
             }
             return value.toString();
         }

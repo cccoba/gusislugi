@@ -25,6 +25,7 @@ const ruPages = {
             add: "Новая заявка",
             noRecordsText: "У вас нет заявок",
             fields: {
+                id: "Номер",
                 title: "Название",
                 updatedDate: "Дата",
                 status: "Статус",
@@ -32,9 +33,11 @@ const ruPages = {
             },
             success: {
                 removeClaim: "Заявка удалена",
+                addClaim: "Заявка подана",
             },
             errors: {
                 removeClaim: "Не удалось удалить заявку!",
+                addClaim: "Не удалось подать заявку!",
             },
             deleteConfirm: {
                 title: "Удалить заявку",

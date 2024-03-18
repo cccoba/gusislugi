@@ -43,7 +43,7 @@ export interface ITableField {
     name: string;
     title?: string;
     noSort?: boolean;
-    format?: "text" | "date" | "number" | "component";
+    format?: "text" | "date" | "number" | "image" | "component";
     formatProps?: any;
     disablePadding?: boolean;
     width?: string;
