@@ -2,11 +2,11 @@ import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 
 export interface IClaimDto {
     id: number;
-    addDate: number;
-    updatedDate: number;
+    uid: number;
+    status: ClaimStatusEnum;
     title: string;
     description: string;
     resolution: string;
-    status: ClaimStatusEnum;
-    uid: number;
+    created_at?: Date;
+    updated_at?: Date;
 }

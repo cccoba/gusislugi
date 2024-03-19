@@ -18,8 +18,6 @@ interface IProps {
 }
 const defValues: IClaimDto = {
     id: 0,
-    addDate: 0,
-    updatedDate: 0,
     description: "",
     resolution: "",
     status: ClaimStatusEnum.Created,

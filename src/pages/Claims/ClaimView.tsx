@@ -22,8 +22,8 @@ const defFields: TFormField[] = [
         fieldProps: { readOnly: true },
     },
     {
-        name: "addDate",
-        title: langPage.fields.addDate,
+        name: "created_at",
+        title: langPage.fields.created_at,
         type: "text",
         fieldProps: { InputProps: { readOnly: true } },
     },
@@ -44,7 +44,7 @@ const defFields: TFormField[] = [
 function ClaimView({ ...props }: IProps) {
     const values = useMemo<any>(() => {
         const newValues: any = { ...props };
-        newValues.addDate = dateTime(newValues.addDate);
+        newValues.created_at = dateTime(newValues.created_at);
         return newValues;
     }, [props]);
     const fields = useMemo(() => {

@@ -4,6 +4,7 @@ import lang from "lang";
 import { Accordion, Page } from "components";
 import { setUserData } from "store/reducers/UserSlice";
 import UserForm from "components/UserForm";
+import ProfileMessages from "pages/Users/Profile/Messages";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
@@ -12,7 +13,6 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data/dataProvider";
 
 import ProfileClaims from "./Claims";
-import ProfileMessages from "pages/Users/Profile/Messages";
 
 const langPage = lang.pages.profile;
 
@@ -86,7 +86,7 @@ function Profile() {
                 <>
                     <Accordion
                         autoMountAll
-                        defaultActiveId="userMessages"
+                        defaultActiveId="userInfo"
                         values={accordionValues}
                     />
                 </>

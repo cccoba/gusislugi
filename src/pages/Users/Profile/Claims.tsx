@@ -46,7 +46,7 @@ function ProfileClaims({}: IProps) {
                 id: x.id,
                 title: x.title,
                 status: getEnumTitle("ClaimStatusEnum", enumGetValue(ClaimStatusEnum, x.status) || ""),
-                date: x.updatedDate ? x.updatedDate : x.addDate,
+                date: x.updated_at ? x.updated_at : x.created_at,
                 actions: (
                     <>
                         {x.status === ClaimStatusEnum.Created && (
@@ -117,7 +117,7 @@ function ProfileClaims({}: IProps) {
         claims
             .add(data)
             .then((res) => {
-                const { error, result } = webApiResultData<number>(res);
+                const { error, result } = webApiResultData<boolean>(res);
                 if (error) {
                     throw error;
                 }

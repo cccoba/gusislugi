@@ -2,6 +2,6 @@ export interface IMessageDto {
     id: number;
     fromUid: number;
     toUid: number;
-    addDate: number;
+    created_at: Date;
     message: string;
 }

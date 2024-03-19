@@ -9,7 +9,7 @@ const ClaimsDataProvider = {
     remove: (id: number): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "remove&id=" + id, "get");
     },
-    add: (data: IClaimDto): Promise<IWebDataResult<number>> => {
+    add: (data: IClaimDto): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "add", "post", data);
     },
 };

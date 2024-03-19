@@ -10,7 +10,7 @@ const ruPages = {
                 description: "Описание",
                 resolution: "Результат",
                 uid: "Заявитель",
-                addDate: "Дата подачи",
+                created_at: "Дата подачи",
             },
         },
     },
