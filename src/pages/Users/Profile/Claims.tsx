@@ -4,7 +4,7 @@ import { Confirm, IconButton, PageOrModal, Table } from "components";
 import { ITableField } from "components/Table";
 import lang, { getEnumTitle, sprintf } from "lang";
 
-import { enumGetValue } from "api/common/enumHelper";
+import { getEnumValue } from "api/common/enumHelper";
 import { claims, users } from "api/data";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import useLoadApiData from "api/hooks/useLoadApiData";
@@ -45,7 +45,7 @@ function ProfileClaims({}: IProps) {
             return data.map((x) => ({
                 id: x.id,
                 title: x.title,
-                status: getEnumTitle("ClaimStatusEnum", enumGetValue(ClaimStatusEnum, x.status) || ""),
+                status: getEnumTitle("ClaimStatusEnum", getEnumValue(ClaimStatusEnum, x.status) || ""),
                 date: x.updated_at ? x.updated_at : x.created_at,
                 actions: (
                     <>
@@ -77,7 +77,7 @@ function ProfileClaims({}: IProps) {
         if (result && !!row?.id) {
             setIsLoading(true);
             claims
-                .remove(row.id)
+                .userRemove(row.id)
                 .then((res) => {
                     const { error, result } = webApiResultData<boolean>(res);
                     if (error) {
@@ -115,7 +115,7 @@ function ProfileClaims({}: IProps) {
     const toAdd = (data: IClaimDto) => {
         setIsLoading(true);
         claims
-            .add(data)
+            .userAdd(data)
             .then((res) => {
                 const { error, result } = webApiResultData<boolean>(res);
                 if (error) {

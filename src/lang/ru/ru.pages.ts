@@ -1,17 +1,14 @@
 const ruPages = {
     claims: {
         title: "Заявки",
-        edit: {
-            title: "Редактировать заявку",
-            addTitle: "Новая заявка",
-            fields: {
-                title: "Название",
-                status: "Статус",
-                description: "Описание",
-                resolution: "Результат",
-                uid: "Заявитель",
-                created_at: "Дата подачи",
-            },
+        fields: {
+            id: "Номер",
+            title: "Название",
+            status: "Статус",
+            description: "Описание",
+            resolution: "Результат",
+            uid: "Заявитель",
+            created_at: "Дата подачи",
         },
     },
     login: {

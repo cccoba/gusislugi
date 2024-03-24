@@ -8,7 +8,7 @@ import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { TFormField } from "components/Form";
 import { getEnumSelectValues } from "api/common/enumHelper";
 
-const langPage = lang.pages.claims.edit;
+const langPage = lang.pages.claims;
 
 interface IProps {
     id?: number;

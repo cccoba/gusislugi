@@ -10,7 +10,7 @@ import dateTime from "api/common/dateTime";
 
 interface IProps extends IClaimDto {}
 
-const langPage = lang.pages.claims.edit;
+const langPage = lang.pages.claims;
 
 const defFields: TFormField[] = [
     { name: "title", title: langPage.fields.title, type: "text", fieldProps: { InputProps: { readOnly: true } } },

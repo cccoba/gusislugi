@@ -76,12 +76,19 @@ function FormInput({
             switch (type) {
                 case "number":
                 case "counter":
-                case "user":
                     newRules.validate = (v: any) => {
                         if (!required && !v?.length) {
                             return true;
                         }
                         return /^[0-9]+$/.test(v) || langPage.isNumber;
+                    };
+                    break;
+                case "user":
+                    newRules.validate = (v: any) => {
+                        if (!required && !v?.length) {
+                            return true;
+                        }
+                        return (/^[0-9]+$/.test(v) && v > 0) || langPage.isRequired;
                     };
                     break;
                 case "date":

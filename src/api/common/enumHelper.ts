@@ -55,7 +55,7 @@ export function getEnumSelectValues(enums: any, enumName: string): ISelectValue[
     return result;
 }
 
-export function enumGetValue(enumValues: any, value: number): string | null {
+export function getEnumValue(enumValues: any, value: number): string | null {
     if (typeof enumValues[value] == "undefined") {
         return null;
     }

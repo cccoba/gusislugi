@@ -55,7 +55,6 @@ export default function RoleChecker({ roles = [], children }: IProps) {
             dispatch(loaderHide());
         }
     }, [dispatch, isLoading]);
-    console.log("|inRole", inRole);
 
     if (inRole) {
         return children;

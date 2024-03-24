@@ -1,3 +1,4 @@
+import { getEnumValue } from "api/common/enumHelper";
 import ruLang from "./ru";
 type TLangTypes = "ru";
 const shortName: TLangTypes = "ru";
@@ -36,6 +37,13 @@ export function sprintf(text: string, ...values: (string | number)[]): string {
         }
     }
     return text;
+}
+export function getEnumTitleValue(enumObject: any, enumName: string, enumValue: number, defaultTitle = "") {
+    const value = getEnumValue(enumObject, enumValue);
+    if (value !== null) {
+        return getEnumTitle(enumName, value);
+    }
+    return defaultTitle;
 }
 export function getEnumTitle(enumName: string, valueName: string) {
     enumName = enumName.charAt(0).toLocaleLowerCase() + enumName.slice(1);

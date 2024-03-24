@@ -1,4 +1,6 @@
 export { default as Accordion } from "./Accordion";
+
+export { default as CRUD } from "./CRUD";
 export { default as CutText } from "./CutText";
 
 export { default as Icon } from "./Icon";
