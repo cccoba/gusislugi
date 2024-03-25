@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useState } from "react";
 
-import lang from "lang";
+import Page from "components/Page";
+
+import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import { generateGuid } from "api/common/helper";
 
 import CRUDEdit, { ICRUDEditConfig } from "./Edit";
 import CRUDList, { ICRUDListConfig } from "./List";
-import Page from "components/Page";
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { generateGuid } from "api/common/helper";
 
 export type TCRUDActionCbName = "list" | "add" | "edit" | "delete" | "save";
 export type TCRUDActionCb = (params?: any) => Promise<IWebDataResult<any>>;
@@ -22,9 +21,10 @@ interface IProps {
     actions: ICRUDAction[];
     icon?: string;
     title: string;
+    initialValue?: any;
 }
 
-export default function CRUD({ listConfig, editConfig, actions, icon = "", title }: IProps) {
+export default function CRUD({ listConfig, editConfig, actions, icon = "", initialValue, title }: IProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [needUpdate, setNeedUpdate] = useState("");
@@ -48,6 +48,7 @@ export default function CRUD({ listConfig, editConfig, actions, icon = "", title
                     onClose={hideEdit}
                     onIsLoading={setIsLoading}
                     onSaved={toUpdate}
+                    initialValue={initialValue}
                 />
             )}
             <CRUDList
@@ -56,6 +57,7 @@ export default function CRUD({ listConfig, editConfig, actions, icon = "", title
                 onSelectId={setActiveId}
                 onIsLoading={setIsLoading}
                 needUpdate={needUpdate}
+                initialValue={initialValue}
             />
         </Page>
     );

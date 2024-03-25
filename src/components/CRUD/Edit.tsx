@@ -1,18 +1,14 @@
-import { ReactNode, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { SxProps } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
-import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
 
+import Modal from "components/Modal";
 import { useNotifier } from "api/hooks/useNotifier";
-import { useAppDispatch } from "api/hooks/redux";
+import { webApiResultData } from "api/data";
 
 import Form, { TFormField } from "../Form";
 
-import { ICRUDAction, TCRUDActionCb } from ".";
-import Modal from "components/Modal";
-import { webApiResultData } from "api/data";
+import { ICRUDAction } from ".";
 
 export interface ICRUDEditConfig {
     editTitle?: string;
@@ -24,13 +20,14 @@ interface IProps {
     actions: ICRUDAction[];
     config: ICRUDEditConfig;
     id: number;
+    initialValue?: any;
     onClose: () => void;
     onIsLoading: (isLoading: boolean) => void;
     onSaved: () => void;
 }
 const langPage = lang.components.crud;
 
-export default function CRUDEdit({ id, config, actions = [], onClose, onIsLoading, onSaved }: IProps) {
+export default function CRUDEdit({ id, config, actions = [], initialValue, onClose, onIsLoading, onSaved }: IProps) {
     const [data, setData] = useState<any>(null);
     const { showError, showSuccess } = useNotifier();
     const title = useMemo(() => {
@@ -63,6 +60,8 @@ export default function CRUDEdit({ id, config, actions = [], onClose, onIsLoadin
                         onIsLoading(false);
                     });
             }
+        } else if (id === 0 && typeof initialValue !== "undefined") {
+            setData({ ...initialValue });
         }
     }, [id]);
     const toSubmit = (data: any) => {
@@ -90,6 +89,7 @@ export default function CRUDEdit({ id, config, actions = [], onClose, onIsLoadin
                 });
         }
     };
+
     return (
         <Modal
             open

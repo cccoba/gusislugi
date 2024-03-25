@@ -1,4 +1,3 @@
-//import Table, { ITableConfig, TTableRowClick } from '../Table'
 import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
@@ -7,11 +6,10 @@ import Table, { ITableField } from "components/Table";
 import { useNotifier } from "api/hooks/useNotifier";
 import { ISortData } from "api/interfaces/data/ISortData";
 import { webApiResultData } from "api/data";
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 
 import Confirm, { IConfirmProps } from "../Confirm";
 
-import { ICRUDAction, TCRUDActionCb, TCRUDActionCbName } from ".";
+import { ICRUDAction, TCRUDActionCbName } from ".";
 
 const langPage = lang.components.crud;
 
@@ -28,8 +26,17 @@ interface IProps {
     rowId?: string;
     onIsLoading: (isLoading: boolean) => void;
     needUpdate: string;
+    initialValue?: any;
 }
-export default function CRUDList({ config, needUpdate = "", actions, onSelectId, rowId = "id", onIsLoading }: IProps) {
+export default function CRUDList({
+    config,
+    needUpdate = "",
+    actions,
+    onSelectId,
+    rowId = "id",
+    initialValue,
+    onIsLoading,
+}: IProps) {
     const [selectedRows, setSelectedRows] = useState<any[]>([]);
     const [deleteConfirm, setDeleteConfirm] = useState<IConfirmProps | null>(null);
     const [listData, setListData] = useState<any[]>([]);
@@ -78,11 +85,15 @@ export default function CRUDList({ config, needUpdate = "", actions, onSelectId,
             return res;
         };
         const tableActions = [];
+        if (typeof initialValue !== "undefined") {
+            tableActions.push(getTableAction("add"));
+        }
         for (const action of actions) {
             if (action.name !== "list" && action.name !== "save") {
                 tableActions.push(getTableAction(action.name));
             }
         }
+
         return tableActions;
     }, [actions, selectedRows]);
     const loadList = () => {
@@ -138,9 +149,6 @@ export default function CRUDList({ config, needUpdate = "", actions, onSelectId,
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
-    /*const onDoubleClick = (row: any) => {
-        navigator(basePath + "/" + row[rowId]);
-    };*/
     return (
         <>
             <Table
@@ -150,6 +158,7 @@ export default function CRUDList({ config, needUpdate = "", actions, onSelectId,
                 onSelectedRows={onSelected}
                 isMultiSelection={config.isMultiselection}
                 actions={actionsList}
+                onDoubleClick={(row: any) => onSelectId(row.id)}
             />
             {!!deleteConfirm && (
                 <Confirm

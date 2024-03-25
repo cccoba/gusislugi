@@ -1,6 +1,7 @@
 const ruPages = {
     claims: {
         title: "Заявки",
+        message: 'Ваша заявка "%s" изменила статус на "%s"',
         fields: {
             id: "Номер",
             title: "Название",
@@ -45,7 +46,12 @@ const ruPages = {
             },
         },
         messages: {
-            title: "Сообщения",
+            title: "Оповещения",
+            detailsTitle: "Оповещения от %s",
+            fields: {
+                message: "Сообщение",
+                date: "Дата",
+            },
         },
         success: {
             updateUser: "Данные обновлены",

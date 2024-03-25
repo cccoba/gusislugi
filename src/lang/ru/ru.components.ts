@@ -85,6 +85,13 @@ const ruComponents = {
         profile: "Профиль",
         claims: "Заявки",
     },
+    sendUserNotification: {
+        title: "Отправить пользователю оповещение?",
+        hint: "Текст оповещения",
+        errors: {
+            send: "Не удалось отправить оповещение пользователю",
+        },
+    },
     uploader: {
         imageUploader: {
             add: "Загрузить изображение",

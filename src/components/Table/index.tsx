@@ -37,6 +37,7 @@ export interface ITableProps {
     onPagination?: (page: number, limit: number) => void;
     onSelect?: (data: any) => void;
     onSelectedRows?: (data: any[]) => void;
+    onDoubleClick?: (data: any[]) => void;
 }
 
 export interface ITableField {
@@ -81,6 +82,7 @@ export default function Table({
     onPagination,
     onSelect,
     onSelectedRows,
+    onDoubleClick,
 }: ITableProps) {
     const [orderState, setOrderState] = useState<ISortData>(order);
     const [sortedValues, setSortedValues] = useState<any[]>(values);
@@ -162,6 +164,11 @@ export default function Table({
             });
         });
         return filteredRows;
+    };
+    const toDoubleClick = (row: any) => {
+        if (!!onDoubleClick) {
+            onDoubleClick(row);
+        }
     };
     const updateValues = (data: any) => {
         if (!noFilter) {
@@ -273,6 +280,7 @@ export default function Table({
                         idName={idName}
                         loading={loading}
                         onSelect={onSelect}
+                        onDoubleClick={toDoubleClick}
                         noRecordsText={noRecordsText}
                         isMultiSelection={isMultiSelection}
                         selectedRows={selectedRows}

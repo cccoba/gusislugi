@@ -3,7 +3,6 @@ import { Checkbox, TableCell as MuiTableCell, TableRow as MuiTableRow, TableRowP
 import TableCell from "./TableCell";
 
 import { ITableField } from ".";
-import { useMemo } from "react";
 
 interface IProps {
     fields: ITableField[];
@@ -14,6 +13,7 @@ interface IProps {
     cursor?: string;
     isSelected?: boolean;
     onClick?: (row: any) => void;
+    onDoubleClick?: (row: any) => void;
 }
 
 function TableRow({
@@ -25,10 +25,16 @@ function TableRow({
     isSelected = false,
     cursor,
     onClick,
+    onDoubleClick,
 }: IProps) {
     const onRowClick = () => {
         if (!!onClick) {
             onClick(row);
+        }
+    };
+    const toDoubleClick = (data: any) => {
+        if (!!onDoubleClick) {
+            onDoubleClick(row);
         }
     };
 
@@ -36,6 +42,7 @@ function TableRow({
         <MuiTableRow
             hover={hover}
             onClick={onRowClick}
+            onDoubleClick={toDoubleClick}
             {...rowProps}
         >
             {!!isMultiSelection && (

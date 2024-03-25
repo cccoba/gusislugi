@@ -10,8 +10,6 @@ interface ILangPlural {
 interface ILangPipes {
     [key: string]: { [key2: string]: string };
 }
-
-//const lang = require("./" + shortName).default;
 const lang = ruLang;
 
 export function getLangValue(langObject: any, field: string | number, defValue: string = "") {

@@ -1,14 +1,17 @@
-import lang, { getEnumTitleValue } from "lang";
+import lang, { getEnumTitleValue, sprintf } from "lang";
 import { CRUD } from "components";
+import { ICRUDEditConfig } from "components/CRUD/Edit";
+
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDListConfig } from "components/CRUD/List";
 import { SortOrderEnum } from "api/enums/SortOrderEnum";
-import { ICRUDAction } from "components/CRUD";
+import { ICRUDAction, TCRUDActionCb } from "components/CRUD";
 import { claims } from "api/data";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
-import { ICRUDEditConfig } from "components/CRUD/Edit";
 import { getEnumSelectValues } from "api/common/enumHelper";
+import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
+import { useState } from "react";
 
 const langPage = lang.pages.claims;
 
@@ -57,22 +60,56 @@ const editConfig: ICRUDEditConfig = {
     ],
 };
 
-const actions: ICRUDAction[] = [
-    { name: "list", cb: claims.crudList },
-    { name: "delete", cb: claims.crudDelete },
-    { name: "edit", cb: claims.crudGet },
-    { name: "save", cb: claims.crudSave },
-];
-
 function Claims({ roles }: IPageWithRoles) {
+    const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
+    const onSaveStart: TCRUDActionCb = async (data: IClaimDto) => {
+        return new Promise((resolve, reject) => {
+            claims.crudSave(data).then(resolve).catch(reject);
+            setNotificationData({
+                text: sprintf(
+                    langPage.message,
+                    data.title,
+                    getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status)
+                ),
+                uid: data.uid,
+            });
+        });
+    };
+
+    const actions: ICRUDAction[] = [
+        { name: "list", cb: claims.crudList },
+        { name: "edit", cb: claims.crudGet },
+        { name: "delete", cb: claims.crudDelete },
+        { name: "save", cb: onSaveStart },
+    ];
+
+    const onConfirm = (result: boolean) => {
+        setNotificationData(null);
+    };
     return (
-        <CRUD
-            title={langPage.title}
-            icon="warning"
-            listConfig={listConfig}
-            editConfig={editConfig}
-            actions={actions}
-        />
+        <>
+            {!!notificationData && (
+                <SendUserNotification
+                    {...notificationData}
+                    onClose={onConfirm}
+                />
+            )}
+            <CRUD
+                title={langPage.title}
+                icon="warning"
+                listConfig={listConfig}
+                editConfig={editConfig}
+                actions={actions}
+                initialValue={{
+                    id: 0,
+                    uid: 0,
+                    status: ClaimStatusEnum.Created,
+                    title: "",
+                    description: "",
+                    resolution: "",
+                }}
+            />
+        </>
     );
 }
 export default Claims;

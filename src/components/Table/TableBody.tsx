@@ -17,6 +17,7 @@ interface IProps {
     selectedRows: any[];
     onSelect?: (data: any) => void;
     onSelectRow: (data: any) => void;
+    onDoubleClick?: (data: any) => void;
 }
 
 function TableBofy({
@@ -29,6 +30,7 @@ function TableBofy({
     selectedRows = [],
     onSelect,
     onSelectRow,
+    onDoubleClick,
 }: IProps) {
     const cursor = useMemo(() => {
         return onSelect || isMultiSelection ? "pointer" : undefined;
@@ -70,6 +72,7 @@ function TableBofy({
                                     rowProps={rowProps}
                                     fields={fields}
                                     onClick={onRowClick}
+                                    onDoubleClick={onDoubleClick}
                                     isMultiSelection={isMultiSelection}
                                     isSelected={isItemSelected}
                                     cursor={cursor}

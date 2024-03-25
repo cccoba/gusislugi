@@ -5,5 +5,9 @@ const ruPipes = {
         inProgress: "В работе",
         failed: "Отклонена",
     },
+    messageStatus: {
+        new: "Новая",
+        readed: "Прочитано",
+    },
 };
 export default ruPipes;
