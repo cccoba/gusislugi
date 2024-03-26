@@ -3,7 +3,7 @@ import { useState } from "react";
 import Table from "components/Table";
 
 import { IUserDto } from "api/interfaces/user/IUserDto";
-import { SortOrderEnum } from "api/enums/SortOrderEnum";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import { userFields } from "./List";
 

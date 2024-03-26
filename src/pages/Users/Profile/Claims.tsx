@@ -9,7 +9,6 @@ import { claims, users } from "api/data";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import { useNotifier } from "api/hooks/useNotifier";
-import { SortOrderEnum } from "api/enums/SortOrderEnum";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { IConfirmProps } from "components/Confirm";
 import { webApiResultData } from "api/data/dataProvider";
@@ -17,6 +16,7 @@ import { webApiResultData } from "api/data/dataProvider";
 import ClaimEdit from "pages/Claims/ClaimEdit";
 import { useAppSelector } from "api/hooks/redux";
 import ClaimView from "pages/Claims/ClaimView";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 interface IProps {}
 const langPage = lang.pages.profile.claims;

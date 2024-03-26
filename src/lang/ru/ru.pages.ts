@@ -82,7 +82,10 @@ const ruPages = {
         fields: {
             id: "ID",
             fullName: "Имя",
+            nationalityId: "Национальность",
+            citizenshipId: "Гражданство",
             image: "Фото",
+            created_at: "Создан",
         },
     },
 };

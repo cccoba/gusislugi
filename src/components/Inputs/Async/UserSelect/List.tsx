@@ -8,9 +8,9 @@ import Table, { ITableField } from "components/Table";
 
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
-import { SortOrderEnum } from "api/enums/SortOrderEnum";
 
 import { IUserRowDto, parseUserData } from ".";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.components.userSelect.list;
 

@@ -27,6 +27,7 @@ const ruComponents = {
     loader: {
         defaultText: "Идет загрузка. Подождите...",
     },
+    filterForm: {},
     form: {
         isRequired: "Поле обязательно к заполнению",
         minLength: "Поле должно иметь не менее %s символов",
@@ -39,6 +40,14 @@ const ruComponents = {
         isEmail: "Укажите корректный Email",
         isSelectValue: "Выберите значение из списка",
         pattern: "Поле содержит недопустимые символы",
+    },
+    goodTable: {
+        loading: "Загрузка...",
+        rowsPerPage: "Записей на странице",
+        filters: {
+            value: "Значение",
+            searchType: "Фильтр",
+        },
     },
     image: {
         viewer: {

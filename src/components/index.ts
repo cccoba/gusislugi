@@ -3,6 +3,8 @@ export { default as Accordion } from "./Accordion";
 export { default as CRUD } from "./CRUD";
 export { default as CutText } from "./CutText";
 
+export { default as GoodTable } from "./GoodTable";
+
 export { default as Icon } from "./Icon";
 export { default as IconButton } from "./Icon/IconButton";
 export { default as FabIcon } from "./Icon/FabIcon";

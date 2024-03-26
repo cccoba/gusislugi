@@ -5,12 +5,11 @@ import lang, { sortArray } from "lang";
 import InputSearch from "components/Inputs/InputSearch";
 
 import { keyboardFilterSearch } from "api/common/keyboardFilterSearch";
-import { ISortData } from "api/interfaces/data/ISortData";
-import { IPaginationData } from "api/interfaces/data/IPaginationData";
-import { SortOrderEnum } from "api/enums/SortOrderEnum";
+
 import { useAppSelector } from "api/hooks/redux";
 import dateTime from "api/common/dateTime";
 import { objCopy } from "api/common/helper";
+import { IPaginationData, ISortData, SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";

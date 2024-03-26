@@ -1,28 +1,33 @@
 import { useMemo } from "react";
-import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox } from "@mui/material";
+import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox, Box } from "@mui/material";
 
-import { ISortData, SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 
-import { ITableField } from ".";
+import { IGoodTableField } from ".";
+import GoodTableSearch from "./Filters/Search";
 
 interface IProps {
-    fields: ITableField[];
-    order: ISortData;
+    fields: IGoodTableField[];
+    order?: ISortData;
     isMultiSelection?: boolean;
     selectedRows: any[];
     rowCount: number;
+    filters: TFilterValue[];
+    onFilterChanged: (newFilter: TFilterValue | null, name: string) => void;
     onSort: (data: ISortData) => void;
     selectRows: (action: "select" | "unselect") => void;
 }
-export const getFieldTitle = (field: ITableField) => {
+export const getFieldTitle = (field: IGoodTableField) => {
     return typeof field.title !== "undefined" ? field.title : field.name;
 };
-export default function TableHead({
+export default function GoodTableHead({
     fields = [],
     order = { sort: "id", direction: SortOrderEnum.Ascending },
     isMultiSelection = false,
     selectedRows = [],
     rowCount = 0,
+    filters,
+    onFilterChanged,
     onSort,
     selectRows,
 }: IProps) {
@@ -30,8 +35,8 @@ export default function TableHead({
         return selectedRows.length;
     }, [selectedRows]);
     const orderDirection = useMemo(() => {
-        return order.direction === SortOrderEnum.Ascending ? "asc" : "desc";
-    }, [order.direction]);
+        return order.direction === SortOrderEnum.Descending ? "desc" : "asc";
+    }, [order?.direction]);
 
     const toSort = (sort: string) => {
         const field = fields.find((x) => x.name === sort);
@@ -44,7 +49,7 @@ export default function TableHead({
         }
     };
 
-    const cellSx = (field: ITableField) => {
+    const cellSx = (field: IGoodTableField) => {
         const newSx: any = {};
         if (!!field?.width) {
             newSx.width = field.width;
@@ -80,17 +85,31 @@ export default function TableHead({
                             sortDirection={order.sort === field.name ? orderDirection : false}
                             sx={cellSx(field)}
                         >
-                            {!!field?.noSort ? (
-                                getFieldTitle(field)
-                            ) : (
-                                <TableSortLabel
-                                    active={order.sort === field.name}
-                                    direction={order.sort === field.name ? orderDirection : "asc"}
-                                    onClick={() => toSort(field.name)}
-                                >
-                                    {getFieldTitle(field)}
-                                </TableSortLabel>
-                            )}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                {!!field?.noSort ? (
+                                    getFieldTitle(field)
+                                ) : (
+                                    <TableSortLabel
+                                        active={order.sort === field.name}
+                                        direction={order.sort === field.name ? orderDirection : "asc"}
+                                        onClick={() => toSort(field.name)}
+                                    >
+                                        {getFieldTitle(field)}
+                                    </TableSortLabel>
+                                )}
+                                {!field?.noSearch && (
+                                    <GoodTableSearch
+                                        field={field}
+                                        filter={filters.find((x) => x.name === field.name)}
+                                        onFilterChanged={onFilterChanged}
+                                    />
+                                )}
+                            </Box>
                         </TableCell>
                     ))}
                 </TableRow>

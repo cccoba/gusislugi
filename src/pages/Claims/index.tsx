@@ -2,17 +2,17 @@ import { useState } from "react";
 
 import lang, { getEnumTitleValue, sprintf } from "lang";
 import { CRUD } from "components";
+import { ICRUDAction, TCRUDActionCb } from "components/CRUD";
+import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
 import { ICRUDEditConfig } from "components/CRUD/Edit";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDListConfig } from "components/CRUD/List";
-import { SortOrderEnum } from "api/enums/SortOrderEnum";
-import { ICRUDAction, TCRUDActionCb } from "components/CRUD";
 import { claims } from "api/data";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { getEnumSelectValues } from "api/common/enumHelper";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.pages.claims;
 

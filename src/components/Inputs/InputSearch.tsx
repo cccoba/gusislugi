@@ -5,11 +5,13 @@ import IconButton from "components/Icon/IconButton";
 import Icon from "components/Icon";
 interface IProps extends StandardTextFieldProps {
     onChangeValue?: (data: string) => void;
+    onClearButtonClick?: () => void;
     value?: string;
     showSearchIcon?: boolean;
 }
 export default function InputSearch({
     onChangeValue,
+    onClearButtonClick,
     value = "",
     showSearchIcon,
     InputProps,
@@ -29,7 +31,7 @@ export default function InputSearch({
                 {value?.length ? (
                     <IconButton
                         edge="end"
-                        onClick={() => onChange("")}
+                        onClick={toClear}
                         name="close"
                         size="small"
                     />
@@ -48,13 +50,19 @@ export default function InputSearch({
         }
         return newInputProps;
     }, [showSearchIcon, InputProps, value]);
-
+    function toClear() {
+        onChange("");
+        if (onClearButtonClick) {
+            onClearButtonClick();
+        }
+    }
     return (
         <TextField
             {...props}
             fullWidth={fullWidth}
             onChange={(e) => onChange(e.target.value)}
             InputProps={updatedInputProps}
+            value={value}
         />
     );
 }

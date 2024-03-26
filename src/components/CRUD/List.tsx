@@ -4,7 +4,7 @@ import lang, { sprintf } from "lang";
 import Table, { ITableField } from "components/Table";
 
 import { useNotifier } from "api/hooks/useNotifier";
-import { ISortData } from "api/interfaces/data/ISortData";
+import { ISortData } from "api/interfaces/components/GoodTable";
 import { webApiResultData } from "api/data";
 
 import Confirm, { IConfirmProps } from "../Confirm";
