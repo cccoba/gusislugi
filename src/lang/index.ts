@@ -56,7 +56,9 @@ export function getEnumTitle(enumName: string, valueName: string) {
 export function sortArray(arr: any[], fieldName: string, options = { numeric: true }) {
     const sorter = new Intl.Collator(name, options);
     return arr.sort((a, b) => {
-        return sorter.compare(a[fieldName], b[fieldName]);
+        const aValue = a[fieldName];
+        const bValue = b[fieldName];
+        return sorter.compare(aValue, bValue);
     });
 }
 export default lang;

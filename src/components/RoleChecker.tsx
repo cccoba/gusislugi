@@ -21,6 +21,7 @@ export const getUserRoleAccess = (roleIds: UserRolesEnum[], userRoleParams?: IRo
     var rolesNames = enumToArrayObject(UserRolesEnum)
         .filter((x) => roleIds.includes(x.id))
         .map((x) => x.value.toLocaleLowerCase());
+
     for (const rolesName of rolesNames) {
         if (rolesName in userRoleParams) {
             return (userRoleParams as any)[rolesName];
@@ -31,22 +32,20 @@ export const getUserRoleAccess = (roleIds: UserRolesEnum[], userRoleParams?: IRo
 
 export default function RoleChecker({ roles = [], children }: IProps) {
     const isLoading = useAppSelector((state) => state.user.isLoading);
-    const currentUserRoleId = useAppSelector((state) => state.user.user?.roleId);
-    const allRoles = useAppSelector((state) => state.user.roles);
+    const currentUserRoleParams = useAppSelector((state) => state.user.user?.role?.params);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [inRole, setInRole] = useState(false);
     useEffect(() => {
-        if (!isLoading && !!roles?.length && currentUserRoleId) {
-            const userRoleParams = allRoles.find((x) => x.id === currentUserRoleId)?.params;
-            setInRole(getUserRoleAccess(roles, userRoleParams) !== "no");
+        if (!isLoading && !!roles?.length && currentUserRoleParams) {
+            setInRole(getUserRoleAccess(roles, currentUserRoleParams) !== "no");
         } else {
             if (!roles?.length) {
                 setInRole(true);
             }
         }
-    }, [navigate, isLoading, currentUserRoleId, roles, allRoles]);
+    }, [navigate, isLoading, currentUserRoleParams, roles]);
 
     useEffect(() => {
         if (isLoading) {

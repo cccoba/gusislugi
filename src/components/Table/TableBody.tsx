@@ -15,7 +15,6 @@ interface IProps {
     noRecordsText?: string;
     isMultiSelection?: boolean;
     selectedRows: any[];
-    onSelect?: (data: any) => void;
     onSelectRow: (data: any) => void;
     onDoubleClick?: (data: any) => void;
 }
@@ -28,13 +27,13 @@ function TableBofy({
     noRecordsText = "",
     isMultiSelection = false,
     selectedRows = [],
-    onSelect,
     onSelectRow,
     onDoubleClick,
 }: IProps) {
-    const cursor = useMemo(() => {
+    const cursor = "pointer";
+    /*const cursor = useMemo(() => {
         return onSelect || isMultiSelection ? "pointer" : undefined;
-    }, [onSelect, isMultiSelection]);
+    }, [onSelect, isMultiSelection]);*/
 
     const isSelected = (id: any) => {
         if (!selectedRows?.length) {
@@ -44,10 +43,9 @@ function TableBofy({
         return index > -1;
     };
     const onRowClick = (data: any) => {
-        if (onSelect) {
-            onSelect(data);
-        }
         if (isMultiSelection) {
+            onSelectRow(data);
+        } else {
             onSelectRow(data);
         }
     };

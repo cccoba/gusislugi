@@ -12,6 +12,7 @@ import Registration from "pages/Users/Registration";
 import Profile from "pages/Users/Profile";
 import Claims from "pages/Claims";
 import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import Users from "pages/Users/Users";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -99,6 +100,10 @@ export default function RouterPage() {
                         <Route
                             path="/claims"
                             element={<Claims roles={[UserRolesEnum.Claims]} />}
+                        />
+                        <Route
+                            path="/users"
+                            element={<Users roles={[UserRolesEnum.Users]} />}
                         />
                         <Route
                             path="*"

@@ -9,13 +9,14 @@ import { ISortData } from "api/interfaces/data/ISortData";
 import { IPaginationData } from "api/interfaces/data/IPaginationData";
 import { SortOrderEnum } from "api/enums/SortOrderEnum";
 import { useAppSelector } from "api/hooks/redux";
+import dateTime from "api/common/dateTime";
+import { objCopy } from "api/common/helper";
 
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import TablePagination from "./TablePagination";
 import MobileTable from "./MobileTable";
 import TableToolbar, { ITableToolbarAction } from "./TableToolbar";
-import dateTime from "api/common/dateTime";
 
 export interface ITableProps {
     fields: ITableField[];
@@ -135,7 +136,7 @@ export default function Table({
             setOrderState(newOrder);
             const field = fields.find((x) => x.name === newOrder.sort);
             if (!!field) {
-                const res = sortValues(values, field, newOrder.direction);
+                const res = sortValues(objCopy(values), field, newOrder.direction);
                 updateValues(res);
             }
         }
@@ -279,7 +280,6 @@ export default function Table({
                         values={sortedValues}
                         idName={idName}
                         loading={loading}
-                        onSelect={onSelect}
                         onDoubleClick={toDoubleClick}
                         noRecordsText={noRecordsText}
                         isMultiSelection={isMultiSelection}

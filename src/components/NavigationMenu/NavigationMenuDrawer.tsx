@@ -2,15 +2,14 @@ import { useMemo } from "react";
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import lang from "lang";
 import Icon from "components/Icon";
+import { menuToggle } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { getServerFileUrl } from "api/common/helper";
 import IconButton from "components/Icon/IconButton";
-import { menuToggle } from "store/reducers/ComponentsSlice";
 
-const langPage = lang.components.navigationMenu;
+import menuList from "./menuList";
 
 export interface INavigationMenu {
     name: string;
@@ -19,11 +18,6 @@ export interface INavigationMenu {
     link: string;
     access?: string[];
 }
-const defMenuList: INavigationMenu[] = [
-    { name: "home", title: langPage.home, icon: "home", link: "/" },
-    { name: "profile", title: langPage.profile, icon: "person_pin", link: "/profile" },
-    { name: "claims", title: langPage.claims, icon: "warning", link: "/claims", access: ["isAdmin"] },
-];
 
 function NavigationMenuDrawer() {
     const isAuth = useAppSelector((s) => s.user.isAuth);
@@ -31,18 +25,24 @@ function NavigationMenuDrawer() {
     const roles = useAppSelector((s) => s.user.roles);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const menuList = useMemo<INavigationMenu[]>(() => {
-        return defMenuList.filter((x) => {
+    const filteredMenuList = useMemo<INavigationMenu[]>(() => {
+        return menuList.filter((x) => {
             if (x.access?.length) {
                 for (const access of x.access) {
-                    if (isAuth && access === "isAdmin") {
-                        return true;
+                    if (isAuth) {
+                        if (user?.role.params) {
+                            if (access in user.role.params) {
+                                const accValue = (user.role.params as any)[access];
+                                return accValue === "edit" || accValue === "view";
+                            }
+                        }
+                        return false;
                     }
                 }
             }
             return true;
         });
-    }, [isAuth]);
+    }, [isAuth, user?.role.params]);
     const toProfile = () => {
         navigate("/profile");
         closeMenu();
@@ -94,7 +94,7 @@ function NavigationMenuDrawer() {
                     },
                 }}
             >
-                {menuList.map((menu: INavigationMenu) => {
+                {filteredMenuList.map((menu: INavigationMenu) => {
                     return (
                         <Box
                             sx={{

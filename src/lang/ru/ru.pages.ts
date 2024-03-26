@@ -77,5 +77,13 @@ const ruPages = {
     home: {
         title: "Главное",
     },
+    users: {
+        title: "Пользователи",
+        fields: {
+            id: "ID",
+            fullName: "Имя",
+            image: "Фото",
+        },
+    },
 };
 export default ruPages;

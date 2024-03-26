@@ -84,6 +84,7 @@ const ruComponents = {
         home: "Главное",
         profile: "Профиль",
         claims: "Заявки",
+        users: "Пользователи",
     },
     sendUserNotification: {
         title: "Отправить пользователю оповещение?",

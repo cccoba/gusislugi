@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import lang, { getEnumTitleValue, sprintf } from "lang";
 import { CRUD } from "components";
 import { ICRUDEditConfig } from "components/CRUD/Edit";
@@ -11,7 +13,6 @@ import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { getEnumSelectValues } from "api/common/enumHelper";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { useState } from "react";
 
 const langPage = lang.pages.claims;
 
@@ -95,6 +96,7 @@ function Claims({ roles }: IPageWithRoles) {
                 />
             )}
             <CRUD
+                roles={roles}
                 title={langPage.title}
                 icon="warning"
                 listConfig={listConfig}

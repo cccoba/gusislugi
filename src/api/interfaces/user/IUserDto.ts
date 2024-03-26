@@ -1,3 +1,5 @@
+import { IRoleDto } from "./IRoleDto";
+
 export interface IUserDto {
     id: number;
     tgId?: number;
@@ -12,4 +14,5 @@ export interface IUserDto {
     passport: string;
     image: string;
     description: string;
+    role: IRoleDto;
 }

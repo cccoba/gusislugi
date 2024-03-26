@@ -94,7 +94,7 @@ export const dataProvider = async (
         return data;
     });
 };
-const getHeaders = (extraProps: IDataProviderExtraProps): Headers => {
+export const getHeaders = (extraProps: IDataProviderExtraProps): Headers => {
     let params: any = {};
     if (!extraProps.withoutInterceptors) {
         if (getConst("env-mode") === "development") {

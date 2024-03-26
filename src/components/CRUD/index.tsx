@@ -7,6 +7,7 @@ import { generateGuid } from "api/common/helper";
 
 import CRUDEdit, { ICRUDEditConfig } from "./Edit";
 import CRUDList, { ICRUDListConfig } from "./List";
+import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
 export type TCRUDActionCbName = "list" | "add" | "edit" | "delete" | "save";
 export type TCRUDActionCb = (params?: any) => Promise<IWebDataResult<any>>;
@@ -22,9 +23,10 @@ interface IProps {
     icon?: string;
     title: string;
     initialValue?: any;
+    roles?: UserRolesEnum[];
 }
 
-export default function CRUD({ listConfig, editConfig, actions, icon = "", initialValue, title }: IProps) {
+export default function CRUD({ listConfig, editConfig, actions, icon = "", initialValue, title, roles }: IProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [needUpdate, setNeedUpdate] = useState("");
@@ -39,6 +41,7 @@ export default function CRUD({ listConfig, editConfig, actions, icon = "", initi
             title={title}
             icon={icon}
             isLoading={isLoading}
+            roles={roles}
         >
             {activeId !== null && (
                 <CRUDEdit
