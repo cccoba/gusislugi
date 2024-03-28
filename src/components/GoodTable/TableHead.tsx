@@ -3,8 +3,9 @@ import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbo
 
 import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 
-import { IGoodTableField } from ".";
 import GoodTableSearch from "./Filters/Search";
+
+import { IGoodTableField } from ".";
 
 interface IProps {
     fields: IGoodTableField[];

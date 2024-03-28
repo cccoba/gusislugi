@@ -1,8 +1,6 @@
-import { Box } from "@mui/material";
-import { getEnumSelectValues } from "api/common/enumHelper";
-import { FilterNumberEqualsEnum, IFilterNumberValue } from "api/interfaces/components/GoodTable";
+import { FilterNumberEqualsEnum } from "api/common/filters";
+import { IFilterNumberValue } from "api/interfaces/components/GoodTable";
 import Fieldset from "components/Fieldset";
-import InputSearch from "components/Inputs/InputSearch";
 import Select, { ISelectValue } from "components/Inputs/Select";
 import lang from "lang";
 import { useMemo } from "react";
@@ -24,7 +22,7 @@ function GoodTableSearchListFilter({ label, fieldName, values, filter, onChangeV
             return filter;
         }
         return { name: fieldName, value: undefined, searchType: FilterNumberEqualsEnum.Equals };
-    }, [filter]);
+    }, [filter, fieldName]);
     const toChange = (id: number) => {
         onChangeValue({ ...defFilterValue, value: id, searchType: FilterNumberEqualsEnum.Equals });
         onCloseSearchFilter();

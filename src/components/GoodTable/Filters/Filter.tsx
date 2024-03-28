@@ -1,13 +1,7 @@
-import { TextField } from "@mui/material";
-
-import {
-    IFilterDateValue,
-    IFilterNumberValue,
-    IFilterTextValue,
-    TFilterValue,
-} from "api/interfaces/components/GoodTable";
+import { IFilterNumberValue, IFilterTextValue, TFilterValue } from "api/interfaces/components/GoodTable";
 
 import { IGoodTableField } from "..";
+
 import GoodTableSearchTextFilter from "./TextFilter";
 import GoodTableSearchListFilter from "./ListFilter";
 import GoodTableSearchNumberFilter from "./NumberFilter";

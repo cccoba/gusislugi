@@ -10,7 +10,7 @@ import {
     AutocompleteRenderOptionState,
 } from "@mui/material";
 
-import { keyboardFilterSearch } from "api/common/keyboardFilterSearch";
+import { textFilter } from "api/common/filters";
 
 import lang from "lang";
 
@@ -136,7 +136,7 @@ export default function InputAutocomplete({
         if (!!onSearch) {
             return onSearch(data, inputValue);
         }
-        return data.filter((v) => keyboardFilterSearch(inputValue, v.title));
+        return data.filter((v) => textFilter(inputValue, v.title));
     };
     const getOptionLabel = (option: any) => {
         if (!!option) {

@@ -11,6 +11,7 @@ const ruPipes = {
     },
     filterTextEquals: {
         contains: "Содержит",
+        notContains: "Не содержит",
         equals: "Равен",
         startWith: "Начинается с",
         endWith: "Заканчивается на",
@@ -19,6 +20,7 @@ const ruPipes = {
     },
     filterNumberEquals: {
         contains: "Содержит",
+        notContains: "Не содержит",
         equals: "Равно",
         more: ">=",
         less: "<=",

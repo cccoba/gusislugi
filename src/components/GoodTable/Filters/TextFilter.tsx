@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
-import { getEnumSelectValues } from "api/common/enumHelper";
-import { FilterTextEqualsEnum, IFilterTextValue, TFilterValue } from "api/interfaces/components/GoodTable";
+import { useMemo } from "react";
+
 import Fieldset from "components/Fieldset";
 import InputSearch from "components/Inputs/InputSearch";
 import Select from "components/Inputs/Select";
 import lang from "lang";
-import { useMemo } from "react";
+
+import { getEnumSelectValues } from "api/common/enumHelper";
+import { FilterTextEqualsEnum } from "api/common/filters";
+import { IFilterTextValue } from "api/interfaces/components/GoodTable";
 
 interface IProps {
     label?: string;
@@ -26,7 +28,6 @@ function GoodTableSearchTextFilter({ label, fieldName, filter, onChangeValue, on
     }, [filter]);
     const toClear = () => {
         onChangeValue(null);
-        onCloseSearchFilter();
     };
     return (
         <Fieldset
@@ -40,14 +41,18 @@ function GoodTableSearchTextFilter({ label, fieldName, filter, onChangeValue, on
                 label={langPage.searchType}
                 values={getEnumSelectValues(FilterTextEqualsEnum, "FilterTextEqualsEnum")}
             />
-            <InputSearch
-                value={defFilterValue.value}
-                autoComplete="off"
-                onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: v })}
-                onClearButtonClick={toClear}
-                variant="standard"
-                label={langPage.value}
-            />
+            {defFilterValue.searchType !== FilterTextEqualsEnum.IsClear &&
+            defFilterValue.searchType !== FilterTextEqualsEnum.IsNotClear ? (
+                <InputSearch
+                    value={defFilterValue.value}
+                    autoComplete="off"
+                    autoFocus={true}
+                    onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: v })}
+                    onClearButtonClick={toClear}
+                    variant="standard"
+                    label={langPage.value}
+                />
+            ) : null}
         </Fieldset>
     );
 }

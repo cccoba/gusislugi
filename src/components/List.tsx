@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 import lang from "lang";
 
-import { keyboardFilterSearch } from "api/common/keyboardFilterSearch";
+import { textFilter } from "api/common/filters";
 
 import Icon from "./Icon";
 import IconButton from "./Icon/IconButton";
@@ -66,10 +66,7 @@ export default function List({
     const onFilter = (search: string) => {
         setFilterValue(search);
         setFilteredValues(
-            values.filter(
-                (v) =>
-                    keyboardFilterSearch(search, v.title) || (!!v.subTitle && keyboardFilterSearch(search, v.subTitle))
-            )
+            values.filter((v) => textFilter(search, v.title) || (!!v.subTitle && textFilter(search, v.subTitle)))
         );
     };
     const itemClick = (item: IListItem) => {

@@ -4,7 +4,7 @@ import { Table as MuiTable, TableContainer, Paper, TableFooter, TableRow, TableC
 import lang, { sortArray } from "lang";
 import InputSearch from "components/Inputs/InputSearch";
 
-import { keyboardFilterSearch } from "api/common/keyboardFilterSearch";
+import { textFilter } from "api/common/filters";
 
 import { useAppSelector } from "api/hooks/redux";
 import dateTime from "api/common/dateTime";
@@ -155,10 +155,10 @@ export default function Table({
                     if (!!field?.format) {
                         switch (field?.format) {
                             case "date":
-                                return keyboardFilterSearch(searchText.toString(), dateTime(value, field?.formatProps));
+                                return textFilter(searchText.toString(), dateTime(value, field?.formatProps));
                         }
                     }
-                    return keyboardFilterSearch(searchText.toString(), value.toString());
+                    return textFilter(searchText.toString(), value.toString());
                 }
                 return false;
             });

@@ -1,11 +1,13 @@
-import lang from "lang";
-import { IGoodTableField } from "..";
-import IconButton from "components/Icon/IconButton";
-import { Menu, MenuItem, Paper } from "@mui/material";
 import { useMemo, useState } from "react";
-import InputSearch from "components/Inputs/InputSearch";
-import GoodTableSearchFilter from "./Filter";
+import { Menu } from "@mui/material";
+
+import IconButton from "components/Icon/IconButton";
+
 import { TFilterValue } from "api/interfaces/components/GoodTable";
+
+import { IGoodTableField } from "..";
+
+import GoodTableSearchFilter from "./Filter";
 
 interface IProps {
     field: IGoodTableField;
@@ -18,7 +20,7 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
     const open = Boolean(anchorEl);
     const isActive = useMemo(() => {
         return typeof filter !== "undefined";
-    }, [field.name, filter]);
+    }, [filter]);
     const toMenuClose = () => {
         setAnchorEl(null);
     };
@@ -27,6 +29,9 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
     };
     const toFilterChange = (value: TFilterValue | null) => {
         onFilterChanged(value, field.name);
+    };
+    const toFilterClear = () => {
+        toFilterChange(null);
     };
     if (field.format === "image" || field.format === "component") {
         return null;
@@ -45,10 +50,17 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
                     onCloseSearchFilter={toMenuClose}
                 />
             </Menu>
+            {isActive && (
+                <IconButton
+                    name="filter_alt"
+                    size="small"
+                    color="primary"
+                    onClick={toFilterClear}
+                />
+            )}
             <IconButton
                 name="search"
                 size="small"
-                color={isActive ? "primary" : "default"}
                 onClick={toMenuShow}
             />
         </>

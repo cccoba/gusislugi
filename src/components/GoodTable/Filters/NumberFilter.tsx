@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
-import { getEnumSelectValues } from "api/common/enumHelper";
-import { FilterNumberEqualsEnum, IFilterNumberValue } from "api/interfaces/components/GoodTable";
+import { useMemo } from "react";
+import lang from "lang";
+
 import Fieldset from "components/Fieldset";
 import InputSearch from "components/Inputs/InputSearch";
 import Select from "components/Inputs/Select";
-import lang from "lang";
-import { useMemo } from "react";
+
+import { getEnumSelectValues } from "api/common/enumHelper";
+import { IFilterNumberValue } from "api/interfaces/components/GoodTable";
+import { FilterNumberEqualsEnum } from "api/common/filters";
 
 interface IProps {
     label?: string;
@@ -23,7 +25,7 @@ function GoodTableSearchNumberFilter({ label, fieldName, filter, onChangeValue, 
             return filter;
         }
         return { name: fieldName, value: undefined, searchType: FilterNumberEqualsEnum.Contains };
-    }, [filter]);
+    }, [filter, fieldName]);
     const toClear = () => {
         onChangeValue(null);
         onCloseSearchFilter();

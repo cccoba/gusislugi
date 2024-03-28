@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { InputAdornment, StandardTextFieldProps, TextField } from "@mui/material";
 
 import IconButton from "components/Icon/IconButton";
@@ -18,6 +18,7 @@ export default function InputSearch({
     fullWidth = true,
     ...props
 }: IProps) {
+    const textInputRef = useRef<any>();
     const onChange = (data: string) => {
         if (!!onChangeValue) {
             onChangeValue(data);
@@ -50,7 +51,11 @@ export default function InputSearch({
         }
         return newInputProps;
     }, [showSearchIcon, InputProps, value]);
-    function toClear() {
+    function toClear(e: any) {
+        if (textInputRef.current) {
+            textInputRef.current?.focus();
+        }
+
         onChange("");
         if (onClearButtonClick) {
             onClearButtonClick();
@@ -58,6 +63,7 @@ export default function InputSearch({
     }
     return (
         <TextField
+            inputRef={textInputRef}
             {...props}
             fullWidth={fullWidth}
             onChange={(e) => onChange(e.target.value)}
