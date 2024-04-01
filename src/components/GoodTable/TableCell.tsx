@@ -29,10 +29,14 @@ function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProp
         if (responsiveView) {
             return { cell: { display: "flex", p: 1.5 }, box: { overflowWrap: "break-word", width: "50%" } };
         }
-        const newSxProps: any = { box: { ...defSxProps }, cell: {} };
-        if (!!field?.width) {
-            newSxProps.box.width = field.width;
-            newSxProps.cell.width = field.width;
+        const newSxProps: any = { box: { ...defSxProps }, cell: { p: 1 } };
+        if (!!field?.minWidth) {
+            newSxProps.box.minWidth = field.minWidth;
+            newSxProps.cell.minWidth = field.minWidth;
+        }
+        if (!!field?.maxWidth) {
+            newSxProps.box.maxWidth = field.maxWidth;
+            newSxProps.cell.maxWidth = field.maxWidth;
         }
         if (!!cursor) {
             newSxProps.cell.cursor = cursor;

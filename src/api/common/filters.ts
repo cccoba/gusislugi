@@ -1,4 +1,9 @@
+import dayjs, { Dayjs } from "dayjs";
 import { isMobile } from "react-device-detect";
+
+import { checkDate } from "./helper";
+
+require("dayjs/locale/ru");
 
 export enum FilterTextEqualsEnum {
     Contains,
@@ -11,6 +16,12 @@ export enum FilterTextEqualsEnum {
 }
 export enum FilterNumberEqualsEnum {
     Contains,
+    Equals,
+    More,
+    Less,
+    NotEquals,
+}
+export enum FilterDateEqualsEnum {
     Equals,
     More,
     Less,
@@ -77,13 +88,69 @@ export function textFilter(searchText: string, value: string, filterFormat?: Fil
     }
     return false;
 }
-export function numberFilter(searchNumber: number, value: number, filterFormat?: FilterNumberEqualsEnum): boolean {
+export function numberFilter(searchNumber: number | "", value: number, filterFormat?: FilterNumberEqualsEnum): boolean {
+    if (searchNumber === "") {
+        return true;
+    }
     switch (filterFormat) {
         case FilterNumberEqualsEnum.Equals:
             return searchNumber === value;
+        case FilterNumberEqualsEnum.More:
+            return searchNumber <= value;
+        case FilterNumberEqualsEnum.Less:
+            return searchNumber >= value;
+        case FilterNumberEqualsEnum.NotEquals:
+            return searchNumber !== value;
         default:
             return value.toString().includes(searchNumber.toString());
     }
+}
+
+export function dateFilter(searchDate: Date | null, value: Date | null, filterFormat?: FilterDateEqualsEnum): boolean {
+    if (searchDate === null) {
+        return true;
+    }
+    let djsValue: Dayjs = dayjs();
+    if (value !== null) {
+        if (typeof value === "string") {
+            djsValue = dayjs(new Date(value));
+        }
+        if (checkDate(value)) {
+            djsValue = dayjs(value);
+        }
+    } else {
+        return false;
+    }
+    let djsSearchDate: Dayjs = dayjs();
+    if (typeof searchDate === "string") {
+        djsSearchDate = dayjs(new Date(searchDate));
+    }
+    if (checkDate(searchDate)) {
+        djsSearchDate = dayjs(searchDate);
+    }
+
+    switch (filterFormat) {
+        case FilterDateEqualsEnum.Less:
+            djsSearchDate.set("hour", 0).set("minute", 0).set("second", 0);
+            return djsSearchDate.diff(djsValue) >= 0;
+
+        case FilterDateEqualsEnum.More:
+            djsSearchDate.set("hour", 23).set("minute", 59).set("second", 59);
+            return djsSearchDate.diff(djsValue) <= 0;
+        case FilterDateEqualsEnum.Equals:
+            return (
+                djsValue.year() === djsSearchDate.year() &&
+                djsValue.month() === djsSearchDate.month() &&
+                djsValue.day() === djsSearchDate.day()
+            );
+        case FilterDateEqualsEnum.NotEquals:
+            return (
+                djsValue.year() !== djsSearchDate.year() ||
+                djsValue.month() !== djsSearchDate.month() ||
+                djsValue.day() !== djsSearchDate.day()
+            );
+    }
+
     return false;
 }
 export function replaceKeyboard(str: string, to = "auto") {

@@ -24,7 +24,13 @@ const ruPipes = {
         equals: "Равно",
         more: ">=",
         less: "<=",
-        notEquals: "Не равен",
+        notEquals: "Не равно",
+    },
+    filterDateEquals: {
+        equals: "Равно",
+        more: ">=",
+        less: "<=",
+        notEquals: "Не равно",
     },
 };
 export default ruPipes;

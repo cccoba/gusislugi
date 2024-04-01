@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import lang, { getEnumTitleValue, sprintf } from "lang";
 import { CRUD } from "components";
-import { ICRUDAction, TCRUDActionCb } from "components/CRUD";
+import { ICRUDAction, TCRUDActionCb } from "components/CRUDAsync";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { ICRUDEditConfig } from "components/CRUD/Edit";
+import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { ICRUDListConfig } from "components/CRUD/List";
+import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { claims } from "api/data";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
@@ -16,7 +16,7 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.pages.claims;
 
-const listConfig: ICRUDListConfig = {
+const listConfig: ICRUDAsyncListConfig = {
     isMultiselection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -33,7 +33,7 @@ const listConfig: ICRUDListConfig = {
     }),
 };
 
-const editConfig: ICRUDEditConfig = {
+const editConfig: ICRUDAsyncEditConfig = {
     fields: [
         { name: "id", title: langPage.fields.id, type: "text", disabled: true },
         { name: "title", title: langPage.fields.title, type: "text", required: true },

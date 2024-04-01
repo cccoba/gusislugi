@@ -1,10 +1,16 @@
-import { IFilterNumberValue, IFilterTextValue, TFilterValue } from "api/interfaces/components/GoodTable";
+import {
+    IFilterDateValue,
+    IFilterNumberValue,
+    IFilterTextValue,
+    TFilterValue,
+} from "api/interfaces/components/GoodTable";
 
 import { IGoodTableField } from "..";
 
 import GoodTableSearchTextFilter from "./TextFilter";
 import GoodTableSearchListFilter from "./ListFilter";
 import GoodTableSearchNumberFilter from "./NumberFilter";
+import GoodTableSearchDateFilter from "./DateFilter";
 
 interface IGoodTableSearchFilter {
     field: IGoodTableField;
@@ -14,7 +20,7 @@ interface IGoodTableSearchFilter {
 }
 
 function GoodTableSearchFilter({ field, filter, onChangeValue, onCloseSearchFilter }: IGoodTableSearchFilter) {
-    if (!field?.format || field.format === "text" || field.format === "date") {
+    if (!field?.format || field.format === "text") {
         return (
             <GoodTableSearchTextFilter
                 filter={filter as IFilterTextValue | undefined}
@@ -41,6 +47,17 @@ function GoodTableSearchFilter({ field, filter, onChangeValue, onCloseSearchFilt
         return (
             <GoodTableSearchNumberFilter
                 filter={filter as IFilterNumberValue | undefined}
+                fieldName={field.name}
+                onChangeValue={onChangeValue}
+                label={field.title}
+                onCloseSearchFilter={onCloseSearchFilter}
+            />
+        );
+    }
+    if (field.format === "date") {
+        return (
+            <GoodTableSearchDateFilter
+                filter={filter as IFilterDateValue | undefined}
                 fieldName={field.name}
                 onChangeValue={onChangeValue}
                 label={field.title}

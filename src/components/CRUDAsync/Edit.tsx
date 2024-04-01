@@ -10,7 +10,7 @@ import Form, { TFormField } from "../Form";
 
 import { ICRUDAction } from ".";
 
-export interface ICRUDEditConfig {
+export interface ICRUDAsyncEditConfig {
     editTitle?: string;
     addTitle?: string;
     fields: TFormField[];
@@ -18,7 +18,7 @@ export interface ICRUDEditConfig {
 
 interface IProps {
     actions: ICRUDAction[];
-    config: ICRUDEditConfig;
+    config: ICRUDAsyncEditConfig;
     id: number;
     initialValue?: any;
     onClose: () => void;
@@ -27,7 +27,15 @@ interface IProps {
 }
 const langPage = lang.components.crud;
 
-export default function CRUDEdit({ id, config, actions = [], initialValue, onClose, onIsLoading, onSaved }: IProps) {
+export default function CRUDAsyncEdit({
+    id,
+    config,
+    actions = [],
+    initialValue,
+    onClose,
+    onIsLoading,
+    onSaved,
+}: IProps) {
     const [data, setData] = useState<any>(null);
     const { showError, showSuccess } = useNotifier();
     const title = useMemo(() => {

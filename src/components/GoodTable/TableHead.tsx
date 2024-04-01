@@ -52,8 +52,11 @@ export default function GoodTableHead({
 
     const cellSx = (field: IGoodTableField) => {
         const newSx: any = {};
-        if (!!field?.width) {
-            newSx.width = field.width;
+        if (!!field?.maxWidth) {
+            newSx.maxWidth = field.maxWidth;
+        }
+        if (!!field?.minWidth) {
+            newSx.minWidth = field.minWidth;
         }
         return newSx;
     };
@@ -82,7 +85,7 @@ export default function GoodTableHead({
                     {fields.map((field) => (
                         <TableCell
                             key={field.name}
-                            padding={!!field?.disablePadding ? "none" : "normal"}
+                            padding={"none"}
                             sortDirection={order.sort === field.name ? orderDirection : false}
                             sx={cellSx(field)}
                         >
@@ -90,9 +93,12 @@ export default function GoodTableHead({
                                 sx={{
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    flexWrap: "wrap",
+                                    alignItems: "center",
+                                    alignContent: "stretch",
                                 }}
                             >
-                                {!!field?.noSort ? (
+                                {!!field?.noSort || field.format === "component" ? (
                                     getFieldTitle(field)
                                 ) : (
                                     <TableSortLabel

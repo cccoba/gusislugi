@@ -45,7 +45,7 @@ function GoodTableSearchNumberFilter({ label, fieldName, filter, onChangeValue, 
             <InputSearch
                 value={defFilterValue.value as any}
                 autoComplete="off"
-                onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: parseFloat(v) })}
+                onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: parseFloat(v) || "" })}
                 onClearButtonClick={toClear}
                 variant="standard"
                 label={langPage.value}

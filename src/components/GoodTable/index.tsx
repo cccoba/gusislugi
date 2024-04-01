@@ -3,19 +3,22 @@ import { Box, Paper, TableContainer, Table as MuiTable, TableFooter, TableRow, T
 
 import { sortArray } from "lang";
 
-import {
-    IFilterTextValue,
-    IPaginationData,
-    ISortData,
-    SortOrderEnum,
-    TFilterValue,
-} from "api/interfaces/components/GoodTable";
+import { IPaginationData, ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 import { objCopy, objCopyWithType } from "api/common/helper";
-import { FilterTextEqualsEnum, textFilter } from "api/common/filters";
+import {
+    FilterDateEqualsEnum,
+    FilterNumberEqualsEnum,
+    FilterTextEqualsEnum,
+    dateFilter,
+    numberFilter,
+    textFilter,
+} from "api/common/filters";
 
 import GoodTablePagination from "./TablePagination";
 import GoodTableHead from "./TableHead";
 import GoodTableBody from "./TableBody";
+import { useAppSelector } from "api/hooks/redux";
+import GoodTableMobile from "./MobileTable";
 
 export interface IGoodTableProps<T> {
     fields: IGoodTableField[];
@@ -45,7 +48,8 @@ export interface IGoodTableField {
     format?: "text" | "date" | "number" | "image" | "list" | "component";
     formatProps?: any;
     disablePadding?: boolean;
-    width?: string;
+    minWidth?: string;
+    maxWidth?: string;
     wrap?: boolean;
 }
 
@@ -65,10 +69,11 @@ const filterValue = (values: any, filter: TFilterValue, field: IGoodTableField) 
         case "list":
             return value === filter.value;
         case "text":
-            const a = textFilter((filter?.value as string) || "", value, filter.searchType as FilterTextEqualsEnum);
-            console.log("value", value === "", typeof value, a, value.length);
-
-            return a;
+            return textFilter((filter?.value as string) || "", value, filter.searchType as FilterTextEqualsEnum);
+        case "number":
+            return numberFilter(filter?.value as number, value, filter.searchType as FilterNumberEqualsEnum);
+        case "date":
+            return dateFilter(filter?.value as Date | null, value, filter.searchType as FilterDateEqualsEnum);
     }
     return true;
 };
@@ -117,13 +122,19 @@ function GoodTable<T>({
     idName = "id",
     loading = false,
     noRecordsText,
+    responsive = true,
     onRowDoubleClick,
+    onRowClick,
 }: IGoodTableProps<T>) {
     const [selectedRows, setSelectedRows] = useState<T[]>([]);
     const [filteredValues, setFilteredValues] = useState<T[]>([]);
     const [orderState, setOrderState] = useState<ISortData | undefined>(order);
     const [paginationState, setPaginationState] = useState(pagination);
+    const isMobile = useAppSelector((s) => s.device.isMobile);
     const [filters, setFilters] = useState<TFilterValue[]>([]);
+    const responsiveView = useMemo(() => {
+        return !!responsive && !!isMobile;
+    }, [responsive, isMobile]);
     useEffect(() => {
         setFilteredValues(sortAndOrder(values, fields, filters, orderState));
     }, [values, fields, filters, orderState]);
@@ -190,7 +201,15 @@ function GoodTable<T>({
     const toFilterChange = (newFilter: TFilterValue | null, fieldName: string) => {
         setFilters((prev) => {
             const newResult = objCopyWithType<TFilterValue[]>(prev);
-            if (!!newFilter) {
+            const field = fields.find((x) => x.name === fieldName);
+            if (field) {
+                if (
+                    !newFilter ||
+                    newFilter.value === undefined ||
+                    (field.format === "number" && newFilter.value === "")
+                ) {
+                    return newResult.filter((x) => x.name !== fieldName);
+                }
                 const filterValue = newResult.find((x) => x.name === fieldName);
                 if (filterValue) {
                     filterValue.searchType = newFilter.searchType;
@@ -200,9 +219,31 @@ function GoodTable<T>({
                     return [...newResult, newFilter];
                 }
             }
-            return newResult.filter((x) => x.name !== fieldName);
+            return newResult;
         });
     };
+    if (responsiveView) {
+        return (
+            <>
+                <GoodTableMobile
+                    fields={fields}
+                    values={filteredValues}
+                    idName={idName}
+                    loading={loading}
+                    onSelectRow={toSelectRow}
+                    variant={variant}
+                />
+                {!!isShowedPagination && !!paginationState && (
+                    <GoodTablePagination
+                        {...paginationState}
+                        totalItemCount={filteredValues.length}
+                        onPaginationChange={toPaginationChange}
+                        responsiveView={responsiveView}
+                    />
+                )}
+            </>
+        );
+    }
     return (
         <TableContainer
             component={variant === "paper" ? Paper : Box}
@@ -233,6 +274,7 @@ function GoodTable<T>({
                     isMultiSelection={isMultiSelection}
                     selectedRows={selectedRows}
                     onSelectRow={toSelectRow}
+                    onRowClick={onRowClick}
                 />
                 {!!isShowedPagination && !!paginationState && (
                     <TableFooter>
@@ -242,7 +284,7 @@ function GoodTable<T>({
                                     {...paginationState}
                                     totalItemCount={filteredValues.length}
                                     onPaginationChange={toPaginationChange}
-                                    responsiveView={false}
+                                    responsiveView={responsiveView}
                                 />
                             </TableCell>
                         </TableRow>

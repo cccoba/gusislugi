@@ -5,8 +5,8 @@ import Page from "components/Page";
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { generateGuid } from "api/common/helper";
 
-import CRUDEdit, { ICRUDEditConfig } from "./Edit";
-import CRUDList, { ICRUDListConfig } from "./List";
+import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
+import CRUDAsyncList, { ICRUDAsyncListConfig } from "./List";
 import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
 export type TCRUDActionCbName = "list" | "add" | "edit" | "delete" | "save";
@@ -17,8 +17,8 @@ export interface ICRUDAction {
 }
 
 interface IProps {
-    listConfig: ICRUDListConfig;
-    editConfig: ICRUDEditConfig;
+    listConfig: ICRUDAsyncListConfig;
+    editConfig: ICRUDAsyncEditConfig;
     actions: ICRUDAction[];
     icon?: string;
     title: string;
@@ -26,7 +26,7 @@ interface IProps {
     roles?: UserRolesEnum[];
 }
 
-export default function CRUD({ listConfig, editConfig, actions, icon = "", initialValue, title, roles }: IProps) {
+export default function CRUDAsync({ listConfig, editConfig, actions, icon = "", initialValue, title, roles }: IProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [needUpdate, setNeedUpdate] = useState("");
@@ -44,7 +44,7 @@ export default function CRUD({ listConfig, editConfig, actions, icon = "", initi
             roles={roles}
         >
             {activeId !== null && (
-                <CRUDEdit
+                <CRUDAsyncEdit
                     config={editConfig}
                     actions={actions}
                     id={activeId}
@@ -54,7 +54,7 @@ export default function CRUD({ listConfig, editConfig, actions, icon = "", initi
                     initialValue={initialValue}
                 />
             )}
-            <CRUDList
+            <CRUDAsyncList
                 config={listConfig}
                 actions={actions}
                 onSelectId={setActiveId}

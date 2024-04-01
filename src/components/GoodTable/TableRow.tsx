@@ -32,7 +32,7 @@ function GoodTableRow<T>({
             onClick(row);
         }
     };
-    const toDoubleClick = (data: any) => {
+    const toDoubleClick = () => {
         if (!!onDoubleClick) {
             onDoubleClick(row);
         }

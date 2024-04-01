@@ -59,7 +59,7 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
                 />
             )}
             <IconButton
-                name="search"
+                name="more_vert"
                 size="small"
                 onClick={toMenuShow}
             />

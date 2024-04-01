@@ -13,14 +13,14 @@ import { ICRUDAction, TCRUDActionCbName } from ".";
 
 const langPage = lang.components.crud;
 
-export interface ICRUDListConfig {
+export interface ICRUDAsyncListConfig {
     isMultiselection?: boolean;
     fields: ITableField[];
     orderBy: ISortData;
     transform?: (data: any) => any;
 }
 interface IProps {
-    config: ICRUDListConfig;
+    config: ICRUDAsyncListConfig;
     onSelectId: (activeId: number) => void;
     actions: ICRUDAction[];
     rowId?: string;
@@ -28,7 +28,7 @@ interface IProps {
     needUpdate: string;
     initialValue?: any;
 }
-export default function CRUDList({
+export default function CRUDAsyncList({
     config,
     needUpdate = "",
     actions,

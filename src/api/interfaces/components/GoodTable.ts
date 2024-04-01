@@ -1,4 +1,4 @@
-import { FilterNumberEqualsEnum, FilterTextEqualsEnum } from "api/common/filters";
+import { FilterDateEqualsEnum, FilterNumberEqualsEnum, FilterTextEqualsEnum } from "api/common/filters";
 
 export interface IPaginationData {
     pageNumber: number;
@@ -25,13 +25,13 @@ export interface IFilterTextValue {
 }
 export interface IFilterNumberValue {
     name: string;
-    value?: number;
+    value?: number | "";
     searchType: FilterNumberEqualsEnum;
 }
 export interface IFilterDateValue {
     name: string;
     value?: Date;
-    searchType: FilterNumberEqualsEnum;
+    searchType: FilterDateEqualsEnum;
 }
 
 export type TFilterValue = IFilterTextValue | IFilterNumberValue | IFilterDateValue;

@@ -16,6 +16,7 @@ interface IProps<T> {
     isMultiSelection?: boolean;
     selectedRows: T[];
     onSelectRow: (data: T) => void;
+    onRowClick?: (data: T) => void;
     onRowDoubleClick?: (data: T) => void;
 }
 
@@ -29,11 +30,11 @@ function GoodTableBody<T>({
     selectedRows = [],
     onSelectRow,
     onRowDoubleClick,
+    onRowClick,
 }: IProps<T>) {
-    const cursor = "pointer";
-    /*const cursor = useMemo(() => {
-        return onSelect || isMultiSelection ? "pointer" : undefined;
-    }, [onSelect, isMultiSelection]);*/
+    const cursor = useMemo(() => {
+        return onRowClick || isMultiSelection ? "pointer" : undefined;
+    }, [onRowClick, isMultiSelection]);
 
     const isSelected = (id: any) => {
         if (!selectedRows?.length) {
@@ -42,11 +43,14 @@ function GoodTableBody<T>({
         const index = selectedRows.findIndex((x: any) => (idName in x ? x[idName] === id : false));
         return index > -1;
     };
-    const onRowClick = (data: any) => {
+    const toRowClick = (data: any) => {
         if (isMultiSelection) {
             onSelectRow(data);
         } else {
             onSelectRow(data);
+        }
+        if (!!onRowClick) {
+            onRowClick(data);
         }
     };
     return (
@@ -69,7 +73,7 @@ function GoodTableBody<T>({
                                     key={key}
                                     row={row}
                                     fields={fields}
-                                    onClick={onRowClick}
+                                    onClick={toRowClick}
                                     onDoubleClick={onRowDoubleClick}
                                     isMultiSelection={isMultiSelection}
                                     isSelected={isSelected(key)}

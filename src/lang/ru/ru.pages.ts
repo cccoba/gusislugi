@@ -86,6 +86,7 @@ const ruPages = {
             citizenshipId: "Гражданство",
             image: "Фото",
             created_at: "Создан",
+            actions: "Действие",
         },
     },
 };
