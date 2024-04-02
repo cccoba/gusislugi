@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { IconButton, Modal, GoodTable } from "components";
@@ -12,8 +12,6 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
-interface IProps {}
-
 const langPage = lang.pages.profile.messages;
 
 const fields: IGoodTableField[] = [
@@ -22,7 +20,7 @@ const fields: IGoodTableField[] = [
     { name: "created_at", title: langPage.fields.date, format: "date" },
 ];
 
-function ProfileMessages({}: IProps) {
+function ProfileMessages() {
     const { data = [], isLoading } = useLoadApiData(users.getMessages, []);
     const [details, setDetails] = useState<IMessageDto | null>(null);
     const [values, setValues] = useState<any[]>([]);
@@ -67,7 +65,6 @@ function ProfileMessages({}: IProps) {
     const hideDetails = () => {
         setDetails(null);
     };
-    console.log("v", values);
 
     return (
         <>

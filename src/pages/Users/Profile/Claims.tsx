@@ -18,7 +18,6 @@ import { useAppSelector } from "api/hooks/redux";
 import ClaimView from "pages/Claims/ClaimView";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
-interface IProps {}
 const langPage = lang.pages.profile.claims;
 const fields: IGoodTableField[] = [
     { name: "id", title: langPage.fields.id },
@@ -27,7 +26,7 @@ const fields: IGoodTableField[] = [
     { name: "date", title: langPage.fields.updatedDate, format: "date", maxWidth: "120px" },
     { name: "actions", title: langPage.fields.actions, format: "component", maxWidth: "50px" },
 ];
-function ProfileClaims({}: IProps) {
+function ProfileClaims() {
     const { data = [], error, isLoading: usersIsLoading, refetch } = useLoadApiData(users.getClaims, []);
     const [deleteConfirm, setDeleteConfirm] = useState<null | IConfirmProps>(null);
     const { showError, showSuccess } = useNotifier();
@@ -39,7 +38,7 @@ function ProfileClaims({}: IProps) {
         if (error) {
             showError(error);
         }
-    }, [error]);
+    }, [error, showError]);
     const values = useMemo(() => {
         if (data?.length) {
             return data.map((x) => ({
@@ -138,6 +137,7 @@ function ProfileClaims({}: IProps) {
             {showedAddModal && (
                 <PageOrModal
                     title={langPage.add}
+                    isLoading={isLoading}
                     modalProps={{
                         onClose: hideAddModal,
                         withCloseButton: true,
@@ -155,6 +155,7 @@ function ProfileClaims({}: IProps) {
             {!!selected && (
                 <PageOrModal
                     title={langPage.claim}
+                    isLoading={isLoading}
                     modalProps={{
                         onClose: hideSelected,
                         withCloseButton: true,
@@ -173,6 +174,7 @@ function ProfileClaims({}: IProps) {
             <GoodTable
                 fields={fields}
                 values={values as any}
+                loading={isLoading}
                 order={{ direction: SortOrderEnum.Descending, sort: "id" }}
                 onRowClick={showSelected}
                 noRecordsText={langPage.noRecordsText}

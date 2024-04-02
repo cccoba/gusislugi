@@ -30,13 +30,13 @@ const typeList = [
 ];
 
 export const userFields: IGoodTableField[] = [
-    {
+    /*{
         name: "image",
         title: langPage.fields.imageId,
         maxWidth: "70px",
         format: "image",
         noSort: true,
-    },
+    },*/
     { name: "fullName", title: langPage.fields.fullName, maxWidth: "180px" },
     { name: "role", title: langPage.fields.role, maxWidth: "100px" },
 ];

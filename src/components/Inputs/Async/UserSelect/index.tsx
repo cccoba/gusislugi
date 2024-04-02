@@ -3,18 +3,17 @@ import { Input, FormHelperText, FormLabel } from "@mui/material";
 
 import { IconButton } from "components";
 import lang from "lang";
+import FormControl from "components/Inputs/FormControl";
 
 import { users as usersService, webApiResultData } from "api/data";
-
 import { IInputProps } from "api/interfaces/components/IInputProps";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
+import { IRoleDto } from "api/interfaces/user/IRoleDto";
 
 import UserSelectList from "./List";
 import UserSelectTable from "./Table";
 import UserSelectChips from "./Chips";
-import FormControl from "components/Inputs/FormControl";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
 
 interface IProps extends IInputProps<number | number[]> {
     multiple?: boolean;
@@ -126,8 +125,6 @@ export default function UserSelect({
         setModalShow(false);
     };
     const updateValue = (newValue: any) => {
-        console.log("newValue", newValue);
-
         if (!multiple) {
             let newSelectedUserText = "";
             if (!!newValue) {

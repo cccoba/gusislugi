@@ -1,8 +1,5 @@
-import { useState } from "react";
-
 import GoodTable from "components/GoodTable";
 
-import { IUserDto } from "api/interfaces/user/IUserDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import { userFields } from "./List";
@@ -17,14 +14,11 @@ interface IProps {
 }
 
 function UserSelectTable({ loading = true, users = [], onDel, onAdd }: IProps) {
-    const [selectedRows, setSelectedRows] = useState<IUserRowDto[]>([]);
-
     return (
         <GoodTable<IUserRowDto>
             loading={loading}
             values={users}
             fields={userFields}
-            onSelectedRows={setSelectedRows}
             order={{ direction: SortOrderEnum.Ascending, sort: "fullName" }}
             actions={[
                 {
