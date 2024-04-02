@@ -31,20 +31,23 @@ function Users({ roles }: IPageWithRoles) {
         if (nationalityId) {
             nationalityId.formatProps = nationalities;
         }
+
         const citizenshipId = newFields.find((x) => x.name === "citizenshipId");
         if (citizenshipId) {
             citizenshipId.formatProps = citizenships;
         }
         return newFields;
     }, [nationalities, citizenships]);
+
     const values = useMemo(() => {
         if (data?.length) {
             return data.map((x) => ({ ...x, actions: <UserActions /> }));
         }
         return [];
     }, [data]);
-    const toSelectRow = (data: any) => {
-        console.log("toSelectRow", data);
+
+    const toAdd = (data: any) => {
+        console.log("toAdd", data);
     };
 
     return (
@@ -57,15 +60,21 @@ function Users({ roles }: IPageWithRoles) {
             <GoodTable
                 fields={fields}
                 values={values}
+                actions={[
+                    {
+                        name: "add",
+                        icon: "add",
+                        color: "primary",
+                        tooltip: lang.add,
+                        onClick: toAdd,
+                        disable: (rows: any[]) => !rows?.length,
+                    },
+                ]}
             />
         </Page>
     );
 }
 
-const actions = [
-    { icon: <Icon name="copy" />, name: "Copy" },
-    { icon: <Icon name="save" />, name: "Save" },
-];
 function UserActions() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

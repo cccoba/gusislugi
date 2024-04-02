@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox, Box } from "@mui/material";
+import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox, Box, Divider } from "@mui/material";
 
 import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 
@@ -51,7 +51,7 @@ export default function GoodTableHead({
     };
 
     const cellSx = (field: IGoodTableField) => {
-        const newSx: any = {};
+        const newSx: any = { pl: 1.5, pr: 0, py: 0 };
         if (!!field?.maxWidth) {
             newSx.maxWidth = field.maxWidth;
         }
@@ -70,7 +70,12 @@ export default function GoodTableHead({
     return (
         <>
             <MuiTableHead>
-                <TableRow>
+                <TableRow
+                    sx={{
+                        "&  th": { borderTop: "1px solid #e0e0e0" },
+                        "&  th:not(:last-child)": { borderRight: "1px solid #e0e0e0" },
+                    }}
+                >
                     {!!isMultiSelection && (
                         <TableCell padding="checkbox">
                             <Checkbox
@@ -80,12 +85,12 @@ export default function GoodTableHead({
                                 onChange={onSelectAllClick}
                                 inputProps={{ "aria-label": "select all desserts" }}
                             />
+                            <Divider />
                         </TableCell>
                     )}
                     {fields.map((field) => (
                         <TableCell
                             key={field.name}
-                            padding={"none"}
                             sortDirection={order.sort === field.name ? orderDirection : false}
                             sx={cellSx(field)}
                         >

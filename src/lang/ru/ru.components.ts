@@ -48,6 +48,9 @@ const ruComponents = {
             value: "Значение",
             searchType: "Фильтр",
         },
+        toolbar: {
+            search: "Введите текст для поиска",
+        },
     },
     image: {
         viewer: {

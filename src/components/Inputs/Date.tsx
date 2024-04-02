@@ -39,6 +39,13 @@ export default function DateInput({
     const [localValue, setLocalValue] = useState<Dayjs | null>(null);
 
     useEffect(() => {
+        if (value === null) {
+            onChangeDate(null);
+            return;
+        }
+        if (value.toString() === "Invalid Date") {
+            return;
+        }
         if (!!value && typeof value === "string") {
             const newValue = dayjs(new Date(value));
             onChangeDate(newValue);
@@ -46,7 +53,8 @@ export default function DateInput({
         if (checkDate(value)) {
             onChangeDate(dayjs(value));
         }
-    }, [value?.toISOString(), timeChange]);
+    }, [value?.toString(), timeChange]);
+
     const onChangeDate = (dateValue: Dayjs | null) => {
         if (dateValue !== null) {
             switch (timeChange) {
@@ -63,7 +71,7 @@ export default function DateInput({
         onChangeValue(newValue);
     };
     const onErrorDate = (reason: any, value: any) => {
-        console.log("onErrorDate", reason, value);
+        //console.log("onErrorDate", reason, value);
     };
     return (
         <LocalizationProvider

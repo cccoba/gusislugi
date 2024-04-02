@@ -1,5 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { Box, Paper, TableContainer, Table as MuiTable, TableFooter, TableRow, TableCell } from "@mui/material";
+import {
+    Box,
+    Paper,
+    TableContainer,
+    Table as MuiTable,
+    TableFooter,
+    TableRow,
+    TableCell,
+    IconButtonProps,
+} from "@mui/material";
 
 import { sortArray } from "lang";
 
@@ -13,13 +22,24 @@ import {
     numberFilter,
     textFilter,
 } from "api/common/filters";
+import { useAppSelector } from "api/hooks/redux";
 
 import GoodTablePagination from "./TablePagination";
 import GoodTableHead from "./TableHead";
 import GoodTableBody from "./TableBody";
-import { useAppSelector } from "api/hooks/redux";
 import GoodTableMobile from "./MobileTable";
+import GoodTableToolbar from "./TableToolbar";
+import dateTime from "api/common/dateTime";
+import { ISelectValue } from "components/Inputs/Select";
 
+export interface IGoodTTableToolbarAction<T> {
+    name: string;
+    icon: string;
+    onClick: (selectedRows: T[]) => void;
+    color?: IconButtonProps["color"];
+    disable?: (selectedRows: T[]) => boolean;
+    tooltip?: string;
+}
 export interface IGoodTableProps<T> {
     fields: IGoodTableField[];
     values: T[];
@@ -34,6 +54,9 @@ export interface IGoodTableProps<T> {
     idName?: string;
     size?: "medium" | "small";
     variant?: "box" | "paper";
+    title?: string;
+    actions?: IGoodTTableToolbarAction<T>[];
+    withoutSimpleTextFilter?: boolean;
 
     onRowClick?: (data: T) => void;
     onSelectedRows?: (data: T[]) => void;
@@ -79,7 +102,7 @@ const filterValue = (values: any, filter: TFilterValue, field: IGoodTableField) 
 };
 const filterValues = (values: any[], filters: TFilterValue[], fields: IGoodTableField[]) => {
     if (values.length && filters.length) {
-        let newValues = objCopy(values);
+        let newValues = [...values];
         for (const filter of filters) {
             const field = fields.find((x) => x.name === filter.name);
             if (field) {
@@ -93,13 +116,46 @@ const filterValues = (values: any[], filters: TFilterValue[], fields: IGoodTable
     }
     return values;
 };
+const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGoodTableField[]) => {
+    if (!!simpleSearchText?.length) {
+        const filteredRows = values.filter((row: any) => {
+            return fields.some((field: any) => {
+                if (field.name in row) {
+                    const value = row[field.name];
+                    if (value === null) {
+                        return false;
+                    }
+                    if (!!field?.format) {
+                        switch (field?.format) {
+                            case "component":
+                            case "image":
+                                return false;
+                            case "date":
+                                return textFilter(simpleSearchText.toString(), dateTime(value, field?.formatProps));
+                            case "list":
+                                const selectedValue = field.formatProps.find((x: ISelectValue) => x.id === value);
+                                if (!!selectedValue?.title) {
+                                    return textFilter(simpleSearchText.toString(), selectedValue.title);
+                                }
+                                return false;
+                        }
+                    }
+                    return textFilter(simpleSearchText.toString(), value.toString());
+                }
+                return false;
+            });
+        });
+        return filteredRows;
+    }
+    return values;
+};
 function sortAndOrder(values: any[], fields: IGoodTableField[], filters: TFilterValue[], order?: ISortData) {
     const res = filterValues(values, filters, fields);
     if (res.length) {
         if (!!order) {
             const field = fields.find((x) => x.name === order.sort);
             if (!!field) {
-                return sortValues(objCopy(values), field, order.direction);
+                return sortValues(res, field, order.direction);
             }
         }
         return res;
@@ -112,7 +168,7 @@ const defTableMaxHeight = 650;
 function GoodTable<T>({
     values = [],
     fields = [],
-    variant = "box",
+    variant = "paper",
     height,
     stickyHeader = false,
     size = "medium",
@@ -123,6 +179,9 @@ function GoodTable<T>({
     loading = false,
     noRecordsText,
     responsive = true,
+    title,
+    actions = [],
+    withoutSimpleTextFilter = false,
     onRowDoubleClick,
     onRowClick,
 }: IGoodTableProps<T>) {
@@ -132,12 +191,14 @@ function GoodTable<T>({
     const [paginationState, setPaginationState] = useState(pagination);
     const isMobile = useAppSelector((s) => s.device.isMobile);
     const [filters, setFilters] = useState<TFilterValue[]>([]);
+    const [simpleSearchText, setSimpleSearchText] = useState("");
     const responsiveView = useMemo(() => {
         return !!responsive && !!isMobile;
     }, [responsive, isMobile]);
     useEffect(() => {
-        setFilteredValues(sortAndOrder(values, fields, filters, orderState));
-    }, [values, fields, filters, orderState]);
+        const simpleValues = simpleTextSearch(simpleSearchText, values, fields);
+        setFilteredValues(sortAndOrder(simpleValues, fields, filters, orderState));
+    }, [values, fields, filters, orderState, simpleSearchText]);
     const containerSx = useMemo(() => {
         const newContainerSx: any = {};
         if (!!height) {
@@ -224,7 +285,14 @@ function GoodTable<T>({
     };
     if (responsiveView) {
         return (
-            <>
+            <TableContainer component={variant === "paper" ? Paper : Box}>
+                <GoodTableToolbar
+                    title={title}
+                    actions={actions}
+                    selectedRows={selectedRows}
+                    withoutSimpleTextFilter={withoutSimpleTextFilter}
+                    onChangeSimpleSearchText={setSimpleSearchText}
+                />
                 <GoodTableMobile
                     fields={fields}
                     values={filteredValues}
@@ -241,7 +309,7 @@ function GoodTable<T>({
                         responsiveView={responsiveView}
                     />
                 )}
-            </>
+            </TableContainer>
         );
     }
     return (
@@ -249,6 +317,13 @@ function GoodTable<T>({
             component={variant === "paper" ? Paper : Box}
             sx={containerSx}
         >
+            <GoodTableToolbar
+                title={title}
+                actions={actions}
+                selectedRows={selectedRows}
+                withoutSimpleTextFilter={withoutSimpleTextFilter}
+                onChangeSimpleSearchText={setSimpleSearchText}
+            />
             <MuiTable
                 stickyHeader={stickyHeader}
                 size={size}
