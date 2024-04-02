@@ -85,7 +85,6 @@ export default function GoodTableHead({
                                 onChange={onSelectAllClick}
                                 inputProps={{ "aria-label": "select all desserts" }}
                             />
-                            <Divider />
                         </TableCell>
                     )}
                     {fields.map((field) => (
