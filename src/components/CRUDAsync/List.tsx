@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
-import Table, { ITableField } from "components/Table";
+import GoodTable, { IGoodTableToolbarAction, IGoodTableField } from "components/GoodTable";
 
 import { useNotifier } from "api/hooks/useNotifier";
 import { ISortData } from "api/interfaces/components/GoodTable";
@@ -14,8 +14,8 @@ import { ICRUDAction, TCRUDActionCbName } from ".";
 const langPage = lang.components.crud;
 
 export interface ICRUDAsyncListConfig {
-    isMultiselection?: boolean;
-    fields: ITableField[];
+    isMultiSelection?: boolean;
+    fields: IGoodTableField[];
     orderBy: ISortData;
     transform?: (data: any) => any;
 }
@@ -46,11 +46,11 @@ export default function CRUDAsyncList({
     }, [needUpdate]);
     const actionsList = useMemo(() => {
         const getTableAction = (actionName: TCRUDActionCbName) => {
-            let res: any = {
+            let res: IGoodTableToolbarAction<any> = {
                 name: actionName,
                 icon: actionName,
                 onClick: (a: any) => {},
-                disabled: false,
+                disable: () => false,
             };
             switch (actionName) {
                 case "add":
@@ -61,17 +61,17 @@ export default function CRUDAsyncList({
                     break;
                 case "edit":
                     res.color = "primary";
-                    res.disabled = selectedRows.length !== 1;
+                    res.disable = (selectedRows) => selectedRows?.length !== 1;
                     res.onClick = (data: any) => {
                         if (data.length) {
-                            onSelectId(data[0]);
+                            onSelectId(data[0][rowId]);
                         }
                     };
                     break;
                 case "delete":
                     res.color = "error";
-                    res.disabled = !selectedRows.length;
-                    res.onClick = () => {
+                    res.disable = (selectedRows) => !selectedRows?.length;
+                    res.onClick = (selectedRows) => {
                         setDeleteConfirm({
                             open: true,
                             title: langPage.deleteConfirm.title,
@@ -151,14 +151,14 @@ export default function CRUDAsyncList({
     };
     return (
         <>
-            <Table
+            <GoodTable
                 fields={config.fields}
                 values={listData}
                 order={config.orderBy}
                 onSelectedRows={onSelected}
-                isMultiSelection={config.isMultiselection}
+                isMultiSelection={config.isMultiSelection}
                 actions={actionsList}
-                onDoubleClick={(row: any) => onSelectId(row.id)}
+                onRowDoubleClick={(row: any) => onSelectId(row.id)}
             />
             {!!deleteConfirm && (
                 <Confirm

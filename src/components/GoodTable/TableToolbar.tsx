@@ -5,11 +5,11 @@ import IconButton from "components/Icon/IconButton";
 import lang from "lang";
 import InputSearch from "components/Inputs/InputSearch";
 
-import { IGoodTTableToolbarAction } from ".";
+import { IGoodTableToolbarAction } from ".";
 
 interface IProps<T> {
     title?: string;
-    actions?: IGoodTTableToolbarAction<T>[];
+    actions?: IGoodTableToolbarAction<T>[];
     selectedRows: T[];
     withoutSimpleTextFilter?: boolean;
     onChangeSimpleSearchText: (search: string) => void;

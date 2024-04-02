@@ -17,7 +17,7 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 const langPage = lang.pages.claims;
 
 const listConfig: ICRUDAsyncListConfig = {
-    isMultiselection: true,
+    isMultiSelection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id },

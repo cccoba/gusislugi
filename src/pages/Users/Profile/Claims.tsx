@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Confirm, IconButton, PageOrModal, Table } from "components";
-import { ITableField } from "components/Table";
+import { Confirm, IconButton, PageOrModal, GoodTable } from "components";
+import { IGoodTableField } from "components/GoodTable";
 import lang, { getEnumTitle, sprintf } from "lang";
 
 import { getEnumValue } from "api/common/enumHelper";
@@ -20,12 +20,12 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 interface IProps {}
 const langPage = lang.pages.profile.claims;
-const fields: ITableField[] = [
+const fields: IGoodTableField[] = [
     { name: "id", title: langPage.fields.id },
     { name: "title", title: langPage.fields.title },
     { name: "status", title: langPage.fields.status },
-    { name: "date", title: langPage.fields.updatedDate, format: "date", width: "120px" },
-    { name: "actions", title: langPage.fields.actions, format: "component", width: "50px" },
+    { name: "date", title: langPage.fields.updatedDate, format: "date", maxWidth: "120px" },
+    { name: "actions", title: langPage.fields.actions, format: "component", maxWidth: "50px" },
 ];
 function ProfileClaims({}: IProps) {
     const { data = [], error, isLoading: usersIsLoading, refetch } = useLoadApiData(users.getClaims, []);
@@ -170,11 +170,11 @@ function ProfileClaims({}: IProps) {
                     onClose={toDelete}
                 />
             )}
-            <Table
+            <GoodTable
                 fields={fields}
-                values={values}
+                values={values as any}
                 order={{ direction: SortOrderEnum.Descending, sort: "id" }}
-                onSelect={showSelected}
+                onRowClick={showSelected}
                 noRecordsText={langPage.noRecordsText}
                 actions={[{ icon: "add", name: "add", onClick: showAddModal, color: "primary" }]}
             />

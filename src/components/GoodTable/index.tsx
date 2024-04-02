@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 
 import { sortArray } from "lang";
+import { ISelectValue } from "components/Inputs/Select";
 
 import { IPaginationData, ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
-import { objCopy, objCopyWithType } from "api/common/helper";
+import { objCopyWithType } from "api/common/helper";
 import {
     FilterDateEqualsEnum,
     FilterNumberEqualsEnum,
@@ -23,16 +24,15 @@ import {
     textFilter,
 } from "api/common/filters";
 import { useAppSelector } from "api/hooks/redux";
+import dateTime from "api/common/dateTime";
 
 import GoodTablePagination from "./TablePagination";
 import GoodTableHead from "./TableHead";
 import GoodTableBody from "./TableBody";
 import GoodTableMobile from "./MobileTable";
 import GoodTableToolbar from "./TableToolbar";
-import dateTime from "api/common/dateTime";
-import { ISelectValue } from "components/Inputs/Select";
 
-export interface IGoodTTableToolbarAction<T> {
+export interface IGoodTableToolbarAction<T> {
     name: string;
     icon: string;
     onClick: (selectedRows: T[]) => void;
@@ -55,7 +55,7 @@ export interface IGoodTableProps<T> {
     size?: "medium" | "small";
     variant?: "box" | "paper";
     title?: string;
-    actions?: IGoodTTableToolbarAction<T>[];
+    actions?: IGoodTableToolbarAction<T>[];
     withoutSimpleTextFilter?: boolean;
 
     onRowClick?: (data: T) => void;

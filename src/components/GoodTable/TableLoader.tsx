@@ -6,7 +6,7 @@ interface IProps {
     responsiveView: boolean;
 }
 
-const langPage = lang.components.table;
+const langPage = lang.components.goodTable;
 
 const sx = {
     textAlign: "center",

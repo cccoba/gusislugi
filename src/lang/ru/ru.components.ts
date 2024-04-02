@@ -144,9 +144,5 @@ const ruComponents = {
             },
         },
     },
-    table: {
-        loading: "Загрузка...",
-        rowsPerPage: "Записей на странице",
-    },
 };
 export default ruComponents;

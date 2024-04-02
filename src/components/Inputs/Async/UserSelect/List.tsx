@@ -4,13 +4,13 @@ import { Box, Button } from "@mui/material";
 import lang from "lang";
 import Modal from "components/Modal";
 import List from "components/List";
-import Table, { ITableField } from "components/Table";
+import GoodTable, { IGoodTableField } from "components/GoodTable";
 
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import { IUserRowDto, parseUserData } from ".";
-import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.components.userSelect.list;
 
@@ -29,16 +29,16 @@ const typeList = [
     { id: "allList", title: langPage.allList, icon: "user" },
 ];
 
-export const userFields: ITableField[] = [
+export const userFields: IGoodTableField[] = [
     {
         name: "image",
         title: langPage.fields.imageId,
-        width: "70px",
+        maxWidth: "70px",
         format: "image",
         noSort: true,
     },
-    { name: "fullName", title: langPage.fields.fullName, width: "180px" },
-    { name: "role", title: langPage.fields.role, width: "100px" },
+    { name: "fullName", title: langPage.fields.fullName, maxWidth: "180px" },
+    { name: "role", title: langPage.fields.role, maxWidth: "100px" },
 ];
 
 export default function UserSelectList({
@@ -120,10 +120,10 @@ export default function UserSelectList({
         >
             {type === "userList" ? (
                 <>
-                    <Table
+                    <GoodTable<IUserRowDto>
                         values={filteredUsers}
                         isMultiSelection={multiple}
-                        onSelect={onSelected}
+                        onRowClick={onSelected}
                         fields={userFields}
                         order={{ direction: SortOrderEnum.Ascending, sort: "fullName" }}
                     />

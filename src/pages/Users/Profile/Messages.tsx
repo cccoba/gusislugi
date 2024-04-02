@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
-import { IconButton, Modal, Table } from "components";
-import { ITableField } from "components/Table";
+import { IconButton, Modal, GoodTable } from "components";
+import { IGoodTableField } from "components/GoodTable";
 import lang, { getEnumTitleValue, sprintf } from "lang";
 
 import dateTime from "api/common/dateTime";
@@ -16,7 +16,7 @@ interface IProps {}
 
 const langPage = lang.pages.profile.messages;
 
-const fields: ITableField[] = [
+const fields: IGoodTableField[] = [
     { name: "statusComponent", title: "", format: "component" },
     { name: "message", title: langPage.fields.message },
     { name: "created_at", title: langPage.fields.date, format: "date" },
@@ -82,12 +82,12 @@ function ProfileMessages({}: IProps) {
                     <Typography>{details.message}</Typography>
                 </Modal>
             )}
-            <Table
+            <GoodTable
                 loading={isLoading}
                 fields={fields}
                 values={values}
                 order={{ direction: SortOrderEnum.Descending, sort: "created_at" }}
-                onSelect={toShow}
+                onRowClick={toShow}
             />
         </>
     );

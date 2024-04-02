@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
+import { Menu, MenuItem } from "@mui/material";
 
 import lang from "lang";
-import { GoodTable, Icon, IconButton, Page } from "components";
+import { GoodTable, IconButton, Page } from "components";
+import { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { IUserDto } from "api/interfaces/user/IUserDto";
-import { IGoodTableField } from "components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
-import { Button, Menu, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
@@ -46,10 +46,6 @@ function Users({ roles }: IPageWithRoles) {
         return [];
     }, [data]);
 
-    const toAdd = (data: any) => {
-        console.log("toAdd", data);
-    };
-
     return (
         <Page
             title={langPage.title}
@@ -60,16 +56,6 @@ function Users({ roles }: IPageWithRoles) {
             <GoodTable
                 fields={fields}
                 values={values}
-                actions={[
-                    {
-                        name: "add",
-                        icon: "add",
-                        color: "primary",
-                        tooltip: lang.add,
-                        onClick: toAdd,
-                        disable: (rows: any[]) => !rows?.length,
-                    },
-                ]}
             />
         </Page>
     );
