@@ -3,4 +3,5 @@ export enum UserRolesEnum {
     Claims,
     Users,
     Admins,
+    Qr,
 }

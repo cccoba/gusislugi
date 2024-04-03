@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 
 import lang, { sprintf } from "lang";
 
-import { isGuid, isUrl } from "api/common/helper";
+import { isUrl } from "api/common/helper";
 import { checkDate } from "api/common/helper";
 
 import { Select, Switcher, InputAutocomplete, Counter, InputImage, UserSelect } from "..";

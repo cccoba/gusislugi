@@ -19,5 +19,6 @@ export interface IComponentsData {
         type?: "info" | "error" | "success";
         show?: boolean;
     };
+    withTelegram: boolean;
     redirect: null | { id?: any; page: string };
 }

@@ -99,6 +99,10 @@ export const getHeaders = (extraProps: IDataProviderExtraProps): Headers => {
     if (!extraProps.withoutInterceptors) {
         if (getConst("env-mode") === "development") {
             params["Authorization"] = window.localStorage.getItem(getConst("auth-token-name"));
+        } else {
+            if (!!(window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+                params["Authorization"] = `Telegram ${(window as any).Telegram.WebApp.initDataUnsafe.user.username}`;
+            }
         }
     }
     if (extraProps.requestType === "json") {

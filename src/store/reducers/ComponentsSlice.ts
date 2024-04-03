@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import getConst from "api/common/getConst";
 import { IComponentsData } from "api/interfaces/store/IComponentsData";
 
 const COMPONENTS_INITIAL_STATE: IComponentsData = {
@@ -23,6 +24,7 @@ const COMPONENTS_INITIAL_STATE: IComponentsData = {
         show: false,
     },
     redirect: null,
+    withTelegram: !!(window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.username,
 };
 const HeaderSlice = createSlice({
     name: "components",

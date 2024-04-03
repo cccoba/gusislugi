@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Loader from "components/Loader";
@@ -63,9 +63,9 @@ class MainIndex extends React.Component<IProps, IState> {
                     zIndex={10000}
                 />
                 {this.state.loaded && !user.isLoading && (
-                    <BrowserRouter>
+                    <HashRouter>
                         <RouterPage />
-                    </BrowserRouter>
+                    </HashRouter>
                 )}
             </>
         );

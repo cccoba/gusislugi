@@ -1,4 +1,3 @@
-import React from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";

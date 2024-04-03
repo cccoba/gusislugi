@@ -90,6 +90,13 @@ const ruPages = {
     },
     home: {
         title: "Главное",
+        actions: {
+            qr: "QR сканер",
+        },
+    },
+    qrScanner: {
+        title: "QR сканер",
+        startScan: "Начать сканирование",
     },
     users: {
         title: "Пользователи",

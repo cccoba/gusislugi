@@ -15,6 +15,7 @@ import { UserRolesEnum } from "api/enums/UserRolesEnum";
 import Users from "pages/Users/Users";
 import Citizenships from "pages/Citizenships";
 import Nationalities from "pages/Nationalities";
+import QrScanner from "pages/QrScanner";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -114,6 +115,15 @@ export default function RouterPage() {
                         <Route
                             path="/nationalities"
                             element={<Nationalities roles={[UserRolesEnum.Admins]} />}
+                        />
+                        <Route
+                            path="/qrScanner"
+                            element={
+                                <QrScanner
+                                    roles={[UserRolesEnum.Qr]}
+                                    icon="qr_code_scanner"
+                                />
+                            }
                         />
                         <Route
                             path="*"

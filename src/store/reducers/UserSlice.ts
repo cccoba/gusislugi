@@ -55,13 +55,16 @@ const UserSlice = createSlice({
 });
 
 export const userInit = createAsyncThunk("user/load", async (_, { dispatch, getState }) => {
-    const authCookie = window.localStorage.getItem(getConst("auth-token-name"));
     try {
         const res = await users.getMainData();
         const { error, result } = webApiResultData<IFirstLoadView>(res);
         if (!error && !!result) {
             dispatch(setData(result));
-            if (authCookie !== result.token) {
+
+            if (
+                getConst("env-mode") === "development" &&
+                window.localStorage.getItem(getConst("auth-token-name")) !== result.token
+            ) {
                 window.localStorage.setItem(getConst("auth-token-name"), result.token);
             }
         } else {

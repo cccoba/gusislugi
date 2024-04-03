@@ -6,12 +6,10 @@ import { Form } from "components";
 import { IFormField } from "components/Form";
 import { users } from "api/data";
 import { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { useNotifier } from "api/hooks/useNotifier";
-import { IUserDto } from "api/interfaces/user/IUserDto";
 import { webApiResultData } from "api/data/dataProvider";
 import { useAppDispatch } from "api/hooks/redux";
-import { setUserData, userInit } from "store/reducers/UserSlice";
+import { userInit } from "store/reducers/UserSlice";
 
 const langPage = lang.pages.registration;
 const fields: IFormField[] = [

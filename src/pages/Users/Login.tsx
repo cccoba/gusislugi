@@ -3,6 +3,7 @@ import getConst from "api/common/getConst";
 import lang from "lang";
 
 const langPage = lang.pages.login;
+
 function Login() {
     return (
         <Box
@@ -26,7 +27,6 @@ function Login() {
                 }}
             >
                 <Typography sx={{ mb: 3 }}>{langPage.text}</Typography>
-
                 <Button
                     component={Link}
                     variant="contained"
