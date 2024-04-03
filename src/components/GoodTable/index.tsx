@@ -206,7 +206,7 @@ function GoodTable<T>({
             }
             return newSelectedRows;
         });
-    }, [values, fields, filters, orderState, simpleSearchText]);
+    }, [values, fields, filters, orderState, simpleSearchText, idName]);
     const containerSx = useMemo(() => {
         const newContainerSx: any = {};
         if (!!height) {
