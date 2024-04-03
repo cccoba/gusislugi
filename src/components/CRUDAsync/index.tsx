@@ -4,22 +4,22 @@ import Page from "components/Page";
 
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { generateGuid } from "api/common/helper";
+import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
 import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
 import CRUDAsyncList, { ICRUDAsyncListConfig } from "./List";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
-export type TCRUDActionCbName = "list" | "add" | "edit" | "delete" | "save";
-export type TCRUDActionCb = (params?: any) => Promise<IWebDataResult<any>>;
-export interface ICRUDAction {
-    name: TCRUDActionCbName;
-    cb: TCRUDActionCb;
+export type TCRUDAsyncActionCbName = "list" | "add" | "edit" | "delete" | "save";
+export type TCRUDAsuncActionCb = (params?: any) => Promise<IWebDataResult<any>>;
+export interface ICRUDAsyncAction {
+    name: TCRUDAsyncActionCbName;
+    cb: TCRUDAsuncActionCb;
 }
 
 interface IProps {
     listConfig: ICRUDAsyncListConfig;
     editConfig: ICRUDAsyncEditConfig;
-    actions: ICRUDAction[];
+    actions: ICRUDAsyncAction[];
     icon?: string;
     title: string;
     initialValue?: any;

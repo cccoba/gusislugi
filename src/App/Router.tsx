@@ -13,6 +13,8 @@ import Profile from "pages/Users/Profile";
 import Claims from "pages/Claims";
 import { UserRolesEnum } from "api/enums/UserRolesEnum";
 import Users from "pages/Users/Users";
+import Citizenships from "pages/Citizenships";
+import Nationalities from "pages/Nationalities";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -104,6 +106,14 @@ export default function RouterPage() {
                         <Route
                             path="/users"
                             element={<Users roles={[UserRolesEnum.Users]} />}
+                        />
+                        <Route
+                            path="/citizenships"
+                            element={<Citizenships roles={[UserRolesEnum.Admins]} />}
+                        />
+                        <Route
+                            path="/nationalities"
+                            element={<Nationalities roles={[UserRolesEnum.Admins]} />}
                         />
                         <Route
                             path="*"

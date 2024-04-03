@@ -8,7 +8,7 @@ import { webApiResultData } from "api/data";
 
 import Form, { TFormField } from "../Form";
 
-import { ICRUDAction } from ".";
+import { ICRUDAsyncAction } from ".";
 
 export interface ICRUDAsyncEditConfig {
     editTitle?: string;
@@ -17,7 +17,7 @@ export interface ICRUDAsyncEditConfig {
 }
 
 interface IProps {
-    actions: ICRUDAction[];
+    actions: ICRUDAsyncAction[];
     config: ICRUDAsyncEditConfig;
     id: number;
     initialValue?: any;

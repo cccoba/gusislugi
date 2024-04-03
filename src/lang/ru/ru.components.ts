@@ -97,6 +97,8 @@ const ruComponents = {
         profile: "Профиль",
         claims: "Заявки",
         users: "Пользователи",
+        citizenships: "Гражданство",
+        nationalities: "Национальность",
     },
     sendUserNotification: {
         title: "Отправить пользователю оповещение?",

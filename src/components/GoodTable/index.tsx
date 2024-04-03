@@ -198,6 +198,14 @@ function GoodTable<T>({
     useEffect(() => {
         const simpleValues = simpleTextSearch(simpleSearchText, values, fields);
         setFilteredValues(sortAndOrder(simpleValues, fields, filters, orderState));
+        setSelectedRows((prev) => {
+            const newSelectedRows = [...prev];
+            if (newSelectedRows.length && values.length) {
+                const valuesIds = values.map((x: any) => x?.[idName]);
+                return newSelectedRows.filter((x: any) => valuesIds.includes(x?.[idName]));
+            }
+            return newSelectedRows;
+        });
     }, [values, fields, filters, orderState, simpleSearchText]);
     const containerSx = useMemo(() => {
         const newContainerSx: any = {};

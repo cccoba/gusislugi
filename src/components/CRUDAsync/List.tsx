@@ -9,7 +9,7 @@ import { webApiResultData } from "api/data";
 
 import Confirm, { IConfirmProps } from "../Confirm";
 
-import { ICRUDAction, TCRUDActionCbName } from ".";
+import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from ".";
 
 const langPage = lang.components.crud;
 
@@ -22,7 +22,7 @@ export interface ICRUDAsyncListConfig {
 interface IProps {
     config: ICRUDAsyncListConfig;
     onSelectId: (activeId: number) => void;
-    actions: ICRUDAction[];
+    actions: ICRUDAsyncAction[];
     rowId?: string;
     onIsLoading: (isLoading: boolean) => void;
     needUpdate: string;
@@ -45,8 +45,8 @@ export default function CRUDAsyncList({
         loadList();
     }, [needUpdate]);
     const actionsList = useMemo(() => {
-        const getTableAction = (actionName: TCRUDActionCbName) => {
-            let res: IGoodTableToolbarAction<any> = {
+        const getTableAction = (actionName: TCRUDAsyncActionCbName) => {
+            const res: IGoodTableToolbarAction<any> = {
                 name: actionName,
                 icon: actionName,
                 onClick: (a: any) => {},
@@ -149,6 +149,7 @@ export default function CRUDAsyncList({
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
+
     return (
         <>
             <GoodTable

@@ -1,4 +1,18 @@
 const ruPages = {
+    citizenships: {
+        title: "Гражданство",
+        fields: {
+            id: "ID",
+            title: "Название",
+        },
+    },
+    nationalities: {
+        title: "Национальность",
+        fields: {
+            id: "ID",
+            title: "Название",
+        },
+    },
     claims: {
         title: "Заявки",
         message: 'Ваша заявка "%s" изменила статус на "%s"',
