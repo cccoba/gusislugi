@@ -1,10 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import lang from "lang";
-import { Accordion, Page } from "components";
+import { Page } from "components";
 import { setUserData } from "store/reducers/UserSlice";
 import UserForm from "components/UserForm";
-import ProfileMessages from "pages/Messages/Messages";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
