@@ -1,6 +1,6 @@
 export { default as Accordion } from "./Accordion";
 
-export { default as CRUD } from "./CRUDAsync";
+export { default as CRUDAsync } from "./CRUDAsync";
 export { default as CutText } from "./CutText";
 
 export { default as GoodTable } from "./GoodTable";

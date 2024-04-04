@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import lang, { getEnumTitleValue, sprintf } from "lang";
-import { CRUD } from "components";
-import { ICRUDAsyncAction, TCRUDAsuncActionCb } from "components/CRUDAsync";
+import { CRUDAsync } from "components";
+import { ICRUDAsyncAction, TCRUDAsuncActionCb } from "components/CRUDAsync/Main";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
@@ -95,7 +95,8 @@ function Claims({ roles }: IPageWithRoles) {
                     onClose={onConfirm}
                 />
             )}
-            <CRUD
+            <CRUDAsync
+                backUrl="/claims"
                 roles={roles}
                 title={langPage.title}
                 icon="warning"

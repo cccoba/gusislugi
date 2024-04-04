@@ -1,22 +1,15 @@
-import { useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import Page from "components/Page";
+import { loaderChange } from "store/reducers/ComponentsSlice";
 
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { generateGuid } from "api/common/helper";
+import { useAppDispatch } from "api/hooks/redux";
 import { UserRolesEnum } from "api/enums/UserRolesEnum";
 
+import CRUDAsyncMain, { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
-import CRUDAsyncList, { ICRUDAsyncListConfig } from "./List";
+import { ICRUDAsyncListConfig } from "./List";
 
-export type TCRUDAsyncActionCbName = "list" | "add" | "edit" | "delete" | "save";
-export type TCRUDAsuncActionCb = (params?: any) => Promise<IWebDataResult<any>>;
-export interface ICRUDAsyncAction {
-    name: TCRUDAsyncActionCbName;
-    cb: TCRUDAsuncActionCb;
-}
-
-interface IProps {
+export interface ICRUDAsyncProps {
     listConfig: ICRUDAsyncListConfig;
     editConfig: ICRUDAsyncEditConfig;
     actions: ICRUDAsyncAction[];
@@ -24,44 +17,41 @@ interface IProps {
     title: string;
     initialValue?: any;
     roles?: UserRolesEnum[];
+    backUrl?: string;
 }
-
-export default function CRUDAsync({ listConfig, editConfig, actions, icon = "", initialValue, title, roles }: IProps) {
-    const [activeId, setActiveId] = useState<number | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [needUpdate, setNeedUpdate] = useState("");
-    const hideEdit = () => {
-        setActiveId(null);
+function CRUDAsync(props: ICRUDAsyncProps) {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const onIsLoading = (isLoading: boolean) => {
+        dispatch(loaderChange(isLoading));
     };
-    const toUpdate = () => {
-        setNeedUpdate(generateGuid());
+    const goBack = () => {
+        if (props?.backUrl) {
+            navigate(props.backUrl);
+        }
     };
     return (
-        <Page
-            title={title}
-            icon={icon}
-            isLoading={isLoading}
-            roles={roles}
-        >
-            {activeId !== null && (
-                <CRUDAsyncEdit
-                    config={editConfig}
-                    actions={actions}
-                    id={activeId}
-                    onClose={hideEdit}
-                    onIsLoading={setIsLoading}
-                    onSaved={toUpdate}
-                    initialValue={initialValue}
-                />
-            )}
-            <CRUDAsyncList
-                config={listConfig}
-                actions={actions}
-                onSelectId={setActiveId}
-                onIsLoading={setIsLoading}
-                needUpdate={needUpdate}
-                initialValue={initialValue}
+        <Routes>
+            <Route
+                path="/"
+                element={<CRUDAsyncMain {...props} />}
             />
-        </Page>
+            <Route
+                path="/:id"
+                element={
+                    <CRUDAsyncEdit
+                        showVariant="page"
+                        config={props.editConfig}
+                        actions={props.actions}
+                        onClose={goBack}
+                        onIsLoading={onIsLoading}
+                        onSaved={goBack}
+                        initialValue={props.initialValue}
+                        backUrl={props.backUrl}
+                    />
+                }
+            />
+        </Routes>
     );
 }
+export default CRUDAsync;

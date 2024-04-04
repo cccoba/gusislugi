@@ -7,7 +7,6 @@ import { useMemo } from "react";
 
 interface IProps {
     user: IUserDto;
-    isCurrent?: boolean;
     onChangeValue?: (userData: IUserDto) => void;
 }
 
@@ -26,7 +25,7 @@ const defFields: IFormField[] = [
     { name: "description", title: langPage.description, fieldProps: { multiline: true } },
 ];
 
-function UserForm({ user, isCurrent = false, onChangeValue }: IProps) {
+function UserForm({ user, onChangeValue }: IProps) {
     const currentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     const isMobile = useAppSelector((s) => s.device.isMobile);
     const roles = useAppSelector((s) => s.user.roles);

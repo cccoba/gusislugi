@@ -2,21 +2,25 @@ import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Box, SxProps, Toolbar } from "@mui/material";
 
-import Header from "components/Header";
-import getConst from "api/common/getConst";
-import { useAppSelector } from "api/hooks/redux";
-import Login from "pages/Users/Login";
 import NavigationMenu from "components/NavigationMenu";
+import Header from "components/Header";
+
+import Login from "pages/Users/Login";
 import Home from "pages/Home";
 import Registration from "pages/Users/Registration";
 import Profile from "pages/Users/Profile";
 import Claims from "pages/Claims";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import Users from "pages/Users/Users";
+import Users from "pages/Users";
 import Citizenships from "pages/Citizenships";
 import Nationalities from "pages/Nationalities";
 import QrScanner from "pages/QR/QrScanner";
 import Passport from "pages/Passport";
+
+import getConst from "api/common/getConst";
+import { useAppSelector } from "api/hooks/redux";
+import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import MyClaims from "pages/Claims/MyClaims";
+import MyMessages from "pages/Messages/MyMessages";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -102,19 +106,27 @@ export default function RouterPage() {
                             element={<Profile />}
                         />
                         <Route
-                            path="/claims"
+                            path="/claims/*"
                             element={<Claims roles={[UserRolesEnum.Claims]} />}
                         />
                         <Route
-                            path="/users"
+                            path="/myClaims"
+                            element={<MyClaims />}
+                        />
+                        <Route
+                            path="/myMessages"
+                            element={<MyMessages />}
+                        />
+                        <Route
+                            path="/users/*"
                             element={<Users roles={[UserRolesEnum.Users]} />}
                         />
                         <Route
-                            path="/citizenships"
+                            path="/citizenships/*"
                             element={<Citizenships roles={[UserRolesEnum.Admins]} />}
                         />
                         <Route
-                            path="/nationalities"
+                            path="/nationalities/*"
                             element={<Nationalities roles={[UserRolesEnum.Admins]} />}
                         />
                         <Route

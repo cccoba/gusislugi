@@ -1,6 +1,6 @@
 import lang from "lang";
-import { CRUD } from "components";
-import { ICRUDAsyncAction } from "components/CRUDAsync";
+import { CRUDAsync } from "components";
+import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
@@ -36,7 +36,8 @@ function Nationalities({ roles }: IPageWithRoles) {
 
     return (
         <>
-            <CRUD
+            <CRUDAsync
+                backUrl={"/nationalities"}
                 roles={roles}
                 title={langPage.title}
                 icon="group"

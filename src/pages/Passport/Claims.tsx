@@ -8,6 +8,7 @@ import { GoodTable, Icon, RoleChecker } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import lang, { getEnumTitle } from "lang";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
     claims: IClaimDto[];
@@ -23,6 +24,7 @@ const fields: IGoodTableField[] = [
     { name: "date", title: langClaims.fields.updatedDate, format: "date", maxWidth: "120px" },
 ];
 function PassportClaims({ claims }: IProps) {
+    const navigate = useNavigate();
     const values = useMemo(() => {
         if (claims?.length) {
             return claims.map((x) => ({
@@ -34,6 +36,9 @@ function PassportClaims({ claims }: IProps) {
         }
         return [];
     }, [claims]);
+    const toClaim = (data: any) => {
+        navigate(`/claims/${data.id}`);
+    };
     return (
         <RoleChecker roles={[UserRolesEnum.Claims]}>
             <Accordion>
@@ -45,6 +50,7 @@ function PassportClaims({ claims }: IProps) {
                         fields={fields}
                         values={values}
                         order={{ direction: SortOrderEnum.Descending, sort: "id" }}
+                        onRowClick={toClaim}
                     />
                 </AccordionDetails>
             </Accordion>

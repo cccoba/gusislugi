@@ -4,15 +4,13 @@ import lang from "lang";
 import { Accordion, Page } from "components";
 import { setUserData } from "store/reducers/UserSlice";
 import UserForm from "components/UserForm";
-import ProfileMessages from "pages/Users/Profile/Messages";
+import ProfileMessages from "pages/Messages/Messages";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { users } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data/dataProvider";
-
-import ProfileClaims from "./Claims";
 
 const langPage = lang.pages.profile;
 
@@ -21,36 +19,6 @@ function Profile() {
     const user = useAppSelector((x) => x.user.user);
     const { showError, showSuccess } = useNotifier();
     const dispatch = useAppDispatch();
-
-    const accordionValues = useMemo(() => {
-        if (user) {
-            const values = [
-                {
-                    id: "userInfo",
-                    title: langPage.userForm,
-                    child: (
-                        <UserForm
-                            user={user}
-                            isCurrent
-                            onChangeValue={toSaveUser}
-                        />
-                    ),
-                },
-                {
-                    id: "userClaims",
-                    title: langPage.claims.title,
-                    child: <ProfileClaims />,
-                },
-                {
-                    id: "userMessages",
-                    title: langPage.messages.title,
-                    child: <ProfileMessages />,
-                },
-            ];
-            return values;
-        }
-        return [];
-    }, [user]);
 
     function toSaveUser(data: IUserDto) {
         setIsLoading(true);
@@ -83,13 +51,10 @@ function Profile() {
             icon="person_pin"
         >
             {!!user && (
-                <>
-                    <Accordion
-                        autoMountAll
-                        defaultActiveId="userInfo"
-                        values={accordionValues}
-                    />
-                </>
+                <UserForm
+                    user={user}
+                    onChangeValue={toSaveUser}
+                />
             )}
         </Page>
     );

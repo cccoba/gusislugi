@@ -67,6 +67,16 @@ function Home() {
                             title={langPage.actions.profile}
                             icon="person_pin"
                         />
+                        <HomeItem
+                            url="/myClaims"
+                            title={langPage.actions.claims}
+                            icon="warning"
+                        />
+                        <HomeItem
+                            url="/myMessages"
+                            title={langPage.actions.messages}
+                            icon="sms"
+                        />
                     </>
                 )}
             </Grid>

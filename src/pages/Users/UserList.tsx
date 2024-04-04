@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
-import { Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem, Typography } from "@mui/material";
 
 import lang from "lang";
-import { GoodTable, IconButton, Page } from "components";
+import { GoodTable, IconButton, Page, RoleChecker } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
+import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import { useNavigate } from "react-router-dom";
 
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
@@ -21,8 +23,15 @@ const defFields: IGoodTableField[] = [
     { name: "actions", title: langPage.fields.actions, format: "component" },
 ];
 
-function Users({ roles }: IPageWithRoles) {
+type TUserAction = "edit";
+interface IUserActions {
+    onAction: (actionName: TUserAction, user: IUserDto) => void;
+    user: IUserDto;
+}
+
+function UserList({ roles }: IPageWithRoles) {
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
+    const navigate = useNavigate();
     const nationalities = useAppSelector((x) => x.user.nationalities);
     const citizenships = useAppSelector((x) => x.user.citizenships);
     const fields = useMemo(() => {
@@ -41,10 +50,25 @@ function Users({ roles }: IPageWithRoles) {
 
     const values = useMemo(() => {
         if (data?.length) {
-            return data.map((x) => ({ ...x, actions: <UserActions /> }));
+            return data.map((x) => ({
+                ...x,
+                actions: (
+                    <UserActions
+                        user={x}
+                        onAction={toAction}
+                    />
+                ),
+            }));
         }
         return [];
     }, [data]);
+    function toAction(actionName: TUserAction, user: IUserDto) {
+        switch (actionName) {
+            case "edit":
+                navigate(`/users/${user.id}`);
+                break;
+        }
+    }
 
     return (
         <Page
@@ -61,7 +85,7 @@ function Users({ roles }: IPageWithRoles) {
     );
 }
 
-function UserActions() {
+function UserActions({ onAction, user }: IUserActions) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,6 +93,9 @@ function UserActions() {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+    const toEdit = () => {
+        onAction("edit", user);
     };
     return (
         <>
@@ -81,15 +108,19 @@ function UserActions() {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                }}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <RoleChecker roles={[UserRolesEnum.Admins]}>
+                    <MenuItem onClick={toEdit}>
+                        <Typography
+                            variant="inherit"
+                            noWrap
+                        >
+                            {langPage.actions.edit}
+                        </Typography>
+                    </MenuItem>
+                </RoleChecker>
             </Menu>
         </>
     );
 }
-export default Users;
+export default UserList;

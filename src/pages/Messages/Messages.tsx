@@ -12,7 +12,7 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
-const langPage = lang.pages.profile.messages;
+const langPage = lang.pages.messages;
 
 const fields: IGoodTableField[] = [
     { name: "statusComponent", title: "", format: "component" },

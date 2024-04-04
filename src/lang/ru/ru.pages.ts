@@ -6,6 +6,14 @@ const ruPages = {
             title: "Название",
         },
     },
+    messages: {
+        title: "Оповещения",
+        detailsTitle: "Оповещения от %s",
+        fields: {
+            message: "Сообщение",
+            date: "Дата",
+        },
+    },
     nationalities: {
         title: "Национальность",
         fields: {
@@ -59,14 +67,6 @@ const ruPages = {
                 okText: "Да, удалить",
             },
         },
-        messages: {
-            title: "Оповещения",
-            detailsTitle: "Оповещения от %s",
-            fields: {
-                message: "Сообщение",
-                date: "Дата",
-            },
-        },
         success: {
             updateUser: "Данные обновлены",
         },
@@ -94,6 +94,8 @@ const ruPages = {
             qr: "QR сканер",
             showId: "Показать ID",
             profile: "Мой профиль",
+            messages: "Оповещения",
+            claims: "Мои заявки",
         },
         myId: {
             title: "Мой ID",
@@ -130,6 +132,16 @@ const ruPages = {
             image: "Фото",
             created_at: "Создан",
             actions: "Действие",
+        },
+        actions: {
+            edit: "Редактировать",
+        },
+        success: {
+            updateUser: "Пользователь отредактирован",
+        },
+        errors: {
+            getUser: "Пользователь не найден!",
+            updateUser: "Не удалось отредактировать пользователя!",
         },
     },
 };

@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
+import PageOrModal from "components/Page/PageOrModal";
 
-import Modal from "components/Modal";
 import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data";
+import useParamsId from "api/hooks/useParamsId";
 
-import Form, { TFormField } from "../Form";
+import { TFormField } from "../Form";
 
-import { ICRUDAsyncAction } from ".";
+import { ICRUDAsyncAction } from "./Main";
+import CRUDAsyncForm from "./Form";
 
 export interface ICRUDAsyncEditConfig {
     editTitle?: string;
@@ -19,8 +21,10 @@ export interface ICRUDAsyncEditConfig {
 interface IProps {
     actions: ICRUDAsyncAction[];
     config: ICRUDAsyncEditConfig;
-    id: number;
+    id?: number;
     initialValue?: any;
+    showVariant: "page" | "modal";
+    backUrl?: string;
     onClose: () => void;
     onIsLoading: (isLoading: boolean) => void;
     onSaved: () => void;
@@ -32,25 +36,44 @@ export default function CRUDAsyncEdit({
     config,
     actions = [],
     initialValue,
+    showVariant,
+    backUrl,
     onClose,
     onIsLoading,
     onSaved,
 }: IProps) {
     const [data, setData] = useState<any>(null);
     const { showError, showSuccess } = useNotifier();
+    const paramId = useParamsId();
+    const modalProps = useMemo(() => {
+        if (showVariant === "modal") {
+            return {
+                withCloseButton: true,
+                onClose,
+            };
+        }
+        return undefined;
+    }, [showVariant]);
+    const idValue = useMemo(() => {
+        if (showVariant === "modal") {
+            return id;
+        }
+        return paramId;
+    }, [showVariant, id, paramId]);
+
     const title = useMemo(() => {
-        if (!!id) {
+        if (!!idValue) {
             return config?.editTitle || langPage.editTitle;
         }
         return config?.addTitle || langPage.addTitle;
-    }, [id, config.editTitle, config.addTitle]);
+    }, [idValue, config.editTitle, config.addTitle]);
     useEffect(() => {
-        if (id) {
+        if (idValue) {
             const action = actions.find((x) => x.name === "edit");
             if (action) {
                 onIsLoading(true);
                 action
-                    .cb(id)
+                    .cb(idValue)
                     .then((res) => {
                         const { error, result } = webApiResultData<any>(res);
                         if (error) {
@@ -68,10 +91,10 @@ export default function CRUDAsyncEdit({
                         onIsLoading(false);
                     });
             }
-        } else if (id === 0 && typeof initialValue !== "undefined") {
+        } else if (idValue === 0 && typeof initialValue !== "undefined") {
             setData({ ...initialValue });
         }
-    }, [id]);
+    }, [idValue]);
     const toSubmit = (data: any) => {
         const action = actions.find((x) => x.name === "save");
         if (action) {
@@ -99,20 +122,17 @@ export default function CRUDAsyncEdit({
     };
 
     return (
-        <Modal
-            open
+        <PageOrModal
+            modalProps={modalProps}
             title={title}
-            withCloseButton
-            onClose={onClose}
+            backUrl={backUrl}
         >
-            {!!data && (
-                <Form
-                    onSubmit={toSubmit}
-                    fields={config.fields}
-                    values={data}
-                    onCancel={onClose}
-                />
-            )}
-        </Modal>
+            <CRUDAsyncForm
+                values={data}
+                fields={config.fields}
+                onSubmit={toSubmit}
+                onCancel={onClose}
+            />
+        </PageOrModal>
     );
 }

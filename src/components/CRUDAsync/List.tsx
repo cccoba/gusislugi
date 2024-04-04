@@ -9,7 +9,7 @@ import { webApiResultData } from "api/data";
 
 import Confirm, { IConfirmProps } from "../Confirm";
 
-import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from ".";
+import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
 
 const langPage = lang.components.crud;
 

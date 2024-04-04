@@ -15,6 +15,7 @@ const langUser = lang.components.userForm;
 function PassportUser({ user }: IProps) {
     const citizenships = useAppSelector((s) => s.user.citizenships);
     const nationalities = useAppSelector((s) => s.user.nationalities);
+    const roles = useAppSelector((s) => s.user.roles);
     return (
         <>
             <Box
@@ -32,16 +33,20 @@ function PassportUser({ user }: IProps) {
                     <Typography>
                         {langUser.lastName + " " + langUser.firstName}: {user.lastName + " " + user.firstName}
                     </Typography>
-                    <Typography>
-                        {langUser.nationality}:{" "}
-                        {nationalities.find((x) => x.id === user.nationalityId)?.title || lang.unknown}
-                    </Typography>
+
                     <Typography>
                         {langUser.citizenship}:{" "}
                         {citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.unknown}
                     </Typography>
+                    <Typography>
+                        {langUser.role}: {roles.find((x) => x.id === user.roleId)?.title || lang.unknown}
+                    </Typography>
                 </Fieldset>
                 <Fieldset label={langPage.passportData}>
+                    <Typography>
+                        {langUser.nationality}:{" "}
+                        {nationalities.find((x) => x.id === user.nationalityId)?.title || lang.unknown}
+                    </Typography>
                     <Typography>
                         {langUser.passport}: {user.passport}
                     </Typography>
@@ -54,7 +59,7 @@ function PassportUser({ user }: IProps) {
                 <Box sx={{ textAlign: "right" }}>
                     <Button
                         component={Link}
-                        url={`/user/${user.id}`}
+                        url={`/users/${user.id}`}
                         variant="outlined"
                         startIcon={<Icon name="edit" />}
                     >
