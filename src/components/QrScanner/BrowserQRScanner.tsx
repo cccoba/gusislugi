@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AppBar, Box, Button, ButtonGroup, Paper, Toolbar, Typography } from "@mui/material";
 
 import { Icon, Loader } from "components";
@@ -23,7 +22,7 @@ function BrowserQRScanner({ onRead, onCancel }: IProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const [camerasToggle, setCamerasToggle] = useState(false);
-    const navigate = useNavigate();
+
     const { showError } = useNotifier();
     useEffect(() => {
         qrInit();

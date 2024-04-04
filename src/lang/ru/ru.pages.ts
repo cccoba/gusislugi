@@ -92,11 +92,33 @@ const ruPages = {
         title: "Главное",
         actions: {
             qr: "QR сканер",
+            showId: "Показать ID",
+            profile: "Мой профиль",
+        },
+        myId: {
+            title: "Мой ID",
         },
     },
+    passport: {
+        byGuid: {
+            title: "Информация о жителе",
+            errors: {
+                getUserByGuid: "Пользователь не найден",
+            },
+        },
+        user: {
+            passportData: "Паспорт",
+            mainData: "Основное",
+        },
+        claims: { title: "Заявки" },
+    },
+
     qrScanner: {
         title: "QR сканер",
-        startScan: "Начать сканирование",
+        startScan: "Начать сканирование QR",
+        errors: {
+            notDetect: "Данный код сюда не подходит",
+        },
     },
     users: {
         title: "Пользователи",

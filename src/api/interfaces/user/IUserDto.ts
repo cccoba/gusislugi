@@ -2,6 +2,7 @@ import { IRoleDto } from "./IRoleDto";
 
 export interface IUserDto {
     id: number;
+    guid: string;
     tgId?: number;
     tgName: string;
     nickname: string;
@@ -12,6 +13,7 @@ export interface IUserDto {
     nationalityId?: number;
     citizenshipId?: number;
     passport: string;
+    registration: string;
     image: string;
     description: string;
     role: IRoleDto;

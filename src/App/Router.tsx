@@ -15,7 +15,8 @@ import { UserRolesEnum } from "api/enums/UserRolesEnum";
 import Users from "pages/Users/Users";
 import Citizenships from "pages/Citizenships";
 import Nationalities from "pages/Nationalities";
-import QrScanner from "pages/QrScanner";
+import QrScanner from "pages/QR/QrScanner";
+import Passport from "pages/Passport";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -125,6 +126,27 @@ export default function RouterPage() {
                                 />
                             }
                         />
+                        <Route
+                            path="/passport/:id"
+                            element={
+                                <Passport
+                                    roles={[UserRolesEnum.Qr]}
+                                    icon="badge"
+                                    idName="guid"
+                                />
+                            }
+                        />
+                        <Route
+                            path="/passport-tg/:id"
+                            element={
+                                <Passport
+                                    roles={[UserRolesEnum.Qr]}
+                                    icon="badge"
+                                    idName="telegramLogin"
+                                />
+                            }
+                        />
+
                         <Route
                             path="*"
                             element={
