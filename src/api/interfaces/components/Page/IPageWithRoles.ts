@@ -1,7 +1,7 @@
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
 import { IPage } from "./IPage";
 
 export interface IPageWithRoles extends IPage {
-    roles: UserRolesEnum[];
+    roles: TRoleCheckerRole[];
 }

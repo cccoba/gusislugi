@@ -38,6 +38,16 @@ const ruPages = {
         text: "У вас нет доступа к сайту. Попросите бота вас пустить",
         toBot: "К боту",
     },
+    money: {
+        title: "Финансы",
+        userTitle: "Деньги пользователя",
+        fields: {
+            fromUid: "Отправитель",
+            toUid: "Получатель",
+            value: "Сумма",
+            created_at: "Дата",
+        },
+    },
     profile: {
         title: "Мой профиль",
         userForm: "Общая информация",
@@ -88,6 +98,20 @@ const ruPages = {
             registration: "Не удалось пройти регистрацию!",
         },
     },
+    roles: {
+        title: "Роли",
+        fields: {
+            id: "ID",
+            title: "Роль",
+            params: "Доступ",
+        },
+        success: {
+            save: "Роль изменена",
+        },
+        errors: {
+            save: "Не удалось отредактировать запись",
+        },
+    },
     home: {
         title: "Главное",
         actions: {
@@ -124,6 +148,7 @@ const ruPages = {
     },
     users: {
         title: "Пользователи",
+        messageSenderTitle: "Отправить пользователю %s",
         fields: {
             id: "ID",
             fullName: "Имя",
@@ -135,6 +160,8 @@ const ruPages = {
         },
         actions: {
             edit: "Редактировать",
+            message: "Оповещение",
+            money: "Деньги",
         },
         success: {
             updateUser: "Пользователь отредактирован",

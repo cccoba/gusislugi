@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import lang, { getEnumTitleValue, sprintf } from "lang";
+import lang, { getEnumTitleValue, getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncAction, TCRUDAsuncActionCb } from "components/CRUDAsync/Main";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
@@ -11,7 +11,6 @@ import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { claims } from "api/data";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
-import { getEnumSelectValues } from "api/common/enumHelper";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.pages.claims;

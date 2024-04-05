@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import lang from "lang";
+import lang, { getEnumSelectValues } from "lang";
 
 import Fieldset from "components/Fieldset";
 import Select from "components/Inputs/Select";
 
-import { getEnumSelectValues } from "api/common/enumHelper";
 import { IFilterDateValue } from "api/interfaces/components/GoodTable";
 import { FilterDateEqualsEnum } from "api/common/filters";
 import { Date } from "components";

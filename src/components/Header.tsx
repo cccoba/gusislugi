@@ -97,6 +97,12 @@ export default function Header({ title = "", icon = null, backUrl = null }: IPro
                     {title}
                 </Typography>
             </Toolbar>
+            <Typography
+                sx={{ position: "absolute", right: 5, top: 0, color: "common.white", opacity: 0.5 }}
+                variant="caption"
+            >
+                v {getConst("app-version")}
+            </Typography>
         </AppBar>
     );
 }

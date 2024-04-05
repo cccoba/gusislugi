@@ -1,9 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import { useAppSelector } from "api/hooks/redux";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+
 import { Fieldset, Icon, Image, Link, RoleChecker } from "components";
 import lang from "lang";
+
+import { useAppSelector } from "api/hooks/redux";
+import { IUserDto } from "api/interfaces/user/IUserDto";
 
 interface IProps {
     user: IUserDto;
@@ -55,7 +56,7 @@ function PassportUser({ user }: IProps) {
                     </Typography>
                 </Fieldset>
             </Box>
-            <RoleChecker roles={[UserRolesEnum.Admins]}>
+            <RoleChecker roles={[["admins"]]}>
                 <Box sx={{ textAlign: "right" }}>
                     <Button
                         component={Link}

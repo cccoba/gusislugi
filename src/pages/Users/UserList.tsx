@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Menu, MenuItem, Typography } from "@mui/material";
 
-import lang from "lang";
+import lang, { sprintf } from "lang";
 import { GoodTable, IconButton, Page, RoleChecker } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
@@ -9,8 +9,8 @@ import useGetData from "store/rtkProvider";
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
 import { useNavigate } from "react-router-dom";
+import SendUserNotification from "components/SendUserNotification";
 
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
@@ -23,7 +23,7 @@ const defFields: IGoodTableField[] = [
     { name: "actions", title: langPage.fields.actions, format: "component" },
 ];
 
-type TUserAction = "edit";
+type TUserAction = "edit" | "message" | "money";
 interface IUserActions {
     onAction: (actionName: TUserAction, user: IUserDto) => void;
     user: IUserDto;
@@ -31,6 +31,7 @@ interface IUserActions {
 
 function UserList({ roles }: IPageWithRoles) {
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
+    const [messageUser, setMessageUser] = useState<IUserDto | null>(null);
     const navigate = useNavigate();
     const nationalities = useAppSelector((x) => x.user.nationalities);
     const citizenships = useAppSelector((x) => x.user.citizenships);
@@ -67,8 +68,17 @@ function UserList({ roles }: IPageWithRoles) {
             case "edit":
                 navigate(`/users/${user.id}`);
                 break;
+            case "money":
+                navigate(`/userMoney/${user.id}`);
+                break;
+            case "message":
+                setMessageUser(user);
+                break;
         }
     }
+    const hideMessageSender = () => {
+        setMessageUser(null);
+    };
 
     return (
         <Page
@@ -77,6 +87,14 @@ function UserList({ roles }: IPageWithRoles) {
             roles={roles}
             isLoading={isLoading}
         >
+            {!!messageUser && (
+                <SendUserNotification
+                    text=""
+                    uid={messageUser.id}
+                    title={sprintf(langPage.messageSenderTitle, messageUser?.fullName)}
+                    onClose={hideMessageSender}
+                />
+            )}
             <GoodTable
                 fields={fields}
                 values={values}
@@ -97,6 +115,13 @@ function UserActions({ onAction, user }: IUserActions) {
     const toEdit = () => {
         onAction("edit", user);
     };
+    const toMessage = () => {
+        onAction("message", user);
+    };
+    const toMoney = () => {
+        onAction("money", user);
+    };
+
     return (
         <>
             <IconButton
@@ -109,15 +134,33 @@ function UserActions({ onAction, user }: IUserActions) {
                 open={open}
                 onClose={handleClose}
             >
-                <RoleChecker roles={[UserRolesEnum.Admins]}>
-                    <MenuItem onClick={toEdit}>
-                        <Typography
-                            variant="inherit"
-                            noWrap
-                        >
-                            {langPage.actions.edit}
-                        </Typography>
-                    </MenuItem>
+                <RoleChecker roles={[["admins"]]}>
+                    <>
+                        <MenuItem onClick={toEdit}>
+                            <Typography
+                                variant="inherit"
+                                noWrap
+                            >
+                                {langPage.actions.edit}
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={toMessage}>
+                            <Typography
+                                variant="inherit"
+                                noWrap
+                            >
+                                {langPage.actions.message}
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={toMoney}>
+                            <Typography
+                                variant="inherit"
+                                noWrap
+                            >
+                                {langPage.actions.money}
+                            </Typography>
+                        </MenuItem>
+                    </>
                 </RoleChecker>
             </Menu>
         </>

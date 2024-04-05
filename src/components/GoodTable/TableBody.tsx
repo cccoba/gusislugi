@@ -63,7 +63,7 @@ function GoodTableBody<T>({
             ) : (
                 <>
                     {!!values?.length ? (
-                        values.map((row: any, index) => {
+                        values.map((row: any, index: number) => {
                             let key = index;
                             if (idName in row) {
                                 key = row[idName];

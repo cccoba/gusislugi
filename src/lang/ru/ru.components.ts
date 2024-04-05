@@ -22,6 +22,7 @@ const ruComponents = {
             delete: "Не удалось удалить выбранные записи!",
             edit: "Не удалось получить запись с сервера!",
             save: "Не удалось сохранить данные на сервере!",
+            initialValue: "Не указаны данные по умолчанию",
         },
     },
     loader: {
@@ -96,11 +97,14 @@ const ruComponents = {
         home: "Главное",
         profile: "Профиль",
         claims: "Заявки",
+        money: "Финансы",
         users: "Пользователи",
         citizenships: "Гражданство",
         nationalities: "Национальность",
         qrScanner: "QR сканер",
+        roles: "Роли",
     },
+    rolePermissions: {},
     sendUserNotification: {
         title: "Отправить пользователю оповещение?",
         hint: "Текст оповещения",

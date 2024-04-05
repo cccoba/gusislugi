@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { loaderChange } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch } from "api/hooks/redux";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
 import CRUDAsyncMain, { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
@@ -16,7 +16,7 @@ export interface ICRUDAsyncProps {
     icon?: string;
     title: string;
     initialValue?: any;
-    roles?: UserRolesEnum[];
+    roles?: TRoleCheckerRole[];
     backUrl?: string;
 }
 function CRUDAsync(props: ICRUDAsyncProps) {

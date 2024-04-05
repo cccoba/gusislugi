@@ -91,8 +91,12 @@ export default function CRUDAsyncEdit({
                         onIsLoading(false);
                     });
             }
-        } else if (idValue === 0 && typeof initialValue !== "undefined") {
-            setData({ ...initialValue });
+        } else if (idValue === 0) {
+            if (typeof initialValue !== "undefined") {
+                setData({ ...initialValue });
+            } else {
+                showError(langPage.errors.initialValue);
+            }
         }
     }, [idValue]);
     const toSubmit = (data: any) => {
@@ -120,7 +124,6 @@ export default function CRUDAsyncEdit({
                 });
         }
     };
-
     return (
         <PageOrModal
             modalProps={modalProps}

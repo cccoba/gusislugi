@@ -5,6 +5,7 @@ import { users } from "api/data";
 import { IFirstLoadView } from "api/data/IFirstLoadView";
 import { webApiResultData } from "api/data/dataProvider";
 import { IUserData } from "api/interfaces/store/IUserData";
+import { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 
 const USER_INITIAL_STATE: IUserData = {
@@ -23,6 +24,9 @@ const UserSlice = createSlice({
     reducers: {
         setInitialState(state) {
             return USER_INITIAL_STATE;
+        },
+        setRoles(state, { payload }: PayloadAction<IRoleDto[]>) {
+            state.roles = payload;
         },
         setData(state, { payload }: PayloadAction<IFirstLoadView>) {
             state.tg = payload?.tgUser || null;
@@ -75,6 +79,6 @@ export const userInit = createAsyncThunk("user/load", async (_, { dispatch, getS
 });
 
 const { actions, reducer } = UserSlice;
-export const { setData, setUserData } = actions;
+export const { setData, setUserData, setRoles } = actions;
 
 export default reducer;

@@ -37,7 +37,6 @@ function GoodTableRow<T>({
             onDoubleClick(row);
         }
     };
-
     return (
         <MuiTableRow
             hover={hover}

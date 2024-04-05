@@ -119,6 +119,12 @@ export default function CRUDAsyncList({
                 });
         }
     };
+    const onRowDoubleClick = (row: any) => {
+        const action = actions.find((x) => x.name === "edit");
+        if (action) {
+            onSelectId(row.id);
+        }
+    };
     const onDeleteConfirmed = (result: boolean) => {
         if (result && deleteConfirm?.otherProps.length) {
             const action = actions.find((x) => x.name === "delete");
@@ -149,7 +155,6 @@ export default function CRUDAsyncList({
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
-
     return (
         <>
             <GoodTable
@@ -159,7 +164,7 @@ export default function CRUDAsyncList({
                 onSelectedRows={onSelected}
                 isMultiSelection={config.isMultiSelection}
                 actions={actionsList}
-                onRowDoubleClick={(row: any) => onSelectId(row.id)}
+                onRowDoubleClick={onRowDoubleClick}
             />
             {!!deleteConfirm && (
                 <Confirm

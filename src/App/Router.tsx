@@ -15,12 +15,15 @@ import Citizenships from "pages/Citizenships";
 import Nationalities from "pages/Nationalities";
 import QrScanner from "pages/QR/QrScanner";
 import Passport from "pages/Passport";
+import MyClaims from "pages/Claims/MyClaims";
+import MyMessages from "pages/Messages/MyMessages";
+import MoneyList from "pages/Money";
+import Roles from "pages/Roles";
 
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import MyClaims from "pages/Claims/MyClaims";
-import MyMessages from "pages/Messages/MyMessages";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import MoneyUser from "pages/Money/User";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -107,7 +110,7 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/claims/*"
-                            element={<Claims roles={[UserRolesEnum.Claims]} />}
+                            element={<Claims roles={[["claims"]]} />}
                         />
                         <Route
                             path="/myClaims"
@@ -119,30 +122,59 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/users/*"
-                            element={<Users roles={[UserRolesEnum.Users]} />}
+                            element={<Users roles={[["users"]]} />}
                         />
                         <Route
                             path="/citizenships/*"
-                            element={<Citizenships roles={[UserRolesEnum.Admins]} />}
+                            element={<Citizenships roles={[["admins"]]} />}
                         />
                         <Route
                             path="/nationalities/*"
-                            element={<Nationalities roles={[UserRolesEnum.Admins]} />}
+                            element={<Nationalities roles={[["admins"]]} />}
                         />
                         <Route
                             path="/qrScanner"
                             element={
                                 <QrScanner
-                                    roles={[UserRolesEnum.Qr]}
+                                    roles={[["qr"]]}
                                     icon="qr_code_scanner"
                                 />
                             }
                         />
                         <Route
+                            path="/money/*"
+                            element={
+                                <MoneyList
+                                    roles={[["admins"]]}
+                                    icon="payments"
+                                />
+                            }
+                        />
+                        <Route
+                            path="/userMoney/:id"
+                            element={
+                                <MoneyUser
+                                    roles={[["admins"]]}
+                                    icon="payments"
+                                />
+                            }
+                        />
+
+                        <Route
+                            path="/roles"
+                            element={
+                                <Roles
+                                    roles={[["admins"]]}
+                                    icon="engineering"
+                                />
+                            }
+                        />
+
+                        <Route
                             path="/passport/:id"
                             element={
                                 <Passport
-                                    roles={[UserRolesEnum.Qr]}
+                                    roles={[["qr"]]}
                                     icon="badge"
                                     idName="guid"
                                 />
@@ -152,7 +184,7 @@ export default function RouterPage() {
                             path="/passport-tg/:id"
                             element={
                                 <Passport
-                                    roles={[UserRolesEnum.Qr]}
+                                    roles={[["qr"]]}
                                     icon="badge"
                                     idName="telegramLogin"
                                 />

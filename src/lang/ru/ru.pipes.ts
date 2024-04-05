@@ -32,5 +32,17 @@ const ruPipes = {
         less: "<=",
         notEquals: "Не равно",
     },
+    rolePermissions: {
+        admins: "Администрирование",
+        claims: "Заявки",
+        qr: "QR-сканер",
+        users: "Пользователи",
+    },
+    rolePermissionAction: {
+        view: "Просмотр",
+        add: "Создавать",
+        edit: "Редактировать",
+        delete: "Удалять",
+    },
 };
 export default ruPipes;

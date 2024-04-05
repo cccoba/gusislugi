@@ -3,9 +3,8 @@ import { useMemo } from "react";
 import Fieldset from "components/Fieldset";
 import InputSearch from "components/Inputs/InputSearch";
 import Select from "components/Inputs/Select";
-import lang from "lang";
+import lang, { getEnumSelectValues } from "lang";
 
-import { getEnumSelectValues } from "api/common/enumHelper";
 import { FilterTextEqualsEnum } from "api/common/filters";
 import { IFilterTextValue } from "api/interfaces/components/GoodTable";
 

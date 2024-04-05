@@ -73,6 +73,7 @@ export interface IGoodTableField {
     disablePadding?: boolean;
     minWidth?: string;
     maxWidth?: string;
+    width?: string;
     wrap?: boolean;
 }
 
@@ -291,6 +292,7 @@ function GoodTable<T>({
             return newResult;
         });
     };
+
     if (responsiveView) {
         return (
             <TableContainer component={variant === "paper" ? Paper : Box}>

@@ -1,6 +1,6 @@
 import { PaperProps } from "@mui/material";
 
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
+import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
 import { ReactNode } from "react";
 
@@ -11,9 +11,9 @@ export interface IPage {
     isLoading?: boolean;
     children?: ReactNode;
     parepProps?: PaperProps;
-    roles?: UserRolesEnum[];
     redirectLink?: string;
     loadintText?: string;
     scrollTop?: boolean;
     fabMargin?: boolean;
+    roles?: TRoleCheckerRole[];
 }

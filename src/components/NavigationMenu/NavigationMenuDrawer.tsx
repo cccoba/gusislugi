@@ -1,13 +1,15 @@
 import { useMemo } from "react";
-import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from "@mui/material";
+import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import Icon from "components/Icon";
 import { menuToggle } from "store/reducers/ComponentsSlice";
+import IconButton from "components/Icon/IconButton";
+import { checkUserRoleAccess } from "components/RoleChecker";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { getServerFileUrl } from "api/common/helper";
-import IconButton from "components/Icon/IconButton";
+import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
 import menuList from "./menuList";
 
@@ -16,7 +18,7 @@ export interface INavigationMenu {
     title: string;
     icon: string;
     link: string;
-    access?: string[];
+    roles?: TRoleCheckerRole[];
 }
 
 function NavigationMenuDrawer() {
@@ -27,17 +29,9 @@ function NavigationMenuDrawer() {
     const dispatch = useAppDispatch();
     const filteredMenuList = useMemo<INavigationMenu[]>(() => {
         return menuList.filter((x) => {
-            if (x.access?.length) {
-                for (const access of x.access) {
-                    if (isAuth) {
-                        if (user?.role.params) {
-                            if (access in user.role.params) {
-                                const accValue = (user.role.params as any)[access];
-                                return accValue === "edit" || accValue === "view";
-                            }
-                        }
-                        return false;
-                    }
+            if (x.roles?.length) {
+                if (isAuth && !!user?.role.params) {
+                    return checkUserRoleAccess(x.roles, user.role.params);
                 }
             }
             return true;

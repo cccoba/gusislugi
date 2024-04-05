@@ -4,30 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import { enumToArrayObject } from "api/common/enumHelper";
-import { IRoleDto, TRoleParamValue } from "api/interfaces/user/IRoleDto";
+import { checkFlagIncludes } from "api/common/enumHelper";
+import { IRoleDto, TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import { RolePermissionFlagAny } from "api/enums/RolePermissionFlag";
 
 interface IProps {
-    roles: UserRolesEnum[];
+    roles: TRoleCheckerRole[];
     children: JSX.Element;
     redirectLink?: string | null;
 }
 
-export const getUserRoleAccess = (roleIds: UserRolesEnum[], userRoleParams?: IRoleDto["params"]): TRoleParamValue => {
+export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRoleDto["params"]): boolean => {
     if (!userRoleParams) {
-        return "no";
+        return false;
     }
-    var rolesNames = enumToArrayObject(UserRolesEnum)
-        .filter((x) => roleIds.includes(x.id))
-        .map((x) => x.value.toLocaleLowerCase());
-
-    for (const rolesName of rolesNames) {
-        if (rolesName in userRoleParams) {
-            return (userRoleParams as any)[rolesName];
+    for (const [roleName, flagValue = RolePermissionFlagAny] of roles) {
+        if (roleName in userRoleParams) {
+            if (checkFlagIncludes(flagValue, (userRoleParams as any)[roleName])) {
+                return true;
+            }
         }
     }
-    return "no";
+    return false;
 };
 
 export default function RoleChecker({ roles = [], children }: IProps) {
@@ -39,7 +37,7 @@ export default function RoleChecker({ roles = [], children }: IProps) {
     const [inRole, setInRole] = useState(false);
     useEffect(() => {
         if (!isLoading && !!roles?.length && currentUserRoleParams) {
-            setInRole(getUserRoleAccess(roles, currentUserRoleParams) !== "no");
+            setInRole(checkUserRoleAccess(roles, currentUserRoleParams));
         } else {
             if (!roles?.length) {
                 setInRole(true);

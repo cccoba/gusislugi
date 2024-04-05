@@ -1,5 +1,6 @@
-import { getEnumValue } from "api/common/enumHelper";
+import { enumToArray, enumToValuesArray, getEnumValue } from "api/common/enumHelper";
 import ruLang from "./ru";
+import { ISelectValue } from "components/Inputs/Select";
 type TLangTypes = "ru";
 const shortName: TLangTypes = "ru";
 const name = "ru-RU";
@@ -60,5 +61,18 @@ export function sortArray(arr: any[], fieldName: string, options = { numeric: tr
         const bValue = b[fieldName];
         return sorter.compare(aValue, bValue);
     });
+}
+export function getEnumSelectValues(enums: any, enumName: string): ISelectValue[] {
+    const enumNames = enumToArray(enums);
+    const enumValues = enumToValuesArray(enums);
+
+    const result: ISelectValue[] = [];
+    for (let i = 0; i < enumNames.length; i++) {
+        result.push({
+            id: enumValues[i],
+            title: getEnumTitle(enumName, enumNames[i].toString()),
+        });
+    }
+    return result;
 }
 export default lang;

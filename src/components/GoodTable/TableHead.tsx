@@ -58,6 +58,9 @@ export default function GoodTableHead({
         if (!!field?.minWidth) {
             newSx.minWidth = field.minWidth;
         }
+
+        newSx.width = field?.width || "auto";
+
         return newSx;
     };
     const onSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {

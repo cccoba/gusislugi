@@ -1,6 +1,3 @@
-import { ISelectValue } from "components/Inputs/Select";
-import { getEnumTitle } from "lang";
-
 export interface IEnumHelperObject {
     id: number;
     value: string;
@@ -41,19 +38,6 @@ export function enumToArrayObject(enums: any, transformCb: Function | null = nul
     }
     return result;
 }
-export function getEnumSelectValues(enums: any, enumName: string): ISelectValue[] {
-    const enumNames = enumToArray(enums);
-    const enumValues = enumToValuesArray(enums);
-
-    const result: ISelectValue[] = [];
-    for (let i = 0; i < enumNames.length; i++) {
-        result.push({
-            id: enumValues[i],
-            title: getEnumTitle(enumName, enumNames[i].toString()),
-        });
-    }
-    return result;
-}
 
 export function getEnumValue(enumValues: any, value: number): string | null {
     if (typeof enumValues[value] == "undefined") {
@@ -81,10 +65,36 @@ export function enumGetId(enumValues: any, value: any): number | null {
  * @param values массив значений
  * @returns битовая маска
  */
-export function getFlagByEnumValues(values: number[]): number {
+export function getFlagValuesToFlag(values: number[]): number {
     let result = 0;
     for (const item of values) {
         result |= item;
     }
     return result;
+}
+
+/**
+ *  из битовой маски получает массив значений
+ * @param value  битовая маска
+ * @returns массив значений
+ */
+export function getFlagToFlagValues(value: number, enumValue: any): number[] {
+    const result: number[] = [];
+    const roles = enumToArrayObject(enumValue);
+    for (const role of roles) {
+        if (value & role.id) {
+            result.push(role.id);
+        }
+    }
+    return result;
+}
+
+/**
+ * проверяем входит ли mask2 в подмножество mask1
+ * @param mask1 маска с которой сравниваем
+ * @param mask2 что сравниваем
+ * @returns
+ */
+export function checkFlagIncludes(mask1: number, mask2: number): boolean {
+    return (mask1 & mask2) === mask2;
 }

@@ -1,7 +1,13 @@
-export type TRoleParamName = "claims" | "messages";
-export type TRoleParamValue = "no" | "view" | "edit";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+
+export type TRoleCheckerRole = [keyof IRoleDto["params"], RolePermissionFlag?];
 export interface IRoleDto {
     id: number;
     title: string;
-    params: { [key in TRoleParamName]: TRoleParamValue };
+    params: {
+        admins?: RolePermissionFlag;
+        claims?: RolePermissionFlag;
+        qr?: RolePermissionFlag;
+        users?: RolePermissionFlag;
+    };
 }

@@ -1,14 +1,16 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
-import { getEnumValue } from "api/common/enumHelper";
-import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+
 import { GoodTable, Icon, RoleChecker } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import lang, { getEnumTitle } from "lang";
-import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { getEnumValue } from "api/common/enumHelper";
+import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { IClaimDto } from "api/interfaces/user/IClaimDto";
 
 interface IProps {
     claims: IClaimDto[];
@@ -40,7 +42,7 @@ function PassportClaims({ claims }: IProps) {
         navigate(`/claims/${data.id}`);
     };
     return (
-        <RoleChecker roles={[UserRolesEnum.Claims]}>
+        <RoleChecker roles={[["claims"]]}>
             <Accordion>
                 <AccordionSummary expandIcon={<Icon name="down" />}>
                     {langPage.title} ( {claims?.length} )

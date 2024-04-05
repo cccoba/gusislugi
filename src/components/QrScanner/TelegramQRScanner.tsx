@@ -14,7 +14,7 @@ const TelegramQRScanner = ({ onRead, onCancel }: IProps) => {
     const [showQrPopup, closeQrPopup] = useScanQrPopup();
     useEffect(() => {
         const startScan = () => {
-            showQrPopup({ text: "111" }, (text) => {
+            showQrPopup({ text: "" }, (text) => {
                 closeQrPopup();
                 alert(text);
                 onRead(text);

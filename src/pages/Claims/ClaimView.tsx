@@ -1,8 +1,7 @@
 import { Form } from "components";
 import { TFormField } from "components/Form";
-import lang from "lang";
+import lang, { getEnumSelectValues } from "lang";
 
-import { getEnumSelectValues } from "api/common/enumHelper";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { useMemo } from "react";

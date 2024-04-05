@@ -113,25 +113,6 @@ export function numberFixed(number: string | number, fixed: number): number | un
     }
     return undefined;
 }
-export function parseUrlParams(search?: string) {
-    if (search?.length) {
-        if (search[0] === "?") {
-            search = search.substring(1);
-        }
-        try {
-            const result = JSON.parse(
-                '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-                function (key, value) {
-                    return key === "" ? value : decodeURIComponent(value);
-                }
-            );
-            return result;
-        } catch (error) {
-            return {};
-        }
-    }
-    return {};
-}
 
 export function checkDate(dateValue: any) {
     if (typeof dateValue === "object" && typeof dateValue?.getMonth === "function") {

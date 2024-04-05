@@ -3,6 +3,7 @@ import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 import lang, { sprintf } from "lang";
+import RolePermissions from "components/Inputs/RolePermissions";
 
 import { isUrl } from "api/common/helper";
 import { checkDate } from "api/common/helper";
@@ -212,8 +213,6 @@ function FormInput({
                     control={control}
                     rules={rules}
                     render={({ field, fieldState }) => {
-                        if (name === "gradeTreeIds") console.log("fieldState", fieldState);
-
                         return (
                             <InputAutocomplete
                                 onChange={(v: any) => {
@@ -324,6 +323,33 @@ function FormInput({
                     render={({ field, fieldState }) => {
                         return (
                             <UserSelect
+                                onChangeValue={(value: any) => {
+                                    onInputChange(name, value);
+                                }}
+                                value={field.value}
+                                fullWidth={fullWidth}
+                                disabled={disabled}
+                                label={title}
+                                variant={variant}
+                                error={fieldState.invalid}
+                                helperText={fieldState.error?.message}
+                                required={required}
+                                {...fieldProps}
+                            />
+                        );
+                    }}
+                />
+            );
+        case "rolePermissions":
+            return (
+                <Controller
+                    key={name}
+                    name={name}
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => {
+                        return (
+                            <RolePermissions
                                 onChangeValue={(value: any) => {
                                     onInputChange(name, value);
                                 }}

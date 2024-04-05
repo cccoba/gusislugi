@@ -66,6 +66,9 @@ export interface IFormFieldImage extends IFormField {
 export interface IFormFieldUser extends IFormField {
     type: "user";
 }
+export interface IFormFieldRolePermissions extends IFormField {
+    type: "rolePermissions";
+}
 
 export interface IFormGroup {
     title: string;
@@ -80,7 +83,8 @@ export type TFormField =
     | IFormFieldSelect
     | IFormFieldSelectFiltered
     | IFormFieldSwitcher
-    | IFormFieldUser;
+    | IFormFieldUser
+    | IFormFieldRolePermissions;
 interface IProps {
     onSubmit?: (values: any) => void;
     onCancel?: () => void;
@@ -193,6 +197,9 @@ export default function Form({
                         break;
                     case "user":
                         newFields.push(field as IFormFieldUser);
+                        break;
+                    case "rolePermissions":
+                        newFields.push(field as IFormFieldRolePermissions);
                         break;
                     default:
                         newFields.push(field as IFormFieldText);

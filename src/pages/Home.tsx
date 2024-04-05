@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { Box, Card, CardActionArea, CardHeader, Grid, Typography } from "@mui/material";
+
 import lang from "lang";
 import { Icon, Link, Modal, Page, RoleChecker } from "components";
-import { UserRolesEnum } from "api/enums/UserRolesEnum";
-import { Box, Card, CardActionArea, CardHeader, Grid, Typography } from "@mui/material";
+
 import { useAppSelector } from "api/hooks/redux";
 import QrPrint from "components/QrPrint";
 import dateTime from "api/common/dateTime";
+
 const langPage = lang.pages.home;
 interface IHomeItem {
     title: string;
@@ -48,7 +50,7 @@ function Home() {
                 container
                 spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
             >
-                <RoleChecker roles={[UserRolesEnum.Qr]}>
+                <RoleChecker roles={[["qr"]]}>
                     <HomeItem
                         url="/qrScanner"
                         title={langPage.actions.qr}
