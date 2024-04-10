@@ -45,6 +45,7 @@ const ruComponents = {
     goodTable: {
         loading: "Загрузка...",
         rowsPerPage: "Записей на странице",
+        noRecords: "Нет записей",
         filters: {
             value: "Значение",
             searchType: "Фильтр",

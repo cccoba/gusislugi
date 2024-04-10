@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox, Box, Divider } from "@mui/material";
+import { TableHead as MuiTableHead, TableRow, TableCell, TableSortLabel, Checkbox, Box } from "@mui/material";
 
 import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 

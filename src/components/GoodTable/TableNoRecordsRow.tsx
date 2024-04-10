@@ -1,12 +1,14 @@
 import { TableCell, TableRow } from "@mui/material";
 
+import lang from "lang";
+
 interface IProps {
     noRecordsText?: string;
     fieldsLength?: number;
 }
-
-function GoodTableNoRecordsRow({ noRecordsText = "", fieldsLength = 1 }: IProps) {
-    if (!noRecordsText) {
+const langPage = lang.components.goodTable;
+function GoodTableNoRecordsRow({ noRecordsText, fieldsLength = 1 }: IProps) {
+    if (noRecordsText === "") {
         return null;
     }
     return (
@@ -15,7 +17,7 @@ function GoodTableNoRecordsRow({ noRecordsText = "", fieldsLength = 1 }: IProps)
                 colSpan={fieldsLength || 1}
                 align="center"
             >
-                {noRecordsText}
+                {noRecordsText || langPage.noRecords}
             </TableCell>
         </TableRow>
     );

@@ -1,8 +1,8 @@
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { IMoneyDto } from "api/interfaces/user/IMoneyDto";
+import { IUserMoneyDto } from "api/interfaces/Money/IUserMoneyDto";
 
 import { dataProvider } from "./dataProvider";
-import { IUserMoneyDto } from "api/interfaces/Money/IUserMoneyDto";
 
 const baseUrl = "money&view=";
 

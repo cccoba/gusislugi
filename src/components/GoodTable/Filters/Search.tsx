@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Menu } from "@mui/material";
+import { Box, Menu } from "@mui/material";
 
 import IconButton from "components/Icon/IconButton";
 
@@ -37,7 +37,7 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
         return null;
     }
     return (
-        <>
+        <Box>
             <Menu
                 anchorEl={anchorEl}
                 open={open}
@@ -63,7 +63,7 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
                 size="small"
                 onClick={toMenuShow}
             />
-        </>
+        </Box>
     );
 }
 

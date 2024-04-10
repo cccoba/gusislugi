@@ -5,7 +5,7 @@ import GoodTableLoader from "./TableLoader";
 import GoodTableRow from "./TableRow";
 import GoodTableNoRecordsRow from "./TableNoRecordsRow";
 
-import { IGoodTableField, IGoodTableProps } from ".";
+import { IGoodTableField } from ".";
 
 interface IProps<T> {
     fields: IGoodTableField[];
@@ -25,7 +25,7 @@ function GoodTableBody<T>({
     values = [],
     idName = "id",
     loading = false,
-    noRecordsText = "",
+    noRecordsText,
     isMultiSelection = false,
     selectedRows = [],
     onSelectRow,
@@ -35,7 +35,16 @@ function GoodTableBody<T>({
     const cursor = useMemo(() => {
         return onRowClick || isMultiSelection ? "pointer" : undefined;
     }, [onRowClick, isMultiSelection]);
-
+    const fieldsLength = useMemo(() => {
+        let newFieldsLength = 1;
+        if (!!fields?.length) {
+            newFieldsLength = fields.length;
+            if (isMultiSelection) {
+                newFieldsLength++;
+            }
+        }
+        return newFieldsLength;
+    }, [isMultiSelection, fields?.length]);
     const isSelected = (id: any) => {
         if (!selectedRows?.length) {
             return false;
@@ -84,7 +93,7 @@ function GoodTableBody<T>({
                     ) : (
                         <GoodTableNoRecordsRow
                             noRecordsText={noRecordsText}
-                            fieldsLength={fields?.length || 1}
+                            fieldsLength={fieldsLength}
                         />
                     )}
                 </>

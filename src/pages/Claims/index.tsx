@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import lang, { getEnumTitleValue, getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncAction, TCRUDAsuncActionCb } from "components/CRUDAsync/Main";
+import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
@@ -62,7 +62,7 @@ const editConfig: ICRUDAsyncEditConfig = {
 
 function Claims({ roles }: IPageWithRoles) {
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsuncActionCb = async (data: IClaimDto) => {
+    const onSaveStart: TCRUDAsyncActionCb = async (data: IClaimDto) => {
         return new Promise((resolve, reject) => {
             claims.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
