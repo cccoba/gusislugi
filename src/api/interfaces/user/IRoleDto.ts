@@ -9,5 +9,7 @@ export interface IRoleDto {
         claims?: RolePermissionFlag;
         qr?: RolePermissionFlag;
         users?: RolePermissionFlag;
+        medicalPolicies?: RolePermissionFlag;
+        taxes?: RolePermissionFlag;
     };
 }

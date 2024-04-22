@@ -14,7 +14,7 @@ import Select from "./Select";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
-const permissionList = ["admins", "claims", "qr", "users"];
+const permissionList = ["admins", "claims", "qr", "users", "medicalPolicies"];
 const permissions = permissionList.map((x) => ({
     id: x,
     title: getLangValue(lang.pipes.rolePermissions, x),
@@ -25,6 +25,7 @@ const defValue = {
     claims: [],
     qr: [],
     users: [],
+    medicalPolicies: [],
 };
 
 const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag");

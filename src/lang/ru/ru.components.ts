@@ -28,11 +28,12 @@ const ruComponents = {
     loader: {
         defaultText: "Идет загрузка. Подождите...",
     },
-    filterForm: {},
     form: {
         isRequired: "Поле обязательно к заполнению",
         minLength: "Поле должно иметь не менее %s символов",
         maxLength: "Поле должно иметь не более %s символов",
+        min: "Значение должно быть не меньше %s",
+        max: "Значение должно быть не больше %s",
         cancelBtn: "Отмена",
         submitBtn: "Сохранить",
         isNumber: "Значение должно быть числом",
@@ -102,6 +103,7 @@ const ruComponents = {
         users: "Пользователи",
         citizenships: "Гражданство",
         nationalities: "Национальность",
+        medicalPolicies: "Мед. полисы",
         qrScanner: "QR сканер",
         roles: "Роли",
     },
@@ -112,6 +114,9 @@ const ruComponents = {
         errors: {
             send: "Не удалось отправить оповещение пользователю",
         },
+    },
+    treeViewer: {
+        clearValue: "Удалить значение",
     },
     qrScanner: {
         text: "Считать QR-код",

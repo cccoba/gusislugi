@@ -31,6 +31,8 @@ type MediaType = "image" | "video";
 
 export interface IListItem {
     id: number | string;
+
+    key?: number | string;
     title: string;
     subTitle?: string;
     mediaId?: string;

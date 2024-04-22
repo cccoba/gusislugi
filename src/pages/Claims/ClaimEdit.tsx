@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang, { getEnumSelectValues } from "lang";
 import { Form } from "components";
+import { TFormField } from "components/Form/FormAdapters";
 
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
-import { TFormField } from "components/Form";
 
 const langPage = lang.pages.claims;
 

@@ -6,6 +6,21 @@ const ruPages = {
             title: "Название",
         },
     },
+    medicalPolicies: {
+        title: "Мед. полис",
+        statusActive: "Активен",
+        statusNotActive: "Не активен",
+        fields: {
+            id: "ID",
+            type: "Тип",
+            status: "Активен",
+            trauma_rescue: "Травма рескью",
+            number: "Номер",
+            created_at: "Дата выдачи",
+            endDate: "Дата окончания",
+            uid: "Пользователь",
+        },
+    },
     messages: {
         title: "Оповещения",
         detailsTitle: "Оповещения от %s",
@@ -19,6 +34,18 @@ const ruPages = {
         fields: {
             id: "ID",
             title: "Название",
+        },
+    },
+    taxes: {
+        title: "Налоги",
+        fields: {
+            id: "ID",
+            title: "Название",
+            status: "Статус",
+            value: "Сумма",
+            created_at: "Дата назначения",
+            endDate: "Дата просрочки платежа",
+            uid: "Пользователь",
         },
     },
     claims: {

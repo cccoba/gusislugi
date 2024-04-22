@@ -24,6 +24,8 @@ import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import MoneyUser from "pages/Money/User";
+import MedicalPolicies from "pages/MedicalPolicies";
+import Taxes from "pages/Taxes";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -141,6 +143,25 @@ export default function RouterPage() {
                                 />
                             }
                         />
+                        <Route
+                            path="/medicalPolicies/*"
+                            element={
+                                <MedicalPolicies
+                                    roles={[["medicalPolicies"]]}
+                                    icon="medical_services"
+                                />
+                            }
+                        />
+                        <Route
+                            path="/taxes/*"
+                            element={
+                                <Taxes
+                                    roles={[["taxes"]]}
+                                    icon="receipt_long"
+                                />
+                            }
+                        />
+
                         <Route
                             path="/money/*"
                             element={

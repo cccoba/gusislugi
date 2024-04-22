@@ -96,7 +96,7 @@ export default function UserSelect({
             }
         }
         getData();
-    }, [isInit]);
+    }, [isInit, value]);
     const delUsers = (ids: number[]) => {
         updateValue(selectedUsers.filter((u) => !ids.includes(u.id)).map((x) => x.id));
     };

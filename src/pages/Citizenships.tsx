@@ -40,7 +40,7 @@ function Citizenships({ roles }: IPageWithRoles) {
                 backUrl="/citizenships"
                 roles={roles}
                 title={langPage.title}
-                icon="group"
+                icon="list"
                 listConfig={listConfig}
                 editConfig={editConfig}
                 actions={actions}

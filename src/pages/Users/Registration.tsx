@@ -3,7 +3,8 @@ import { Box, Paper, Typography } from "@mui/material";
 
 import lang from "lang";
 import { Form } from "components";
-import { IFormField } from "components/Form";
+import { TFormField } from "components/Form/FormAdapters";
+
 import { users } from "api/data";
 import { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
 import { useNotifier } from "api/hooks/useNotifier";
@@ -12,10 +13,10 @@ import { useAppDispatch } from "api/hooks/redux";
 import { userInit } from "store/reducers/UserSlice";
 
 const langPage = lang.pages.registration;
-const fields: IFormField[] = [
-    { name: "lastName", title: langPage.fields.lastName, required: true },
-    { name: "firstName", title: langPage.fields.firstName, required: true },
-    { name: "passport", title: langPage.fields.passport, required: true },
+const fields: TFormField[] = [
+    { type: "text", name: "lastName", title: langPage.fields.lastName, required: true },
+    { type: "text", name: "firstName", title: langPage.fields.firstName, required: true },
+    { type: "text", name: "passport", title: langPage.fields.passport, required: true },
 ];
 
 const defValues: IUserRegistrationDto = {

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
 import GoodTable, { IGoodTableToolbarAction, IGoodTableField } from "components/GoodTable";
+import TreeViewer, { ITreeItem } from "components/TreeViewer";
 
 import { useNotifier } from "api/hooks/useNotifier";
 import { ISortData } from "api/interfaces/components/GoodTable";
@@ -17,16 +18,18 @@ export interface ICRUDAsyncListConfig {
     isMultiSelection?: boolean;
     fields: IGoodTableField[];
     orderBy: ISortData;
+    toTreeView?: (data: any[]) => ITreeItem[];
     transform?: (data: any) => any;
 }
 interface IProps {
     config: ICRUDAsyncListConfig;
-    onSelectId: (activeId: number) => void;
     actions: ICRUDAsyncAction[];
     rowId?: string;
-    onIsLoading: (isLoading: boolean) => void;
+
     needUpdate: string;
     initialValue?: any;
+    onIsLoading: (isLoading: boolean) => void;
+    onSelectId: (activeId: number) => void;
 }
 export default function CRUDAsyncList({
     config,
@@ -45,7 +48,7 @@ export default function CRUDAsyncList({
         loadList();
     }, [needUpdate]);
     const actionsList = useMemo(() => {
-        const getTableAction = (actionName: TCRUDAsyncActionCbName) => {
+        const getTableAction = (actionName: TCRUDAsyncActionCbName | "add") => {
             const res: IGoodTableToolbarAction<any> = {
                 name: actionName,
                 icon: actionName,
@@ -95,7 +98,7 @@ export default function CRUDAsyncList({
         }
 
         return tableActions;
-    }, [actions, selectedRows]);
+    }, [actions, selectedRows, initialValue, rowId]);
     const loadList = () => {
         const action = actions.find((x) => x.name === "list");
         if (action) {
@@ -107,7 +110,7 @@ export default function CRUDAsyncList({
                     if (error) {
                         throw error;
                     }
-                    if (result?.length) {
+                    if (result) {
                         setListData(result?.length ? (!!config.transform ? result.map(config.transform) : result) : []);
                     }
                 })
@@ -116,6 +119,7 @@ export default function CRUDAsyncList({
                 })
                 .finally(() => {
                     onIsLoading(false);
+                    setSelectedRows([]);
                 });
         }
     };
@@ -155,17 +159,27 @@ export default function CRUDAsyncList({
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
+
     return (
         <>
-            <GoodTable
-                fields={config.fields}
-                values={listData}
-                order={config.orderBy}
-                onSelectedRows={onSelected}
-                isMultiSelection={config.isMultiSelection}
-                actions={actionsList}
-                onRowDoubleClick={onRowDoubleClick}
-            />
+            {!!config?.toTreeView ? (
+                <TreeViewer
+                    values={config.toTreeView(listData)}
+                    actions={actionsList}
+                    onSelect={(value) => onSelected([{ id: value }])}
+                    value={selectedRows?.length ? selectedRows[0][rowId] : null}
+                />
+            ) : (
+                <GoodTable
+                    fields={config.fields}
+                    values={listData}
+                    order={config.orderBy}
+                    onSelectedRows={onSelected}
+                    isMultiSelection={config.isMultiSelection}
+                    actions={actionsList}
+                    onRowDoubleClick={onRowDoubleClick}
+                />
+            )}
             {!!deleteConfirm && (
                 <Confirm
                     onClose={onDeleteConfirmed}

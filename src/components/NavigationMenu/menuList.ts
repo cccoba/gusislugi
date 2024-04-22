@@ -40,16 +40,23 @@ const menuList: INavigationMenu[] = [
     {
         name: "citizenships",
         title: langPage.citizenships,
-        icon: "group",
+        icon: "list",
         link: "/citizenships",
         roles: [["admins"]],
     },
     {
         name: "nationalities",
         title: langPage.nationalities,
-        icon: "group",
+        icon: "list",
         link: "/nationalities",
         roles: [["admins"]],
+    },
+    {
+        name: "medicalPolicies",
+        title: langPage.medicalPolicies,
+        icon: "medical_services",
+        link: "/medicalPolicies",
+        roles: [["medicalPolicies"]],
     },
     {
         name: "users",

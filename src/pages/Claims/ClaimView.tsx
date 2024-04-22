@@ -1,5 +1,5 @@
 import { Form } from "components";
-import { TFormField } from "components/Form";
+import { TFormField } from "components/Form/FormAdapters";
 import lang, { getEnumSelectValues } from "lang";
 
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";

@@ -33,14 +33,14 @@ const listConfig: ICRUDAsyncListConfig = {
 };
 const editConfig: ICRUDAsyncEditConfig = {
     fields: [
-        { name: "fromUid", title: langPage.fields.fromUid, type: "number", required: true },
-        { name: "toUid", title: langPage.fields.toUid, type: "number", required: true },
+        { name: "fromUid", title: langPage.fields.fromUid, type: "user", required: true },
+        { name: "toUid", title: langPage.fields.toUid, type: "user", required: true },
         { name: "value", title: langPage.fields.value, type: "number", required: true },
     ],
 };
 const defInitialValue: IMoneyDto = {
     id: 0,
-    fromUid: 0,
+    fromUid: 1,
     toUid: 0,
     value: 0,
 };

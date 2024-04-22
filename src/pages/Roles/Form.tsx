@@ -1,9 +1,7 @@
-import { useState } from "react";
-
 import lang from "lang";
-import { Form, Page, PageOrModal } from "components";
+import { Form, PageOrModal } from "components";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
-import { TFormField } from "components/Form";
+import { TFormField } from "components/Form/FormAdapters";
 
 const langPage = lang.pages.roles;
 

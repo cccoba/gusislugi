@@ -1,9 +1,12 @@
+import { useMemo } from "react";
+
+import Form from "components/Form";
+import lang from "lang";
+import { TFormField } from "components/Form/FormAdapters";
+
 import { objCopy } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
-import Form, { IFormField, IFormFieldImage, IFormFieldSelect } from "components/Form";
-import lang from "lang";
-import { useMemo } from "react";
 
 interface IProps {
     user: IUserDto;
@@ -12,17 +15,17 @@ interface IProps {
 
 const langPage = lang.components.userForm;
 
-const defFields: IFormField[] = [
-    { name: "image", title: langPage.image, type: "image", fieldProps: { previewWidth: "200px" } } as IFormFieldImage,
-    { name: "lastName", title: langPage.lastName },
-    { name: "firstName", title: langPage.firstName },
-    { name: "nickname", title: langPage.nickname },
-    { name: "roleId", title: langPage.role, type: "select", values: [] } as IFormFieldSelect,
-    { name: "nationalityId", title: langPage.nationality, type: "select", values: [] } as IFormFieldSelect,
-    { name: "citizenshipId", title: langPage.citizenship, type: "select", values: [] } as IFormFieldSelect,
-    { name: "passport", title: langPage.passport },
-    { name: "registration", title: langPage.registration },
-    { name: "description", title: langPage.description, fieldProps: { multiline: true } },
+const defFields: TFormField[] = [
+    { name: "image", title: langPage.image, type: "image", fieldProps: { previewWidth: "200px" } },
+    { type: "text", name: "lastName", title: langPage.lastName },
+    { type: "text", name: "firstName", title: langPage.firstName },
+    { type: "text", name: "nickname", title: langPage.nickname },
+    { name: "roleId", title: langPage.role, type: "select", values: [] },
+    { name: "nationalityId", title: langPage.nationality, type: "select", values: [] },
+    { name: "citizenshipId", title: langPage.citizenship, type: "select", values: [] },
+    { type: "text", name: "passport", title: langPage.passport },
+    { type: "text", name: "registration", title: langPage.registration },
+    { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
 ];
 
 function UserForm({ user, onChangeValue }: IProps) {

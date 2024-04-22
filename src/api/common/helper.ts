@@ -77,6 +77,20 @@ export function generateGuid() {
         return v.toString(16);
     });
 }
+export function generateRandomString(count: number, keys: string): string {
+    let result: string = "";
+    const keysLength: number = keys.length;
+    if (keysLength === 0) {
+        return "";
+    }
+
+    for (let i = 0; i < count; i++) {
+        const randomIndex: number = Math.floor(Math.random() * keysLength);
+        result += keys.charAt(randomIndex);
+    }
+
+    return result;
+}
 export function isUrl(value: string) {
     if (!value?.length || typeof value !== "string") {
         return false;

@@ -1,5 +1,5 @@
 import Form from "components/Form";
-import lang from "lang";
+
 import { ICRUDAsyncEditConfig } from "./Edit";
 
 interface IProps {
@@ -13,6 +13,7 @@ function CRUDAsyncForm({ values, fields, onCancel, onSubmit }: IProps) {
     if (!values) {
         return null;
     }
+
     return (
         <Form
             fields={fields}

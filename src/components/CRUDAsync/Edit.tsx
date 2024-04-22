@@ -2,12 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
 import PageOrModal from "components/Page/PageOrModal";
+import { TFormField } from "components/Form/FormAdapters";
 
 import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data";
 import useParamsId from "api/hooks/useParamsId";
-
-import { TFormField } from "../Form";
 
 import { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncForm from "./Form";

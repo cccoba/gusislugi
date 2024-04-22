@@ -1,23 +1,9 @@
 import { useMemo } from "react";
-import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 import lang, { sprintf } from "lang";
-import RolePermissions from "components/Inputs/RolePermissions";
 
-import { isUrl } from "api/common/helper";
-import { checkDate } from "api/common/helper";
-
-import { Select, Switcher, InputAutocomplete, Counter, InputImage, UserSelect } from "..";
-
-import {
-    IFormField,
-    IFormFieldCounter,
-    IFormFieldImage,
-    IFormFieldSelect,
-    IFormFieldSelectFiltered,
-    IFormFieldText,
-} from ".";
+import FormAdapters, { IFormAdapter, IFormField } from "./FormAdapters";
 
 interface IProps extends IFormField {
     fieldsVariant: "filled" | "outlined" | "standard";
@@ -30,8 +16,22 @@ interface IProps extends IFormField {
 
 const langPage = lang.components.form;
 
+function getInput(adapters: IFormAdapter[], adapterName: string) {
+    const adapter = adapters.find((x) => x.name === adapterName);
+    if (adapter) {
+        return adapter.input;
+    }
+    return adapters.find((x) => x.name === "text")?.input || null;
+}
+function getValidate(adapters: IFormAdapter[], adapterName: string) {
+    const adapter = adapters.find((x) => x.name === adapterName);
+    if (adapter) {
+        return adapter.validate;
+    }
+    return () => true;
+}
 function FormInput({
-    type = "text",
+    type,
     name,
     title,
     required = false,
@@ -74,97 +74,9 @@ function FormInput({
                 return fieldParams.pattern.test(v) || langPage.pattern;
             };
         } else {
-            switch (type) {
-                case "number":
-                case "counter":
-                    newRules.validate = (v: any) => {
-                        if (!required && !v?.length) {
-                            return true;
-                        }
-                        return /^[0-9]+$/.test(v) || langPage.isNumber;
-                    };
-                    break;
-                case "user":
-                    newRules.validate = (v: any) => {
-                        if (!required && !v?.length) {
-                            return true;
-                        }
-                        return (/^[0-9]+$/.test(v) && v > 0) || langPage.isRequired;
-                    };
-                    break;
-                case "date":
-                    newRules.validate = (v: any) => {
-                        if (!required && !v) {
-                            return true;
-                        }
-                        return checkDate(v) || langPage.isDate;
-                    };
-                    break;
-                case "dateTime":
-                    newRules.validate = (v: any) => {
-                        if (!required && !v) {
-                            return true;
-                        }
-                        return checkDate(v) || langPage.isDate;
-                    };
-                    break;
-                case "phone":
-                    newRules.validate = (v: any) => {
-                        if (!required && v?.length === 0) {
-                            return true;
-                        }
-                        const value = v.replace(/(\D)/g, "").toString();
-                        return (value[0] === "7" && value.length === 11) || langPage.isPhone;
-                    };
-                    break;
-                case "image":
-                    newRules.validate = (v: any) => {
-                        if (!!required) {
-                            return !!v && Number.isInteger(v);
-                        }
-                        return true;
-                    };
-                    break;
-                case "email":
-                    newRules.validate = (v: any) => {
-                        if (!required && v?.length === 0) {
-                            return true;
-                        }
-                        return (
-                            String(v)
-                                .toLowerCase()
-                                .match(
-                                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                                ) || langPage.isEmail
-                        );
-                    };
-                    break;
-                case "url":
-                    newRules.validate = (v: any) => {
-                        if (!required && v?.length === 0) {
-                            return true;
-                        }
-                        return isUrl(v);
-                    };
-                    break;
-                case "time":
-                    newRules.validate = (v: any) => {
-                        if (!!required) {
-                            if (!v?.length || v === "--:--" || v === ":00") {
-                                return false;
-                            }
-                        }
-                        return true;
-                    };
-                    break;
-                case "text":
-                    newRules.validate = (v: any) => {
-                        if (!!required && !v?.length) {
-                            return false;
-                        }
-                        return true;
-                    };
-                    break;
+            const validateFn = getValidate(FormAdapters, type);
+            if (!!validateFn) {
+                newRules.validate = (v: any) => validateFn(v, required, fieldParams);
             }
         }
         return newRules;
@@ -173,236 +85,35 @@ function FormInput({
     if (!!hidden) {
         return null;
     }
-    switch (type) {
-        case "select":
-            const selectFormField = fieldParams as IFormFieldSelect;
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <Select
-                                onChangeValue={(v) => {
-                                    onInputChange(name, v);
-                                }}
-                                value={field.value}
-                                values={!!selectFormField?.values?.length ? selectFormField.values : []}
-                                multiple={!!selectFormField?.multiple}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                label={title}
-                                variant={variant}
-                                required={required}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "selectFiltered":
-            const selectFormFieldFiltered = fieldParams as IFormFieldSelectFiltered;
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <InputAutocomplete
-                                onChange={(v: any) => {
-                                    onInputChange(name, v);
-                                }}
-                                value={field.value}
-                                values={!!selectFormFieldFiltered?.values?.length ? selectFormFieldFiltered.values : []}
-                                multiple={!!selectFormFieldFiltered?.multiple}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                label={title}
-                                variant={variant}
-                                required={required}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "switcher":
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    rules={rules}
-                    control={control}
-                    render={({ field }) => {
-                        return (
-                            <Switcher
-                                onChangeValue={(v) => onInputChange(name, v)}
-                                textValue={title}
-                                value={!!field.value}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                variant={variant}
-                                required={required}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "counter":
-            const counterFieldParams = fieldParams as IFormFieldCounter;
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <Counter
-                                onChangeValue={(v: string) => onInputChange(name, v)}
-                                {...counterFieldParams}
-                                value={field.value}
-                                label={title}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                variant={variant}
-                                required={required}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "image":
-            const imageProps = fieldParams as IFormFieldImage;
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <InputImage
-                                onChangeValue={(value: any) => {
-                                    onInputChange(name, value);
-                                }}
-                                value={field.value}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                label={title}
-                                variant={variant}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                required={required}
-                                {...fieldProps}
-                                {...imageProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "user":
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <UserSelect
-                                onChangeValue={(value: any) => {
-                                    onInputChange(name, value);
-                                }}
-                                value={field.value}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                label={title}
-                                variant={variant}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                required={required}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        case "rolePermissions":
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <RolePermissions
-                                onChangeValue={(value: any) => {
-                                    onInputChange(name, value);
-                                }}
-                                value={field.value}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                label={title}
-                                variant={variant}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                required={required}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
-        default:
-            const textFormField = fieldParams as IFormFieldText;
-            if (!fieldProps) {
-                fieldProps = {};
-            }
-            if (!!textFormField.maxLength) {
-                if (!fieldProps?.inputProps) {
-                    fieldProps.inputProps = {};
-                }
-                fieldProps.inputProps.maxLength = textFormField.maxLength;
-            }
-            return (
-                <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <TextField
-                                {...field}
-                                onChange={(e: any) => onInputChange(name, e.target.value)}
-                                label={title}
-                                type={type}
-                                fullWidth={fullWidth}
-                                disabled={disabled}
-                                variant={variant}
-                                error={fieldState.invalid}
-                                helperText={fieldState.error?.message}
-                                required={required}
-                                {...fieldProps}
-                            />
-                        );
-                    }}
-                />
-            );
+
+    const Input: any = getInput(FormAdapters, type);
+    if (Input !== null) {
+        return (
+            <Controller
+                key={name}
+                name={name}
+                control={control}
+                rules={rules}
+                render={({ field, fieldState }) => {
+                    return (
+                        <Input
+                            onChangeValue={(v: any) => onInputChange(name, v)}
+                            value={field?.value}
+                            fieldProps={fieldProps}
+                            required={required}
+                            fullWidth={fullWidth}
+                            disabled={disabled}
+                            label={title}
+                            variant={variant}
+                            error={fieldState.invalid}
+                            helperText={fieldState.error?.message}
+                            fieldParams={fieldParams}
+                        />
+                    );
+                }}
+            />
+        );
     }
+    return null;
 }
 export default FormInput;

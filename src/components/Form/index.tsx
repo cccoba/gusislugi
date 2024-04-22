@@ -1,10 +1,9 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Box, SxProps, Typography } from "@mui/material";
 
 import lang from "lang";
 import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
-import { ISelectValue } from "components/Inputs/Select";
 
 import { useAppDispatch } from "api/hooks/redux";
 
@@ -12,79 +11,12 @@ import { Fieldset } from "..";
 
 import FormInput from "./FormInput";
 import FormButtons from "./FormButtons";
-
-export interface IFormField {
-    name: string;
-    title: string;
-    type?: any;
-    onChange?: (value: any) => void;
-    required?: boolean;
-    validateFn?: (value: any) => string | null;
-    pattern?: string;
-    fieldProps?: any;
-    fullWidth?: boolean;
-    disabled?: boolean;
-    variant?: "filled" | "outlined" | "standard";
-    group?: string;
-    hidden?: boolean;
-}
-export interface IFormFieldText extends IFormField {
-    minLength?: number;
-    maxLength?: number;
-    type: "text" | "number" | "url";
-}
-export interface IFormFieldSelect extends IFormField {
-    type: "select";
-    values?: ISelectValue[];
-    multiple?: boolean;
-}
-export interface IFormFieldSelectFiltered extends IFormField {
-    type: "selectFiltered";
-    values?: ISelectValue[];
-    multiple?: boolean;
-}
-
-export interface IFormFieldPassword extends IFormField {
-    type: "password";
-}
-export interface IFormFieldEmail extends IFormField {
-    type: "email";
-}
-
-export interface IFormFieldSwitcher extends IFormField {
-    type: "switcher";
-}
-export interface IFormFieldCounter extends IFormField {
-    type: "counter";
-    minValue?: number;
-    maxValue?: number;
-    step?: number;
-}
-export interface IFormFieldImage extends IFormField {
-    type: "image";
-}
-export interface IFormFieldUser extends IFormField {
-    type: "user";
-}
-export interface IFormFieldRolePermissions extends IFormField {
-    type: "rolePermissions";
-}
+import { TFormField } from "./FormAdapters";
 
 export interface IFormGroup {
     title: string;
     name: string;
 }
-export type TFormField =
-    | IFormFieldText
-    | IFormFieldCounter
-    | IFormFieldEmail
-    | IFormFieldImage
-    | IFormFieldPassword
-    | IFormFieldSelect
-    | IFormFieldSelectFiltered
-    | IFormFieldSwitcher
-    | IFormFieldUser
-    | IFormFieldRolePermissions;
 interface IProps {
     onSubmit?: (values: any) => void;
     onCancel?: () => void;
@@ -139,7 +71,6 @@ export default function Form({
         reset,
         getValues,
     } = useForm({ mode: "onChange" });
-    const [formFields, setFormFields] = useState<IFormField[]>([]);
     const dispatch = useAppDispatch();
     const [columnSx, setColumnSx] = useState<SxProps>({});
     useEffect(() => {
@@ -168,46 +99,14 @@ export default function Form({
             reset(values);
         }
     }, [values, isInit]);
-    useEffect(() => {
-        const newFields: IFormField[] = [];
+
+    const formFields = useMemo(() => {
         if (!!isInit && !!fields?.length) {
-            for (const field of fields) {
-                const type = !!field?.type ? field.type : "text";
-                switch (type) {
-                    case "select":
-                        newFields.push(field as IFormFieldSelect);
-                        break;
-                    case "selectFiltered":
-                        newFields.push(field as IFormFieldSelectFiltered);
-                        break;
-                    case "password":
-                        newFields.push(field as IFormFieldPassword);
-                        break;
-                    case "email":
-                        newFields.push(field as IFormFieldEmail);
-                        break;
-                    case "switcher":
-                        newFields.push(field as IFormFieldSwitcher);
-                        break;
-                    case "counter":
-                        newFields.push(field as IFormFieldCounter);
-                        break;
-                    case "image":
-                        newFields.push(field as IFormFieldImage);
-                        break;
-                    case "user":
-                        newFields.push(field as IFormFieldUser);
-                        break;
-                    case "rolePermissions":
-                        newFields.push(field as IFormFieldRolePermissions);
-                        break;
-                    default:
-                        newFields.push(field as IFormFieldText);
-                }
-            }
+            return fields;
         }
-        setFormFields(newFields);
+        return [];
     }, [fields, isInit]);
+
     useEffect(() => {
         if (!!onIsValidChanged) {
             onIsValidChanged(isValid);
@@ -236,7 +135,6 @@ export default function Form({
             onInputChanged(getValues(), errors);
         }
     };
-
     if (!isInit) {
         return null;
     }
@@ -259,15 +157,14 @@ export default function Form({
                               >
                                   {formFields
                                       .filter((f) => f?.group === g.name)
-                                      .map((formField: IFormField, index) => {
+                                      .map((formField: TFormField, index) => {
                                           const variant = !!formField?.variant ? formField.variant : fieldsVariant;
                                           let sx: SxProps = {};
                                           if (variant === "outlined") {
-                                              sx = { mb: 1 };
+                                              sx = { ...columnSx, mb: 1 };
                                           } else {
-                                              sx = { mt: index === 0 ? 0 : 2 };
+                                              sx = { ...columnSx, mt: index === 0 ? 0 : 2 };
                                           }
-                                          sx = { ...sx, ...columnSx };
                                           if (!!formField?.hidden) {
                                               return null;
                                           }
@@ -288,16 +185,14 @@ export default function Form({
                               </Fieldset>
                           );
                       })
-                    : formFields.map((formField: IFormField, index) => {
+                    : formFields.map((formField: TFormField, index) => {
                           const variant = !!formField?.variant ? formField.variant : fieldsVariant;
                           let sx: SxProps = {};
                           if (variant === "outlined") {
-                              sx = { mb: 1.5 };
+                              sx = { ...columnSx, mb: 1.5 };
                           } else {
-                              sx = { mt: index === 0 && columnCount === 1 ? 0 : 2 };
+                              sx = { ...columnSx, mt: index === 0 && columnCount === 1 ? 0 : 2 };
                           }
-                          sx = { ...sx, ...columnSx };
-
                           if (!!formField?.hidden) {
                               return null;
                           }
