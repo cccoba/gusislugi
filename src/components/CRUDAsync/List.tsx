@@ -11,6 +11,8 @@ import { webApiResultData } from "api/data";
 import Confirm, { IConfirmProps } from "../Confirm";
 
 import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { checkFlagIncludes } from "api/common/enumHelper";
 
 const langPage = lang.components.crud;
 
@@ -28,6 +30,8 @@ interface IProps {
 
     needUpdate: string;
     initialValue?: any;
+
+    permissions: RolePermissionFlag;
     onIsLoading: (isLoading: boolean) => void;
     onSelectId: (activeId: number) => void;
 }
@@ -35,9 +39,10 @@ export default function CRUDAsyncList({
     config,
     needUpdate = "",
     actions,
-    onSelectId,
     rowId = "id",
     initialValue,
+    permissions,
+    onSelectId,
     onIsLoading,
 }: IProps) {
     const [selectedRows, setSelectedRows] = useState<any[]>([]);
@@ -88,20 +93,31 @@ export default function CRUDAsyncList({
             return res;
         };
         const tableActions = [];
-        if (typeof initialValue !== "undefined") {
+        if (typeof initialValue !== "undefined" && checkFlagIncludes(permissions, RolePermissionFlag.Add)) {
             tableActions.push(getTableAction("add"));
         }
         for (const action of actions) {
             if (action.name !== "list" && action.name !== "save") {
-                tableActions.push(getTableAction(action.name));
+                switch (action.name) {
+                    case "delete":
+                        if (checkFlagIncludes(permissions, RolePermissionFlag.Delete)) {
+                            tableActions.push(getTableAction(action.name));
+                        }
+                        break;
+                    case "edit":
+                        if (checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
+                            tableActions.push(getTableAction(action.name));
+                        }
+                        break;
+                }
             }
         }
 
         return tableActions;
-    }, [actions, selectedRows, initialValue, rowId]);
+    }, [actions, selectedRows, initialValue, rowId, permissions]);
     const loadList = () => {
         const action = actions.find((x) => x.name === "list");
-        if (action) {
+        if (action && checkFlagIncludes(permissions, RolePermissionFlag.View)) {
             onIsLoading(true);
             action
                 .cb()
@@ -125,7 +141,7 @@ export default function CRUDAsyncList({
     };
     const onRowDoubleClick = (row: any) => {
         const action = actions.find((x) => x.name === "edit");
-        if (action) {
+        if (action && checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
             onSelectId(row.id);
         }
     };

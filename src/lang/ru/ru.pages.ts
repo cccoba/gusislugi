@@ -10,6 +10,10 @@ const ruPages = {
         title: "Мед. полис",
         statusActive: "Активен",
         statusNotActive: "Не активен",
+        message: {
+            title: "Мед. полис",
+            text: 'Ваша полис "%s" в статусе "%s"',
+        },
         fields: {
             id: "ID",
             type: "Тип",
@@ -38,6 +42,10 @@ const ruPages = {
     },
     taxes: {
         title: "Налоги",
+        message: {
+            title: "Налоги",
+            text: 'Налог %s на сумму "%s" в статусе "%s"',
+        },
         fields: {
             id: "ID",
             title: "Название",
@@ -73,6 +81,7 @@ const ruPages = {
             toUid: "Получатель",
             value: "Сумма",
             created_at: "Дата",
+            hidden: "Скрыть",
         },
     },
     profile: {
@@ -171,6 +180,25 @@ const ruPages = {
         startScan: "Начать сканирование QR",
         errors: {
             notDetect: "Данный код сюда не подходит",
+        },
+    },
+    wanteds: {
+        title: "Розыск",
+        statusActive: "Активен",
+        statusNotActive: "Не активен",
+        hiddenHint: "Пользователь увидит что его ищут",
+        message: {
+            title: "Розыск",
+            text: 'Статус вашего розыска "%s"',
+        },
+        fields: {
+            id: "ID",
+            type: "Уровень",
+            status: "Статус розыска",
+            hidden: "Уведомить разыскиваемого",
+            created_at: "Дата создания",
+            uid: "Разыскиваемый",
+            description: "Описание",
         },
     },
     users: {

@@ -9,6 +9,7 @@ import CRUDAsyncEdit from "./Edit";
 import CRUDAsyncList from "./List";
 
 import { ICRUDAsyncProps } from ".";
+import { RolePermissionFlagAny } from "api/enums/RolePermissionFlag";
 
 export type TCRUDAsyncActionCbName = "list" | "add" | "edit" | "delete" | "save";
 export type TCRUDAsyncActionCb = (params?: any) => Promise<IWebDataResult<any>>;
@@ -25,6 +26,7 @@ export default function CRUDAsyncMain({
     initialValue,
     title,
     roles,
+    permissions = RolePermissionFlagAny,
 }: ICRUDAsyncProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +54,7 @@ export default function CRUDAsyncMain({
                     onIsLoading={setIsLoading}
                     onSaved={toUpdate}
                     initialValue={initialValue}
+                    permissions={permissions}
                 />
             )}
             <CRUDAsyncList
@@ -61,6 +64,7 @@ export default function CRUDAsyncMain({
                 onIsLoading={setIsLoading}
                 needUpdate={needUpdate}
                 initialValue={initialValue}
+                permissions={permissions}
             />
         </Page>
     );

@@ -11,10 +11,10 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 const langPage = lang.pages.citizenships;
 
 const listConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: true,
+    isMultiSelection: false,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
-        { name: "id", title: langPage.fields.id },
+        { name: "id", title: langPage.fields.id, width: "90px" },
         { name: "title", title: langPage.fields.title },
     ],
 };

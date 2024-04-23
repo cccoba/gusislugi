@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
+import { messages, webApiResultData } from "api/data";
+import { useNotifier } from "api/hooks/useNotifier";
 
 import lang from "lang";
 
 import Modal from "./Modal";
-import { messages, webApiResultData } from "api/data";
-import { useNotifier } from "api/hooks/useNotifier";
+import Form from "./Form";
 
 export interface ISendUserNotificationProps {
     text: string;
@@ -46,31 +47,25 @@ function SendUserNotification({ text, title, uid, onClose }: IProps) {
         <Modal
             open
             title={title || langPage.title}
+            responsiveWidth
+            withCloseButton
+            onClose={onCancel}
         >
-            <TextField
-                fullWidth
-                label={langPage.title}
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                sx={{ mt: 2 }}
-                multiline
+            <Form
+                values={{ text }}
+                fields={[
+                    {
+                        name: "text",
+                        title: langPage.title,
+                        type: "text",
+                        required: true,
+                        fieldProps: { multiline: true },
+                    },
+                ]}
+                onCancel={onCancel}
+                onSubmit={onSend}
+                submitBtnText={lang.send}
             />
-            <Box textAlign="right">
-                <Button
-                    onClick={onCancel}
-                    color="inherit"
-                >
-                    {lang.cancel}
-                </Button>
-                <Button
-                    onClick={onSend}
-                    color="primary"
-                    autoFocus
-                    disabled={!message?.length}
-                >
-                    {lang.send}
-                </Button>
-            </Box>
         </Modal>
     );
 }

@@ -45,12 +45,25 @@ const ruPipes = {
         qr: "QR-сканер",
         users: "Пользователи",
         medicalPolicies: "Мед. полис",
+        taxes: "Налоги",
+        wanteds: "Розыск",
     },
     rolePermissionAction: {
         view: "Просмотр",
         add: "Создавать",
         edit: "Редактировать",
         delete: "Удалять",
+    },
+    taxeStatus: {
+        active: "Не оплачен",
+        completed: "Оплачен",
+        expired: "Просрочен",
+    },
+    wantedType: {
+        minima: "Минима",
+        minoris: "Минорис",
+        majoris: "Майорис",
+        ekstremis: "Экстремис",
     },
 };
 export default ruPipes;

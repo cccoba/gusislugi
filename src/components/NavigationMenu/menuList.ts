@@ -59,6 +59,21 @@ const menuList: INavigationMenu[] = [
         roles: [["medicalPolicies"]],
     },
     {
+        name: "taxes",
+        title: langPage.taxes,
+        icon: "taxes",
+        link: "/taxes",
+        roles: [["taxes"]],
+    },
+    {
+        name: "wanteds",
+        title: lang.pages.wanteds.title,
+        icon: "wanteds",
+        link: "/wanteds",
+        roles: [["wanteds"]],
+    },
+
+    {
         name: "users",
         title: langPage.users,
         icon: "group",

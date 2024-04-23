@@ -106,6 +106,7 @@ const ruComponents = {
         medicalPolicies: "Мед. полисы",
         qrScanner: "QR сканер",
         roles: "Роли",
+        taxes: "Налоги",
     },
     rolePermissions: {},
     sendUserNotification: {

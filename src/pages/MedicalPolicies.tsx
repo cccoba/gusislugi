@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
-import lang, { getEnumSelectValues } from "lang";
+import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
@@ -15,6 +15,8 @@ import { generateRandomString } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
+import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 const langPage = lang.pages.medicalPolicies;
 
@@ -92,41 +94,32 @@ const editConfig: ICRUDAsyncEditConfig = {
 
 function MedicalPolicies({ roles, icon }: IPageWithRoles) {
     const currentUserRoleMedicalPolicies = useAppSelector((s) => s.user.user?.role?.params?.medicalPolicies);
-    const props = useMemo(() => {
-        const newRoleActions: any = { initialValue: undefined, actions: [] };
-        if (!!currentUserRoleMedicalPolicies) {
-            if (checkFlagIncludes(currentUserRoleMedicalPolicies, RolePermissionFlag.Add)) {
-                newRoleActions.initialValue = {
-                    id: 0,
-                    number: generateRandomString(10, "1234567890"),
-                    uid: 0,
-                    type: MedicalPoliciesTypeEnum.Oms,
-                    trauma_rescue: false,
-                    status: true,
-                    endDate: dayjs().add(24, "hour").toDate(),
-                };
-                if (newRoleActions.actions.findIndex((x: any) => x.name === "save") === -1) {
-                    newRoleActions.actions.push({ name: "save", cb: medicalPolicies.crudSave });
-                }
-            }
-            if (checkFlagIncludes(currentUserRoleMedicalPolicies, RolePermissionFlag.Edit)) {
-                newRoleActions.actions.push({ name: "edit", cb: medicalPolicies.crudGet });
-                if (newRoleActions.actions.findIndex((x: any) => x.name === "save") === -1) {
-                    newRoleActions.actions.push({ name: "save", cb: medicalPolicies.crudSave });
-                }
-            }
-            if (checkFlagIncludes(currentUserRoleMedicalPolicies, RolePermissionFlag.Delete)) {
-                newRoleActions.actions.push({ name: "delete", cb: medicalPolicies.crudDelete });
-            }
-            if (checkFlagIncludes(currentUserRoleMedicalPolicies, RolePermissionFlag.View)) {
-                newRoleActions.actions.push({ name: "list", cb: medicalPolicies.crudList });
-            }
-        }
-        return newRoleActions;
-    }, [currentUserRoleMedicalPolicies]);
-
+    const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
+    const onSaveStart: TCRUDAsyncActionCb = async (data: IMedicalPoliciesDto) => {
+        return new Promise((resolve, reject) => {
+            medicalPolicies.crudSave(data).then(resolve).catch(reject);
+            setNotificationData({
+                uid: data.uid,
+                title: langPage.message.title,
+                text: sprintf(
+                    langPage.message.text,
+                    getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", data.type),
+                    data.status ? langPage.statusActive : langPage.statusNotActive
+                ),
+            });
+        });
+    };
+    const hideNotificationData = () => {
+        setNotificationData(null);
+    };
     return (
         <>
+            {!!notificationData && (
+                <SendUserNotification
+                    {...notificationData}
+                    onClose={hideNotificationData}
+                />
+            )}
             <CRUDAsync
                 backUrl="/medicalPolicies"
                 roles={roles}
@@ -134,8 +127,22 @@ function MedicalPolicies({ roles, icon }: IPageWithRoles) {
                 icon={icon}
                 listConfig={listConfig}
                 editConfig={editConfig}
-                actions={props.actions}
-                initialValue={props.initialValue}
+                actions={[
+                    { name: "save", cb: onSaveStart },
+                    { name: "edit", cb: medicalPolicies.crudGet },
+                    { name: "delete", cb: medicalPolicies.crudDelete },
+                    { name: "list", cb: medicalPolicies.crudList },
+                ]}
+                initialValue={{
+                    id: 0,
+                    number: generateRandomString(10, "1234567890"),
+                    uid: 0,
+                    type: MedicalPoliciesTypeEnum.Oms,
+                    trauma_rescue: false,
+                    status: true,
+                    endDate: dayjs().add(24, "hour").toDate(),
+                }}
+                permissions={currentUserRoleMedicalPolicies}
             />
         </>
     );

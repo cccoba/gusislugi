@@ -59,10 +59,10 @@ export default function Modal({
     const [maxWidthState, setMaxWidthState] = useState(maxWidth);
     useEffect(() => {
         if (responsiveWidth) {
-            setFullWidthState(true);
             if (deviceScreenName === "mobile") {
                 setFullScreenState(true);
             } else {
+                setFullWidthState(true);
                 setMaxWidthState(deviceScreenType);
             }
         }

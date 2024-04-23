@@ -4,6 +4,7 @@ export interface IMoneyDto {
     id: number;
     fromUid: number;
     toUid: number;
+    hidden: boolean;
     fromUser?: IUserShortDto;
     toUser?: IUserShortDto;
     created_at?: Date;

@@ -27,7 +27,7 @@ const listConfig: ICRUDAsyncListConfig = {
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     transform: (data: IMoneyDto) => ({
         ...data,
-        from_user: data.from_user?.fullName || lang.unknown,
+        from_user: data.hidden ? lang.unknown : data.from_user?.fullName || lang.unknown,
         to_user: data.to_user?.fullName || lang.unknown,
     }),
 };
@@ -36,6 +36,7 @@ const editConfig: ICRUDAsyncEditConfig = {
         { name: "fromUid", title: langPage.fields.fromUid, type: "user", required: true },
         { name: "toUid", title: langPage.fields.toUid, type: "user", required: true },
         { name: "value", title: langPage.fields.value, type: "number", required: true },
+        { name: "hidden", title: "", text: langPage.fields.hidden, type: "switcher" },
     ],
 };
 const defInitialValue: IMoneyDto = {
@@ -43,6 +44,7 @@ const defInitialValue: IMoneyDto = {
     fromUid: 1,
     toUid: 0,
     value: 0,
+    hidden: false,
 };
 function MoneyList({ roles, icon }: IPageWithRoles) {
     const currentUserPermissions = useAppSelector((s) => s.user.user?.role.params);

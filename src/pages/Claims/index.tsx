@@ -75,6 +75,9 @@ function Claims({ roles }: IPageWithRoles) {
             });
         });
     };
+    const hideNotificationData = () => {
+        setNotificationData(null);
+    };
 
     const actions: ICRUDAsyncAction[] = [
         { name: "list", cb: claims.crudList },
@@ -83,15 +86,12 @@ function Claims({ roles }: IPageWithRoles) {
         { name: "save", cb: onSaveStart },
     ];
 
-    const onConfirm = (result: boolean) => {
-        setNotificationData(null);
-    };
     return (
         <>
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    onClose={onConfirm}
+                    onClose={hideNotificationData}
                 />
             )}
             <CRUDAsync

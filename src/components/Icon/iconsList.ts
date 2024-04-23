@@ -6,6 +6,8 @@ const icn: any = {
     user: "person",
     userAdd: "person_add",
     users: "people",
+    taxes: "receipt_long",
+    wanteds: "local_police",
 };
 
 export default icn;

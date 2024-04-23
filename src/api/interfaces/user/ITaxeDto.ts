@@ -2,9 +2,10 @@ import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 
 import { IUserShortDto } from "./IUserShortDto";
 
-export interface ITaxesDto {
+export interface ITaxeDto {
     id: number;
     uid: number;
+    title: string;
     status: TaxeStatusEnum;
     value: number;
     endDate: Date;

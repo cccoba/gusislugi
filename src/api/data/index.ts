@@ -11,5 +11,6 @@ export { default as passport } from "./passport";
 export { default as roles } from "./roles";
 export { default as taxes } from "./taxes";
 export { default as users } from "./users";
+export { default as wanteds } from "./wanteds";
 
 export { webApiResultData } from "./dataProvider";
