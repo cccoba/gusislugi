@@ -83,6 +83,27 @@ const ruPages = {
             created_at: "Дата",
             hidden: "Скрыть",
         },
+        sgp: {
+            title: "Система Гусиных Платежей",
+            history: "История переводов",
+            send: "Перевести деньги",
+            fields: {
+                money: "Ваш баланс",
+            },
+        },
+        history: {
+            title: "История переводов",
+            noRecordsText: "Еще не было переводов",
+            fields: {
+                fromUid: "Отправитель",
+                toUid: "Получатель",
+                value: "Сумма",
+                created_at: "Дата",
+            },
+            errors: {
+                history: "Не удалось получить историю платежей!",
+            },
+        },
     },
     profile: {
         title: "Мой профиль",

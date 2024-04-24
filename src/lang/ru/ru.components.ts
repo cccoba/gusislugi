@@ -98,6 +98,7 @@ const ruComponents = {
     navigationMenu: {
         home: "Главное",
         profile: "Профиль",
+        sgp: "СГП",
         claims: "Заявки",
         money: "Финансы",
         users: "Пользователи",

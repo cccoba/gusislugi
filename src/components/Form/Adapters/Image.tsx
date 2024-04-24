@@ -23,6 +23,7 @@ function FormInput({ value = "", fieldProps, fieldParams, ...props }: IFormAdapt
             value={value}
             {...props}
             {...fieldProps}
+            {...fieldParams}
         />
     );
 }

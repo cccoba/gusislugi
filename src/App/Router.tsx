@@ -26,6 +26,7 @@ import MoneyUser from "pages/Money/User";
 import MedicalPolicies from "pages/MedicalPolicies";
 import Taxes from "pages/Taxes";
 import Wanteds from "pages/Wanteds";
+import MoneySgp from "pages/Money/Sgp";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -181,6 +182,11 @@ export default function RouterPage() {
                                 />
                             }
                         />
+                        <Route
+                            path="/sgp"
+                            element={<MoneySgp icon="sgp" />}
+                        />
+
                         <Route
                             path="/userMoney/:id"
                             element={

@@ -19,5 +19,12 @@ const MoneyDataProvider = {
     userData: (userId: number): Promise<IWebDataResult<IUserMoneyDto>> => {
         return dataProvider(baseUrl + `userData&id=${userId}`);
     },
+    userHistory: (userId?: number): Promise<IWebDataResult<IMoneyDto[]>> => {
+        let url = baseUrl + "userHistory";
+        if (userId) {
+            url += "&id=" + userId;
+        }
+        return dataProvider(url);
+    },
 };
 export default MoneyDataProvider;

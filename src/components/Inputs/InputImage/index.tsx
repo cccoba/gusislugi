@@ -83,6 +83,7 @@ export default function InputImage({
     const confirmDelete = () => {
         setDeleteConfirm(true);
     };
+
     return (
         <>
             <FormControl

@@ -9,6 +9,8 @@ const langPage = lang.components.navigationMenu;
 const menuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
     { name: "profile", title: langPage.profile, icon: "person_pin", link: "/profile" },
+    { name: "sgp", title: langPage.sgp, icon: "sgp", link: "/sgp" },
+
     {
         name: "qrScanner",
         title: langPage.qrScanner,

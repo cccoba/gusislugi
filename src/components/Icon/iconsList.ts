@@ -8,6 +8,7 @@ const icn: any = {
     users: "people",
     taxes: "receipt_long",
     wanteds: "local_police",
+    sgp: "currency_exchange",
 };
 
 export default icn;

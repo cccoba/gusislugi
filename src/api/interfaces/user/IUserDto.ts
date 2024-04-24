@@ -16,5 +16,6 @@ export interface IUserDto {
     registration: string;
     image: string;
     description: string;
+    money: number;
     role: IRoleDto;
 }

@@ -14,6 +14,7 @@ const ru = {
     delete: "Удалить",
     error: "Ошибка",
     edit: "Редактировать",
+    money: "%s kr",
     next: "Далее",
     no: "Нет",
     ok: "OK",
