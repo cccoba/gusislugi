@@ -18,5 +18,8 @@ const MedicalPoliciesProvider = {
     crudSave: (data: IMedicalPoliciesDto): Promise<IWebDataResult<IMedicalPoliciesDto>> => {
         return dataProvider(baseUrl + "save", "post", data);
     },
+    getMyData: (): Promise<IWebDataResult<IMedicalPoliciesDto[]>> => {
+        return dataProvider(baseUrl + "getMyData");
+    },
 };
 export default MedicalPoliciesProvider;

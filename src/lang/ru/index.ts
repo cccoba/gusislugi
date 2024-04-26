@@ -15,6 +15,7 @@ const ru = {
     error: "Ошибка",
     edit: "Редактировать",
     money: "%s kr",
+    moneyValue: "kr",
     next: "Далее",
     no: "Нет",
     ok: "OK",

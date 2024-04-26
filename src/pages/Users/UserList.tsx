@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Menu, MenuItem, Typography } from "@mui/material";
 
 import lang, { sprintf } from "lang";
-import { GoodTable, IconButton, Page, RoleChecker } from "components";
+import { GoodTable, IconButton, Page, RoleChecker, Switcher } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
 
@@ -14,12 +14,12 @@ import SendUserNotification from "components/SendUserNotification";
 
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
-    { name: "id", title: langPage.fields.id, format: "number", maxWidth: "50px" },
-    { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "50px" },
-    { name: "fullName", title: langPage.fields.fullName },
+    { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
+    { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
+    { name: "firstName", title: langPage.fields.firstName },
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
-    { name: "created_at", title: langPage.fields.created_at, format: "date" },
+    { name: "nickname", title: langPage.fields.nickname },
     { name: "actions", title: langPage.fields.actions, format: "component" },
 ];
 
@@ -35,8 +35,12 @@ function UserList({ roles }: IPageWithRoles) {
     const navigate = useNavigate();
     const nationalities = useAppSelector((x) => x.user.nationalities);
     const citizenships = useAppSelector((x) => x.user.citizenships);
+    const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
-        const newFields = [...defFields];
+        let newFields = [...defFields];
+        if (!withImage) {
+            newFields = newFields.filter((x) => x.name !== "image");
+        }
         const nationalityId = newFields.find((x) => x.name === "nationalityId");
         if (nationalityId) {
             nationalityId.formatProps = nationalities;
@@ -47,7 +51,7 @@ function UserList({ roles }: IPageWithRoles) {
             citizenshipId.formatProps = citizenships;
         }
         return newFields;
-    }, [nationalities, citizenships]);
+    }, [nationalities, citizenships, withImage]);
 
     const values = useMemo(() => {
         if (data?.length) {
@@ -91,10 +95,17 @@ function UserList({ roles }: IPageWithRoles) {
                 <SendUserNotification
                     text=""
                     uid={messageUser.id}
-                    title={sprintf(langPage.messageSenderTitle, messageUser?.fullName)}
+                    title={sprintf(langPage.messageSenderTitle, messageUser?.firstName)}
                     onClose={hideMessageSender}
                 />
             )}
+            <Box>
+                <Switcher
+                    value={withImage}
+                    onChangeValue={setWithImage}
+                    textValue={langPage.withImage}
+                />
+            </Box>
             <GoodTable
                 fields={fields}
                 values={values}

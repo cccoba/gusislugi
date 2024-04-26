@@ -22,7 +22,7 @@ const listConfig: ICRUDAsyncListConfig = {
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id, width: "30px" },
-        { name: "image", title: langPage.fields.id, width: "30px", format: "image" },
+        { name: "image", title: langPage.fields.image, width: "30px", format: "image" },
         { name: "user", title: langPage.fields.uid },
         {
             name: "type",
@@ -35,7 +35,7 @@ const listConfig: ICRUDAsyncListConfig = {
     ],
     transform: (data: IMedicalPoliciesDto) => ({
         ...data,
-        user: data.user?.fullName || lang.unknown,
+        user: data.user?.firstName || lang.unknown,
         image: data.user?.image || "",
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
     }),
@@ -60,12 +60,6 @@ const editConfig: ICRUDAsyncEditConfig = {
             name: "status",
             title: langPage.fields.status,
             text: langPage.statusActive,
-            type: "switcher",
-        },
-        {
-            name: "hidden",
-            title: langPage.fields.hidden,
-            text: langPage.hiddenHint,
             type: "switcher",
         },
         {

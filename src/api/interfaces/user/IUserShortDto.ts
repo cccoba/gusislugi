@@ -3,6 +3,6 @@ export interface IUserShortDto {
     tgId?: number;
     nickname: string;
     roleId: number;
-    fullName: string;
+    firstName: string;
     image: string;
 }

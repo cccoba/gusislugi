@@ -77,8 +77,13 @@ export interface IGoodTableField {
     wrap?: boolean;
 }
 
-export interface ITablePagination extends IPaginationData {
-    rowsPerPage?: number[];
+export interface ITablePagination {
+    rowsPerPage: number[];
+    pageSize: number;
+}
+
+interface ITablePaginationWithPageNumber extends ITablePagination {
+    pageNumber: number;
 }
 
 const sortValues = (values: any[], field: IGoodTableField, direction: SortOrderEnum) => {
@@ -166,6 +171,8 @@ function sortAndOrder(values: any[], fields: IGoodTableField[], filters: TFilter
 
 const defTableMaxHeight = 650;
 
+const defPagination: ITablePagination = { pageSize: 10, rowsPerPage: [10, 25, 100] };
+
 function GoodTable<T>({
     values = [],
     fields = [],
@@ -173,7 +180,7 @@ function GoodTable<T>({
     height,
     stickyHeader = false,
     size = "medium",
-    pagination,
+    pagination = defPagination,
     order,
     isMultiSelection = false,
     idName = "id",
@@ -188,8 +195,12 @@ function GoodTable<T>({
 }: IGoodTableProps<T>) {
     const [selectedRows, setSelectedRows] = useState<T[]>([]);
     const [filteredValues, setFilteredValues] = useState<T[]>([]);
+    const [filteredValuesTotalCount, setFilteredValuesTotalCount] = useState(0);
     const [orderState, setOrderState] = useState<ISortData | undefined>(order);
-    const [paginationState, setPaginationState] = useState(pagination);
+    const [paginationState, setPaginationState] = useState<ITablePaginationWithPageNumber>({
+        ...pagination,
+        pageNumber: 1,
+    });
     const isMobile = useAppSelector((s) => s.device.isMobile);
     const [filters, setFilters] = useState<TFilterValue[]>([]);
     const [simpleSearchText, setSimpleSearchText] = useState("");
@@ -198,16 +209,35 @@ function GoodTable<T>({
     }, [responsive, isMobile]);
     useEffect(() => {
         const simpleValues = simpleTextSearch(simpleSearchText, values, fields);
-        setFilteredValues(sortAndOrder(simpleValues, fields, filters, orderState));
+        const startIndex = (paginationState.pageNumber - 1) * paginationState.pageSize;
+        let arr = sortAndOrder(simpleValues, fields, filters, orderState);
+        setFilteredValuesTotalCount(arr?.length || 0);
+        if (startIndex >= arr.length || paginationState.pageNumber < 1) {
+            arr = [];
+        } else {
+            const endIndex = startIndex + paginationState.pageSize;
+            arr = arr.slice(startIndex, endIndex);
+        }
+        setFilteredValues(arr);
         setSelectedRows((prev) => {
             const newSelectedRows = [...prev];
             if (newSelectedRows.length && values.length) {
                 const valuesIds = values.map((x: any) => x?.[idName]);
+
                 return newSelectedRows.filter((x: any) => valuesIds.includes(x?.[idName]));
             }
             return newSelectedRows;
         });
-    }, [values, fields, filters, orderState, simpleSearchText, idName]);
+    }, [
+        values,
+        fields,
+        filters,
+        orderState,
+        simpleSearchText,
+        idName,
+        paginationState.pageSize,
+        paginationState.pageNumber,
+    ]);
     const containerSx = useMemo(() => {
         const newContainerSx: any = {};
         if (!!height) {
@@ -226,7 +256,13 @@ function GoodTable<T>({
     }, [paginationState, values?.length]);
 
     useEffect(() => {
-        setPaginationState(pagination);
+        setPaginationState((prev) => {
+            const newData = pagination ? pagination : defPagination;
+            return {
+                ...prev,
+                ...newData,
+            };
+        });
     }, [pagination]);
 
     useEffect(() => {
@@ -310,11 +346,13 @@ function GoodTable<T>({
                     loading={loading}
                     onSelectRow={toSelectRow}
                     variant={variant}
+                    noRecordsText={noRecordsText}
+                    onRowClick={onRowClick}
                 />
                 {!!isShowedPagination && !!paginationState && (
                     <GoodTablePagination
                         {...paginationState}
-                        totalItemCount={filteredValues.length}
+                        totalItemCount={filteredValuesTotalCount}
                         onPaginationChange={toPaginationChange}
                         responsiveView={responsiveView}
                     />
@@ -322,6 +360,7 @@ function GoodTable<T>({
             </TableContainer>
         );
     }
+
     return (
         <TableContainer
             component={variant === "paper" ? Paper : Box}
@@ -367,7 +406,7 @@ function GoodTable<T>({
                             <TableCell colSpan={fields?.length || 100}>
                                 <GoodTablePagination
                                     {...paginationState}
-                                    totalItemCount={filteredValues.length}
+                                    totalItemCount={filteredValuesTotalCount}
                                     onPaginationChange={toPaginationChange}
                                     responsiveView={responsiveView}
                                 />

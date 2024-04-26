@@ -6,6 +6,7 @@ import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 
 import { dataProvider } from "./dataProvider";
 import { IFirstLoadView } from "./IFirstLoadView";
+import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
 
 const baseUrl = "users&view=";
 
@@ -30,6 +31,12 @@ const UsersDataProvider = {
     },
     getUser: (userId: number): Promise<IWebDataResult<IUserDto>> => {
         return dataProvider(baseUrl + "getUser&id=" + userId);
+    },
+    getUserByName: (search: string): Promise<IWebDataResult<IUserShortDto>> => {
+        return dataProvider(baseUrl + "getUserByName&search=" + search);
+    },
+    getUserByGuid: (search: string): Promise<IWebDataResult<IUserShortDto>> => {
+        return dataProvider(baseUrl + "getUserByGuid&search=" + search);
     },
 };
 export default UsersDataProvider;

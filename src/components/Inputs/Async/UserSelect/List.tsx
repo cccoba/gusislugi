@@ -37,7 +37,7 @@ export const userFields: IGoodTableField[] = [
         format: "image",
         noSort: true,
     },*/
-    { name: "fullName", title: langPage.fields.fullName, maxWidth: "180px" },
+    { name: "firstName", title: langPage.fields.firstName, maxWidth: "180px" },
     { name: "role", title: langPage.fields.role, maxWidth: "100px" },
 ];
 
@@ -125,7 +125,7 @@ export default function UserSelectList({
                         isMultiSelection={multiple}
                         onRowClick={onSelected}
                         fields={userFields}
-                        order={{ direction: SortOrderEnum.Ascending, sort: "fullName" }}
+                        order={{ direction: SortOrderEnum.Ascending, sort: "firstName" }}
                     />
                     {multiple && (
                         <Box sx={{ textAlign: "right" }}>

@@ -45,7 +45,7 @@ const ruPipes = {
         qr: "QR-сканер",
         users: "Пользователи",
         medicalPolicies: "Мед. полис",
-        taxes: "Налоги",
+        taxes: "Платежи",
         wanteds: "Розыск",
     },
     rolePermissionAction: {

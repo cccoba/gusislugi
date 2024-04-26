@@ -18,5 +18,8 @@ const TaxesProvider = {
     crudSave: (data: ITaxeDto): Promise<IWebDataResult<ITaxeDto>> => {
         return dataProvider(baseUrl + "save", "post", data);
     },
+    getMyData: (): Promise<IWebDataResult<ITaxeDto[]>> => {
+        return dataProvider(baseUrl + "getMyData");
+    },
 };
 export default TaxesProvider;

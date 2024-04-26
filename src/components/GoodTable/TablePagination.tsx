@@ -3,11 +3,12 @@ import { Box, Pagination, Select, MenuItem, Typography } from "@mui/material";
 
 import lang from "lang";
 
-import { ITablePagination } from ".";
-
-interface IProps extends ITablePagination {
-    rowsPerPage?: number[];
+interface IProps {
     responsiveView: boolean;
+    pageNumber: number;
+    totalItemCount: number;
+    rowsPerPage: number[];
+    pageSize: number;
     onPaginationChange: (page: number, limit: number) => void;
 }
 

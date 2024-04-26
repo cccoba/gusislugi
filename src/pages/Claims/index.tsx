@@ -28,7 +28,7 @@ const listConfig: ICRUDAsyncListConfig = {
     transform: (data: IClaimDto) => ({
         ...data,
         status: getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status),
-        user: data.user?.fullName || lang.unknown,
+        user: data.user?.firstName || lang.unknown,
     }),
 };
 

@@ -7,9 +7,8 @@ export interface IUserDto {
     tgName: string;
     nickname: string;
     roleId: number;
-    lastName: string;
     firstName: string;
-    fullName: string;
+    realName: string;
     nationalityId?: number;
     citizenshipId?: number;
     passport: string;

@@ -4,6 +4,7 @@ import GoodTableLoader from "../TableLoader";
 import { IGoodTableField, IGoodTableProps } from "..";
 
 import GoodTableMobileRow from "./TableRow";
+import GoodTableMobileNoRecordsRow from "./TableNoRecordsRow";
 
 interface IProps<T> {
     fields: IGoodTableField[];
@@ -11,7 +12,9 @@ interface IProps<T> {
     idName: string;
     loading: boolean;
     variant: IGoodTableProps<T>["variant"];
-    onSelectRow?: (data: any) => void;
+    noRecordsText?: string;
+    onSelectRow?: (data: T) => void;
+    onRowClick?: (data: T) => void;
 }
 
 function GoodTableMobile<T>({
@@ -20,8 +23,18 @@ function GoodTableMobile<T>({
     idName = "id",
     loading = false,
     variant = "box",
+    noRecordsText,
     onSelectRow,
+    onRowClick,
 }: IProps<T>) {
+    const onClick = (data: T) => {
+        if (onSelectRow) {
+            onSelectRow(data);
+        }
+        if (onRowClick) {
+            onRowClick(data);
+        }
+    };
     return (
         <Box component={variant === "paper" ? Paper : Box}>
             {!!loading ? (
@@ -29,7 +42,7 @@ function GoodTableMobile<T>({
                     colSpan={fields.length}
                     responsiveView={true}
                 />
-            ) : (
+            ) : !!values?.length ? (
                 values.map((row: any, index) => {
                     let key = index;
                     if (idName in row) {
@@ -40,10 +53,12 @@ function GoodTableMobile<T>({
                             key={key}
                             row={row}
                             fields={fields}
-                            onClick={onSelectRow}
+                            onClick={onClick}
                         />
                     );
                 })
+            ) : (
+                <GoodTableMobileNoRecordsRow noRecordsText={noRecordsText} />
             )}
         </Box>
     );

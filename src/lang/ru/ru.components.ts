@@ -95,6 +95,14 @@ const ruComponents = {
         deleteTitle: "Удалить изображение?",
         deleteText: "Вы уверены, что хотите удалить изображение?",
     },
+    inputUser: {
+        userSelect: "Введите Имя и фамилию пользователя или Telegram login",
+        scan: "Считать QR",
+        errors: {
+            searchByName: "Пользователь с такими данными не найден",
+            scanerFormat: "Данный код сюда не подходит",
+        },
+    },
     navigationMenu: {
         home: "Главное",
         profile: "Профиль",
@@ -107,7 +115,7 @@ const ruComponents = {
         medicalPolicies: "Мед. полисы",
         qrScanner: "QR сканер",
         roles: "Роли",
-        taxes: "Налоги",
+        taxes: "Платежи",
     },
     rolePermissions: {},
     sendUserNotification: {
@@ -150,8 +158,8 @@ const ruComponents = {
     },
     userForm: {
         image: "Фото",
-        lastName: "Фамилия",
-        firstName: "Имя",
+        realName: "Реальное ФИО",
+        firstName: "Имя Фамилия",
         nickname: "Позывной",
         role: "Роль",
         nationality: "Национальность",
@@ -165,11 +173,11 @@ const ruComponents = {
         list: {
             title: "Добавить пользователей",
             roles: "По роли",
-            allList: "По ФИО",
+            allList: "По имя фамилия",
             addBtn: "Добавить",
             fields: {
-                fullName: "ФИО",
-                role: "Должность",
+                firstName: "Имя Фамилия",
+                role: "Роль",
                 phone: "Телефон",
                 imageId: "Фото",
             },

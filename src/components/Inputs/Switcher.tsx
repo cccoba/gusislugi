@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import FormControl from "components/Inputs/FormControl";
 
 interface IProps {
-    type?: "checkbox";
     value: boolean;
     label?: string;
     textPosition?: "bottom" | "end" | "start" | "top";
@@ -13,6 +12,7 @@ interface IProps {
     fullWidth?: boolean;
     error?: boolean;
     required?: boolean;
+    readOnly?: boolean;
     helperText?: string;
     disabled?: boolean;
     color?: "primary" | "secondary" | "error" | "info" | "success" | "warning" | "default";
@@ -20,7 +20,6 @@ interface IProps {
 }
 
 function Switcher({
-    type = "checkbox",
     value = false,
     label = "",
     textValue = "",
@@ -32,6 +31,7 @@ function Switcher({
     helperText = "",
     color = "primary",
     disabled = false,
+    readOnly = false,
     onChangeValue,
 }: IProps) {
     const [textSx, setTextSx] = useState<SxProps>({});
@@ -43,7 +43,7 @@ function Switcher({
         }
     }, [error]);
     const onChange = (value: boolean) => {
-        if (!!onChangeValue) {
+        if (!readOnly) {
             onChangeValue(value);
         }
     };

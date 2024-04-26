@@ -14,13 +14,11 @@ import { userInit } from "store/reducers/UserSlice";
 
 const langPage = lang.pages.registration;
 const fields: TFormField[] = [
-    { type: "text", name: "lastName", title: langPage.fields.lastName, required: true },
     { type: "text", name: "firstName", title: langPage.fields.firstName, required: true },
     { type: "text", name: "passport", title: langPage.fields.passport, required: true },
 ];
 
 const defValues: IUserRegistrationDto = {
-    lastName: "",
     firstName: "",
     passport: "",
 };

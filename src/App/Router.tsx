@@ -27,6 +27,8 @@ import MedicalPolicies from "pages/MedicalPolicies";
 import Taxes from "pages/Taxes";
 import Wanteds from "pages/Wanteds";
 import MoneySgp from "pages/Money/Sgp";
+import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
+import MyTaxes from "pages/Taxes/MyTaxes";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -124,6 +126,15 @@ export default function RouterPage() {
                             element={<MyMessages />}
                         />
                         <Route
+                            path="/myMedicalPolicies"
+                            element={<MyMedicalPolicies />}
+                        />
+                        <Route
+                            path="/myTaxes"
+                            element={<MyTaxes />}
+                        />
+
+                        <Route
                             path="/users/*"
                             element={<Users roles={[["users"]]} />}
                         />
@@ -149,7 +160,7 @@ export default function RouterPage() {
                             element={
                                 <MedicalPolicies
                                     roles={[["medicalPolicies"]]}
-                                    icon="medical_services"
+                                    icon="medicalPolicies"
                                 />
                             }
                         />

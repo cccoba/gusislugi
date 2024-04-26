@@ -19,7 +19,7 @@ function UserSelectTable({ loading = true, users = [], onDel, onAdd }: IProps) {
             loading={loading}
             values={users}
             fields={userFields}
-            order={{ direction: SortOrderEnum.Ascending, sort: "fullName" }}
+            order={{ direction: SortOrderEnum.Ascending, sort: "firstName" }}
             actions={[
                 {
                     name: "add",

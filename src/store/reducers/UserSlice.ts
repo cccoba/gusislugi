@@ -39,6 +39,16 @@ const UserSlice = createSlice({
         setUserData(state, { payload }: PayloadAction<IUserDto>) {
             state.user = payload;
         },
+        setMoney(state, { payload }: PayloadAction<number>) {
+            if (state.user) {
+                state.user.money = payload;
+            }
+        },
+        setMoneyMinus(state, { payload }: PayloadAction<number>) {
+            if (state.user) {
+                state.user.money = state.user.money - payload;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -79,6 +89,6 @@ export const userInit = createAsyncThunk("user/load", async (_, { dispatch, getS
 });
 
 const { actions, reducer } = UserSlice;
-export const { setData, setUserData, setRoles } = actions;
+export const { setData, setUserData, setRoles, setMoneyMinus, setMoney } = actions;
 
 export default reducer;

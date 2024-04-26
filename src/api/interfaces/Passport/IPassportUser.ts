@@ -3,5 +3,5 @@ import { IUserDto } from "../user/IUserDto";
 
 export interface IPassportUser {
     user: IUserDto;
-    claims: IClaimDto[];
+    claims?: IClaimDto[];
 }

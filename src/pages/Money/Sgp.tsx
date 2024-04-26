@@ -1,27 +1,46 @@
-import { useMemo, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
 
 import lang, { sprintf } from "lang";
-import { Icon, Image, KeyValueList, Page } from "components";
+import { Icon, IconButton, Image, Page } from "components";
+import { setMoney } from "store/reducers/UserSlice";
+
 import { IPage } from "api/interfaces/components/Page/IPage";
 import getConst from "api/common/getConst";
-import { IKeyValueListItem } from "components/KeyValueList";
-import { useAppSelector } from "api/hooks/redux";
-import MoneyUserHistory from "./UserHistory";
+import { useAppDispatch, useAppSelector } from "api/hooks/redux";
+import { money, webApiResultData } from "api/data";
+
+import MoneyUserHistory from "./UserHistory/UserHistory";
+import MoneyUserSend from "./UserSend";
 
 const langPage = lang.pages.money.sgp;
 
 function MoneySgp({ icon }: IPage) {
-    const [isLoading, setIsLoading] = useState(false);
     const [showHistory, setShowHistory] = useState(false);
-
-    const userMoney = useAppSelector((s) => s.user.user?.money);
-    const userId = useAppSelector((s) => s.user.user?.id);
-    const values = useMemo(() => {
-        const newValues: IKeyValueListItem[] = [];
-        newValues.push({ title: langPage.fields.money, value: sprintf(lang.money, userMoney || 0) });
-        return newValues;
-    }, [userMoney]);
+    const [showSend, setShowSend] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        loadMoneyCount();
+    }, []);
+    const currentUserMoney = useAppSelector((s) => s.user.user?.money);
+    function loadMoneyCount() {
+        setIsLoading(true);
+        money
+            .getValue()
+            .then((res) => {
+                const { error, result } = webApiResultData<number>(res);
+                if (error) {
+                    throw error;
+                }
+                if (result) {
+                    dispatch(setMoney(result));
+                }
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }
     const toShowHistory = () => {
         setShowHistory(true);
     };
@@ -29,36 +48,50 @@ function MoneySgp({ icon }: IPage) {
         setShowHistory(false);
     };
     const toSend = () => {
-        console.log("toSend");
+        setShowSend(true);
+    };
+    const hideSend = () => {
+        setShowSend(false);
     };
 
     return (
         <Page
             title={langPage.title}
-            isLoading={isLoading}
             icon={icon}
+            isLoading={isLoading}
+            backUrl={"/"}
         >
             {showHistory && (
-                <MoneyUserHistory
-                    userId={userId || 0}
-                    modalProps={{ onClose: hideHistory, withCloseButton: true, responsiveWidth: true }}
-                />
+                <MoneyUserHistory modalProps={{ onClose: hideHistory, withCloseButton: true, responsiveWidth: true }} />
+            )}
+            {showSend && (
+                <MoneyUserSend modalProps={{ onClose: hideSend, withCloseButton: true, responsiveWidth: true }} />
             )}
             <Box sx={{ display: "flex" }}>
                 <Image
                     url={getConst("assets-images-path") + "sgp.png"}
-                    width="150px"
-                    height="150px"
+                    width="100px"
+                    height="100px"
+                    alt={langPage.sgp}
                 />
                 <Box
                     flexGrow="5"
                     sx={{ ml: 2 }}
                 >
-                    <KeyValueList
-                        withDivider
-                        values={values}
-                    />
-
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexWrap="wrap"
+                    >
+                        <Typography>{langPage.fields.money} : </Typography>
+                        <Typography variant="h4">{sprintf(lang.money, currentUserMoney || 0)} </Typography>
+                        <IconButton
+                            name="update"
+                            color="primary"
+                            onClick={loadMoneyCount}
+                        />
+                    </Box>
                     <Button
                         variant="contained"
                         sx={{ my: 1 }}
@@ -74,6 +107,7 @@ function MoneySgp({ icon }: IPage) {
                         startIcon={<Icon name="send" />}
                         fullWidth
                         onClick={toSend}
+                        disabled={!currentUserMoney}
                     >
                         {langPage.send}
                     </Button>

@@ -9,6 +9,8 @@ const icn: any = {
     taxes: "receipt_long",
     wanteds: "local_police",
     sgp: "currency_exchange",
+    qrScanner: "qr_code_scanner",
+    medicalPolicies: "medical_services",
 };
 
 export default icn;

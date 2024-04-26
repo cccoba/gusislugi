@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import lang from "lang";
 import { Icon, Page } from "components";
-import QrScanner from "components/QrScanner";
+import QrScanner, { qrResultParser } from "components/QrScanner";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { isGuid } from "api/common/helper";
@@ -18,12 +18,16 @@ function QrScannerPage({ roles, icon }: IPageWithRoles) {
     const { showError } = useNotifier();
     const toCheck = (message: string) => {
         hideReader();
-        if (isGuid(message)) {
-            navigate(`/passport/${message}`);
-        } else if (message.startsWith("https://t.me/")) {
-            navigate(`/passport-tg/${message.slice(13)}`);
-        } else {
-            showError(langPage.errors.notDetect);
+        const result = qrResultParser(message);
+        switch (result.type) {
+            case "guid":
+                navigate(`/passport/${result.value}`);
+                break;
+            case "telegram":
+                navigate(`/passport-tg/${result.value}`);
+                break;
+            default:
+                showError(langPage.errors.notDetect);
         }
     };
     const showReader = () => {
@@ -45,7 +49,7 @@ function QrScannerPage({ roles, icon }: IPageWithRoles) {
                 />
             )}
             <Button
-                startIcon={<Icon name="qr_code_scanner" />}
+                startIcon={<Icon name="qrScanner" />}
                 onClick={showReader}
                 variant="outlined"
             >

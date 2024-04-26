@@ -35,6 +35,7 @@ export { default as Date } from "./Inputs/Date";
 export { default as InputSearch } from "./Inputs/InputSearch";
 export { default as Select } from "./Inputs/Select";
 export { default as InputImage } from "./Inputs/InputImage";
+export { default as InputUser } from "./Inputs/Async/InputUser";
 
 export { default as InputAutocomplete } from "./Inputs/InputAutocomplete";
 export { default as Switcher } from "./Inputs/Switcher";

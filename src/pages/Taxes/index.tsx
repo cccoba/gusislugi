@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
+import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
@@ -12,12 +14,8 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { useAppSelector } from "api/hooks/redux";
-import { checkFlagIncludes } from "api/common/enumHelper";
-import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
 import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 const langPage = lang.pages.taxes;
 
@@ -39,7 +37,7 @@ const listConfig: ICRUDAsyncListConfig = {
     ],
     transform: (data: IMedicalPoliciesDto) => ({
         ...data,
-        user: data.user?.fullName || lang.unknown,
+        user: data.user?.firstName || lang.unknown,
     }),
 };
 
@@ -54,9 +52,9 @@ const editConfig: ICRUDAsyncEditConfig = {
         {
             name: "value",
             title: langPage.fields.value,
-            type: "number",
+            type: "counter",
             required: true,
-            min: 0,
+            minValue: 0,
         },
         {
             name: "status",
@@ -100,7 +98,7 @@ function Taxes({ roles, icon }: IPageWithRoles) {
                 text: sprintf(
                     langPage.message.text,
                     data.title,
-                    data.value,
+                    sprintf(lang.money, data.value),
                     getEnumTitleValue(TaxeStatusEnum, "TaxeStatusEnum", data.status)
                 ),
             });

@@ -38,7 +38,7 @@ const listConfig: ICRUDAsyncListConfig = {
     transform: (data: IMedicalPoliciesDto) => ({
         ...data,
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
-        user: data.user?.fullName || lang.unknown,
+        user: data.user?.firstName || lang.unknown,
     }),
 };
 

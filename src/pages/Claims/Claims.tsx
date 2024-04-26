@@ -178,7 +178,10 @@ function ProfileClaims() {
                 order={{ direction: SortOrderEnum.Descending, sort: "id" }}
                 onRowClick={showSelected}
                 noRecordsText={langPage.noRecordsText}
-                actions={[{ icon: "add", name: "add", onClick: showAddModal, color: "primary" }]}
+                actions={[
+                    { icon: "add", name: "add", onClick: showAddModal, color: "primary" },
+                    { icon: "refresh", name: "refresh", onClick: refetch },
+                ]}
             />
         </>
     );

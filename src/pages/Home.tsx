@@ -18,7 +18,7 @@ interface IHomeItem {
 
 function Home() {
     const currentUserGuid = useAppSelector((s) => s.user.user?.guid);
-    const currentUserName = useAppSelector((s) => s.user.user?.fullName);
+    const currentUserName = useAppSelector((s) => s.user.user?.firstName);
     const [isMyIdShowed, setIsMyIdShowed] = useState(false);
     const showMyId = () => {
         setIsMyIdShowed(true);
@@ -54,7 +54,7 @@ function Home() {
                     <HomeItem
                         url="/qrScanner"
                         title={langPage.actions.qr}
-                        icon="qr_code_scanner"
+                        icon="qrScanner"
                     />
                 </RoleChecker>
                 {!!currentUserGuid && (
@@ -78,6 +78,21 @@ function Home() {
                             url="/myMessages"
                             title={langPage.actions.messages}
                             icon="sms"
+                        />
+                        <HomeItem
+                            url="/sgp"
+                            title={lang.pages.money.sgp.title}
+                            icon="sgp"
+                        />
+                        <HomeItem
+                            url="/myMedicalPolicies"
+                            title={langPage.actions.medicalPolicies}
+                            icon="sgp"
+                        />
+                        <HomeItem
+                            url="/myTaxes"
+                            title={langPage.actions.taxes}
+                            icon="taxes"
                         />
                     </>
                 )}

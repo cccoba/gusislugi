@@ -27,15 +27,15 @@ const listConfig: ICRUDAsyncListConfig = {
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     transform: (data: IMoneyDto) => ({
         ...data,
-        from_user: data.hidden ? lang.unknown : data.from_user?.fullName || lang.unknown,
-        to_user: data.to_user?.fullName || lang.unknown,
+        from_user: data.hidden ? lang.unknown : data.from_user?.firstName || lang.unknown,
+        to_user: data.to_user?.firstName || lang.unknown,
     }),
 };
-const editConfig: ICRUDAsyncEditConfig = {
+export const moneyEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         { name: "fromUid", title: langPage.fields.fromUid, type: "user", required: true },
         { name: "toUid", title: langPage.fields.toUid, type: "user", required: true },
-        { name: "value", title: langPage.fields.value, type: "number", required: true },
+        { name: "value", title: langPage.fields.value, type: "counter", minValue: 1, required: true },
         { name: "hidden", title: "", text: langPage.fields.hidden, type: "switcher" },
     ],
 };
@@ -80,7 +80,7 @@ function MoneyList({ roles, icon }: IPageWithRoles) {
             listConfig={listConfig}
             actions={actions}
             title={langPage.title}
-            editConfig={editConfig}
+            editConfig={moneyEditConfig}
             initialValue={initialValue}
         />
     );

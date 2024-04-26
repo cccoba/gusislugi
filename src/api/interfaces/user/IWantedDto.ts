@@ -6,7 +6,6 @@ export interface IWantedDto {
     id: number;
     uid: number;
     status: boolean;
-    hidden: boolean;
     type: WantedTypeEnum;
     description: string;
     created_at?: Date;

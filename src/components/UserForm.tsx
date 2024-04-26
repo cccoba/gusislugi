@@ -7,7 +7,7 @@ import { TFormField } from "components/Form/FormAdapters";
 import { objCopy } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
-import { checkUserRoleAccess } from "./RoleChecker";
+
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
@@ -20,14 +20,16 @@ const langPage = lang.components.userForm;
 
 const defFields: TFormField[] = [
     { name: "image", title: langPage.image, type: "image", fieldProps: { previewWidth: "200px" } },
-    { type: "text", name: "lastName", title: langPage.lastName },
+
     { type: "text", name: "firstName", title: langPage.firstName },
-    { type: "text", name: "nickname", title: langPage.nickname },
-    { name: "roleId", title: langPage.role, type: "select", values: [] },
+
     { name: "nationalityId", title: langPage.nationality, type: "select", values: [] },
     { name: "citizenshipId", title: langPage.citizenship, type: "select", values: [] },
     { type: "text", name: "passport", title: langPage.passport },
     { type: "text", name: "registration", title: langPage.registration },
+    { type: "text", name: "nickname", title: langPage.nickname },
+    { type: "text", name: "realName", title: langPage.realName },
+    { name: "roleId", title: langPage.role, type: "select", values: [] },
     { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
 ];
 
@@ -48,10 +50,6 @@ function UserForm({ user, onChangeValue }: IProps) {
                 field.fieldProps = { ...field.fieldProps, inputProps: { readOnly: true } };
             }
             switch (field.name) {
-                case "roleId":
-                    field.values = roles;
-                    field.hidden = !currentUserIsAdmin;
-                    break;
                 case "nationalityId":
                     field.values = nationalities;
                     break;
@@ -61,8 +59,13 @@ function UserForm({ user, onChangeValue }: IProps) {
                 case "image":
                     field.readOnly = !isEditable;
                     break;
+                case "roleId":
+                    field.values = roles;
+                    field.hidden = !currentUserIsAdmin;
+                    break;
                 case "nickname":
                 case "description":
+                case "realName":
                     field.hidden = !currentUserIsAdmin;
                     break;
             }

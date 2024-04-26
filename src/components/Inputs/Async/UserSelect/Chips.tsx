@@ -24,7 +24,7 @@ function UserSelectChips({ loading = true, users = [], onDel, onAdd }: IProps) {
                                 "& .MuiChip-label": { pl: 0 },
                             }}
                             key={user.id}
-                            label={user.fullName}
+                            label={user.firstName}
                             avatar={
                                 <Image
                                     width="32px"

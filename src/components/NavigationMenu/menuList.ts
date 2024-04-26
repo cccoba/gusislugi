@@ -10,11 +10,10 @@ const menuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
     { name: "profile", title: langPage.profile, icon: "person_pin", link: "/profile" },
     { name: "sgp", title: langPage.sgp, icon: "sgp", link: "/sgp" },
-
     {
         name: "qrScanner",
         title: langPage.qrScanner,
-        icon: "qr_code_scanner",
+        icon: "qrScanner",
         link: "/qrScanner",
         roles: [["qr", RolePermissionFlag.View]],
     },
@@ -32,31 +31,11 @@ const menuList: INavigationMenu[] = [
         link: "/money",
         roles: [["admins"]],
     },
-    {
-        name: "roles",
-        title: langPage.roles,
-        icon: "engineering",
-        link: "/roles",
-        roles: [["admins"]],
-    },
-    {
-        name: "citizenships",
-        title: langPage.citizenships,
-        icon: "list",
-        link: "/citizenships",
-        roles: [["admins"]],
-    },
-    {
-        name: "nationalities",
-        title: langPage.nationalities,
-        icon: "list",
-        link: "/nationalities",
-        roles: [["admins"]],
-    },
+
     {
         name: "medicalPolicies",
         title: langPage.medicalPolicies,
-        icon: "medical_services",
+        icon: "medicalPolicies",
         link: "/medicalPolicies",
         roles: [["medicalPolicies"]],
     },
@@ -74,7 +53,13 @@ const menuList: INavigationMenu[] = [
         link: "/wanteds",
         roles: [["wanteds"]],
     },
-
+    {
+        name: "roles",
+        title: langPage.roles,
+        icon: "engineering",
+        link: "/roles",
+        roles: [["admins"]],
+    },
     {
         name: "users",
         title: langPage.users,

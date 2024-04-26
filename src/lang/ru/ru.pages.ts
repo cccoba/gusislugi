@@ -41,10 +41,10 @@ const ruPages = {
         },
     },
     taxes: {
-        title: "Налоги",
+        title: "Платежи",
         message: {
-            title: "Налоги",
-            text: 'Налог %s на сумму "%s" в статусе "%s"',
+            title: "Платежи",
+            text: 'Платеж "%s" на сумму %s в статусе "%s"',
         },
         fields: {
             id: "ID",
@@ -57,7 +57,7 @@ const ruPages = {
         },
     },
     claims: {
-        title: "Заявки",
+        title: "Заявки в администрацию",
         message: 'Ваша заявка "%s" изменила статус на "%s"',
         fields: {
             id: "Номер",
@@ -76,6 +76,7 @@ const ruPages = {
     money: {
         title: "Финансы",
         userTitle: "Деньги пользователя",
+        userName: "Пользователь",
         fields: {
             fromUid: "Отправитель",
             toUid: "Получатель",
@@ -83,12 +84,20 @@ const ruPages = {
             created_at: "Дата",
             hidden: "Скрыть",
         },
+        success: {
+            toUserMoneyAdd: "Начислено %s",
+        },
+        errors: {
+            loadData: "Не удалось получить информацию о пользователе",
+            toUserMoneyAdd: "Не удалось начислить денег пользователю",
+        },
         sgp: {
             title: "Система Гусиных Платежей",
             history: "История переводов",
             send: "Перевести деньги",
+            sgp: "СГП",
             fields: {
-                money: "Ваш баланс",
+                money: "Баланс",
             },
         },
         history: {
@@ -102,6 +111,20 @@ const ruPages = {
             },
             errors: {
                 history: "Не удалось получить историю платежей!",
+            },
+        },
+        send: {
+            title: "Перевести деньги",
+            success: "Успех",
+            moneyCount: "Сумма перевода",
+            user: "Получатель",
+            maxMoney: "Максимальная сумма: %s %s",
+            successResult: "Перевод на сумму %s пользователю %s выполнен УСПЕШНО!",
+            send: "Перевести",
+            hiddenText: "Скрытый перевод",
+            errors: {
+                userSendMoney: "Не удалось перевести деньги другому пользователю",
+                positiveCount: "Сумма должна быть больше нуля",
             },
         },
     },
@@ -144,9 +167,8 @@ const ruPages = {
     registration: {
         text: "Вы не зарегистрированы в системе. Введите:",
         fields: {
-            lastName: "Фамилия",
-            firstName: "Имя",
-            passport: "Номер паспорта",
+            firstName: "Имя Фамилия",
+            passport: "Серия-номер паспорта",
         },
         success: {
             registration: "Вы успешно зарегистрированы",
@@ -177,6 +199,8 @@ const ruPages = {
             profile: "Мой профиль",
             messages: "Оповещения",
             claims: "Мои заявки",
+            medicalPolicies: "Мой мед. полис",
+            taxes: "Мои платежи",
         },
         myId: {
             title: "Мой ID",
@@ -207,16 +231,15 @@ const ruPages = {
         title: "Розыск",
         statusActive: "Активен",
         statusNotActive: "Не активен",
-        hiddenHint: "Пользователь увидит что его ищут",
         message: {
             title: "Розыск",
             text: 'Статус вашего розыска "%s"',
         },
         fields: {
             id: "ID",
+            image: "Фото",
             type: "Уровень",
             status: "Статус розыска",
-            hidden: "Уведомить разыскиваемого",
             created_at: "Дата создания",
             uid: "Разыскиваемый",
             description: "Описание",
@@ -225,13 +248,14 @@ const ruPages = {
     users: {
         title: "Пользователи",
         messageSenderTitle: "Отправить пользователю %s",
+        withImage: "Показать фото",
         fields: {
             id: "ID",
-            fullName: "Имя",
+            firstName: "Имя Фамилия",
             nationalityId: "Национальность",
             citizenshipId: "Гражданство",
             image: "Фото",
-            created_at: "Создан",
+            nickname: "Позывной",
             actions: "Действие",
         },
         actions: {

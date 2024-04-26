@@ -68,11 +68,11 @@ function NavigationMenuDrawer() {
                         {!!user?.image ? (
                             <Avatar src={getServerFileUrl(user?.image)} />
                         ) : (
-                            <Avatar>{user?.fullName[0]}</Avatar>
+                            <Avatar>{user?.firstName[0]}</Avatar>
                         )}
                     </ListItemAvatar>
                     <ListItemText
-                        primary={user?.fullName}
+                        primary={user?.firstName}
                         secondary={roles.find((x) => x.id === user?.roleId)?.title}
                     />
                 </ListItem>

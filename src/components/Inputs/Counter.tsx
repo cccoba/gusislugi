@@ -2,7 +2,6 @@ import { useEffect, useMemo } from "react";
 import { Button, InputAdornment, TextField } from "@mui/material";
 
 import Icon from "components/Icon";
-
 import { IInputProps } from "api/interfaces/components/IInputProps";
 
 interface IProps extends IInputProps<number> {
@@ -45,6 +44,7 @@ function Counter({
         }
         toChangeValue(newValue);
     }, [value, minValue, maxValue]);
+
     const buttonSx = useMemo(() => {
         if (compact) {
             return {
@@ -67,7 +67,7 @@ function Counter({
         toChangeValue(floatValue);
     };
     const toChangeValue = (newValue: number) => {
-        if (!!onChangeValue) {
+        if (newValue !== value) {
             onChangeValue(newValue);
         }
     };
@@ -98,7 +98,7 @@ function Counter({
                             onClick={toMinus}
                             disabled={value <= minValue}
                         >
-                            <Icon name="minus" />
+                            <Icon name="remove" />
                         </Button>
                     </InputAdornment>
                 ),

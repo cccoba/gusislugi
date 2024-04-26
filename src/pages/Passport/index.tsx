@@ -18,10 +18,9 @@ interface IProps extends IPageWithRoles {
 function Passport({ roles, icon, idName }: IProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState<IPassportUser | null>(null);
+
     const { id = "" } = useParams();
     const [error, setError] = useState("");
-    console.log("guid", id);
-
     useEffect(() => {
         if (!!id) {
             const cb = idName === "telegramLogin" ? passport.getUserByTelegramLogin : passport.getUserByGuid;
@@ -61,7 +60,7 @@ function Passport({ roles, icon, idName }: IProps) {
             ) : !!user ? (
                 <>
                     <PassportUser user={user.user} />
-                    {!!user.claims?.length && <PassportClaims claims={user.claims} />}
+                    {typeof user.claims !== "undefined" && <PassportClaims claims={user.claims} />}
                 </>
             ) : null}
         </Page>

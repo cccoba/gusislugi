@@ -23,7 +23,7 @@ interface IProps extends IInputProps<number | number[]> {
 export interface IUserRowDto {
     id: number;
     image: string;
-    fullName: string;
+    firstName: string;
     roleId: number;
     role: string;
 }
@@ -32,7 +32,7 @@ export function parseUserData(user: IUserDto, roles: IRoleDto[]): IUserRowDto {
     return {
         id: user.id,
         image: user.image,
-        fullName: user.fullName,
+        firstName: user.firstName,
         roleId: user?.roleId || 0,
         role: roles.find((x) => x.id === user.roleId)?.title || lang.no,
     };
@@ -66,7 +66,7 @@ export default function UserSelect({
                         throw userListData.error;
                     }
                     const newUsers = userListData.result?.length
-                        ? userListData.result.sort((a, b) => a.fullName.localeCompare(b.fullName))
+                        ? userListData.result.sort((a, b) => a.firstName.localeCompare(b.firstName))
                         : [];
                     setUsers(newUsers);
                     if (!!value) {
@@ -75,7 +75,7 @@ export default function UserSelect({
                             if (!!value) {
                                 const foundedUser = newUsers.find((u) => u.id === value);
                                 if (foundedUser?.id) {
-                                    newSelectedUserText = foundedUser.fullName;
+                                    newSelectedUserText = foundedUser.firstName;
                                 }
                             }
 
@@ -130,7 +130,7 @@ export default function UserSelect({
             if (!!newValue) {
                 const foundedUser = users.find((u) => u.id === newValue);
                 if (foundedUser?.id) {
-                    newSelectedUserText = foundedUser.fullName;
+                    newSelectedUserText = foundedUser.firstName;
                 }
             }
 
@@ -156,7 +156,7 @@ export default function UserSelect({
                     helperText={helperText}
                 >
                     <Input
-                        disabled
+                        readOnly
                         value={selectedUserText}
                         endAdornment={
                             !value ? (

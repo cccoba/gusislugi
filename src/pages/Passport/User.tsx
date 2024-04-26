@@ -17,6 +17,7 @@ function PassportUser({ user }: IProps) {
     const citizenships = useAppSelector((s) => s.user.citizenships);
     const nationalities = useAppSelector((s) => s.user.nationalities);
     const roles = useAppSelector((s) => s.user.roles);
+    const curentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     return (
         <>
             <Box
@@ -32,16 +33,17 @@ function PassportUser({ user }: IProps) {
                 </Box>
                 <Fieldset label={`${langPage.mainData}`}>
                     <Typography>
-                        {langUser.lastName + " " + langUser.firstName}: {user.lastName + " " + user.firstName}
+                        {langUser.firstName}: {user.firstName}
                     </Typography>
-
                     <Typography>
                         {langUser.citizenship}:{" "}
                         {citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.unknown}
                     </Typography>
-                    <Typography>
-                        {langUser.role}: {roles.find((x) => x.id === user.roleId)?.title || lang.unknown}
-                    </Typography>
+                    {!!curentUserIsAdmin && (
+                        <Typography>
+                            {langUser.role}: {roles.find((x) => x.id === user.roleId)?.title || lang.unknown}
+                        </Typography>
+                    )}
                 </Fieldset>
                 <Fieldset label={langPage.passportData}>
                     <Typography>
