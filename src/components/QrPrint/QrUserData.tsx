@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import Modal from "components/Modal";
 
@@ -6,6 +6,7 @@ import dateTime from "api/common/dateTime";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 
 import QrPrint from ".";
+import lang from "lang";
 
 interface IProps {
     user: IUserDto | null;
@@ -24,6 +25,7 @@ function QrUserData({ user, onClose, title }: IProps) {
             withCloseButton
             onClose={onClose}
             title={title}
+            actions={[<Button onClick={onClose}>{lang.close}</Button>]}
         >
             <Box
                 sx={{

@@ -120,9 +120,9 @@ export default function UserSelect({
     const delUsers = (ids: number[]) => {
         updateValue(selectedUsers.filter((u) => !ids.includes(u.id)).map((x) => x.id));
     };
-    const toAdd = () => {
+    function toAdd() {
         setModalShow(true);
-    };
+    }
     const addUsers = (data: any) => {
         if (multiple) {
             if (!!data?.length) {

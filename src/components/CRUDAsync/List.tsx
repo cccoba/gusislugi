@@ -7,12 +7,12 @@ import TreeViewer, { ITreeItem } from "components/TreeViewer";
 import { useNotifier } from "api/hooks/useNotifier";
 import { ISortData } from "api/interfaces/components/GoodTable";
 import { webApiResultData } from "api/data";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { checkFlagIncludes } from "api/common/enumHelper";
 
 import Confirm, { IConfirmProps } from "../Confirm";
 
 import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
-import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
-import { checkFlagIncludes } from "api/common/enumHelper";
 
 const langPage = lang.components.crud;
 
