@@ -21,6 +21,7 @@ const defFields: IGoodTableField[] = [
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "nickname", title: langPage.fields.nickname },
     { name: "actions", title: langPage.fields.actions, format: "component" },
+    { name: "realName", title: "", hidden: true },
 ];
 
 type TUserAction = "edit" | "message" | "money";

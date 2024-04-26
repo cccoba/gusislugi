@@ -7,7 +7,7 @@ import getConst from "api/common/getConst";
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 
 import IconButton from "./Icon/IconButton";
-import Link from "./Link";
+import Link from "./Link/Link";
 import Icon from "./Icon";
 
 interface IProps {

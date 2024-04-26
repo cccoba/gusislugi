@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-
-import lang, { getEnumSelectValues } from "lang";
-import { Alert, Page } from "components";
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { useParams } from "react-router-dom";
+
+import lang from "lang";
+import { Alert, Page } from "components";
+
+import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { passport, webApiResultData } from "api/data";
 import { IPassportUser } from "api/interfaces/Passport/IPassportUser";
+import { IUserDto } from "api/interfaces/user/IUserDto";
+
 import PassportUser from "./User";
 import PassportClaims from "./Claims";
-import { useAppSelector } from "api/hooks/redux";
-import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import PassportTaxes from "./Taxes";
+import PassportMedicalPolicies from "./MedicalPolicies";
+import PassportWanteds from "./Wanteds";
 
 const langPage = lang.pages.passport.byGuid;
 
@@ -71,6 +74,27 @@ function Passport({ roles, icon, idName }: IProps) {
                         <PassportClaims
                             subTitle={!!userData.claims ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.claims.title}
+                            user={userData.user}
+                        />
+                    )}
+                    {typeof userData.taxes !== "undefined" && (
+                        <PassportTaxes
+                            subTitle={!!userData.taxes ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.taxes.title}
+                            user={userData.user}
+                        />
+                    )}
+                    {typeof userData.medicalPolicies !== "undefined" && (
+                        <PassportMedicalPolicies
+                            subTitle={!!userData.medicalPolicies ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.medicalPolicies.title}
+                            user={userData.user}
+                        />
+                    )}
+                    {typeof userData.wanteds !== "undefined" && (
+                        <PassportWanteds
+                            subTitle={!!userData.wanteds ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.wanteds.title}
                             user={userData.user}
                         />
                     )}

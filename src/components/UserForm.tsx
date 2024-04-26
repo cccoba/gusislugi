@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import Form from "components/Form";
 import lang from "lang";
@@ -10,6 +10,9 @@ import { IUserDto } from "api/interfaces/user/IUserDto";
 
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { Button } from "@mui/material";
+import Icon from "./Icon";
+import QrUserData from "./QrPrint/QrUserData";
 
 interface IProps {
     user: IUserDto;
@@ -75,6 +78,11 @@ function UserForm({ user, onChangeValue }: IProps) {
 
     return (
         <>
+            {!!isEditable && (
+                <>
+                    <ShowQR user={user} />
+                </>
+            )}
             <Form
                 values={user}
                 fields={fields}
@@ -82,6 +90,36 @@ function UserForm({ user, onChangeValue }: IProps) {
                 columnCount={isMobile ? 1 : 3}
                 onSubmit={onChangeValue}
             />
+        </>
+    );
+}
+interface IShowQRProps {
+    user: IUserDto;
+}
+function ShowQR({ user }: IShowQRProps) {
+    const [isIdShowed, setIsIdShowed] = useState(false);
+    const showMyId = () => {
+        setIsIdShowed(true);
+    };
+    const hideMyId = () => {
+        setIsIdShowed(false);
+    };
+    return (
+        <>
+            {!!isIdShowed && (
+                <QrUserData
+                    onClose={hideMyId}
+                    title={langPage.titleShowId}
+                    user={user}
+                />
+            )}
+            <Button
+                startIcon={<Icon name="id" />}
+                onClick={showMyId}
+                variant="outlined"
+            >
+                {langPage.showId}
+            </Button>
         </>
     );
 }

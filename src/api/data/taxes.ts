@@ -9,6 +9,9 @@ const TaxesProvider = {
     crudList: (): Promise<IWebDataResult<ITaxeDto[]>> => {
         return dataProvider(baseUrl + "list");
     },
+    crudUserList: (userId: number): Promise<IWebDataResult<ITaxeDto[]>> => {
+        return dataProvider(baseUrl + "userList&id=" + userId);
+    },
     crudDelete: (ids: number[]): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "remove", "delete", ids);
     },

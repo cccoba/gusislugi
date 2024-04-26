@@ -15,6 +15,9 @@ const ClaimsDataProvider = {
     crudList: (): Promise<IWebDataResult<IClaimDto[]>> => {
         return dataProvider(baseUrl + "list");
     },
+    crudUserList: (userId: number): Promise<IWebDataResult<IClaimDto[]>> => {
+        return dataProvider(baseUrl + "userList&id=" + userId);
+    },
     crudDelete: (ids: number[]): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "remove", "delete", ids);
     },

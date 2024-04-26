@@ -1,10 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 
-import { Fieldset, Icon, Image, Link, RoleChecker } from "components";
+import { Fieldset, Icon, Image, Link, LinkButton } from "components";
 import lang from "lang";
 
 import { useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
+import { checkFlagIncludes } from "api/common/enumHelper";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
 interface IProps {
     user: IUserDto;
@@ -18,8 +20,20 @@ function PassportUser({ user }: IProps) {
     const nationalities = useAppSelector((s) => s.user.nationalities);
     const roles = useAppSelector((s) => s.user.roles);
     const curentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
+    const adminPermissions = useAppSelector((s) => s.user.user?.role.params.admins);
     return (
         <>
+            {checkFlagIncludes(adminPermissions || 0, RolePermissionFlag.Edit) && (
+                <Box sx={{ textAlign: "right" }}>
+                    <LinkButton
+                        url={`/users/${user.id}`}
+                        variant="outlined"
+                        startIcon={<Icon name="edit" />}
+                    >
+                        {lang.edit}
+                    </LinkButton>
+                </Box>
+            )}
             <Box
                 display="flex"
                 flexWrap="wrap"
@@ -58,18 +72,6 @@ function PassportUser({ user }: IProps) {
                     </Typography>
                 </Fieldset>
             </Box>
-            <RoleChecker roles={[["admins"]]}>
-                <Box sx={{ textAlign: "right" }}>
-                    <Button
-                        component={Link}
-                        url={`/users/${user.id}`}
-                        variant="outlined"
-                        startIcon={<Icon name="edit" />}
-                    >
-                        {lang.edit}
-                    </Button>
-                </Box>
-            </RoleChecker>
         </>
     );
 }

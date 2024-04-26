@@ -7,6 +7,7 @@ import { Icon, Link, Modal, Page, RoleChecker } from "components";
 import { useAppSelector } from "api/hooks/redux";
 import QrPrint from "components/QrPrint";
 import dateTime from "api/common/dateTime";
+import QrUserData from "components/QrPrint/QrUserData";
 
 const langPage = lang.pages.home;
 interface IHomeItem {
@@ -17,8 +18,7 @@ interface IHomeItem {
 }
 
 function Home() {
-    const currentUserGuid = useAppSelector((s) => s.user.user?.guid);
-    const currentUserName = useAppSelector((s) => s.user.user?.firstName);
+    const currentUser = useAppSelector((s) => s.user.user);
     const [isMyIdShowed, setIsMyIdShowed] = useState(false);
     const showMyId = () => {
         setIsMyIdShowed(true);
@@ -32,19 +32,11 @@ function Home() {
             icon="home"
         >
             {!!isMyIdShowed && (
-                <Modal
-                    open
-                    responsiveWidth
-                    withCloseButton
+                <QrUserData
                     onClose={hideMyId}
                     title={langPage.myId.title}
-                >
-                    <Box sx={{ textAlign: "center" }}>
-                        <QrPrint value={currentUserGuid || ""} />
-                        <Typography variant="h3">{currentUserName} </Typography>
-                        <Typography>{dateTime(new Date())}</Typography>
-                    </Box>
-                </Modal>
+                    user={currentUser}
+                />
             )}
             <Grid
                 container
@@ -57,12 +49,12 @@ function Home() {
                         icon="qrScanner"
                     />
                 </RoleChecker>
-                {!!currentUserGuid && (
+                {!!currentUser && (
                     <>
                         <HomeItem
                             onClick={showMyId}
                             title={langPage.actions.showId}
-                            icon="vpn_key"
+                            icon="id"
                         />
                         <HomeItem
                             url="/profile"

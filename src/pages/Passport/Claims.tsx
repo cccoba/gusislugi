@@ -32,6 +32,8 @@ function PassportClaims({ title, subTitle, user }: IPassportItem) {
             initialValue: defInitialValue,
         };
         result.initialValue.uid = user.id;
+        result.listConfig.isMultiSelection = false;
+        result.listConfig.fields = result.listConfig.fields.filter((x) => x.name !== "user");
         const uidField = result.editConfig.fields.find((x) => x.name === "uid");
         if (uidField) {
             uidField.disabled = true;
@@ -48,7 +50,7 @@ function PassportClaims({ title, subTitle, user }: IPassportItem) {
                 <CRUDAsync
                     listConfig={props.listConfig}
                     actions={[
-                        { name: "list", cb: claims.crudList, cbArgs: [user.id] },
+                        { name: "list", cb: claims.crudUserList, cbArgs: [user.id] },
                         { name: "edit", cb: claims.crudGet },
                         { name: "delete", cb: claims.crudDelete },
                         { name: "save", cb: claims.crudSave },

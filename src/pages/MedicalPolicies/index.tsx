@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
+import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
@@ -13,14 +15,10 @@ import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { generateRandomString } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
-import { checkFlagIncludes } from "api/common/enumHelper";
-import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 const langPage = lang.pages.medicalPolicies;
 
-const listConfig: ICRUDAsyncListConfig = {
+export const medicalPoliciesListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -42,7 +40,7 @@ const listConfig: ICRUDAsyncListConfig = {
     }),
 };
 
-const editConfig: ICRUDAsyncEditConfig = {
+export const medicalPoliciesEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "number",
@@ -125,8 +123,8 @@ function MedicalPolicies({ roles, icon }: IPageWithRoles) {
                 roles={roles}
                 title={langPage.title}
                 icon={icon}
-                listConfig={listConfig}
-                editConfig={editConfig}
+                listConfig={medicalPoliciesListConfig}
+                editConfig={medicalPoliciesEditConfig}
                 actions={[
                     { name: "save", cb: onSaveStart },
                     { name: "edit", cb: medicalPolicies.crudGet },

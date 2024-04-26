@@ -9,6 +9,9 @@ const MedicalPoliciesProvider = {
     crudList: (): Promise<IWebDataResult<IMedicalPoliciesDto[]>> => {
         return dataProvider(baseUrl + "list");
     },
+    crudUserList: (userId: number): Promise<IWebDataResult<IMedicalPoliciesDto[]>> => {
+        return dataProvider(baseUrl + "userList&id=" + userId);
+    },
     crudDelete: (ids: number[]): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "remove", "delete", ids);
     },

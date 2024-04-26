@@ -58,7 +58,9 @@ function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProp
         }
         return "";
     }, [value, field]);
-
+    if (!!field?.hidden) {
+        return null;
+    }
     if (responsiveView) {
         return (
             <Box

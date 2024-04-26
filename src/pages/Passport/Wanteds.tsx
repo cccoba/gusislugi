@@ -1,40 +1,38 @@
 import { useMemo } from "react";
-import dayjs from "dayjs";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { CRUDAsync, Icon } from "components";
 import lang from "lang";
 
-import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
-import { taxesEditConfig, taxesListConfig } from "pages/Taxes";
-import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
+import { wantedsEditConfig, wantedsListConfig } from "pages/Wanteds";
 import { useAppSelector } from "api/hooks/redux";
-import { taxes } from "api/data";
+import { wanteds } from "api/data";
 
 import { IPassportItem } from ".";
+import { IWantedDto } from "api/interfaces/user/IWantedDto";
+import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 
-const langPage = lang.pages.taxes;
+const langPage = lang.pages.wanteds;
 
-const defInitialValue: ITaxeDto = {
+const defInitialValue: IWantedDto = {
     id: 0,
     uid: 0,
-    title: "",
-    value: 0,
-    status: TaxeStatusEnum.Active,
-    endDate: dayjs().add(8, "hour").toDate(),
+    status: true,
+    type: WantedTypeEnum.Minima,
+    description: "",
 };
 
-function PassportTaxes({ title, subTitle, user }: IPassportItem) {
-    const permissions = useAppSelector((s) => s.user.user?.role.params?.taxes);
+function PassportWanteds({ title, subTitle, user }: IPassportItem) {
+    const permissions = useAppSelector((s) => s.user.user?.role.params?.wanteds);
     const props = useMemo(() => {
         const result = {
-            listConfig: taxesListConfig,
-            editConfig: taxesEditConfig,
+            listConfig: wantedsListConfig,
+            editConfig: wantedsEditConfig,
             initialValue: defInitialValue,
         };
         result.initialValue.uid = user.id;
         result.listConfig.isMultiSelection = false;
-        result.listConfig.fields = result.listConfig.fields.filter((x) => x.name !== "user");
+        result.listConfig.fields = result.listConfig.fields.filter((x) => x.name !== "image" && x.name !== "user");
         const uidField = result.editConfig.fields.find((x) => x.name === "uid");
         if (uidField) {
             uidField.disabled = true;
@@ -51,10 +49,10 @@ function PassportTaxes({ title, subTitle, user }: IPassportItem) {
                 <CRUDAsync
                     listConfig={props.listConfig}
                     actions={[
-                        { name: "list", cb: taxes.crudUserList, cbArgs: [user.id] },
-                        { name: "edit", cb: taxes.crudGet },
-                        { name: "delete", cb: taxes.crudDelete },
-                        { name: "save", cb: taxes.crudSave },
+                        { name: "list", cb: wanteds.crudUserList, cbArgs: [user.id] },
+                        { name: "edit", cb: wanteds.crudGet },
+                        { name: "delete", cb: wanteds.crudDelete },
+                        { name: "save", cb: wanteds.crudSave },
                     ]}
                     editConfig={props.editConfig}
                     initialValue={props.initialValue}
@@ -66,4 +64,4 @@ function PassportTaxes({ title, subTitle, user }: IPassportItem) {
         </Accordion>
     );
 }
-export default PassportTaxes;
+export default PassportWanteds;

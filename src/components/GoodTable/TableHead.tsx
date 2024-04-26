@@ -90,42 +90,47 @@ export default function GoodTableHead({
                             />
                         </TableCell>
                     )}
-                    {fields.map((field) => (
-                        <TableCell
-                            key={field.name}
-                            sortDirection={order.sort === field.name ? orderDirection : false}
-                            sx={cellSx(field)}
-                        >
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    flexWrap: "wrap",
-                                    alignItems: "center",
-                                    alignContent: "stretch",
-                                }}
+                    {fields.map((field) => {
+                        if (!!field?.hidden) {
+                            return null;
+                        }
+                        return (
+                            <TableCell
+                                key={field.name}
+                                sortDirection={order.sort === field.name ? orderDirection : false}
+                                sx={cellSx(field)}
                             >
-                                {!!field?.noSort || field.format === "component" ? (
-                                    getFieldTitle(field)
-                                ) : (
-                                    <TableSortLabel
-                                        active={order.sort === field.name}
-                                        direction={order.sort === field.name ? orderDirection : "asc"}
-                                        onClick={() => toSort(field.name)}
-                                    >
-                                        {getFieldTitle(field)}
-                                    </TableSortLabel>
-                                )}
-                                {!field?.noSearch && (
-                                    <GoodTableSearch
-                                        field={field}
-                                        filter={filters.find((x) => x.name === field.name)}
-                                        onFilterChanged={onFilterChanged}
-                                    />
-                                )}
-                            </Box>
-                        </TableCell>
-                    ))}
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        flexWrap: "wrap",
+                                        alignItems: "center",
+                                        alignContent: "stretch",
+                                    }}
+                                >
+                                    {!!field?.noSort || field.format === "component" ? (
+                                        getFieldTitle(field)
+                                    ) : (
+                                        <TableSortLabel
+                                            active={order.sort === field.name}
+                                            direction={order.sort === field.name ? orderDirection : "asc"}
+                                            onClick={() => toSort(field.name)}
+                                        >
+                                            {getFieldTitle(field)}
+                                        </TableSortLabel>
+                                    )}
+                                    {!field?.noSearch && (
+                                        <GoodTableSearch
+                                            field={field}
+                                            filter={filters.find((x) => x.name === field.name)}
+                                            onFilterChanged={onFilterChanged}
+                                        />
+                                    )}
+                                </Box>
+                            </TableCell>
+                        );
+                    })}
                 </TableRow>
             </MuiTableHead>
         </>

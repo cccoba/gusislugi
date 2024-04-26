@@ -20,7 +20,8 @@ export { default as Form } from "./Form";
 export { default as Loader } from "./Loader";
 export { default as MenuList } from "./MenuList";
 export { default as KeyValueList } from "./KeyValueList";
-export { default as Link } from "./Link";
+export { default as Link } from "./Link/Link";
+export { default as LinkButton } from "./Link/LinkButton";
 export { default as List } from "./List";
 
 export { default as Modal } from "./Modal";

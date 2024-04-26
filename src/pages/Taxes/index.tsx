@@ -19,7 +19,7 @@ import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 
 const langPage = lang.pages.taxes;
 
-const listConfig: ICRUDAsyncListConfig = {
+export const taxesListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -41,7 +41,7 @@ const listConfig: ICRUDAsyncListConfig = {
     }),
 };
 
-const editConfig: ICRUDAsyncEditConfig = {
+export const taxesEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "title",
@@ -120,8 +120,8 @@ function Taxes({ roles, icon }: IPageWithRoles) {
                 roles={roles}
                 title={langPage.title}
                 icon={icon}
-                listConfig={listConfig}
-                editConfig={editConfig}
+                listConfig={taxesListConfig}
+                editConfig={taxesEditConfig}
                 actions={[
                     { name: "list", cb: taxes.crudList },
                     { name: "delete", cb: taxes.crudDelete },

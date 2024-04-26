@@ -75,6 +75,7 @@ export interface IGoodTableField {
     maxWidth?: string;
     width?: string;
     wrap?: boolean;
+    hidden?: boolean;
 }
 
 export interface ITablePagination {

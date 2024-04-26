@@ -1,8 +1,6 @@
 import { Link as MuiLink, LinkProps } from "@mui/material";
 import { NavLink, NavLinkProps } from "react-router-dom";
 
-import getConst from "api/common/getConst";
-
 interface IProps extends LinkProps {
     url: string;
     state?: NavLinkProps["state"];

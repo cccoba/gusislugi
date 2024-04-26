@@ -17,7 +17,7 @@ import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 
 const langPage = lang.pages.wanteds;
 
-const listConfig: ICRUDAsyncListConfig = {
+export const wantedsListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: false,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -41,7 +41,7 @@ const listConfig: ICRUDAsyncListConfig = {
     }),
 };
 
-const editConfig: ICRUDAsyncEditConfig = {
+export const wantedsEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "uid",
@@ -107,8 +107,8 @@ function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
                 roles={roles}
                 title={langPage.title}
                 icon={icon}
-                listConfig={listConfig}
-                editConfig={editConfig}
+                listConfig={wantedsListConfig}
+                editConfig={wantedsEditConfig}
                 actions={[
                     { name: "list", cb: wanteds.crudList },
                     { name: "delete", cb: wanteds.crudDelete },
@@ -120,7 +120,6 @@ function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
                     id: 0,
                     uid: 0,
                     status: true,
-                    hidden: false,
                     type: WantedTypeEnum.Minima,
                     description: "",
                 }}

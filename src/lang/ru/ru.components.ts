@@ -167,6 +167,8 @@ const ruComponents = {
         passport: "Паспорт",
         registration: "Прописка",
         description: "Секретно. не для всех",
+        showId: "Показать ID",
+        titleShowId: "ID пользователя",
     },
     userSelect: {
         multiplePlaceholder: "Выберите пользователей",

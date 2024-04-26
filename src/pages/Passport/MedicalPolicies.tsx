@@ -5,31 +5,34 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { CRUDAsync, Icon } from "components";
 import lang from "lang";
 
-import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
-import { taxesEditConfig, taxesListConfig } from "pages/Taxes";
-import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
+import { medicalPoliciesEditConfig, medicalPoliciesListConfig } from "pages/MedicalPolicies";
 import { useAppSelector } from "api/hooks/redux";
-import { taxes } from "api/data";
+import { medicalPolicies } from "api/data";
+
+import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
+import { generateRandomString } from "api/common/helper";
+import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 
 import { IPassportItem } from ".";
 
-const langPage = lang.pages.taxes;
+const langPage = lang.pages.medicalPolicies;
 
-const defInitialValue: ITaxeDto = {
+const defInitialValue: IMedicalPoliciesDto = {
     id: 0,
+    number: generateRandomString(10, "1234567890"),
     uid: 0,
-    title: "",
-    value: 0,
-    status: TaxeStatusEnum.Active,
-    endDate: dayjs().add(8, "hour").toDate(),
+    type: MedicalPoliciesTypeEnum.Oms,
+    trauma_rescue: false,
+    status: true,
+    endDate: dayjs().add(24, "hour").toDate(),
 };
 
-function PassportTaxes({ title, subTitle, user }: IPassportItem) {
-    const permissions = useAppSelector((s) => s.user.user?.role.params?.taxes);
+function PassportMedicalPolicies({ title, subTitle, user }: IPassportItem) {
+    const permissions = useAppSelector((s) => s.user.user?.role.params?.medicalPolicies);
     const props = useMemo(() => {
         const result = {
-            listConfig: taxesListConfig,
-            editConfig: taxesEditConfig,
+            listConfig: medicalPoliciesListConfig,
+            editConfig: medicalPoliciesEditConfig,
             initialValue: defInitialValue,
         };
         result.initialValue.uid = user.id;
@@ -51,10 +54,10 @@ function PassportTaxes({ title, subTitle, user }: IPassportItem) {
                 <CRUDAsync
                     listConfig={props.listConfig}
                     actions={[
-                        { name: "list", cb: taxes.crudUserList, cbArgs: [user.id] },
-                        { name: "edit", cb: taxes.crudGet },
-                        { name: "delete", cb: taxes.crudDelete },
-                        { name: "save", cb: taxes.crudSave },
+                        { name: "list", cb: medicalPolicies.crudUserList, cbArgs: [user.id] },
+                        { name: "edit", cb: medicalPolicies.crudGet },
+                        { name: "delete", cb: medicalPolicies.crudDelete },
+                        { name: "save", cb: medicalPolicies.crudSave },
                     ]}
                     editConfig={props.editConfig}
                     initialValue={props.initialValue}
@@ -66,4 +69,4 @@ function PassportTaxes({ title, subTitle, user }: IPassportItem) {
         </Accordion>
     );
 }
-export default PassportTaxes;
+export default PassportMedicalPolicies;

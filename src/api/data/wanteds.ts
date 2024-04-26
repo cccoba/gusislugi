@@ -9,6 +9,9 @@ const WantedsProvider = {
     crudList: (): Promise<IWebDataResult<IWantedDto[]>> => {
         return dataProvider(baseUrl + "list");
     },
+    crudUserList: (userId: number): Promise<IWebDataResult<IWantedDto[]>> => {
+        return dataProvider(baseUrl + "userList&id=" + userId);
+    },
     crudDelete: (ids: number[]): Promise<IWebDataResult<boolean>> => {
         return dataProvider(baseUrl + "remove", "delete", ids);
     },
