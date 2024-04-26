@@ -15,13 +15,18 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 const langPage = lang.pages.claims;
 
-const listConfig: ICRUDAsyncListConfig = {
+export const claimListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id },
         { name: "title", title: langPage.fields.title },
-        { name: "status", title: langPage.fields.status },
+        {
+            name: "status",
+            title: langPage.fields.status,
+            format: "list",
+            formatProps: getEnumSelectValues(ClaimStatusEnum, "ClaimStatusEnum"),
+        },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
         { name: "user", title: langPage.fields.uid },
     ],
@@ -32,7 +37,7 @@ const listConfig: ICRUDAsyncListConfig = {
     }),
 };
 
-const editConfig: ICRUDAsyncEditConfig = {
+export const claimEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         { name: "id", title: langPage.fields.id, type: "text", disabled: true },
         { name: "title", title: langPage.fields.title, type: "text", required: true },
@@ -99,8 +104,8 @@ function Claims({ roles }: IPageWithRoles) {
                 roles={roles}
                 title={langPage.title}
                 icon="warning"
-                listConfig={listConfig}
-                editConfig={editConfig}
+                listConfig={claimListConfig}
+                editConfig={claimEditConfig}
                 actions={actions}
                 initialValue={{
                     id: 0,

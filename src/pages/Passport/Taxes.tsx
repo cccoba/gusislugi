@@ -1,29 +1,29 @@
 import { useMemo } from "react";
+import dayjs from "dayjs";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { CRUDAsync, Icon } from "components";
 import lang from "lang";
 
-import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
+import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { claimEditConfig, claimListConfig } from "pages/Claims";
 import { useAppSelector } from "api/hooks/redux";
 import { claims } from "api/data";
 
 import { IPassportItem } from ".";
+import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 
-const langPage = lang.pages.claims;
+const langPage = lang.pages.taxes;
 
-const defInitialValue: IClaimDto = {
+const defInitialValue: ITaxeDto = {
     id: 0,
     uid: 0,
-    status: ClaimStatusEnum.Created,
     title: "",
-    description: "",
-    resolution: "",
+    status: TaxeStatusEnum.Active,
+    endDate: dayjs().add(8, "hour").toDate(),
 };
 
-function PassportClaims({ title, subTitle, user }: IPassportItem) {
+function PassportTaxes({ title, subTitle, user }: IPassportItem) {
     const permissions = useAppSelector((s) => s.user.user?.role.params?.claims);
     const props = useMemo(() => {
         const result = {
@@ -63,4 +63,4 @@ function PassportClaims({ title, subTitle, user }: IPassportItem) {
         </Accordion>
     );
 }
-export default PassportClaims;
+export default PassportTaxes;

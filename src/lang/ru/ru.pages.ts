@@ -209,6 +209,8 @@ const ruPages = {
     passport: {
         byGuid: {
             title: "Информация о жителе",
+            haveData: "Есть записи!",
+            notHaveData: "нет записей",
             errors: {
                 getUserByGuid: "Пользователь не найден",
             },

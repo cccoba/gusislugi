@@ -31,7 +31,7 @@ interface IProps {
     needUpdate: string;
     initialValue?: any;
 
-    permissions: RolePermissionFlag;
+    permissions: RolePermissionFlag | 0;
     onIsLoading: (isLoading: boolean) => void;
     onSelectId: (activeId: number) => void;
 }
@@ -119,17 +119,17 @@ export default function CRUDAsyncList({
         const action = actions.find((x) => x.name === "list");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.View)) {
             onIsLoading(true);
-            action
-                .cb()
-                .then((res) => {
-                    const { error, result } = webApiResultData<any>(res);
-                    if (error) {
-                        throw error;
-                    }
-                    if (result) {
-                        setListData(result?.length ? (!!config.transform ? result.map(config.transform) : result) : []);
-                    }
-                })
+            const cb = !!action.cbArgs ? action.cb(...action.cbArgs) : action.cb();
+
+            cb.then((res) => {
+                const { error, result } = webApiResultData<any>(res);
+                if (error) {
+                    throw error;
+                }
+                if (result) {
+                    setListData(result?.length ? (!!config.transform ? result.map(config.transform) : result) : []);
+                }
+            })
                 .catch((err) => {
                     showError(err?.name === "webApiResultError" ? err.message : langPage.errors.list);
                 })

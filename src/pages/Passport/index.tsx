@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import lang from "lang";
+import lang, { getEnumSelectValues } from "lang";
 import { Alert, Page } from "components";
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { useParams } from "react-router-dom";
@@ -8,17 +8,24 @@ import { passport, webApiResultData } from "api/data";
 import { IPassportUser } from "api/interfaces/Passport/IPassportUser";
 import PassportUser from "./User";
 import PassportClaims from "./Claims";
+import { useAppSelector } from "api/hooks/redux";
+import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
+import { IUserDto } from "api/interfaces/user/IUserDto";
 
 const langPage = lang.pages.passport.byGuid;
 
 interface IProps extends IPageWithRoles {
     idName: "guid" | "telegramLogin";
 }
+export interface IPassportItem {
+    title: string;
+    subTitle: string;
+    user: IUserDto;
+}
 
 function Passport({ roles, icon, idName }: IProps) {
     const [isLoading, setIsLoading] = useState(false);
-    const [user, setUser] = useState<IPassportUser | null>(null);
-
+    const [userData, setUserData] = useState<IPassportUser | null>(null);
     const { id = "" } = useParams();
     const [error, setError] = useState("");
     useEffect(() => {
@@ -32,7 +39,7 @@ function Passport({ roles, icon, idName }: IProps) {
                         throw error;
                     }
                     if (result) {
-                        setUser(result);
+                        setUserData(result);
                     }
                 })
                 .catch((err) => {
@@ -57,10 +64,16 @@ function Passport({ roles, icon, idName }: IProps) {
                     type="error"
                     text={error}
                 />
-            ) : !!user ? (
+            ) : !!userData ? (
                 <>
-                    <PassportUser user={user.user} />
-                    {typeof user.claims !== "undefined" && <PassportClaims claims={user.claims} />}
+                    <PassportUser user={userData.user} />
+                    {typeof userData.claims !== "undefined" && (
+                        <PassportClaims
+                            subTitle={!!userData.claims ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.claims.title}
+                            user={userData.user}
+                        />
+                    )}
                 </>
             ) : null}
         </Page>

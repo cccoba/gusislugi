@@ -16,6 +16,7 @@ export type TCRUDAsyncActionCb = (params?: any) => Promise<IWebDataResult<any>>;
 export interface ICRUDAsyncAction {
     name: TCRUDAsyncActionCbName;
     cb: TCRUDAsyncActionCb;
+    cbArgs?: any[];
 }
 
 export default function CRUDAsyncMain({
@@ -27,6 +28,7 @@ export default function CRUDAsyncMain({
     title,
     roles,
     permissions = RolePermissionFlagAny,
+    withOutPage = false,
 }: ICRUDAsyncProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +39,34 @@ export default function CRUDAsyncMain({
     const toUpdate = () => {
         setNeedUpdate(generateGuid());
     };
+    if (withOutPage) {
+        return (
+            <>
+                {activeId !== null && (
+                    <CRUDAsyncEdit
+                        showVariant="modal"
+                        config={editConfig}
+                        actions={actions}
+                        id={activeId}
+                        onClose={hideEdit}
+                        onIsLoading={setIsLoading}
+                        onSaved={toUpdate}
+                        initialValue={initialValue}
+                        permissions={permissions}
+                    />
+                )}
+                <CRUDAsyncList
+                    config={listConfig}
+                    actions={actions}
+                    onSelectId={setActiveId}
+                    onIsLoading={setIsLoading}
+                    needUpdate={needUpdate}
+                    initialValue={initialValue}
+                    permissions={permissions}
+                />
+            </>
+        );
+    }
     return (
         <Page
             title={title}

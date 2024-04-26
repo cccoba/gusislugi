@@ -26,7 +26,7 @@ interface IProps {
     initialValue?: any;
     showVariant: "page" | "modal";
     backUrl?: string;
-    permissions: RolePermissionFlag;
+    permissions: RolePermissionFlag | 0;
     onClose: () => void;
     onIsLoading: (isLoading: boolean) => void;
     onSaved: () => void;

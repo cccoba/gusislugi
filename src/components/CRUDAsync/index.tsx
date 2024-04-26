@@ -19,7 +19,8 @@ export interface ICRUDAsyncProps {
     initialValue?: any;
     roles?: TRoleCheckerRole[];
     backUrl?: string;
-    permissions?: RolePermissionFlag;
+    permissions?: RolePermissionFlag | 0;
+    withOutPage?: boolean;
 }
 function CRUDAsync(props: ICRUDAsyncProps) {
     const dispatch = useAppDispatch();

@@ -133,7 +133,7 @@ function Taxes({ roles, icon }: IPageWithRoles) {
                     id: 0,
                     value: 0,
                     uid: 0,
-                    status: MedicalPoliciesTypeEnum.Oms,
+                    status: TaxeStatusEnum.Active,
                     endDate: dayjs().add(8, "hour").toDate(),
                 }}
             />

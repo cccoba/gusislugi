@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Input, FormHelperText, FormLabel } from "@mui/material";
 
 import { IconButton } from "components";
@@ -48,6 +48,7 @@ export default function UserSelect({
     error = false,
     required = false,
     helperText = "",
+    disabled = false,
     onChangeValue,
 }: IProps) {
     const [users, setUsers] = useState<IUserDto[]>([]);
@@ -97,6 +98,25 @@ export default function UserSelect({
         }
         getData();
     }, [isInit, value]);
+    const endAdornment = useMemo(() => {
+        if (disabled) {
+            return undefined;
+        }
+        return !value ? (
+            <IconButton
+                name="add"
+                color="primary"
+                onClick={toAdd}
+                size="small"
+            />
+        ) : (
+            <IconButton
+                name="cancel"
+                onClick={() => updateValue(null)}
+                size="small"
+            />
+        );
+    }, [value, disabled]);
     const delUsers = (ids: number[]) => {
         updateValue(selectedUsers.filter((u) => !ids.includes(u.id)).map((x) => x.id));
     };
@@ -154,26 +174,12 @@ export default function UserSelect({
                     required={required}
                     label={label}
                     helperText={helperText}
+                    disabled={disabled}
                 >
                     <Input
                         readOnly
                         value={selectedUserText}
-                        endAdornment={
-                            !value ? (
-                                <IconButton
-                                    name="add"
-                                    color="primary"
-                                    onClick={toAdd}
-                                    size="small"
-                                />
-                            ) : (
-                                <IconButton
-                                    name="cancel"
-                                    onClick={() => updateValue(null)}
-                                    size="small"
-                                />
-                            )
-                        }
+                        endAdornment={endAdornment}
                     />
                 </FormControl>
                 <UserSelectList
