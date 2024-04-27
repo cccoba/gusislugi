@@ -8,7 +8,7 @@ import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 import CRUDAsyncMain, { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
 import { ICRUDAsyncListConfig } from "./List";
-import { RolePermissionFlag, RolePermissionFlagAny } from "api/enums/RolePermissionFlag";
+import { RolePermissionFlag, RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 export interface ICRUDAsyncProps {
     listConfig: ICRUDAsyncListConfig;
@@ -19,7 +19,7 @@ export interface ICRUDAsyncProps {
     initialValue?: any;
     roles?: TRoleCheckerRole[];
     backUrl?: string;
-    permissions?: RolePermissionFlag | 0;
+    permissions?: RolePermissionFlag;
     withOutPage?: boolean;
 }
 function CRUDAsync(props: ICRUDAsyncProps) {
@@ -51,7 +51,9 @@ function CRUDAsync(props: ICRUDAsyncProps) {
                         onSaved={goBack}
                         initialValue={props.initialValue}
                         backUrl={props.backUrl}
-                        permissions={props?.permissions || RolePermissionFlagAny}
+                        permissions={
+                            typeof props.permissions === "undefined" ? RolePermissionFlagAll : props.permissions
+                        }
                     />
                 }
             />

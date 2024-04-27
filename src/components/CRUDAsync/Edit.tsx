@@ -26,7 +26,7 @@ interface IProps {
     initialValue?: any;
     showVariant: "page" | "modal";
     backUrl?: string;
-    permissions: RolePermissionFlag | 0;
+    permissions: RolePermissionFlag;
     onClose: () => void;
     onIsLoading: (isLoading: boolean) => void;
     onSaved: () => void;
@@ -95,7 +95,7 @@ export default function CRUDAsyncEdit({
                     });
             }
         } else if (idValue === 0) {
-            if (typeof initialValue !== "undefined" && checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
+            if (typeof initialValue !== "undefined" && checkFlagIncludes(permissions, RolePermissionFlag.Add)) {
                 setData({ ...initialValue });
             } else {
                 showError(langPage.errors.initialValue);

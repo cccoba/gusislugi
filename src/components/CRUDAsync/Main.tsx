@@ -4,7 +4,7 @@ import Page from "components/Page";
 
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { generateGuid } from "api/common/helper";
-import { RolePermissionFlagAny } from "api/enums/RolePermissionFlag";
+import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 import CRUDAsyncEdit from "./Edit";
 import CRUDAsyncList from "./List";
@@ -27,7 +27,7 @@ export default function CRUDAsyncMain({
     initialValue,
     title,
     roles,
-    permissions = RolePermissionFlagAny,
+    permissions,
     withOutPage = false,
 }: ICRUDAsyncProps) {
     const [activeId, setActiveId] = useState<number | null>(null);
@@ -52,7 +52,7 @@ export default function CRUDAsyncMain({
                         onIsLoading={setIsLoading}
                         onSaved={toUpdate}
                         initialValue={initialValue}
-                        permissions={permissions}
+                        permissions={typeof permissions === "undefined" ? RolePermissionFlagAll : permissions}
                     />
                 )}
                 <CRUDAsyncList
@@ -62,7 +62,7 @@ export default function CRUDAsyncMain({
                     onIsLoading={setIsLoading}
                     needUpdate={needUpdate}
                     initialValue={initialValue}
-                    permissions={permissions}
+                    permissions={typeof permissions === "undefined" ? RolePermissionFlagAll : permissions}
                 />
             </>
         );
@@ -84,7 +84,7 @@ export default function CRUDAsyncMain({
                     onIsLoading={setIsLoading}
                     onSaved={toUpdate}
                     initialValue={initialValue}
-                    permissions={permissions}
+                    permissions={typeof permissions === "undefined" ? RolePermissionFlagAll : permissions}
                 />
             )}
             <CRUDAsyncList
@@ -94,7 +94,7 @@ export default function CRUDAsyncMain({
                 onIsLoading={setIsLoading}
                 needUpdate={needUpdate}
                 initialValue={initialValue}
-                permissions={permissions}
+                permissions={typeof permissions === "undefined" ? RolePermissionFlagAll : permissions}
             />
         </Page>
     );

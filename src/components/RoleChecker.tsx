@@ -6,7 +6,7 @@ import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { IRoleDto, TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
-import { RolePermissionFlagAny } from "api/enums/RolePermissionFlag";
+import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 interface IProps {
     roles: TRoleCheckerRole[];
@@ -18,7 +18,7 @@ export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRo
     if (!userRoleParams) {
         return false;
     }
-    for (const [roleName, flagValue = RolePermissionFlagAny] of roles) {
+    for (const [roleName, flagValue = RolePermissionFlagAll] of roles) {
         if (roleName in userRoleParams) {
             if (checkFlagIncludes(flagValue, (userRoleParams as any)[roleName])) {
                 return true;
