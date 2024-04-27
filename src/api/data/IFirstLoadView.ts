@@ -1,5 +1,4 @@
 import { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { INationalityDto } from "api/interfaces/user/INationalityDto";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { ITgUserDto } from "api/interfaces/user/ITgUserDto";
@@ -12,4 +11,5 @@ export interface IFirstLoadView {
     nationalities: INationalityDto[];
     citizenships: ICitizenshipDto[];
     roles: IRoleDto[];
+    appVersion: string;
 }

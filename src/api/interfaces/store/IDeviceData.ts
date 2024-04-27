@@ -8,4 +8,5 @@ export interface IDeviceData {
         type: "xs" | "sm" | "md" | "lg" | "xl";
         name: "mobile" | "normal" | "big";
     };
+    serverAppVersion: string;
 }

@@ -13,6 +13,7 @@ const DEVICE_INITIAL_STATE: IDeviceData = {
         type: "xs",
         name: "mobile",
     },
+    serverAppVersion: "",
 };
 const DeviceSlice = createSlice({
     name: "device",
@@ -26,10 +27,13 @@ const DeviceSlice = createSlice({
             state.screen.type = deviceGetScreenType(state.screen.size.width);
             state.screen.name = deviceGetScreenName(state.screen.type, state.isMobile);
         },
+        setServerAppVersion(state, { payload }: PayloadAction<string>) {
+            state.serverAppVersion = payload;
+        },
     },
 });
 
 const { actions, reducer } = DeviceSlice;
-export const { deviceInit, setDeviceSize } = actions;
+export const { deviceInit, setDeviceSize, setServerAppVersion } = actions;
 
 export default reducer;

@@ -7,6 +7,7 @@ import { webApiResultData } from "api/data/dataProvider";
 import { IUserData } from "api/interfaces/store/IUserData";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { IUserDto } from "api/interfaces/user/IUserDto";
+import { setServerAppVersion } from "./DeviceSlice";
 
 const USER_INITIAL_STATE: IUserData = {
     user: null,
@@ -18,6 +19,7 @@ const USER_INITIAL_STATE: IUserData = {
     isLoad: false,
     isAuth: false,
 };
+interface IFirstLoadData extends Omit<IFirstLoadView, "appVersion"> {}
 const UserSlice = createSlice({
     name: "user",
     initialState: USER_INITIAL_STATE,
@@ -28,7 +30,7 @@ const UserSlice = createSlice({
         setRoles(state, { payload }: PayloadAction<IRoleDto[]>) {
             state.roles = payload;
         },
-        setData(state, { payload }: PayloadAction<IFirstLoadView>) {
+        setData(state, { payload }: PayloadAction<IFirstLoadData>) {
             state.tg = payload?.tgUser || null;
             state.user = payload?.user || null;
             state.isAuth = !!payload?.tgUser?.id;
@@ -73,7 +75,9 @@ export const userInit = createAsyncThunk("user/load", async (_, { dispatch, getS
         const res = await users.getMainData();
         const { error, result } = webApiResultData<IFirstLoadView>(res);
         if (!error && !!result) {
-            dispatch(setData(result));
+            const { appVersion, ...otherProps } = result;
+            dispatch(setData(otherProps));
+            dispatch(setServerAppVersion(appVersion));
 
             if (
                 getConst("env-mode") === "development" &&

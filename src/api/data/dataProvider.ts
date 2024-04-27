@@ -3,11 +3,11 @@ import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import getConst from "../common/getConst";
 interface IDataProviderExtraProps {
     withoutInterceptors?: boolean;
-    responceType?: "json" | "blob";
+    responseType?: "json" | "blob";
     requestType?: "json" | "params" | "raw";
     headers?: any;
 }
-export interface IDataProviderErrorResponce {
+interface IDataProviderErrorResponse {
     status: number;
     statusText: string;
     data?: any;
@@ -19,7 +19,7 @@ interface ICheckDataResult<T> {
     };
     result: T | null;
 }
-export const webApiResultError = (message: string) => {
+const webApiResultError = (message: string) => {
     return {
         name: "webApiResultError",
         message: message,
@@ -45,7 +45,7 @@ export const dataProvider = async (
 ) => {
     const defaultExtraProps: IDataProviderExtraProps = {
         requestType: "json",
-        responceType: "json",
+        responseType: "json",
         withoutInterceptors: false,
         headers: undefined,
     };
@@ -84,7 +84,7 @@ export const dataProvider = async (
         const isJson = response.headers.get("content-type")?.includes("application/json");
         const data = isJson ? await response.json() : response;
         if (!response.ok) {
-            const error: IDataProviderErrorResponce = {
+            const error: IDataProviderErrorResponse = {
                 status: response.status,
                 statusText: response.statusText,
                 data: data,

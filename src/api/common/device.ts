@@ -10,6 +10,7 @@ export const deviceLoad = (): IDeviceData => {
             type: "xs",
             name: "mobile",
         },
+        serverAppVersion: "",
     };
     data.screen.type = deviceGetScreenType(data.screen.size.width);
     data.screen.name = deviceGetScreenName(data.screen.type, data.isMobile);

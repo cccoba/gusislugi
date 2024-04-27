@@ -6,9 +6,10 @@ import { menuToggle } from "store/reducers/ComponentsSlice";
 import getConst from "api/common/getConst";
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 
-import IconButton from "./Icon/IconButton";
-import Link from "./Link/Link";
-import Icon from "./Icon";
+import IconButton from "../Icon/IconButton";
+
+import BackBtnICon from "./BackBtnICon";
+import AppVersion from "./AppVersion";
 
 interface IProps {
     title: string;
@@ -97,43 +98,7 @@ export default function Header({ title = "", icon = null, backUrl = null }: IPro
                     {title}
                 </Typography>
             </Toolbar>
-            <Typography
-                sx={{ position: "absolute", right: 5, top: 0, color: "common.white", opacity: 0.5 }}
-                variant="caption"
-            >
-                v {getConst("app-version")}
-            </Typography>
+            <AppVersion />
         </AppBar>
-    );
-}
-interface IBackBtnICon {
-    backUrl: string | null;
-    icon: string | null;
-    deviceScreenName: string;
-}
-function BackBtnICon({ backUrl = "", icon = "", deviceScreenName = "" }: IBackBtnICon) {
-    if ((!backUrl && !icon) || deviceScreenName === "mobile") {
-        return null;
-    }
-    return (
-        <Box sx={{ display: "flex", maxWidth: "70px" }}>
-            {!!backUrl && (
-                <Link
-                    url={backUrl}
-                    sx={{ display: "flex", color: "primary.contrastText" }}
-                >
-                    <Icon
-                        name="back"
-                        sx={{ mr: 1 }}
-                    />
-                </Link>
-            )}
-            {deviceScreenName !== "mobile" && !!icon && (
-                <Icon
-                    name={icon}
-                    sx={{ mr: 1, display: { xs: "none", sm: "inline-block" } }}
-                />
-            )}
-        </Box>
     );
 }

@@ -3,10 +3,10 @@ import { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
+import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
 
 import { dataProvider } from "./dataProvider";
 import { IFirstLoadView } from "./IFirstLoadView";
-import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
 
 const baseUrl = "users&view=";
 
