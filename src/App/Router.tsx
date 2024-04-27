@@ -29,6 +29,8 @@ import Wanteds from "pages/Wanteds";
 import MoneySgp from "pages/Money/Sgp";
 import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
 import MyTaxes from "pages/Taxes/MyTaxes";
+import MyFines from "pages/Fines/MyFines";
+import Fines from "pages/Fines";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -133,6 +135,10 @@ export default function RouterPage() {
                             path="/myTaxes"
                             element={<MyTaxes />}
                         />
+                        <Route
+                            path="/myFines"
+                            element={<MyFines />}
+                        />
 
                         <Route
                             path="/users/*"
@@ -170,6 +176,15 @@ export default function RouterPage() {
                                 <Taxes
                                     roles={[["taxes"]]}
                                     icon="taxes"
+                                />
+                            }
+                        />
+                        <Route
+                            path="/fines/*"
+                            element={
+                                <Fines
+                                    roles={[["fines"]]}
+                                    icon="fines"
                                 />
                             }
                         />

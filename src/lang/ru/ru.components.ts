@@ -119,6 +119,7 @@ const ruComponents = {
         qrScanner: "QR сканер",
         roles: "Роли",
         taxes: "Платежи",
+        fines: "Штрафы",
     },
     rolePermissions: {},
     sendUserNotification: {

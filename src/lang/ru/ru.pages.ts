@@ -6,6 +6,22 @@ const ruPages = {
             title: "Название",
         },
     },
+    fines: {
+        title: "Штрафы",
+        message: {
+            title: "Штрафы",
+            text: 'Штраф "%s" на сумму %s в статусе "%s"',
+        },
+        fields: {
+            id: "ID",
+            title: "Название",
+            status: "Статус",
+            value: "Сумма",
+            created_at: "Дата назначения",
+            endDate: "Дата просрочки",
+            uid: "Пользователь",
+        },
+    },
     medicalPolicies: {
         title: "Мед. полис",
         statusActive: "Активен",
@@ -200,7 +216,8 @@ const ruPages = {
             messages: "Оповещения",
             claims: "Мои заявки",
             medicalPolicies: "Мой мед. полис",
-            taxes: "Мои платежи",
+            taxes: "Мои платежи  ( Юж. Прешев )",
+            fines: "Мои штрафы ( Сев. Прешев )",
         },
         myId: {
             title: "Мой ID",

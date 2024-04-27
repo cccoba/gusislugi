@@ -86,6 +86,11 @@ function Home() {
                             title={langPage.actions.taxes}
                             icon="taxes"
                         />
+                        <HomeItem
+                            url="/myFines"
+                            title={langPage.actions.fines}
+                            icon="fines"
+                        />
                     </>
                 )}
             </Grid>

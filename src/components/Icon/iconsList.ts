@@ -7,6 +7,7 @@ const icn: any = {
     userAdd: "person_add",
     users: "people",
     taxes: "receipt_long",
+    fines: "savings",
     wanteds: "local_police",
     sgp: "currency_exchange",
     qrScanner: "qr_code_scanner",

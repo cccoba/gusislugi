@@ -9,17 +9,17 @@ import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
-import { taxes } from "api/data";
+import { fines } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 
 import { useAppSelector } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
-import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
+import { IFineDto } from "api/interfaces/user/IFineDto";
 
-const langPage = lang.pages.taxes;
+const langPage = lang.pages.fines;
 
-export const taxesListConfig: ICRUDAsyncListConfig = {
+export const finesListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -41,7 +41,7 @@ export const taxesListConfig: ICRUDAsyncListConfig = {
     }),
 };
 
-export const taxesEditConfig: ICRUDAsyncEditConfig = {
+export const finesEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "title",
@@ -86,12 +86,12 @@ export const taxesEditConfig: ICRUDAsyncEditConfig = {
     ],
 };
 
-function Taxes({ roles, icon }: IPageWithRoles) {
-    const currentUserRoleTaxes = useAppSelector((s) => s.user.user?.role?.params?.taxes);
+function Fines({ roles, icon }: IPageWithRoles) {
+    const currentUserRolePermissions = useAppSelector((s) => s.user.user?.role?.params?.fines);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsyncActionCb = async (data: ITaxeDto) => {
+    const onSaveStart: TCRUDAsyncActionCb = async (data: IFineDto) => {
         return new Promise((resolve, reject) => {
-            taxes.crudSave(data).then(resolve).catch(reject);
+            fines.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
                 uid: data.uid,
                 title: langPage.message.title,
@@ -116,19 +116,19 @@ function Taxes({ roles, icon }: IPageWithRoles) {
                 />
             )}
             <CRUDAsync
-                backUrl="/taxes"
+                backUrl="/fines"
                 roles={roles}
                 title={langPage.title}
                 icon={icon}
-                listConfig={taxesListConfig}
-                editConfig={taxesEditConfig}
+                listConfig={finesListConfig}
+                editConfig={finesEditConfig}
                 actions={[
-                    { name: "list", cb: taxes.crudList },
-                    { name: "delete", cb: taxes.crudDelete },
-                    { name: "edit", cb: taxes.crudGet },
+                    { name: "list", cb: fines.crudList },
+                    { name: "delete", cb: fines.crudDelete },
+                    { name: "edit", cb: fines.crudGet },
                     { name: "save", cb: onSaveStart },
                 ]}
-                permissions={currentUserRoleTaxes}
+                permissions={currentUserRolePermissions}
                 initialValue={{
                     id: 0,
                     value: 0,
@@ -141,4 +141,4 @@ function Taxes({ roles, icon }: IPageWithRoles) {
     );
 }
 
-export default Taxes;
+export default Fines;
