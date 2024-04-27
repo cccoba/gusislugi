@@ -79,7 +79,7 @@ function Home() {
                         <HomeItem
                             url="/myMedicalPolicies"
                             title={langPage.actions.medicalPolicies}
-                            icon="sgp"
+                            icon="medicalPolicies"
                         />
                         <HomeItem
                             url="/myTaxes"
