@@ -37,7 +37,7 @@ function Registration() {
                 }
                 if (result) {
                     dispatch(userInit());
-                    showSuccess(langPage.success.registration);
+                    showSuccess(result === true ? langPage.success.registration : result);
                 }
             })
             .catch((err) => {
