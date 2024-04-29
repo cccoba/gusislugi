@@ -19,7 +19,8 @@ import { useAppSelector } from "api/hooks/redux";
 const langPage = lang.pages.medicalPolicies;
 
 export const medicalPoliciesListConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: true,
+    isMultiSelection: false,
+    withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id, width: "30px" },

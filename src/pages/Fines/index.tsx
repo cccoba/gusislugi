@@ -20,7 +20,8 @@ import { IFineDto } from "api/interfaces/user/IFineDto";
 const langPage = lang.pages.fines;
 
 export const finesListConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: true,
+    isMultiSelection: false,
+    withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id, width: "30px" },

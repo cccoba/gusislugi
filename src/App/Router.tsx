@@ -25,12 +25,14 @@ import { useAppSelector } from "api/hooks/redux";
 import MoneyUser from "pages/Money/User";
 import MedicalPolicies from "pages/MedicalPolicies";
 import Taxes from "pages/Taxes";
-import Wanteds from "pages/Wanteds";
+import Wanteds from "pages/Wanteds/Wanteds";
 import MoneySgp from "pages/Money/Sgp";
 import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
 import MyTaxes from "pages/Taxes/MyTaxes";
 import MyFines from "pages/Fines/MyFines";
 import Fines from "pages/Fines";
+import Wanteds2 from "pages/Wanteds/Wanteds2";
+import Persons from "pages/Users/Persons";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -142,8 +144,18 @@ export default function RouterPage() {
 
                         <Route
                             path="/users/*"
-                            element={<Users roles={[["users"]]} />}
+                            element={<Users roles={[["admins"]]} />}
                         />
+                        <Route
+                            path="/persons/*"
+                            element={
+                                <Persons
+                                    roles={[["users"]]}
+                                    icon="group"
+                                />
+                            }
+                        />
+
                         <Route
                             path="/citizenships/*"
                             element={<Citizenships roles={[["admins"]]} />}
@@ -195,6 +207,16 @@ export default function RouterPage() {
                                     roles={[["wanteds"]]}
                                     icon="wanteds"
                                     backUrl={"/wanteds"}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/wanteds2/*"
+                            element={
+                                <Wanteds2
+                                    roles={[["wanteds2"]]}
+                                    icon="wanteds"
+                                    backUrl={"/wanteds2"}
                                 />
                             }
                         />

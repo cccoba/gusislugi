@@ -6,7 +6,7 @@ import lang from "lang";
 
 import { wantedsEditConfig, wantedsListConfig } from "pages/Wanteds/Wanteds";
 import { useAppSelector } from "api/hooks/redux";
-import { wanteds } from "api/data";
+import { wanteds2 } from "api/data";
 import { IWantedDto } from "api/interfaces/user/IWantedDto";
 import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 
@@ -22,7 +22,7 @@ const defInitialValue: IWantedDto = {
     description: "",
 };
 
-function PassportWanteds({ title, subTitle, user }: IPassportItem) {
+function PassportWanteds2({ title, subTitle, user }: IPassportItem) {
     const permissions = useAppSelector((s) => s.user.user?.role.params?.wanteds);
     const props = useMemo(() => {
         const result = {
@@ -49,19 +49,19 @@ function PassportWanteds({ title, subTitle, user }: IPassportItem) {
                 <CRUDAsync
                     listConfig={props.listConfig}
                     actions={[
-                        { name: "list", cb: wanteds.crudUserList, cbArgs: [user.id] },
-                        { name: "edit", cb: wanteds.crudGet },
-                        { name: "delete", cb: wanteds.crudDelete },
-                        { name: "save", cb: wanteds.crudSave },
+                        { name: "list", cb: wanteds2.crudUserList, cbArgs: [user.id] },
+                        { name: "edit", cb: wanteds2.crudGet },
+                        { name: "delete", cb: wanteds2.crudDelete },
+                        { name: "save", cb: wanteds2.crudSave },
                     ]}
                     editConfig={props.editConfig}
                     initialValue={props.initialValue}
                     permissions={permissions || 0}
-                    title={langPage.title}
+                    title={langPage.title2}
                     withOutPage
                 />
             </AccordionDetails>
         </Accordion>
     );
 }
-export default PassportWanteds;
+export default PassportWanteds2;

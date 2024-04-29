@@ -117,13 +117,13 @@ export default function CRUDAsyncEdit({
                         showSuccess(langPage.success.save);
                         onSaved();
                     }
+                    onClose();
                 })
                 .catch((err) => {
                     showError(err?.name === "webApiResultError" ? err.message : langPage.errors.save);
                 })
                 .finally(() => {
                     onIsLoading(false);
-                    onClose();
                 });
         }
     };

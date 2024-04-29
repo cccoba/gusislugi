@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 
-import UserList from "./UserList";
+import AdminUserList from "./AdminUserList";
 import User from "./User";
 
 interface IProps {}
@@ -12,7 +12,7 @@ function Users({ roles }: IPageWithRoles) {
         <Routes>
             <Route
                 path="/"
-                element={<UserList roles={roles} />}
+                element={<AdminUserList roles={roles} />}
             />
             <Route
                 path="/:id"

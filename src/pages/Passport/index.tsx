@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import lang from "lang";
-import { Alert, Page } from "components";
+import { Alert, PageOrModal } from "components";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import { IPageOrModal } from "api/interfaces/components/Page/IPageOrModal";
 import { passport, webApiResultData } from "api/data";
 import { IPassportUser } from "api/interfaces/Passport/IPassportUser";
 import { IUserDto } from "api/interfaces/user/IUserDto";
@@ -14,11 +14,14 @@ import PassportClaims from "./Claims";
 import PassportTaxes from "./Taxes";
 import PassportMedicalPolicies from "./MedicalPolicies";
 import PassportWanteds from "./Wanteds";
+import PassportWanteds2 from "./Wanteds2";
+import PassportFines from "./Fines";
 
 const langPage = lang.pages.passport.byGuid;
 
-interface IProps extends IPageWithRoles {
+interface IProps extends IPageOrModal {
     idName: "guid" | "telegramLogin";
+    userGuid?: string;
 }
 export interface IPassportItem {
     title: string;
@@ -26,16 +29,19 @@ export interface IPassportItem {
     user: IUserDto;
 }
 
-function Passport({ roles, icon, idName }: IProps) {
+function Passport({ roles, icon, idName, modalProps, userGuid }: IProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState<IPassportUser | null>(null);
     const { id = "" } = useParams();
+    const { state } = useLocation();
+    const [backUrl, setBackUrl] = useState("/");
     const [error, setError] = useState("");
     useEffect(() => {
-        if (!!id) {
+        const newUserId = userGuid || id;
+        if (!!newUserId) {
             const cb = idName === "telegramLogin" ? passport.getUserByTelegramLogin : passport.getUserByGuid;
             setIsLoading(true);
-            cb(id)
+            cb(newUserId)
                 .then((res) => {
                     const { error, result } = webApiResultData<IPassportUser>(res);
                     if (error) {
@@ -52,15 +58,21 @@ function Passport({ roles, icon, idName }: IProps) {
                     setIsLoading(false);
                 });
         }
-    }, [id]);
+    }, [id, userGuid]);
+    useEffect(() => {
+        if (state?.backUrl) {
+            setBackUrl(state.backUrl);
+        }
+    }, [state]);
 
     return (
-        <Page
+        <PageOrModal
             title={langPage.title}
             isLoading={isLoading}
             roles={roles}
             icon={icon}
-            backUrl={"/"}
+            backUrl={backUrl}
+            modalProps={modalProps}
         >
             {!!error ? (
                 <Alert
@@ -69,7 +81,10 @@ function Passport({ roles, icon, idName }: IProps) {
                 />
             ) : !!userData ? (
                 <>
-                    <PassportUser user={userData.user} />
+                    <PassportUser
+                        user={userData.user}
+                        hideEdit={!!modalProps}
+                    />
                     {typeof userData.claims !== "undefined" && (
                         <PassportClaims
                             subTitle={!!userData.claims ? langPage.haveData : langPage.notHaveData}
@@ -81,6 +96,13 @@ function Passport({ roles, icon, idName }: IProps) {
                         <PassportTaxes
                             subTitle={!!userData.taxes ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.taxes.title}
+                            user={userData.user}
+                        />
+                    )}
+                    {typeof userData.fines !== "undefined" && (
+                        <PassportFines
+                            subTitle={!!userData.fines ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.fines.title}
                             user={userData.user}
                         />
                     )}
@@ -98,9 +120,16 @@ function Passport({ roles, icon, idName }: IProps) {
                             user={userData.user}
                         />
                     )}
+                    {typeof userData.wanteds2 !== "undefined" && (
+                        <PassportWanteds2
+                            subTitle={!!userData.wanteds2 ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.wanteds.title2}
+                            user={userData.user}
+                        />
+                    )}
                 </>
             ) : null}
-        </Page>
+        </PageOrModal>
     );
 }
 export default Passport;

@@ -61,6 +61,13 @@ const menuList: INavigationMenu[] = [
         roles: [["wanteds"]],
     },
     {
+        name: "wanteds2",
+        title: lang.pages.wanteds.title2,
+        icon: "wanteds",
+        link: "/wanteds2",
+        roles: [["wanteds2"]],
+    },
+    {
         name: "roles",
         title: langPage.roles,
         icon: "engineering",
@@ -73,6 +80,13 @@ const menuList: INavigationMenu[] = [
         icon: "group",
         link: "/users",
         roles: [["admins"]],
+    },
+    {
+        name: "persons",
+        title: langPage.persons,
+        icon: "group",
+        link: "/persons",
+        roles: [["users"]],
     },
 ];
 

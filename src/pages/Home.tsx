@@ -8,6 +8,8 @@ import { useAppSelector } from "api/hooks/redux";
 import QrPrint from "components/QrPrint";
 import dateTime from "api/common/dateTime";
 import QrUserData from "components/QrPrint/QrUserData";
+import { checkFlagIncludes } from "api/common/enumHelper";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
 const langPage = lang.pages.home;
 interface IHomeItem {
@@ -56,6 +58,13 @@ function Home() {
                             title={langPage.actions.showId}
                             icon="id"
                         />
+                        {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
+                            <HomeItem
+                                url="/persons"
+                                title={langPage.actions.persons}
+                                icon="group"
+                            />
+                        )}
                         <HomeItem
                             url="/profile"
                             title={langPage.actions.profile}

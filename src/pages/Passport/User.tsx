@@ -10,12 +10,13 @@ import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
 interface IProps {
     user: IUserDto;
+    hideEdit?: boolean;
 }
 
 const langPage = lang.pages.passport.user;
 const langUser = lang.components.userForm;
 
-function PassportUser({ user }: IProps) {
+function PassportUser({ user, hideEdit }: IProps) {
     const citizenships = useAppSelector((s) => s.user.citizenships);
     const nationalities = useAppSelector((s) => s.user.nationalities);
     const roles = useAppSelector((s) => s.user.roles);
@@ -23,7 +24,7 @@ function PassportUser({ user }: IProps) {
     const adminPermissions = useAppSelector((s) => s.user.user?.role.params.admins);
     return (
         <>
-            {checkFlagIncludes(adminPermissions || 0, RolePermissionFlag.Edit) && (
+            {!hideEdit && checkFlagIncludes(adminPermissions || 0, RolePermissionFlag.Edit) && (
                 <Box sx={{ textAlign: "right" }}>
                     <LinkButton
                         url={`/users/${user.id}`}

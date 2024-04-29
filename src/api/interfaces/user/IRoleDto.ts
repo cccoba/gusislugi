@@ -4,6 +4,7 @@ export type TRoleCheckerRole = [keyof IRoleDto["params"], RolePermissionFlag?];
 export interface IRoleDto {
     id: number;
     title: string;
+    description: string;
     params: {
         admins?: RolePermissionFlag;
         claims?: RolePermissionFlag;
@@ -13,5 +14,6 @@ export interface IRoleDto {
         taxes?: RolePermissionFlag;
         fines?: RolePermissionFlag;
         wanteds?: RolePermissionFlag;
+        wanteds2?: RolePermissionFlag;
     };
 }

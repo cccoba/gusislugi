@@ -8,13 +8,14 @@ import { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { RolePermissionFlag as RolePermissionActionFlag } from "api/enums/RolePermissionFlag";
 import { toArray } from "api/common/helper";
 import { getFlagToFlagValues, getFlagValuesToFlag } from "api/common/enumHelper";
+import { UserRolePermissionActionFlag } from "api/enums/UserRolePermissionActionFlag";
 
 import FormControl from "./FormControl";
 import Select from "./Select";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
-const permissionList = ["admins", "claims", "qr", "users", "medicalPolicies", "taxes", "fines", "wanteds"];
+const permissionList = ["admins", "claims", "qr", "medicalPolicies", "taxes", "fines", "wanteds", "wanteds2", "users"];
 const permissions = permissionList.map((x) => ({
     id: x,
     title: getLangValue(lang.pipes.rolePermissions, x),
@@ -29,10 +30,14 @@ const defValue = {
     taxes: [],
     fines: [],
     wanteds: [],
+    wanteds2: [],
 };
 
 const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
     (x) => x.id !== RolePermissionActionFlag.None
+);
+const userValues = getEnumSelectValues(UserRolePermissionActionFlag, "UserRolePermissionActionFlag").filter(
+    (x) => x.id !== UserRolePermissionActionFlag.None
 );
 
 function RolePermissions({
@@ -51,7 +56,11 @@ function RolePermissions({
         if (toArray(value).length > 0) {
             for (const idName in value) {
                 if (Object.prototype.hasOwnProperty.call(value, idName)) {
-                    newValue[idName] = getFlagToFlagValues((value as any)[idName], RolePermissionActionFlag);
+                    if (idName === "users") {
+                        newValue[idName] = getFlagToFlagValues((value as any)[idName], UserRolePermissionActionFlag);
+                    } else {
+                        newValue[idName] = getFlagToFlagValues((value as any)[idName], RolePermissionActionFlag);
+                    }
                 }
             }
         }
@@ -73,13 +82,15 @@ function RolePermissions({
         >
             <Box sx={{ mx: 1 }}>
                 {permissions.map((x) => {
+                    const valueList = x.id === "users" ? userValues : values;
+
                     return (
                         <Select
                             type="selectFiltered"
                             multiple
                             key={x.id}
                             label={x.title}
-                            values={values}
+                            values={valueList}
                             value={(inputValue as any)[x.id]}
                             onChangeValue={(v) => toChange(x.id, v)}
                         />

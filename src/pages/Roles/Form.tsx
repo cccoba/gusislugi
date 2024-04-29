@@ -12,6 +12,7 @@ interface IProps {
 }
 const fields: TFormField[] = [
     { name: "title", title: langPage.fields.title, type: "text", required: true },
+    { name: "description", title: langPage.fields.description, type: "text", fieldProps: { multiline: true } },
     { name: "params", title: langPage.fields.params, type: "rolePermissions" },
 ];
 function RoleForm({ role, onCancel, onSave }: IProps) {

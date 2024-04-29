@@ -13,6 +13,7 @@ import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { Button } from "@mui/material";
 import Icon from "./Icon";
 import QrUserData from "./QrPrint/QrUserData";
+import Passport from "pages/Passport";
 
 interface IProps {
     user: IUserDto;
@@ -31,13 +32,13 @@ const defFields: TFormField[] = [
     { type: "text", name: "passport", title: langPage.passport },
     { type: "text", name: "registration", title: langPage.registration },
     { type: "text", name: "nickname", title: langPage.nickname },
-    { type: "text", name: "realName", title: langPage.realName },
     { name: "roleId", title: langPage.role, type: "select", values: [] },
+    { type: "text", name: "tgLogin", title: langPage.tgLogin, disabled: true },
     { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
 ];
 
 function UserForm({ user, onChangeValue }: IProps) {
-    const currentUserRoleParams = useAppSelector((s) => s.user.user?.role.params.users);
+    const currentUserRoleParams = useAppSelector((s) => s.user.user?.role.params.admins);
     const currentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     const isEditable = useMemo(() => {
         return checkFlagIncludes(currentUserRoleParams || 0, RolePermissionFlag.Edit);
@@ -66,9 +67,9 @@ function UserForm({ user, onChangeValue }: IProps) {
                     field.values = roles;
                     field.hidden = !currentUserIsAdmin;
                     break;
+                case "tgLogin":
                 case "nickname":
                 case "description":
-                case "realName":
                     field.hidden = !currentUserIsAdmin;
                     break;
             }
@@ -81,6 +82,7 @@ function UserForm({ user, onChangeValue }: IProps) {
             {!!isEditable && (
                 <>
                     <ShowQR user={user} />
+                    <ShowPasport user={user} />
                 </>
             )}
             <Form
@@ -119,6 +121,39 @@ function ShowQR({ user }: IShowQRProps) {
                 variant="outlined"
             >
                 {langPage.showId}
+            </Button>
+        </>
+    );
+}
+function ShowPasport({ user }: IShowQRProps) {
+    const [isIdShowed, setIsIdShowed] = useState(false);
+    const showMyId = () => {
+        setIsIdShowed(true);
+    };
+    const hideMyId = () => {
+        setIsIdShowed(false);
+    };
+    return (
+        <>
+            {!!isIdShowed && (
+                <Passport
+                    idName="guid"
+                    userGuid={user.guid}
+                    roles={[["qr"]]}
+                    icon="badge"
+                    modalProps={{
+                        withCloseButton: true,
+                        onClose: hideMyId,
+                        responsiveWidth: true,
+                    }}
+                />
+            )}
+            <Button
+                startIcon={<Icon name="badge" />}
+                onClick={showMyId}
+                variant="outlined"
+            >
+                {langPage.showPasport}
             </Button>
         </>
     );

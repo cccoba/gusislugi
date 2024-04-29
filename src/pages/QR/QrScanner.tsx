@@ -41,6 +41,7 @@ function QrScannerPage({ roles, icon }: IPageWithRoles) {
             title={langPage.title}
             roles={roles}
             icon={icon}
+            backUrl={"/"}
         >
             {!!isShowedReader && (
                 <QrScanner

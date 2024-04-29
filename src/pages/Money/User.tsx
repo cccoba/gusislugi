@@ -11,8 +11,10 @@ import useParamsId from "api/hooks/useParamsId";
 import { useNotifier } from "api/hooks/useNotifier";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { IMoneyDto } from "api/interfaces/user/IMoneyDto";
+import { IMoneyAddDto } from "api/interfaces/user/IMoneyAddDto";
 
 import UserHistoryTable from "./UserHistory/UserHistoryTable";
+
 import { moneyEditConfig } from ".";
 
 const langPage = lang.pages.money;
@@ -21,7 +23,7 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState<IUserDto | null>(null);
     const [history, setHistory] = useState<any[]>([]);
-    const [addValues, setAddValues] = useState<null | IMoneyDto>(null);
+    const [addValues, setAddValues] = useState<null | IMoneyAddDto>(null);
     const { showError, showSuccess } = useNotifier();
     const userId = useParamsId();
     useEffect(() => {
@@ -56,7 +58,7 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
         }
     };
     const toAdd = () => {
-        setAddValues({ fromUid: 1, toUid: userId, value: 0, hidden: false, id: 0 });
+        setAddValues({ fromUid: 1, toUid: [userId], value: 0, hidden: false, id: 0 });
     };
     const toHideAdd = () => {
         setAddValues(null);
@@ -66,12 +68,12 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
         money
             .crudSave(data)
             .then((res) => {
-                const { error, result } = webApiResultData<IMoneyDto>(res);
+                const { error, result } = webApiResultData<boolean>(res);
                 if (error) {
                     throw error;
                 }
                 if (result) {
-                    showSuccess(sprintf(langPage.success.toUserMoneyAdd, sprintf(lang.money, result.value)));
+                    showSuccess(sprintf(langPage.success.toUserMoneyAdd, sprintf(lang.money, data.value)));
                     updateData();
                     toHideAdd();
                 }
@@ -82,7 +84,6 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
             .finally(() => {
                 setIsLoading(false);
             });
-        console.log("toUserMoneyAdd", data);
     };
     return (
         <Page
@@ -90,6 +91,7 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
             isLoading={isLoading}
             roles={roles}
             icon={icon}
+            backUrl={"/users"}
         >
             {!!addValues && (
                 <Modal

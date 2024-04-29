@@ -17,6 +17,7 @@ const langPage = lang.pages.claims;
 
 export const claimListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: true,
+    withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id },

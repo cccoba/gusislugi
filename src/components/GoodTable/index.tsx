@@ -193,6 +193,7 @@ function GoodTable<T>({
     withoutSimpleTextFilter = false,
     onRowDoubleClick,
     onRowClick,
+    onSelectedRows,
 }: IGoodTableProps<T>) {
     const [selectedRows, setSelectedRows] = useState<T[]>([]);
     const [filteredValues, setFilteredValues] = useState<T[]>([]);
@@ -202,6 +203,11 @@ function GoodTable<T>({
         ...pagination,
         pageNumber: 1,
     });
+    useEffect(() => {
+        if (!!onSelectedRows) {
+            onSelectedRows(selectedRows);
+        }
+    }, [selectedRows]);
     const isMobile = useAppSelector((s) => s.device.isMobile);
     const [filters, setFilters] = useState<TFilterValue[]>([]);
     const [simpleSearchText, setSimpleSearchText] = useState("");

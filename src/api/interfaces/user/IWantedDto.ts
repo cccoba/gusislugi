@@ -8,7 +8,9 @@ export interface IWantedDto {
     status: boolean;
     type: WantedTypeEnum;
     description: string;
+    addUserId?: number;
     created_at?: Date;
     updated_at?: Date;
     user?: IUserShortDto;
+    addUser?: IUserShortDto;
 }

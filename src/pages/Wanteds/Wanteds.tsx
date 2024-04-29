@@ -10,7 +10,6 @@ import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { wanteds } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { useAppSelector } from "api/hooks/redux";
 import { IWantedDto } from "api/interfaces/user/IWantedDto";
 import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
@@ -19,6 +18,7 @@ const langPage = lang.pages.wanteds;
 
 export const wantedsListConfig: ICRUDAsyncListConfig = {
     isMultiSelection: false,
+    withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id, width: "30px" },
@@ -33,7 +33,7 @@ export const wantedsListConfig: ICRUDAsyncListConfig = {
         { name: "status", title: langPage.fields.status },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
     ],
-    transform: (data: IMedicalPoliciesDto) => ({
+    transform: (data: IWantedDto) => ({
         ...data,
         user: data.user?.firstName || lang.unknown,
         image: data.user?.image || "",
@@ -73,6 +73,12 @@ export const wantedsEditConfig: ICRUDAsyncEditConfig = {
             name: "created_at",
             title: langPage.fields.created_at,
             type: "dateTime",
+            disabled: true,
+        },
+        {
+            name: "addUserId",
+            title: langPage.fields.addUserId,
+            type: "user",
             disabled: true,
         },
     ],

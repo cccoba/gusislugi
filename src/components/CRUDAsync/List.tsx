@@ -20,6 +20,7 @@ export interface ICRUDAsyncListConfig {
     isMultiSelection?: boolean;
     fields: IGoodTableField[];
     orderBy: ISortData;
+    withRefresh?: boolean;
     toTreeView?: (data: any[]) => ITreeItem[];
     transform?: (data: any) => any;
 }
@@ -53,7 +54,7 @@ export default function CRUDAsyncList({
         loadList();
     }, [needUpdate]);
     const actionsList = useMemo(() => {
-        const getTableAction = (actionName: TCRUDAsyncActionCbName | "add") => {
+        const getTableAction = (actionName: TCRUDAsyncActionCbName | "add" | "refresh") => {
             const res: IGoodTableToolbarAction<any> = {
                 name: actionName,
                 icon: actionName,
@@ -66,6 +67,10 @@ export default function CRUDAsyncList({
                     res.onClick = () => {
                         onSelectId(0);
                     };
+                    break;
+                case "refresh":
+                    res.color = "primary";
+                    res.onClick = loadList;
                     break;
                 case "edit":
                     res.color = "primary";
@@ -93,6 +98,13 @@ export default function CRUDAsyncList({
             return res;
         };
         const tableActions = [];
+        if (
+            config.withRefresh &&
+            actions.findIndex((x) => x.name === "list") > -1 &&
+            checkFlagIncludes(permissions, RolePermissionFlag.View)
+        ) {
+            tableActions.push(getTableAction("refresh"));
+        }
         if (typeof initialValue !== "undefined" && checkFlagIncludes(permissions, RolePermissionFlag.Add)) {
             tableActions.push(getTableAction("add"));
         }
@@ -115,7 +127,7 @@ export default function CRUDAsyncList({
 
         return tableActions;
     }, [actions, selectedRows, initialValue, rowId, permissions]);
-    const loadList = () => {
+    function loadList() {
         const action = actions.find((x) => x.name === "list");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.View)) {
             onIsLoading(true);
@@ -138,7 +150,7 @@ export default function CRUDAsyncList({
                     setSelectedRows([]);
                 });
         }
-    };
+    }
     const onRowDoubleClick = (row: any) => {
         const action = actions.find((x) => x.name === "edit");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {

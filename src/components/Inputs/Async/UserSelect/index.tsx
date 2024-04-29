@@ -125,6 +125,8 @@ export default function UserSelect({
     }
     const addUsers = (data: any) => {
         if (multiple) {
+            console.log("addUsers", data, users);
+
             if (!!data?.length) {
                 let needUpdate = false;
                 const oldUsers = users.filter((u) => (value as number[]).includes(u.id));

@@ -103,9 +103,9 @@ export default function UserSelectList({
         }
         return null;
     };
-    const onSelected = (items: any) => {
+    const onSelected = (items: IUserRowDto[]) => {
         if (!multiple) {
-            onCancel(items?.id || 0);
+            onCancel(items?.[0]?.id || 0);
         } else {
             setSelectedIds(items.map((u: any) => u.id));
         }
@@ -123,7 +123,7 @@ export default function UserSelectList({
                     <GoodTable<IUserRowDto>
                         values={filteredUsers}
                         isMultiSelection={multiple}
-                        onRowClick={onSelected}
+                        onSelectedRows={onSelected}
                         fields={userFields}
                         order={{ direction: SortOrderEnum.Ascending, sort: "firstName" }}
                     />

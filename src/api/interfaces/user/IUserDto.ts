@@ -3,12 +3,11 @@ import { IRoleDto } from "./IRoleDto";
 export interface IUserDto {
     id: number;
     guid: string;
-    tgId?: number;
-    tgName: string;
+    tgId?: string;
+    tgLogin?: string;
     nickname: string;
     roleId: number;
     firstName: string;
-    realName: string;
     nationalityId?: number;
     citizenshipId?: number;
     passport: string;

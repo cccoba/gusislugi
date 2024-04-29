@@ -14,10 +14,13 @@ import { IMoneyDto } from "api/interfaces/user/IMoneyDto";
 import { useAppSelector } from "api/hooks/redux";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { IMoneyAddDto } from "api/interfaces/user/IMoneyAddDto";
 
 const langPage = lang.pages.money;
 
 const listConfig: ICRUDAsyncListConfig = {
+    isMultiSelection: false,
+    withRefresh: true,
     fields: [
         { name: "from_user", title: langPage.fields.fromUid, format: "text" },
         { name: "to_user", title: langPage.fields.toUid, format: "text" },
@@ -34,15 +37,22 @@ const listConfig: ICRUDAsyncListConfig = {
 export const moneyEditConfig: ICRUDAsyncEditConfig = {
     fields: [
         { name: "fromUid", title: langPage.fields.fromUid, type: "user", required: true },
-        { name: "toUid", title: langPage.fields.toUid, type: "user", required: true },
+        {
+            name: "toUid",
+            title: langPage.fields.toUid,
+            type: "user",
+            required: true,
+            multiple: true,
+            multipleVariant: "chips",
+        },
         { name: "value", title: langPage.fields.value, type: "counter", minValue: 1, required: true },
         { name: "hidden", title: "", text: langPage.fields.hidden, type: "switcher" },
     ],
 };
-const defInitialValue: IMoneyDto = {
+const defInitialValue: IMoneyAddDto = {
     id: 0,
     fromUid: 1,
-    toUid: 0,
+    toUid: [],
     value: 0,
     hidden: false,
 };
@@ -55,7 +65,7 @@ function MoneyList({ roles, icon }: IPageWithRoles) {
             { name: "list", cb: money.crudList },
             { name: "save", cb: money.crudSave },
         ];
-        let newInitialValue: IMoneyDto | undefined = undefined;
+        let newInitialValue: IMoneyAddDto | undefined = undefined;
         if ((checkUserRoleAccess([["admins", RolePermissionFlag.Add]]), currentUserPermissions)) {
             newInitialValue = { ...defInitialValue };
             if (search.length) {
@@ -64,7 +74,7 @@ function MoneyList({ roles, icon }: IPageWithRoles) {
                     newInitialValue.fromUid = parseInt(params.get("fromUid") as string);
                 }
                 if (params.has("toUid") && params.get("toUid") !== null) {
-                    newInitialValue.toUid = parseInt(params.get("toUid") as string);
+                    newInitialValue.toUid = [parseInt(params.get("toUid") as string)];
                 }
                 if (params.has("value") && params.get("value") !== null) {
                     newInitialValue.value = parseInt(params.get("value") as string);

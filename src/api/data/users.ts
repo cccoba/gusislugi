@@ -38,5 +38,8 @@ const UsersDataProvider = {
     getUserByGuid: (search: string): Promise<IWebDataResult<IUserShortDto>> => {
         return dataProvider(baseUrl + "getUserByGuid&search=" + search);
     },
+    getPersons: (): Promise<IWebDataResult<IUserDto[]>> => {
+        return dataProvider(baseUrl + "getPersons", "get");
+    },
 };
 export default UsersDataProvider;

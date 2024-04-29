@@ -7,9 +7,9 @@ const ruPages = {
         },
     },
     fines: {
-        title: "Штрафы",
+        title: "Штрафы Север",
         message: {
-            title: "Штрафы",
+            title: "Штрафы Север",
             text: 'Штраф "%s" на сумму %s в статусе "%s"',
         },
         fields: {
@@ -57,9 +57,9 @@ const ruPages = {
         },
     },
     taxes: {
-        title: "Платежи",
+        title: "Платежи Юг",
         message: {
-            title: "Платежи",
+            title: "Платежи Юг",
             text: 'Платеж "%s" на сумму %s в статусе "%s"',
         },
         fields: {
@@ -198,6 +198,7 @@ const ruPages = {
         fields: {
             id: "ID",
             title: "Роль",
+            description: "Описание",
             params: "Доступ",
         },
         success: {
@@ -218,6 +219,7 @@ const ruPages = {
             medicalPolicies: "Мой мед. полис",
             taxes: "Мои платежи  ( Юж. Прешев )",
             fines: "Мои штрафы ( Сев. Прешев )",
+            persons: "База пользователей",
         },
         myId: {
             title: "Мой ID",
@@ -247,7 +249,8 @@ const ruPages = {
         },
     },
     wanteds: {
-        title: "Розыск",
+        title: "Розыск Юг",
+        title2: "Розыск Север",
         statusActive: "Активен",
         statusNotActive: "Не активен",
         message: {
@@ -262,6 +265,7 @@ const ruPages = {
             created_at: "Дата создания",
             uid: "Разыскиваемый",
             description: "Описание",
+            addUserId: "Кто подал",
         },
     },
     users: {
@@ -281,6 +285,7 @@ const ruPages = {
             edit: "Редактировать",
             message: "Оповещение",
             money: "Деньги",
+            passport: "Паспорт",
         },
         success: {
             updateUser: "Пользователь отредактирован",

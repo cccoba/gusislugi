@@ -38,6 +38,7 @@ function Roles({ roles, icon }: IPageWithRoles) {
         setSelectedRole({
             id: 0,
             title: "",
+            description: "",
             params: {},
         });
     };
@@ -95,7 +96,10 @@ function Roles({ roles, icon }: IPageWithRoles) {
                 fields={fields}
                 values={values}
                 onRowClick={toEdit}
-                actions={[{ icon: "add", name: "add", onClick: toAdd }]}
+                actions={[
+                    { icon: "refresh", name: "refresh", onClick: refetch },
+                    { icon: "add", name: "add", onClick: toAdd },
+                ]}
             />
         </Page>
     );

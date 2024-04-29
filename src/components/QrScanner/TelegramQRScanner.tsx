@@ -1,10 +1,6 @@
-import { Box, Button } from "@mui/material";
+import { useEffect } from "react";
 import { useScanQrPopup } from "@vkruglikov/react-telegram-web-app";
 
-import lang from "lang";
-import { useEffect } from "react";
-
-const langPage = lang.components.qrScanner;
 interface IProps {
     onRead: (message: string) => void;
     onCancel: () => void;

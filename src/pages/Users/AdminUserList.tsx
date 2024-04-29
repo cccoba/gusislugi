@@ -15,22 +15,23 @@ import SendUserNotification from "components/SendUserNotification";
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
     { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
+    { name: "actions", title: langPage.fields.actions, format: "component" },
     { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
     { name: "firstName", title: langPage.fields.firstName },
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "nickname", title: langPage.fields.nickname },
-    { name: "actions", title: langPage.fields.actions, format: "component" },
-    { name: "realName", title: "", hidden: true },
+    { name: "tgLogin", title: "", hidden: true },
+    { name: "passport", title: "", hidden: true },
 ];
 
-type TUserAction = "edit" | "message" | "money";
+type TUserAction = "edit" | "message" | "money" | "passport";
 interface IUserActions {
     onAction: (actionName: TUserAction, user: IUserDto) => void;
     user: IUserDto;
 }
 
-function UserList({ roles }: IPageWithRoles) {
+function AdminUserList({ roles }: IPageWithRoles) {
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
     const [messageUser, setMessageUser] = useState<IUserDto | null>(null);
     const navigate = useNavigate();
@@ -58,6 +59,7 @@ function UserList({ roles }: IPageWithRoles) {
         if (data?.length) {
             return data.map((x) => ({
                 ...x,
+                tgLogin: x.tgLogin ? `@${x.tgLogin}` : null,
                 actions: (
                     <UserActions
                         user={x}
@@ -78,6 +80,9 @@ function UserList({ roles }: IPageWithRoles) {
                 break;
             case "message":
                 setMessageUser(user);
+                break;
+            case "passport":
+                navigate(`/passport/${user.guid}`, { state: { backUrl: "/users" } });
                 break;
         }
     }
@@ -133,6 +138,9 @@ function UserActions({ onAction, user }: IUserActions) {
     const toMoney = () => {
         onAction("money", user);
     };
+    const toPassport = () => {
+        onAction("passport", user);
+    };
 
     return (
         <>
@@ -172,10 +180,18 @@ function UserActions({ onAction, user }: IUserActions) {
                                 {langPage.actions.money}
                             </Typography>
                         </MenuItem>
+                        <MenuItem onClick={toPassport}>
+                            <Typography
+                                variant="inherit"
+                                noWrap
+                            >
+                                {langPage.actions.passport}
+                            </Typography>
+                        </MenuItem>
                     </>
                 </RoleChecker>
             </Menu>
         </>
     );
 }
-export default UserList;
+export default AdminUserList;

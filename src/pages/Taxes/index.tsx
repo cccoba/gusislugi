@@ -20,7 +20,8 @@ import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 const langPage = lang.pages.taxes;
 
 export const taxesListConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: true,
+    isMultiSelection: false,
+    withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
         { name: "id", title: langPage.fields.id, width: "30px" },

@@ -4,11 +4,11 @@ import { loaderChange } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch } from "api/hooks/redux";
 import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import { RolePermissionFlag, RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 import CRUDAsyncMain, { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
 import { ICRUDAsyncListConfig } from "./List";
-import { RolePermissionFlag, RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 export interface ICRUDAsyncProps {
     listConfig: ICRUDAsyncListConfig;
