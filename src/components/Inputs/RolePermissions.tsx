@@ -15,7 +15,18 @@ import Select from "./Select";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
-const permissionList = ["admins", "claims", "qr", "medicalPolicies", "taxes", "fines", "wanteds", "wanteds2", "users"];
+const permissionList = [
+    "admins",
+    "claims",
+    "qr",
+    "medicalPolicies",
+    "medicalInfo",
+    "taxes",
+    "fines",
+    "wanteds",
+    "wanteds2",
+    "users",
+];
 const permissions = permissionList.map((x) => ({
     id: x,
     title: getLangValue(lang.pipes.rolePermissions, x),
@@ -26,6 +37,7 @@ const defValue = {
     claims: [],
     qr: [],
     users: [],
+    medicalInfo: [],
     medicalPolicies: [],
     taxes: [],
     fines: [],

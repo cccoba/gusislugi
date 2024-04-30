@@ -16,6 +16,7 @@ import PassportMedicalPolicies from "./MedicalPolicies";
 import PassportWanteds from "./Wanteds";
 import PassportWanteds2 from "./Wanteds2";
 import PassportFines from "./Fines";
+import PassportMedicalInfo from "./MedicalInfo";
 
 const langPage = lang.pages.passport.byGuid;
 
@@ -103,6 +104,13 @@ function Passport({ roles, icon, idName, modalProps, userGuid }: IProps) {
                         <PassportFines
                             subTitle={!!userData.fines ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.fines.title}
+                            user={userData.user}
+                        />
+                    )}
+                    {typeof userData.medicalInfo !== "undefined" && (
+                        <PassportMedicalInfo
+                            subTitle={!!userData.medicalInfo ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.medicalInfo.title}
                             user={userData.user}
                         />
                     )}

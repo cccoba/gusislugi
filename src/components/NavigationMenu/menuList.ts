@@ -40,6 +40,13 @@ const menuList: INavigationMenu[] = [
         roles: [["medicalPolicies"]],
     },
     {
+        name: "medicalInfo",
+        title: lang.pages.medicalInfo.title,
+        icon: "medicalInfo",
+        link: "/medicalInfo",
+        roles: [["medicalInfo"]],
+    },
+    {
         name: "taxes",
         title: langPage.taxes,
         icon: "taxes",

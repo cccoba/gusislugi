@@ -12,6 +12,7 @@ const icn: any = {
     sgp: "currency_exchange",
     qrScanner: "qr_code_scanner",
     medicalPolicies: "medical_services",
+    medicalInfo: "vaccines",
     id: "vpn_key",
 };
 

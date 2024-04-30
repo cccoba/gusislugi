@@ -22,6 +22,19 @@ const ruPages = {
             uid: "Пользователь",
         },
     },
+    medicalInfo: {
+        title: "Мед. информация",
+        statusActive: "Активен",
+        statusNotActive: "Не активен",
+        fields: {
+            id: "ID",
+            title: "Название",
+            status: "Активен",
+            created_at: "Дата выдачи",
+            endDate: "Дата окончания",
+            uid: "Пользователь",
+        },
+    },
     medicalPolicies: {
         title: "Мед. полис",
         statusActive: "Активен",
@@ -57,9 +70,9 @@ const ruPages = {
         },
     },
     taxes: {
-        title: "Платежи Юг",
+        title: "Платежи",
         message: {
-            title: "Платежи Юг",
+            title: "Платежи",
             text: 'Платеж "%s" на сумму %s в статусе "%s"',
         },
         fields: {
@@ -217,7 +230,7 @@ const ruPages = {
             messages: "Оповещения",
             claims: "Мои заявки",
             medicalPolicies: "Мой мед. полис",
-            taxes: "Мои платежи  ( Юж. Прешев )",
+            taxes: "Мои платежи",
             fines: "Мои штрафы ( Сев. Прешев )",
             persons: "База пользователей",
         },

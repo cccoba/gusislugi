@@ -119,7 +119,7 @@ const ruComponents = {
         medicalPolicies: "Мед. полисы",
         qrScanner: "QR сканер",
         roles: "Роли",
-        taxes: "Платежи Юг",
+        taxes: "Платежи",
         fines: "Штрафы Север",
     },
     rolePermissions: {},

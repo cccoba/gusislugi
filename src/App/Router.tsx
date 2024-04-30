@@ -33,6 +33,7 @@ import MyFines from "pages/Fines/MyFines";
 import Fines from "pages/Fines";
 import Wanteds2 from "pages/Wanteds/Wanteds2";
 import Persons from "pages/Users/Persons";
+import MedicalInfo from "pages/MedicalInfo";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -179,6 +180,15 @@ export default function RouterPage() {
                                 <MedicalPolicies
                                     roles={[["medicalPolicies"]]}
                                     icon="medicalPolicies"
+                                />
+                            }
+                        />
+                        <Route
+                            path="/medicalInfo/*"
+                            element={
+                                <MedicalInfo
+                                    roles={[["medicalInfo"]]}
+                                    icon="medicalInfo"
                                 />
                             }
                         />

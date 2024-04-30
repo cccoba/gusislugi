@@ -8,4 +8,5 @@ export interface IPassportUser {
     wanteds?: boolean;
     wanteds2?: boolean;
     medicalPolicies?: boolean;
+    medicalInfo?: boolean;
 }
