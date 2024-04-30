@@ -51,7 +51,7 @@ function Persons({ roles, icon }: IPageWithRoles) {
     const toPassport = (data: any) => {
         setSelectedUser(!!data ? data : null);
     };
-    const hidePasport = () => {
+    const hidePassport = () => {
         setSelectedUser(null);
     };
     return (
@@ -69,7 +69,7 @@ function Persons({ roles, icon }: IPageWithRoles) {
                     icon="badge"
                     modalProps={{
                         withCloseButton: true,
-                        onClose: hidePasport,
+                        onClose: hidePassport,
                         responsiveWidth: true,
                     }}
                 />

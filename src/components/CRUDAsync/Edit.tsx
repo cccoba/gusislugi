@@ -52,6 +52,7 @@ export default function CRUDAsyncEdit({
         if (showVariant === "modal") {
             return {
                 withCloseButton: true,
+                responsiveWidth: true,
                 onClose,
             };
         }

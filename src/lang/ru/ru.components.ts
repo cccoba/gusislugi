@@ -181,12 +181,13 @@ const ruComponents = {
         list: {
             title: "Добавить пользователей",
             roles: "По роли",
+            citizenships: "По гражданству",
             allList: "По имя фамилия",
             addBtn: "Добавить",
             fields: {
                 firstName: "Имя Фамилия",
                 role: "Роль",
-                phone: "Телефон",
+                citizenship: "Гражданство",
                 imageId: "Фото",
             },
         },
