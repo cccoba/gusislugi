@@ -293,6 +293,7 @@ const ruPages = {
             image: "Фото",
             nickname: "Позывной",
             actions: "Действие",
+            roleId: "Роль",
         },
         actions: {
             edit: "Редактировать",

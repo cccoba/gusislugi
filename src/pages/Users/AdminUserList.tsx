@@ -21,6 +21,7 @@ const defFields: IGoodTableField[] = [
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "nickname", title: langPage.fields.nickname },
+    { name: "roleId", title: langPage.fields.roleId, format: "list" },
     { name: "tgLogin", title: "", hidden: true },
     { name: "passport", title: "", hidden: true },
 ];
@@ -37,6 +38,7 @@ function AdminUserList({ roles }: IPageWithRoles) {
     const navigate = useNavigate();
     const nationalities = useAppSelector((x) => x.user.nationalities);
     const citizenships = useAppSelector((x) => x.user.citizenships);
+    const allRoles = useAppSelector((x) => x.user.roles);
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
         let newFields = [...defFields];
@@ -52,8 +54,12 @@ function AdminUserList({ roles }: IPageWithRoles) {
         if (citizenshipId) {
             citizenshipId.formatProps = citizenships;
         }
+        const roleId = newFields.find((x) => x.name === "roleId");
+        if (roleId) {
+            roleId.formatProps = allRoles;
+        }
         return newFields;
-    }, [nationalities, citizenships, withImage]);
+    }, [nationalities, citizenships, allRoles, withImage]);
 
     const values = useMemo(() => {
         if (data?.length) {
