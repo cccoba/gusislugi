@@ -285,6 +285,7 @@ const ruPages = {
         title: "Пользователи",
         messageSenderTitle: "Отправить пользователю %s",
         withImage: "Показать фото",
+        addUser: "Новый пользователь",
         fields: {
             id: "ID",
             firstName: "Имя Фамилия",
@@ -303,10 +304,12 @@ const ruPages = {
         },
         success: {
             updateUser: "Пользователь отредактирован",
+            addUser: "Пользователь создан",
         },
         errors: {
             getUser: "Пользователь не найден!",
             updateUser: "Не удалось отредактировать пользователя!",
+            addUser: "Не удалось создать пользователя!",
         },
     },
 };

@@ -1,18 +1,23 @@
 import { useMemo, useState } from "react";
 import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import lang, { sprintf } from "lang";
-import { GoodTable, IconButton, Page, RoleChecker, Switcher } from "components";
+import { Form, GoodTable, IconButton, Modal, Page, RoleChecker, Switcher } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
+import SendUserNotification from "components/SendUserNotification";
+import { TFormField } from "components/Form/FormAdapters";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
-import { useNavigate } from "react-router-dom";
-import SendUserNotification from "components/SendUserNotification";
+import { IFormFieldSelect } from "components/Form/Adapters/Select";
+import { users, webApiResultData } from "api/data";
+import { useNotifier } from "api/hooks/useNotifier";
 
 const langPage = lang.pages.users;
+const langAddForm = lang.components.userForm;
 const defFields: IGoodTableField[] = [
     { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
     { name: "actions", title: langPage.fields.actions, format: "component" },
@@ -31,34 +36,85 @@ interface IUserActions {
     onAction: (actionName: TUserAction, user: IUserDto) => void;
     user: IUserDto;
 }
+const defAddFields: TFormField[] = [
+    { name: "image", title: langAddForm.image, type: "image", fieldProps: { previewWidth: "200px" } },
+
+    { type: "text", name: "firstName", title: langAddForm.firstName },
+
+    { name: "nationalityId", title: langAddForm.nationality, type: "select", values: [] },
+    { name: "citizenshipId", title: langAddForm.citizenship, type: "select", values: [] },
+    { type: "text", name: "passport", title: langAddForm.passport },
+    { type: "text", name: "registration", title: langAddForm.registration },
+    { type: "text", name: "nickname", title: langAddForm.nickname },
+    { name: "roleId", title: langAddForm.role, type: "select", values: [] },
+    { type: "text", name: "description", title: langAddForm.description, fieldProps: { multiline: true } },
+];
+
+const addValue: IUserDto = {
+    id: 0,
+    guid: "",
+    nickname: "",
+    roleId: 1,
+    firstName: "",
+    nationalityId: 1,
+    citizenshipId: 1,
+    passport: "",
+    registration: "",
+    image: "",
+    description: "",
+    money: 0,
+    role: {
+        id: 1,
+        description: "",
+        params: {},
+        title: "",
+    },
+};
 
 function AdminUserList({ roles }: IPageWithRoles) {
-    const { data, isLoading } = useGetData<IUserDto[]>("users", []);
+    const { data, isLoading: initLoading, refetch } = useGetData<IUserDto[]>("users", []);
     const [messageUser, setMessageUser] = useState<IUserDto | null>(null);
+    const [addForm, setAddForm] = useState(false);
     const navigate = useNavigate();
+    const { showError, showSuccess } = useNotifier();
+    const [isLoading, setIsLoading] = useState(false);
     const nationalities = useAppSelector((x) => x.user.nationalities);
     const citizenships = useAppSelector((x) => x.user.citizenships);
     const allRoles = useAppSelector((x) => x.user.roles);
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
-        let newFields = [...defFields];
+        let fields = { fields: [...defFields], addFields: [...defAddFields] };
         if (!withImage) {
-            newFields = newFields.filter((x) => x.name !== "image");
+            fields.fields = fields.fields.filter((x) => x.name !== "image");
         }
-        const nationalityId = newFields.find((x) => x.name === "nationalityId");
+        const nationalityId = fields.fields.find((x) => x.name === "nationalityId");
         if (nationalityId) {
             nationalityId.formatProps = nationalities;
         }
 
-        const citizenshipId = newFields.find((x) => x.name === "citizenshipId");
+        const citizenshipId = fields.fields.find((x) => x.name === "citizenshipId");
         if (citizenshipId) {
             citizenshipId.formatProps = citizenships;
         }
-        const roleId = newFields.find((x) => x.name === "roleId");
+        const roleId = fields.fields.find((x) => x.name === "roleId");
         if (roleId) {
             roleId.formatProps = allRoles;
         }
-        return newFields;
+
+        const nationalityId2 = fields.addFields.find((x) => x.name === "nationalityId") as IFormFieldSelect;
+        if (nationalityId2) {
+            nationalityId2.values = nationalities;
+        }
+
+        const citizenshipId2 = fields.addFields.find((x) => x.name === "citizenshipId") as IFormFieldSelect;
+        if (citizenshipId2) {
+            citizenshipId2.values = citizenships;
+        }
+        const roleId2 = fields.addFields.find((x) => x.name === "roleId") as IFormFieldSelect;
+        if (roleId2) {
+            roleId2.values = allRoles;
+        }
+        return fields;
     }, [nationalities, citizenships, allRoles, withImage]);
 
     const values = useMemo(() => {
@@ -95,13 +151,40 @@ function AdminUserList({ roles }: IPageWithRoles) {
     const hideMessageSender = () => {
         setMessageUser(null);
     };
+    const showAddForm = () => {
+        setAddForm(true);
+    };
+    const hideAddForm = () => {
+        setAddForm(false);
+    };
+    const toAdd = (newUser: IUserDto) => {
+        setIsLoading(true);
+        users
+            .addUser(newUser)
+            .then((res) => {
+                const { error, result } = webApiResultData<IUserDto>(res);
+                if (error) {
+                    throw error;
+                }
+                if (result) {
+                    showSuccess(langPage.success.addUser);
+                    hideAddForm();
+                    setIsLoading(false);
+                    refetch();
+                }
+            })
+            .catch((err) => {
+                showError(err?.name === "webApiResultError" ? err.message : langPage.errors.addUser);
+                setIsLoading(false);
+            });
+    };
 
     return (
         <Page
             title={langPage.title}
             icon="group"
             roles={roles}
-            isLoading={isLoading}
+            isLoading={isLoading || initLoading}
         >
             {!!messageUser && (
                 <SendUserNotification
@@ -111,6 +194,22 @@ function AdminUserList({ roles }: IPageWithRoles) {
                     onClose={hideMessageSender}
                 />
             )}
+            {!!addForm && (
+                <Modal
+                    open
+                    responsiveWidth
+                    onClose={hideAddForm}
+                    title={langPage.addUser}
+                    withCloseButton
+                >
+                    <Form
+                        fields={fields.addFields}
+                        values={addValue}
+                        onSubmit={toAdd}
+                        onCancel={hideAddForm}
+                    />
+                </Modal>
+            )}
             <Box>
                 <Switcher
                     value={withImage}
@@ -119,8 +218,12 @@ function AdminUserList({ roles }: IPageWithRoles) {
                 />
             </Box>
             <GoodTable
-                fields={fields}
+                fields={fields.fields}
                 values={values}
+                actions={[
+                    { name: "refresh", icon: "refresh", onClick: refetch },
+                    { name: "add", icon: "add", onClick: showAddForm },
+                ]}
             />
         </Page>
     );

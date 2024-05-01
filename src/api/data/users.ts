@@ -23,6 +23,9 @@ const UsersDataProvider = {
     updateUser: (user: IUserDto): Promise<IWebDataResult<IUserDto>> => {
         return dataProvider(baseUrl + "updateUser", "post", user);
     },
+    addUser: (user: IUserDto): Promise<IWebDataResult<IUserDto>> => {
+        return dataProvider(baseUrl + "addUser", "post", user);
+    },
     getClaims: (): Promise<IWebDataResult<IClaimDto[]>> => {
         return dataProvider(baseUrl + "getClaims");
     },
