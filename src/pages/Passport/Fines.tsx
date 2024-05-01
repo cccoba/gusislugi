@@ -25,7 +25,7 @@ const defInitialValue: IFineDto = {
 };
 
 function PassportFines({ title, subTitle, user }: IPassportItem) {
-    const permissions = useAppSelector((s) => s.user.user?.role.params?.taxes);
+    const permissions = useAppSelector((s) => s.user.user?.role.params?.fines);
     const props = useMemo(() => {
         const result = {
             listConfig: finesListConfig,
@@ -42,6 +42,7 @@ function PassportFines({ title, subTitle, user }: IPassportItem) {
 
         return result;
     }, [user.id]);
+
     return (
         <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<Icon name="down" />}>

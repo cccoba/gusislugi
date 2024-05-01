@@ -23,7 +23,7 @@ const defInitialValue: IWantedDto = {
 };
 
 function PassportWanteds2({ title, subTitle, user }: IPassportItem) {
-    const permissions = useAppSelector((s) => s.user.user?.role.params?.wanteds);
+    const permissions = useAppSelector((s) => s.user.user?.role.params?.wanteds2);
     const props = useMemo(() => {
         const result = {
             listConfig: wantedsListConfig,

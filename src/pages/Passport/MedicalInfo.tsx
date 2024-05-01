@@ -23,7 +23,7 @@ const defInitialValue: IMedicalInfoDto = {
 };
 
 function PassportMedicalInfo({ title, subTitle, user }: IPassportItem) {
-    const permissions = useAppSelector((s) => s.user.user?.role.params?.medicalPolicies);
+    const permissions = useAppSelector((s) => s.user.user?.role.params?.medicalInfo);
     const props = useMemo(() => {
         const result = {
             listConfig: medicalInfoListConfig,
