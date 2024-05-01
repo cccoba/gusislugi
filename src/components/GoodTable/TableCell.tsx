@@ -41,11 +41,12 @@ function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProp
                 case "date":
                     return dateTime(value, field?.formatProps);
                 case "image":
+                    const imageProps =
+                        typeof field?.formatProps !== "undefined" ? field.formatProps : { width: "32px", zoom: true };
                     return (
                         <Image
                             image={value}
-                            width="32px"
-                            zoom
+                            {...imageProps}
                         />
                     );
                 case "list":

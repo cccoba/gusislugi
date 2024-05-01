@@ -13,7 +13,14 @@ import Passport from "pages/Passport";
 
 const langPage = lang.pages.users;
 const defFields: IGoodTableField[] = [
-    { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
+    {
+        name: "image",
+        title: langPage.fields.image,
+        format: "image",
+        noSort: true,
+        maxWidth: "30px",
+        formatProps: { width: "32px" },
+    },
     { name: "firstName", title: langPage.fields.firstName },
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
