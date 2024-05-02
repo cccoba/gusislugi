@@ -410,7 +410,9 @@ function GoodTable<T>({
                 {!!isShowedPagination && !!paginationState && (
                     <TableFooter>
                         <TableRow>
-                            <TableCell colSpan={fields?.length || 100}>
+                            <TableCell
+                                colSpan={fields?.length ? (isMultiSelection ? 1 + fields.length : fields.length) : 100}
+                            >
                                 <GoodTablePagination
                                     {...paginationState}
                                     totalItemCount={filteredValuesTotalCount}
