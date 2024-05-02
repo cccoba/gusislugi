@@ -12,7 +12,7 @@ function MyClaims() {
         <Page
             title={langPage.title}
             isLoading={isLoading}
-            icon="warning"
+            icon="claims"
             backUrl="/"
         >
             <ProfileClaims />

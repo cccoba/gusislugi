@@ -20,14 +20,14 @@ const menuList: INavigationMenu[] = [
     {
         name: "claims",
         title: langPage.claims,
-        icon: "warning",
+        icon: "claims",
         link: "/claims",
         roles: [["claims"]],
     },
     {
         name: "money",
         title: langPage.money,
-        icon: "payments",
+        icon: "money",
         link: "/money",
         roles: [["admins"]],
     },
@@ -70,7 +70,7 @@ const menuList: INavigationMenu[] = [
     {
         name: "wanteds2",
         title: lang.pages.wanteds.title2,
-        icon: "wanteds",
+        icon: "wanteds2",
         link: "/wanteds2",
         roles: [["wanteds2"]],
     },

@@ -29,9 +29,7 @@ const UsersDataProvider = {
     getClaims: (): Promise<IWebDataResult<IClaimDto[]>> => {
         return dataProvider(baseUrl + "getClaims");
     },
-    getMessages: (): Promise<IWebDataResult<IMessageDto[]>> => {
-        return dataProvider(baseUrl + "getMessages");
-    },
+
     getUser: (userId: number): Promise<IWebDataResult<IUserDto>> => {
         return dataProvider(baseUrl + "getUser&id=" + userId);
     },

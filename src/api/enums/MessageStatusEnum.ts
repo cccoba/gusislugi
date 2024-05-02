@@ -1,4 +1,9 @@
 export enum MessageStatusEnum {
-    New,
-    Readed,
+    Claims,
+    Fines,
+    Messages,
+    MedicalPolicies,
+    Taxes,
+    Wanteds,
+    Wanteds2,
 }

@@ -13,6 +13,7 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import { IWantedDto } from "api/interfaces/user/IWantedDto";
 import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.wanteds;
 
@@ -105,6 +106,7 @@ function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
+                    status={MessageStatusEnum.Wanteds}
                     onClose={hideNotificationData}
                 />
             )}

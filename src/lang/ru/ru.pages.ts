@@ -22,6 +22,14 @@ const ruPages = {
             uid: "Пользователь",
         },
     },
+    messages: {
+        title: "Оповещения",
+        detailsTitle: "Оповещения от %s",
+        fields: {
+            message: "Сообщение",
+            date: "Дата",
+        },
+    },
     medicalInfo: {
         title: "Мед. информация",
         statusActive: "Активен",
@@ -54,14 +62,7 @@ const ruPages = {
             uid: "Пользователь",
         },
     },
-    messages: {
-        title: "Оповещения",
-        detailsTitle: "Оповещения от %s",
-        fields: {
-            message: "Сообщение",
-            date: "Дата",
-        },
-    },
+
     nationalities: {
         title: "Национальность",
         fields: {

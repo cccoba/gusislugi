@@ -45,7 +45,16 @@ export const moneyEditConfig: ICRUDAsyncEditConfig = {
             multiple: true,
             multipleVariant: "chips",
         },
-        { name: "value", title: langPage.fields.value, type: "counter", minValue: 1, required: true },
+        {
+            name: "value",
+            title: langPage.fields.value,
+            type: "counter",
+            minValue: 1,
+            required: true,
+            validateFn: (value) => {
+                return (!!value && value > 0) || langPage.send.errors.positiveCount;
+            },
+        },
         { name: "hidden", title: "", text: langPage.fields.hidden, type: "switcher" },
     ],
 };
@@ -53,7 +62,7 @@ const defInitialValue: IMoneyAddDto = {
     id: 0,
     fromUid: 1,
     toUid: [],
-    value: 0,
+    value: 1,
     hidden: false,
 };
 function MoneyList({ roles, icon }: IPageWithRoles) {

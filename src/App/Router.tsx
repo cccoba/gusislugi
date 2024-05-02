@@ -225,7 +225,7 @@ export default function RouterPage() {
                             element={
                                 <Wanteds2
                                     roles={[["wanteds2"]]}
-                                    icon="wanteds"
+                                    icon="wanteds2"
                                     backUrl={"/wanteds2"}
                                 />
                             }
@@ -236,7 +236,7 @@ export default function RouterPage() {
                             element={
                                 <MoneyList
                                     roles={[["admins"]]}
-                                    icon="payments"
+                                    icon="money"
                                 />
                             }
                         />
@@ -250,7 +250,7 @@ export default function RouterPage() {
                             element={
                                 <MoneyUser
                                     roles={[["admins"]]}
-                                    icon="payments"
+                                    icon="money"
                                 />
                             }
                         />

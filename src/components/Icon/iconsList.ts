@@ -9,11 +9,15 @@ const icn: any = {
     taxes: "receipt_long",
     fines: "savings",
     wanteds: "local_police",
+    wanteds2: "gavel",
     sgp: "currency_exchange",
     qrScanner: "qr_code_scanner",
     medicalPolicies: "medical_services",
     medicalInfo: "vaccines",
     id: "vpn_key",
+    messages: "forum",
+    money: "payments",
+    claims: "warning",
 };
 
 export default icn;

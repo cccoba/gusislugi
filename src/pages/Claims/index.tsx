@@ -12,6 +12,7 @@ import { claims } from "api/data";
 import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.claims;
 
@@ -97,6 +98,7 @@ function Claims({ roles }: IPageWithRoles) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
+                    status={MessageStatusEnum.Claims}
                     onClose={hideNotificationData}
                 />
             )}
@@ -104,7 +106,7 @@ function Claims({ roles }: IPageWithRoles) {
                 backUrl="/claims"
                 roles={roles}
                 title={langPage.title}
-                icon="warning"
+                icon="claims"
                 listConfig={claimListConfig}
                 editConfig={claimEditConfig}
                 actions={actions}

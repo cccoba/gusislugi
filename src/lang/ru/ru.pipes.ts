@@ -6,8 +6,13 @@ const ruPipes = {
         failed: "Отклонена",
     },
     messageStatus: {
-        new: "Новая",
-        readed: "Прочитано",
+        claims: "Заявка",
+        fines: "Штраф",
+        medicalPolicies: "Мед. полис",
+        messages: "Сообщение",
+        taxes: "Платеж",
+        wanteds: "Розыск Юг",
+        wanteds2: "Розыск Север",
     },
     filterTextEquals: {
         contains: "Содержит",

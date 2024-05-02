@@ -12,7 +12,7 @@ function MyMessages() {
         <Page
             title={langPage.title}
             isLoading={isLoading}
-            icon="warning"
+            icon="messages"
             backUrl="/"
         >
             <ProfileMessages />

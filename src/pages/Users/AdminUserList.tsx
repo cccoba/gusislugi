@@ -15,6 +15,7 @@ import { useAppSelector } from "api/hooks/redux";
 import { IFormFieldSelect } from "components/Form/Adapters/Select";
 import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.users;
 const langAddForm = lang.components.userForm;
@@ -191,6 +192,7 @@ function AdminUserList({ roles }: IPageWithRoles) {
                     text=""
                     uid={messageUser.id}
                     title={sprintf(langPage.messageSenderTitle, messageUser?.firstName)}
+                    status={MessageStatusEnum.Messages}
                     onClose={hideMessageSender}
                 />
             )}

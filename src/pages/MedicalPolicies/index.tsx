@@ -15,6 +15,7 @@ import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { generateRandomString } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.medicalPolicies;
 
@@ -116,6 +117,7 @@ function MedicalPolicies({ roles, icon }: IPageWithRoles) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
+                    status={MessageStatusEnum.MedicalPolicies}
                     onClose={hideNotificationData}
                 />
             )}

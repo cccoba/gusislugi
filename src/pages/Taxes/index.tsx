@@ -16,6 +16,7 @@ import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { useAppSelector } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.taxes;
 
@@ -54,8 +55,11 @@ export const taxesEditConfig: ICRUDAsyncEditConfig = {
             name: "value",
             title: langPage.fields.value,
             type: "counter",
+            minValue: 1,
             required: true,
-            minValue: 0,
+            validateFn: (value) => {
+                return (!!value && value > 0) || lang.pages.money.send.errors.positiveCount;
+            },
         },
         {
             name: "status",
@@ -113,6 +117,7 @@ function Taxes({ roles, icon }: IPageWithRoles) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
+                    status={MessageStatusEnum.Taxes}
                     onClose={hideNotificationData}
                 />
             )}

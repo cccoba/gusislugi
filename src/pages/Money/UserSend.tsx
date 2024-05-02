@@ -111,6 +111,7 @@ function MoneyUserSend({ modalProps }: IPageOrModal) {
                 });
         }
     };
+
     return (
         <PageOrModal
             title={langPage.title}

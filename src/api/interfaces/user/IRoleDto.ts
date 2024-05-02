@@ -16,5 +16,6 @@ export interface IRoleDto {
         fines?: RolePermissionFlag;
         wanteds?: RolePermissionFlag;
         wanteds2?: RolePermissionFlag;
+        messages?: RolePermissionFlag;
     };
 }

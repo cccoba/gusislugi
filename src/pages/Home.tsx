@@ -73,7 +73,7 @@ function Home() {
                         <HomeItem
                             url="/myClaims"
                             title={langPage.actions.claims}
-                            icon="warning"
+                            icon="claims"
                         />
                         <HomeItem
                             url="/myMessages"

@@ -12,6 +12,7 @@ import { IWantedDto } from "api/interfaces/user/IWantedDto";
 import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 
 import { wantedsEditConfig, wantedsListConfig } from "./Wanteds";
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.wanteds;
 
@@ -36,6 +37,7 @@ function Wanteds2({ roles, icon, backUrl }: IPageWithRoles) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
+                    status={MessageStatusEnum.Wanteds2}
                     onClose={hideNotificationData}
                 />
             )}

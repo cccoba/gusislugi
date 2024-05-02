@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
-import { IconButton, Modal, GoodTable } from "components";
+import { IconButton, Modal, GoodTable, Icon } from "components";
 import { IGoodTableField } from "components/GoodTable";
 import lang, { getEnumTitleValue, sprintf } from "lang";
 
 import dateTime from "api/common/dateTime";
-import { messages, users, webApiResultData } from "api/data";
+import { messages, webApiResultData } from "api/data";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { getEnumValue } from "api/common/enumHelper";
+import { cutText } from "api/common/helper";
 
 const langPage = lang.pages.messages;
 
 const fields: IGoodTableField[] = [
     { name: "statusComponent", title: "", format: "component" },
-    { name: "message", title: langPage.fields.message },
+    { name: "shortMessage", title: langPage.fields.message },
     { name: "created_at", title: langPage.fields.date, format: "date" },
 ];
 
+function getIconName(status: MessageStatusEnum) {
+    const result = getEnumValue(MessageStatusEnum, status) || "";
+    if (!!result?.length) {
+        return result.charAt(0).toLowerCase() + result.slice(1);
+    }
+    return "messages";
+}
+
 function ProfileMessages() {
-    const { data = [], isLoading } = useLoadApiData(users.getMessages, []);
+    const { data = [], isLoading, refetch } = useLoadApiData(messages.getMyMessages, []);
     const [details, setDetails] = useState<IMessageDto | null>(null);
     const [values, setValues] = useState<any[]>([]);
     useEffect(() => {
@@ -29,37 +39,19 @@ function ProfileMessages() {
             setValues(
                 data.map((x) => ({
                     ...x,
-                    statusComponent:
-                        x.status === MessageStatusEnum.New ? (
-                            <IconButton
-                                name="fiber_new"
-                                size="small"
-                                color="primary"
-                                tooltip={getEnumTitleValue(MessageStatusEnum, "MessageStatusEnum", x.status)}
-                            />
-                        ) : null,
+                    shortMessage: cutText(x.message, 100),
+                    statusComponent: (
+                        <Icon
+                            name={getIconName(x.status)}
+                            fontSize="small"
+                            color="primary"
+                        />
+                    ),
                 }))
             );
         }
     }, [data]);
     const toShow = (data: any) => {
-        messages.setReaded(data.id).then((res) => {
-            const { error, result } = webApiResultData<boolean>(res);
-            if (error) {
-                throw error;
-            }
-            if (result) {
-                setValues((prev) => {
-                    const newResult = [...prev];
-                    const updatedValue = newResult.find((x) => x.id === data.id);
-                    if (updatedValue) {
-                        updatedValue.status = MessageStatusEnum.Readed;
-                        updatedValue.statusComponent = null;
-                    }
-                    return newResult;
-                });
-            }
-        });
         setDetails(data);
     };
     const hideDetails = () => {
@@ -85,6 +77,7 @@ function ProfileMessages() {
                 values={values}
                 order={{ direction: SortOrderEnum.Descending, sort: "created_at" }}
                 onRowClick={toShow}
+                actions={[{ name: "refresh", icon: "refresh", onClick: refetch }]}
             />
         </>
     );
