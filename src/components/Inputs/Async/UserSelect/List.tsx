@@ -45,6 +45,7 @@ export const defUserFields: IGoodTableField[] = [
     { name: "role", title: langPage.fields.role, maxWidth: "100px" },
     { name: "citizenship", title: langPage.fields.citizenship, maxWidth: "100px" },
     { name: "nickname", title: "", hidden: true },
+    { name: "tgLogin", title: "", hidden: true },
 ];
 
 export default function UserSelectList({

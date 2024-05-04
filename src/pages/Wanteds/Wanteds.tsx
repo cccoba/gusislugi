@@ -33,10 +33,12 @@ export const wantedsListConfig: ICRUDAsyncListConfig = {
         },
         { name: "status", title: langPage.fields.status },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
+        { name: "nickname", title: "", hidden: true },
     ],
     transform: (data: IWantedDto) => ({
         ...data,
         user: data.user?.firstName || lang.unknown,
+        nickname: data.user?.nickname || "",
         image: data.user?.image || "",
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
     }),

@@ -34,6 +34,8 @@ import Fines from "pages/Fines";
 import Wanteds2 from "pages/Wanteds/Wanteds2";
 import Persons from "pages/Users/Persons";
 import MedicalInfo from "pages/MedicalInfo";
+import Links from "pages/Links";
+import LinksLink from "pages/Links/Link";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -176,12 +178,7 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/medicalPolicies/*"
-                            element={
-                                <MedicalPolicies
-                                    roles={[["medicalPolicies"]]}
-                                    icon="medicalPolicies"
-                                />
-                            }
+                            element={<MedicalPolicies />}
                         />
                         <Route
                             path="/medicalInfo/*"
@@ -243,6 +240,24 @@ export default function RouterPage() {
                         <Route
                             path="/sgp"
                             element={<MoneySgp icon="sgp" />}
+                        />
+                        <Route
+                            path="/links"
+                            element={
+                                <Links
+                                    icon="links"
+                                    backUrl={"/links"}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/links/:id"
+                            element={
+                                <LinksLink
+                                    icon="links"
+                                    backUrl={"/links"}
+                                />
+                            }
                         />
 
                         <Route

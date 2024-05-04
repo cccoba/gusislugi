@@ -40,7 +40,7 @@ export default function ScrollTo({ color = "secondary", id = "scrollTo" }: IScro
                 <Box
                     onClick={handleClick}
                     role="presentation"
-                    sx={{ position: "fixed", bottom: 78, right: 16, zIndex: 100 }}
+                    sx={{ position: "fixed", bottom: 24, right: 16, zIndex: 100 }}
                 >
                     <Fab color={color}>
                         <Icon name="up" />

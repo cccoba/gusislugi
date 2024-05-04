@@ -18,6 +18,7 @@ const icn: any = {
     messages: "forum",
     money: "payments",
     claims: "warning",
+    links: "news",
 };
 
 export default icn;

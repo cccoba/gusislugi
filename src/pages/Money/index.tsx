@@ -26,12 +26,16 @@ const listConfig: ICRUDAsyncListConfig = {
         { name: "to_user", title: langPage.fields.toUid, format: "text" },
         { name: "value", title: langPage.fields.value, format: "number" },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
+        { name: "from_nickname", title: "", hidden: true },
+        { name: "to_nickname", title: "", hidden: true },
     ],
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     transform: (data: IMoneyDto) => ({
         ...data,
         from_user: data.hidden ? lang.unknown : data.from_user?.firstName || lang.unknown,
         to_user: data.to_user?.firstName || lang.unknown,
+        from_nickname: data.from_user?.nickname || "",
+        to_nickname: data.to_user?.nickname || "",
     }),
 };
 export const moneyEditConfig: ICRUDAsyncEditConfig = {

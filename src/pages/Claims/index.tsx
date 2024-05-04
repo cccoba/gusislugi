@@ -31,11 +31,13 @@ export const claimListConfig: ICRUDAsyncListConfig = {
         },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
         { name: "user", title: langPage.fields.uid },
+        { name: "nickname", title: "", hidden: true },
     ],
     transform: (data: IClaimDto) => ({
         ...data,
         status: getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status),
         user: data.user?.firstName || lang.unknown,
+        nickname: data.user?.nickname || "",
     }),
 };
 

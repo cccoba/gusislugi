@@ -4,17 +4,16 @@ import { Input, FormHelperText, FormLabel } from "@mui/material";
 import { IconButton } from "components";
 import lang from "lang";
 import FormControl from "components/Inputs/FormControl";
+import useGetData from "store/rtkProvider";
 
-import { users as usersService, webApiResultData } from "api/data";
 import { IInputProps } from "api/interfaces/components/IInputProps";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
+import { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 
 import UserSelectList from "./List";
-import UserSelectTable from "./Table";
 import UserSelectChips from "./Chips";
-import { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 
 interface IProps extends IInputProps<number | number[]> {
     multiple?: boolean;
@@ -30,6 +29,7 @@ export interface IUserRowDto {
     citizenshipId: number;
     citizenship: string;
     nickname: string;
+    tgLogin: string;
 }
 
 export function parseUserData(user: IUserDto, roles: IRoleDto[], citizenships: ICitizenshipDto[]): IUserRowDto {
@@ -42,6 +42,7 @@ export function parseUserData(user: IUserDto, roles: IRoleDto[], citizenships: I
         citizenshipId: user?.citizenshipId || 0,
         citizenship: citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.no,
         nickname: user?.nickname || "",
+        tgLogin: !!user?.tgLogin ? "@" + user.tgLogin : "",
     };
 }
 
@@ -49,7 +50,6 @@ export default function UserSelect({
     label = "",
     value,
     multiple = false,
-    multipleVariant = "table",
     variant = "standard",
     fullWidth = true,
     error = false,
@@ -65,50 +65,33 @@ export default function UserSelect({
     const roleList = useAppSelector((s) => s.user.roles);
     const citizenshipList = useAppSelector((s) => s.user.citizenships);
     const [modalShow, setModalShow] = useState<boolean>(false);
+    const { data, isLoading, refetch } = useGetData<IUserDto[]>("users", []);
     useEffect(() => {
-        async function getData() {
-            if (!isInit) {
-                try {
-                    const userList = await usersService.getAll();
-                    const userListData = webApiResultData<IUserDto[]>(userList);
-                    if (userListData.error) {
-                        throw userListData.error;
-                    }
-                    const newUsers = userListData.result?.length
-                        ? userListData.result.sort((a, b) => a.firstName.localeCompare(b.firstName))
-                        : [];
-                    setUsers(newUsers);
-
+        if (data?.length) {
+            const newUsers = !!data?.length ? [...data].sort((a, b) => a?.firstName.localeCompare(b?.firstName)) : [];
+            setUsers(newUsers);
+            if (!!value) {
+                if (!multiple) {
+                    let newSelectedUserText = "";
                     if (!!value) {
-                        if (!multiple) {
-                            let newSelectedUserText = "";
-                            if (!!value) {
-                                const foundedUser = newUsers.find((u) => u.id === value);
-                                if (foundedUser?.id) {
-                                    newSelectedUserText = foundedUser.firstName;
-                                }
-                            }
-
-                            setSelectedUserText(newSelectedUserText);
-                            onChangeValue(newUsers.find((u) => u.id === value)?.id || 0);
-                        } else {
-                            if (typeof value === "object") {
-                                const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
-                                setSelectedUsers(
-                                    newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList))
-                                );
-                                onChangeValue(!!newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
-                            }
+                        const foundedUser = newUsers.find((u) => u.id === value);
+                        if (foundedUser?.id) {
+                            newSelectedUserText = foundedUser.firstName;
                         }
                     }
-                } catch (error) {
-                } finally {
-                    setIsInit(true);
+
+                    setSelectedUserText(newSelectedUserText);
+                    onChangeValue(newUsers.find((u) => u.id === value)?.id || 0);
+                } else {
+                    if (typeof value === "object") {
+                        const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
+                        setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList)));
+                        onChangeValue(!!newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
+                    }
                 }
             }
         }
-        getData();
-    }, [isInit, value]);
+    }, [data, value]);
     const endAdornment = useMemo(() => {
         if (disabled) {
             return undefined;

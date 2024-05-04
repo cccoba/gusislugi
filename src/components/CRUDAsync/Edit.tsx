@@ -103,12 +103,12 @@ export default function CRUDAsyncEdit({
             }
         }
     }, [idValue]);
-    const toSubmit = (data: any) => {
+    const toSubmit = (newData: any) => {
         const action = actions.find((x) => x.name === "save");
         if (action) {
             onIsLoading(true);
             action
-                .cb(data)
+                .cb(newData, data)
                 .then((res) => {
                     const { error, result } = webApiResultData<any>(res);
                     if (error) {

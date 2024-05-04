@@ -36,10 +36,12 @@ export const taxesListConfig: ICRUDAsyncListConfig = {
         { name: "value", title: langPage.fields.value },
         { name: "user", title: langPage.fields.uid },
         { name: "endDate", title: langPage.fields.endDate, format: "date" },
+        { name: "nickname", title: "", hidden: true },
     ],
     transform: (data: IMedicalPoliciesDto) => ({
         ...data,
         user: data.user?.firstName || lang.unknown,
+        nickname: data.user?.nickname || "",
     }),
 };
 

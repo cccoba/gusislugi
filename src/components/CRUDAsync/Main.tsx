@@ -12,7 +12,7 @@ import CRUDAsyncList from "./List";
 import { ICRUDAsyncProps } from ".";
 
 export type TCRUDAsyncActionCbName = "list" | "add" | "edit" | "delete" | "save";
-export type TCRUDAsyncActionCb = (params?: any) => Promise<IWebDataResult<any>>;
+export type TCRUDAsyncActionCb = (params?: any, initDAta?: any) => Promise<IWebDataResult<any>>;
 export interface ICRUDAsyncAction {
     name: TCRUDAsyncActionCbName;
     cb: TCRUDAsyncActionCb;

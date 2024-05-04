@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
@@ -34,11 +34,13 @@ export const medicalPoliciesListConfig: ICRUDAsyncListConfig = {
         { name: "status", title: langPage.fields.status },
         { name: "user", title: langPage.fields.uid },
         { name: "endDate", title: langPage.fields.endDate, format: "date" },
+        { name: "nickname", title: "", hidden: true },
     ],
     transform: (data: IMedicalPoliciesDto) => ({
         ...data,
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
         user: data.user?.firstName || lang.unknown,
+        nickname: data.user?.nickname || "",
     }),
 };
 
@@ -91,27 +93,86 @@ export const medicalPoliciesEditConfig: ICRUDAsyncEditConfig = {
         },
     ],
 };
-
-function MedicalPolicies({ roles, icon }: IPageWithRoles) {
+const defInitialData: IMedicalPoliciesDto = {
+    id: 0,
+    number: "",
+    uid: 0,
+    type: MedicalPoliciesTypeEnum.Oms,
+    trauma_rescue: false,
+    status: true,
+    endDate: dayjs().add(24, "hour").toDate(),
+};
+interface IProps {
+    userId?: number;
+}
+function MedicalPolicies({ userId }: IProps) {
     const currentUserRoleMedicalPolicies = useAppSelector((s) => s.user.user?.role?.params?.medicalPolicies);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsyncActionCb = async (data: IMedicalPoliciesDto) => {
+    const props = useMemo(() => {
+        const newProps: { actions: ICRUDAsyncAction[]; initialData: IMedicalPoliciesDto } = {
+            actions: [
+                { name: "list", cb: medicalPolicies.crudList },
+                { name: "save", cb: onSaveStart as any },
+                { name: "edit", cb: medicalPolicies.crudGet },
+                { name: "delete", cb: medicalPolicies.crudDelete },
+            ],
+            initialData: { ...defInitialData, number: generateRandomString(10, "1234567890") },
+        };
+
+        if (userId) {
+            newProps.actions[0].cbArgs = [userId];
+            newProps.actions[0].cb = medicalPolicies.crudUserList;
+            newProps.initialData.uid = userId;
+        }
+        return newProps;
+    }, [userId]);
+    function onSaveStart(data: IMedicalPoliciesDto, initData: IMedicalPoliciesDto) {
         return new Promise((resolve, reject) => {
             medicalPolicies.crudSave(data).then(resolve).catch(reject);
+            let text = "";
+            if (!initData.id) {
+                text = sprintf(
+                    langPage.message.addText,
+                    getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", data.type),
+                    data.status ? langPage.statusActive : langPage.statusNotActive
+                );
+                if (data.trauma_rescue) {
+                    text += "\n" + langPage.message.trauma_rescue;
+                }
+            } else {
+                if (initData.type === data.type) {
+                    text = sprintf(
+                        langPage.message.text,
+                        getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", data.type),
+                        data.status ? langPage.statusActive : langPage.statusNotActive
+                    );
+                } else {
+                    text = sprintf(
+                        langPage.message.textChange,
+                        getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", initData.type),
+                        getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", data.type),
+                        data.status ? langPage.statusActive : langPage.statusNotActive
+                    );
+                }
+                if (initData.trauma_rescue !== data.trauma_rescue) {
+                    if (data.trauma_rescue) {
+                        text += "\n" + langPage.message.trauma_rescue;
+                    } else {
+                        text += "\n" + langPage.message.no_trauma_rescue;
+                    }
+                }
+            }
             setNotificationData({
                 uid: data.uid,
                 title: langPage.message.title,
-                text: sprintf(
-                    langPage.message.text,
-                    getEnumTitleValue(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum", data.type),
-                    data.status ? langPage.statusActive : langPage.statusNotActive
-                ),
+                text: text,
             });
         });
-    };
+    }
     const hideNotificationData = () => {
         setNotificationData(null);
     };
+
     return (
         <>
             {!!notificationData && (
@@ -123,27 +184,15 @@ function MedicalPolicies({ roles, icon }: IPageWithRoles) {
             )}
             <CRUDAsync
                 backUrl="/medicalPolicies"
-                roles={roles}
+                roles={[["medicalPolicies"]]}
+                icon="medicalPolicies"
                 title={langPage.title}
-                icon={icon}
                 listConfig={medicalPoliciesListConfig}
                 editConfig={medicalPoliciesEditConfig}
-                actions={[
-                    { name: "save", cb: onSaveStart },
-                    { name: "edit", cb: medicalPolicies.crudGet },
-                    { name: "delete", cb: medicalPolicies.crudDelete },
-                    { name: "list", cb: medicalPolicies.crudList },
-                ]}
-                initialValue={{
-                    id: 0,
-                    number: generateRandomString(10, "1234567890"),
-                    uid: 0,
-                    type: MedicalPoliciesTypeEnum.Oms,
-                    trauma_rescue: false,
-                    status: true,
-                    endDate: dayjs().add(24, "hour").toDate(),
-                }}
+                actions={props.actions}
+                initialValue={props.initialData}
                 permissions={currentUserRoleMedicalPolicies}
+                withOutPage={!!userId}
             />
         </>
     );

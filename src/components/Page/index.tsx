@@ -21,7 +21,7 @@ export default function Page({
     parepProps = { elevation: 0 },
     isLoading = false,
     loadintText = undefined,
-    scrollTop = false,
+    scrollTop = true,
     fabMargin = false,
 }: IPage) {
     const isMobile = useAppSelector((s) => s.device.isMobile);

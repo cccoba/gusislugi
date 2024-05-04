@@ -65,6 +65,13 @@ function Home() {
                                 icon="group"
                             />
                         )}
+                        {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
+                            <HomeItem
+                                url="/users"
+                                title={lang.pages.users.title}
+                                icon="users"
+                            />
+                        )}
                         <HomeItem
                             url="/profile"
                             title={langPage.actions.profile}
@@ -99,6 +106,11 @@ function Home() {
                             url="/myFines"
                             title={langPage.actions.fines}
                             icon="fines"
+                        />
+                        <HomeItem
+                            url="/links"
+                            title={lang.pages.links.title}
+                            icon="links"
                         />
                     </>
                 )}

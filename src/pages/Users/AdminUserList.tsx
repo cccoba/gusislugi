@@ -28,7 +28,7 @@ const defFields: IGoodTableField[] = [
     { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "nickname", title: langPage.fields.nickname },
     { name: "roleId", title: langPage.fields.roleId, format: "list" },
-    { name: "tgLogin", title: "", hidden: true },
+    { name: "tgLogin", title: langPage.fields.tgLogin },
     { name: "passport", title: "", hidden: true },
 ];
 

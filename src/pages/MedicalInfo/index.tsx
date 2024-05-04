@@ -26,11 +26,13 @@ export const medicalInfoListConfig: ICRUDAsyncListConfig = {
         { name: "status", title: langPage.fields.status },
         { name: "user", title: langPage.fields.uid },
         { name: "endDate", title: langPage.fields.endDate, format: "date" },
+        { name: "nickname", title: "", hidden: true },
     ],
     transform: (data: IMedicalInfoDto) => ({
         ...data,
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
         user: data.user?.firstName || lang.unknown,
+        nickname: data.user?.nickname || "",
     }),
 };
 
