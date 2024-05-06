@@ -68,11 +68,11 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
         money
             .crudSave(data)
             .then((res) => {
-                const { error, result } = webApiResultData<boolean>(res);
+                const { error, result } = webApiResultData<number[]>(res);
                 if (error) {
                     throw error;
                 }
-                if (result) {
+                if (result?.length) {
                     showSuccess(sprintf(langPage.success.toUserMoneyAdd, sprintf(lang.money, data.value)));
                     updateData();
                     toHideAdd();
@@ -84,6 +84,9 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
             .finally(() => {
                 setIsLoading(false);
             });
+    };
+    const toRetry = (data: IMoneyDto) => {
+        setAddValues({ ...data, toUid: [data.toUid], id: 0 });
     };
     return (
         <Page
@@ -144,6 +147,8 @@ function MoneyUser({ roles, icon }: IPageWithRoles) {
                         history={history}
                         userId={userId}
                         isLoading={isLoading}
+                        onRetry={toRetry}
+                        isAdmin
                     />
                 )}
             </Box>

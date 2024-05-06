@@ -8,9 +8,10 @@ import Icon from "./Icon";
 interface IScrollTop {
     color?: FabProps["color"];
     id?: string;
+    bottom?: number;
 }
 
-export default function ScrollTo({ color = "secondary", id = "scrollTo" }: IScrollTop) {
+export default function ScrollTo({ color = "secondary", id = "scrollTo", bottom = 24 }: IScrollTop) {
     const scrollRef = useRef(null);
     const entry = useIntersectionObserver(scrollRef, {});
     const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -40,7 +41,7 @@ export default function ScrollTo({ color = "secondary", id = "scrollTo" }: IScro
                 <Box
                     onClick={handleClick}
                     role="presentation"
-                    sx={{ position: "fixed", bottom: 24, right: 16, zIndex: 100 }}
+                    sx={{ position: "fixed", bottom, right: 16, zIndex: 100 }}
                 >
                     <Fab color={color}>
                         <Icon name="up" />

@@ -6,14 +6,14 @@ import MedicalPolicies from "pages/MedicalPolicies";
 
 import { IPassportItem } from ".";
 
-function PassportMedicalPolicies({ title, subTitle, user }: IPassportItem) {
+function PassportMedicalPolicies({ title, subTitle, userId }: IPassportItem) {
     return (
         <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<Icon name="down" />}>
                 {title} ( {subTitle} )
             </AccordionSummary>
             <AccordionDetails>
-                <MedicalPolicies userId={user.id} />
+                <MedicalPolicies userId={userId} />
             </AccordionDetails>
         </Accordion>
     );

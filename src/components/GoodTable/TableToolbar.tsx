@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Box, ButtonGroup, Toolbar, Typography } from "@mui/material";
 
 import IconButton from "components/Icon/IconButton";
@@ -12,6 +12,7 @@ interface IProps<T> {
     actions?: IGoodTableToolbarAction<T>[];
     selectedRows: T[];
     withoutSimpleTextFilter?: boolean;
+    sticky?: boolean;
     onChangeSimpleSearchText: (search: string) => void;
 }
 
@@ -23,8 +24,20 @@ function GoodTableToolbar<T>({
     selectedRows = [],
     onChangeSimpleSearchText,
     withoutSimpleTextFilter = false,
+    sticky = false,
 }: IProps<T>) {
     const [searchText, setSearchText] = useState("");
+    const sx = useMemo(() => {
+        const newSx: any = {
+            justifyContent: "space-between",
+        };
+        if (sticky) {
+            newSx.bgcolor = "common.white";
+            newSx.position = "sticky";
+            newSx.top = "0";
+        }
+        return newSx;
+    }, [sticky]);
     const toSearchText = (newSearch: string) => {
         setSearchText(newSearch);
         onChangeSimpleSearchText(newSearch);
@@ -44,7 +57,7 @@ function GoodTableToolbar<T>({
         <Toolbar
             disableGutters
             variant="dense"
-            sx={{ justifyContent: "space-between" }}
+            sx={sx}
         >
             <Box sx={{ flexGrow: 10, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <Box sx={{ mx: 1 }}>

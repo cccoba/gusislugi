@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import lang, { getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { wanteds } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
@@ -86,11 +85,42 @@ export const wantedsEditConfig: ICRUDAsyncEditConfig = {
         },
     ],
 };
-
-function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
+const defInitialData: IWantedDto = {
+    id: 0,
+    uid: 0,
+    status: true,
+    type: WantedTypeEnum.Minima,
+    description: "",
+};
+interface IProps {
+    userId?: number;
+}
+function Wanteds({ userId }: IProps) {
     const currentUserRoleParams = useAppSelector((s) => s.user.user?.role?.params?.wanteds);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsyncActionCb = async (data: IWantedDto) => {
+    const props = useMemo(() => {
+        const newProps: { actions: ICRUDAsyncAction[]; initialData: IWantedDto; listConfig: ICRUDAsyncListConfig } = {
+            actions: [
+                { name: "list", cb: wanteds.crudList },
+                { name: "save", cb: onSaveStart as any },
+                { name: "edit", cb: wanteds.crudGet },
+                { name: "delete", cb: wanteds.crudDelete },
+            ],
+            initialData: { ...defInitialData },
+            listConfig: { ...wantedsListConfig },
+        };
+
+        if (userId) {
+            newProps.actions[0].cbArgs = [userId];
+            newProps.actions[0].cb = wanteds.crudUserList;
+            newProps.initialData.uid = userId;
+            newProps.listConfig.fields = newProps.listConfig.fields.filter(
+                (x) => x.name !== "user" && x.name !== "image"
+            );
+        }
+        return newProps;
+    }, [userId]);
+    function onSaveStart(data: IWantedDto) {
         return new Promise((resolve, reject) => {
             wanteds.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
@@ -99,7 +129,7 @@ function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
                 text: sprintf(langPage.message.text, data.status ? langPage.statusActive : langPage.statusNotActive),
             });
         });
-    };
+    }
     const hideNotificationData = () => {
         setNotificationData(null);
     };
@@ -113,26 +143,16 @@ function Wanteds({ roles, icon, backUrl }: IPageWithRoles) {
                 />
             )}
             <CRUDAsync
-                backUrl={backUrl || "/"}
-                roles={roles}
+                roles={[["wanteds"]]}
+                icon="wanteds"
+                backUrl={"/wanteds"}
                 title={langPage.title}
-                icon={icon}
-                listConfig={wantedsListConfig}
+                listConfig={props.listConfig}
                 editConfig={wantedsEditConfig}
-                actions={[
-                    { name: "list", cb: wanteds.crudList },
-                    { name: "delete", cb: wanteds.crudDelete },
-                    { name: "edit", cb: wanteds.crudGet },
-                    { name: "save", cb: onSaveStart },
-                ]}
+                actions={props.actions}
                 permissions={currentUserRoleParams}
-                initialValue={{
-                    id: 0,
-                    uid: 0,
-                    status: true,
-                    type: WantedTypeEnum.Minima,
-                    description: "",
-                }}
+                initialValue={props.initialData}
+                withOutPage={!!userId}
             />
         </>
     );

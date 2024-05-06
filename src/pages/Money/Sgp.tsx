@@ -17,7 +17,7 @@ const langPage = lang.pages.money.sgp;
 
 function MoneySgp({ icon }: IPage) {
     const [showHistory, setShowHistory] = useState(false);
-    const [showSend, setShowSend] = useState(false);
+    const [showSendData, setShowSendData] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useAppDispatch();
     useEffect(() => {
@@ -48,10 +48,10 @@ function MoneySgp({ icon }: IPage) {
         setShowHistory(false);
     };
     const toSend = () => {
-        setShowSend(true);
+        setShowSendData(true);
     };
     const hideSend = () => {
-        setShowSend(false);
+        setShowSendData(false);
     };
 
     return (
@@ -62,9 +62,16 @@ function MoneySgp({ icon }: IPage) {
             backUrl={"/"}
         >
             {showHistory && (
-                <MoneyUserHistory modalProps={{ onClose: hideHistory, withCloseButton: true, responsiveWidth: true }} />
+                <MoneyUserHistory
+                    modalProps={{
+                        onClose: hideHistory,
+                        withCloseButton: true,
+                        responsiveWidth: true,
+                        actions: [<Button onClick={hideHistory}>{lang.close}</Button>],
+                    }}
+                />
             )}
-            {showSend && (
+            {!!showSendData && (
                 <MoneyUserSend modalProps={{ onClose: hideSend, withCloseButton: true, responsiveWidth: true }} />
             )}
             <Box sx={{ display: "flex" }}>

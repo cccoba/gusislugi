@@ -61,11 +61,10 @@ export default function UserSelect({
     const [users, setUsers] = useState<IUserDto[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<IUserRowDto[]>([]);
     const [selectedUserText, setSelectedUserText] = useState<string>("");
-    const [isInit, setIsInit] = useState<boolean>(false);
     const roleList = useAppSelector((s) => s.user.roles);
     const citizenshipList = useAppSelector((s) => s.user.citizenships);
     const [modalShow, setModalShow] = useState<boolean>(false);
-    const { data, isLoading, refetch } = useGetData<IUserDto[]>("users", []);
+    const { data, isLoading } = useGetData<IUserDto[]>("users", []);
     useEffect(() => {
         if (data?.length) {
             const newUsers = !!data?.length ? [...data].sort((a, b) => a?.firstName.localeCompare(b?.firstName)) : [];
@@ -168,7 +167,7 @@ export default function UserSelect({
                     required={required}
                     label={label}
                     helperText={helperText}
-                    disabled={disabled}
+                    disabled={disabled || isLoading}
                 >
                     <Input
                         readOnly
@@ -205,7 +204,7 @@ export default function UserSelect({
                     />
                 ) : (*/}
                 <UserSelectChips
-                    loading={!isInit}
+                    loading={isLoading}
                     users={selectedUsers}
                     onDel={delUsers}
                     onAdd={toAdd}

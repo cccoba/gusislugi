@@ -22,7 +22,7 @@ export default function Page({
     isLoading = false,
     loadintText = undefined,
     scrollTop = true,
-    fabMargin = false,
+    fabMargin = true,
 }: IPage) {
     const isMobile = useAppSelector((s) => s.device.isMobile);
     const dispatch = useAppDispatch();
@@ -65,7 +65,7 @@ export default function Page({
                     sx={!!fabMargin ? { mb: 8 } : {}}
                     {...parepProps}
                 >
-                    {scrollTop && <ScrollTo id={"PageScrollTop"} />}
+                    {scrollTop && <ScrollTo id={"ModalScrollTop"} />}
                     {children}
                 </Paper>
             </>

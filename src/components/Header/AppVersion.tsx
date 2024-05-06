@@ -6,16 +6,18 @@ import { useAppSelector } from "api/hooks/redux";
 import { useNotifier } from "api/hooks/useNotifier";
 import lang from "lang";
 
-const langPage = lang.components.header.appNotLast;
+const langPage = lang.components.header;
 function AppVersion() {
     const serverAppVersion = useAppSelector((s) => s.device.serverAppVersion);
-    const { showError } = useNotifier();
+    const { showError, showSuccess } = useNotifier();
     const isLatest = useMemo(() => {
         return serverAppVersion === getConst("app-version");
     }, [serverAppVersion]);
     const toClick = () => {
         if (!isLatest) {
-            showError(langPage);
+            showError(langPage.appNotLast);
+        } else {
+            showSuccess(langPage.appLast);
         }
     };
     return (

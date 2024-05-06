@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -16,11 +16,11 @@ import lang from "lang";
 import { useAppSelector } from "api/hooks/redux";
 
 import IconButton from "./Icon/IconButton";
+import ScrollTo from "./ScrollTo";
 
 export interface IModalProps extends DialogProps {
     open: boolean;
     title?: string;
-    onClose?: () => void;
     children?: ReactNode;
     actions?: ReactNode[];
     responsiveWidth?: boolean;
@@ -28,13 +28,16 @@ export interface IModalProps extends DialogProps {
     withShadow?: boolean;
     withOkButton?: boolean;
     contentSx?: DialogContentProps["sx"];
+    scrollTop?: boolean;
+    fabMargin?: boolean;
+    onClose?: () => void;
 }
 
 interface IModalTitleProps {
     title: string;
-    onClose: () => void;
     withShadow: boolean;
     withCloseButton: boolean;
+    onClose: () => void;
 }
 
 export default function Modal({
@@ -46,17 +49,26 @@ export default function Modal({
     fullScreen = false,
     fullWidth = false,
     withCloseButton = false,
-    withShadow = false,
+    withShadow = true,
     withOkButton = false,
     contentSx = { mt: 1 },
+    scrollTop = true,
+    fabMargin = true,
     ...props
 }: IModalProps) {
-    const deviceScreenType = useAppSelector((state) => state.device.screen.type);
-    const deviceScreenName = useAppSelector((state) => state.device.screen.name);
+    const deviceScreenType = useAppSelector((s) => s.device.screen.type);
+    const deviceScreenName = useAppSelector((s) => s.device.screen.name);
 
     const [fullScreenState, setFullScreenState] = useState(fullScreen);
     const [fullWidthState, setFullWidthState] = useState(fullWidth);
     const [maxWidthState, setMaxWidthState] = useState(maxWidth);
+    const sx = useMemo(() => {
+        const newSx: any = contentSx || {};
+        if (fabMargin) {
+            newSx.pb = 8;
+        }
+        return newSx;
+    }, [contentSx, fabMargin]);
     useEffect(() => {
         if (responsiveWidth) {
             if (deviceScreenName === "mobile") {
@@ -89,7 +101,15 @@ export default function Modal({
                     onClose={toClose}
                 />
             )}
-            <DialogContent sx={contentSx}>{!!children ? children : null}</DialogContent>
+            <DialogContent sx={sx}>
+                {scrollTop && (
+                    <ScrollTo
+                        id={"PageScrollTop"}
+                        bottom={!!actions?.length ? 56 : 4}
+                    />
+                )}
+                {!!children ? children : null}
+            </DialogContent>
             {!!actions?.length ? (
                 <DialogActions sx={actionsSx}>
                     {actions.map((action, index) => (

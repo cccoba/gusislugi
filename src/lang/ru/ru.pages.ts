@@ -16,7 +16,7 @@ const ruPages = {
             id: "ID",
             title: "Название",
             status: "Статус",
-            value: "Сумма",
+            value: "Сумма ( kr )",
             created_at: "Дата назначения",
             endDate: "Дата просрочки",
             uid: "Пользователь",
@@ -25,6 +25,8 @@ const ruPages = {
     links: {
         title: "ГусиЛинкс",
         download: "Скачать",
+        helpTitle: "Работа с порталом",
+        help: "Справочная информация по пользованию порталом ГусьУслуги",
         errors: {
             getLink: "Не удалось получить информацию о файле",
         },
@@ -93,7 +95,7 @@ const ruPages = {
             id: "ID",
             title: "Название",
             status: "Статус",
-            value: "Сумма",
+            value: "Сумма ( kr )",
             created_at: "Дата назначения",
             endDate: "Дата просрочки платежа",
             uid: "Пользователь",
@@ -126,6 +128,7 @@ const ruPages = {
             value: "Сумма",
             created_at: "Дата",
             hidden: "Скрыть",
+            message: "Сообщение",
         },
         success: {
             toUserMoneyAdd: "Начислено %s",
@@ -146,11 +149,13 @@ const ruPages = {
         history: {
             title: "История переводов",
             noRecordsText: "Еще не было переводов",
+            retry: "Повторить",
             fields: {
                 fromUid: "Отправитель",
                 toUid: "Получатель",
                 value: "Сумма",
                 created_at: "Дата",
+                message: "Сообщение",
             },
             errors: {
                 history: "Не удалось получить историю платежей!",
@@ -159,15 +164,22 @@ const ruPages = {
         send: {
             title: "Перевести деньги",
             success: "Успех",
-            moneyCount: "Сумма перевода",
+            moneyCount: "Сумма перевода ( kr )",
             user: "Получатель",
             maxMoney: "Максимальная сумма: %s %s",
-            successResult: "Перевод на сумму %s пользователю %s выполнен УСПЕШНО!",
             send: "Перевести",
+            message: "Сообщение пользователю",
             hiddenText: "Скрытый перевод",
             errors: {
                 userSendMoney: "Не удалось перевести деньги другому пользователю",
                 positiveCount: "Сумма должна быть больше нуля",
+            },
+            successResult: {
+                money: "Перевод на сумму",
+                money2: "выполнен",
+                money3: "УСПЕШНО",
+                user: "Получатель",
+                id: "Номер транзакции",
             },
         },
     },
@@ -237,6 +249,8 @@ const ruPages = {
     },
     home: {
         title: "Главное",
+        main: "Основное",
+        services: "Сервисы",
         actions: {
             qr: "QR сканер",
             showId: "Показать ID",

@@ -9,12 +9,13 @@ import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { money } from "api/data";
+import { messages, money } from "api/data";
 import { IMoneyDto } from "api/interfaces/user/IMoneyDto";
 import { useAppSelector } from "api/hooks/redux";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { IMoneyAddDto } from "api/interfaces/user/IMoneyAddDto";
+import { cutText } from "api/common/helper";
 
 const langPage = lang.pages.money;
 
@@ -26,6 +27,7 @@ const listConfig: ICRUDAsyncListConfig = {
         { name: "to_user", title: langPage.fields.toUid, format: "text" },
         { name: "value", title: langPage.fields.value, format: "number" },
         { name: "created_at", title: langPage.fields.created_at, format: "date" },
+        { name: "message", title: langPage.fields.message },
         { name: "from_nickname", title: "", hidden: true },
         { name: "to_nickname", title: "", hidden: true },
     ],
@@ -34,6 +36,7 @@ const listConfig: ICRUDAsyncListConfig = {
         ...data,
         from_user: data.hidden ? lang.unknown : data.from_user?.firstName || lang.unknown,
         to_user: data.to_user?.firstName || lang.unknown,
+        message: cutText(data.message, 50),
         from_nickname: data.from_user?.nickname || "",
         to_nickname: data.to_user?.nickname || "",
     }),
@@ -59,6 +62,7 @@ export const moneyEditConfig: ICRUDAsyncEditConfig = {
                 return (!!value && value > 0) || langPage.send.errors.positiveCount;
             },
         },
+        { name: "message", title: langPage.fields.message, type: "text", fieldProps: { multiline: true } },
         { name: "hidden", title: "", text: langPage.fields.hidden, type: "switcher" },
     ],
 };

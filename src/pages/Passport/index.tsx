@@ -27,7 +27,7 @@ interface IProps extends IPageOrModal {
 export interface IPassportItem {
     title: string;
     subTitle: string;
-    user: IUserDto;
+    userId: number;
 }
 
 function Passport({ roles, icon, idName, modalProps, userGuid }: IProps) {
@@ -90,49 +90,49 @@ function Passport({ roles, icon, idName, modalProps, userGuid }: IProps) {
                         <PassportClaims
                             subTitle={!!userData.claims ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.claims.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.taxes !== "undefined" && (
                         <PassportTaxes
                             subTitle={!!userData.taxes ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.taxes.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.fines !== "undefined" && (
                         <PassportFines
                             subTitle={!!userData.fines ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.fines.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.medicalInfo !== "undefined" && (
                         <PassportMedicalInfo
                             subTitle={!!userData.medicalInfo ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalInfo.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.medicalPolicies !== "undefined" && (
                         <PassportMedicalPolicies
                             subTitle={!!userData.medicalPolicies ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalPolicies.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.wanteds !== "undefined" && (
                         <PassportWanteds
                             subTitle={!!userData.wanteds ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.wanteds.title}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                     {typeof userData.wanteds2 !== "undefined" && (
                         <PassportWanteds2
                             subTitle={!!userData.wanteds2 ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.wanteds.title2}
-                            user={userData.user}
+                            userId={userData.user.id}
                         />
                     )}
                 </>

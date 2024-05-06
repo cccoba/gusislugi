@@ -48,6 +48,7 @@ function Profile() {
             title={langPage.title}
             isLoading={isLoading}
             icon="person_pin"
+            backUrl={"/"}
         >
             {!!user && (
                 <UserForm

@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { Box, Card, CardActionArea, CardHeader, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardHeader, Grid } from "@mui/material";
 
 import lang from "lang";
-import { Icon, Link, Modal, Page, RoleChecker } from "components";
+import { Fieldset, Icon, Link, Page, RoleChecker } from "components";
+import QrUserData from "components/QrPrint/QrUserData";
 
 import { useAppSelector } from "api/hooks/redux";
-import QrPrint from "components/QrPrint";
-import dateTime from "api/common/dateTime";
-import QrUserData from "components/QrPrint/QrUserData";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
@@ -40,81 +38,86 @@ function Home() {
                     user={currentUser}
                 />
             )}
-            <Grid
-                container
-                spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
-            >
-                <RoleChecker roles={[["qr"]]}>
+            <Fieldset label={langPage.main}>
+                <Grid
+                    container
+                    spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
+                >
+                    <RoleChecker roles={[["qr"]]}>
+                        <HomeItem
+                            url="/qrScanner"
+                            title={langPage.actions.qr}
+                            icon="qrScanner"
+                        />
+                    </RoleChecker>
                     <HomeItem
-                        url="/qrScanner"
-                        title={langPage.actions.qr}
-                        icon="qrScanner"
+                        onClick={showMyId}
+                        title={langPage.actions.showId}
+                        icon="id"
                     />
-                </RoleChecker>
-                {!!currentUser && (
-                    <>
+                    {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
                         <HomeItem
-                            onClick={showMyId}
-                            title={langPage.actions.showId}
-                            icon="id"
+                            url="/persons"
+                            title={langPage.actions.persons}
+                            icon="group"
                         />
-                        {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
-                            <HomeItem
-                                url="/persons"
-                                title={langPage.actions.persons}
-                                icon="group"
-                            />
-                        )}
-                        {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
-                            <HomeItem
-                                url="/users"
-                                title={lang.pages.users.title}
-                                icon="users"
-                            />
-                        )}
+                    )}
+                    {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
                         <HomeItem
-                            url="/profile"
-                            title={langPage.actions.profile}
-                            icon="person_pin"
+                            url="/users"
+                            title={lang.pages.users.title}
+                            icon="users"
                         />
-                        <HomeItem
-                            url="/myClaims"
-                            title={langPage.actions.claims}
-                            icon="claims"
-                        />
-                        <HomeItem
-                            url="/myMessages"
-                            title={langPage.actions.messages}
-                            icon="sms"
-                        />
-                        <HomeItem
-                            url="/sgp"
-                            title={lang.pages.money.sgp.title}
-                            icon="sgp"
-                        />
-                        <HomeItem
-                            url="/myMedicalPolicies"
-                            title={langPage.actions.medicalPolicies}
-                            icon="medicalPolicies"
-                        />
-                        <HomeItem
-                            url="/myTaxes"
-                            title={langPage.actions.taxes}
-                            icon="taxes"
-                        />
-                        <HomeItem
-                            url="/myFines"
-                            title={langPage.actions.fines}
-                            icon="fines"
-                        />
-                        <HomeItem
-                            url="/links"
-                            title={lang.pages.links.title}
-                            icon="links"
-                        />
-                    </>
-                )}
-            </Grid>
+                    )}
+                    <HomeItem
+                        url="/profile"
+                        title={langPage.actions.profile}
+                        icon="person_pin"
+                    />
+                    <HomeItem
+                        url="/sgp"
+                        title={lang.pages.money.sgp.title}
+                        icon="sgp"
+                    />
+                    <HomeItem
+                        url="/links"
+                        title={lang.pages.links.title}
+                        icon="links"
+                    />
+                </Grid>
+            </Fieldset>
+            <Fieldset label={langPage.services}>
+                <Grid
+                    container
+                    spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
+                >
+                    <HomeItem
+                        url="/myMessages"
+                        title={langPage.actions.messages}
+                        icon="sms"
+                    />
+                    <HomeItem
+                        url="/myClaims"
+                        title={langPage.actions.claims}
+                        icon="claims"
+                    />
+                    <HomeItem
+                        url="/myMedicalPolicies"
+                        title={langPage.actions.medicalPolicies}
+                        icon="medicalPolicies"
+                    />
+                    <HomeItem
+                        url="/myTaxes"
+                        title={langPage.actions.taxes}
+                        icon="taxes"
+                    />
+                    <HomeItem
+                        url="/myFines"
+                        title={langPage.actions.fines}
+                        icon="fines"
+                    />
+                </Grid>
+            </Fieldset>
         </Page>
     );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import lang, { getEnumTitleValue, getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
@@ -13,11 +13,12 @@ import { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import { cutText } from "api/common/helper";
 
 const langPage = lang.pages.claims;
 
-export const claimListConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: true,
+const listConfig: ICRUDAsyncListConfig = {
+    isMultiSelection: false,
     withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
     fields: [
@@ -38,10 +39,11 @@ export const claimListConfig: ICRUDAsyncListConfig = {
         status: getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status),
         user: data.user?.firstName || lang.unknown,
         nickname: data.user?.nickname || "",
+        title: cutText(data.title, 30),
     }),
 };
 
-export const claimEditConfig: ICRUDAsyncEditConfig = {
+const editConfig: ICRUDAsyncEditConfig = {
     fields: [
         { name: "id", title: langPage.fields.id, type: "text", disabled: true },
         { name: "title", title: langPage.fields.title, type: "text", required: true },
@@ -68,10 +70,40 @@ export const claimEditConfig: ICRUDAsyncEditConfig = {
         { name: "resolution", title: langPage.fields.resolution, type: "text", fieldProps: { multiline: true } },
     ],
 };
-
-function Claims({ roles }: IPageWithRoles) {
+const defInitialData = {
+    id: 0,
+    uid: 0,
+    status: ClaimStatusEnum.Created,
+    title: "",
+    description: "",
+    resolution: "",
+};
+interface IProps {
+    userId?: number;
+}
+function Claims({ userId }: IProps) {
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsyncActionCb = async (data: IClaimDto) => {
+    const props = useMemo(() => {
+        const newProps: { actions: ICRUDAsyncAction[]; initialData: IClaimDto; listConfig: ICRUDAsyncListConfig } = {
+            actions: [
+                { name: "list", cb: claims.crudList },
+                { name: "save", cb: onSaveStart as any },
+                { name: "edit", cb: claims.crudGet },
+                { name: "delete", cb: claims.crudDelete },
+            ],
+            initialData: { ...defInitialData },
+            listConfig: { ...listConfig },
+        };
+
+        if (userId) {
+            newProps.actions[0].cbArgs = [userId];
+            newProps.actions[0].cb = claims.crudUserList;
+            newProps.initialData.uid = userId;
+            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
+        }
+        return newProps;
+    }, [userId]);
+    function onSaveStart(data: IClaimDto) {
         return new Promise((resolve, reject) => {
             claims.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
@@ -83,17 +115,10 @@ function Claims({ roles }: IPageWithRoles) {
                 uid: data.uid,
             });
         });
-    };
+    }
     const hideNotificationData = () => {
         setNotificationData(null);
     };
-
-    const actions: ICRUDAsyncAction[] = [
-        { name: "list", cb: claims.crudList },
-        { name: "edit", cb: claims.crudGet },
-        { name: "delete", cb: claims.crudDelete },
-        { name: "save", cb: onSaveStart },
-    ];
 
     return (
         <>
@@ -106,20 +131,14 @@ function Claims({ roles }: IPageWithRoles) {
             )}
             <CRUDAsync
                 backUrl="/claims"
-                roles={roles}
+                roles={[["claims"]]}
                 title={langPage.title}
                 icon="claims"
-                listConfig={claimListConfig}
-                editConfig={claimEditConfig}
-                actions={actions}
-                initialValue={{
-                    id: 0,
-                    uid: 0,
-                    status: ClaimStatusEnum.Created,
-                    title: "",
-                    description: "",
-                    resolution: "",
-                }}
+                listConfig={props.listConfig}
+                editConfig={editConfig}
+                actions={props.actions}
+                initialValue={props.initialData}
+                withOutPage={!!userId}
             />
         </>
     );

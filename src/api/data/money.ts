@@ -13,7 +13,7 @@ const MoneyDataProvider = {
     crudGet: (id: number): Promise<IWebDataResult<IMoneyDto>> => {
         return dataProvider(baseUrl + `record&id=${id}`);
     },
-    crudSave: (data: IMoneyDto): Promise<IWebDataResult<boolean>> => {
+    crudSave: (data: IMoneyDto): Promise<IWebDataResult<number[]>> => {
         return dataProvider(baseUrl + "save", "post", data);
     },
     getUserData: (userId: number): Promise<IWebDataResult<IUserMoneyDto>> => {
@@ -26,8 +26,13 @@ const MoneyDataProvider = {
         }
         return dataProvider(url);
     },
-    userSendMoney: (toUid: number, value: number, hidden: boolean): Promise<IWebDataResult<boolean>> => {
-        return dataProvider(baseUrl + "userSendMoney", "post", { toUid, value, hidden });
+    userSendMoney: (
+        toUid: number,
+        value: number,
+        hidden: boolean,
+        message: string
+    ): Promise<IWebDataResult<number[]>> => {
+        return dataProvider(baseUrl + "userSendMoney", "post", { toUid, value, hidden, message });
     },
     getValue: (): Promise<IWebDataResult<number>> => {
         return dataProvider(baseUrl + "getValue");

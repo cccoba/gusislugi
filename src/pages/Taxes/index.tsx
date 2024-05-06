@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
@@ -17,10 +17,11 @@ import { useAppSelector } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import { cutText } from "api/common/helper";
 
 const langPage = lang.pages.taxes;
 
-export const taxesListConfig: ICRUDAsyncListConfig = {
+const listConfig: ICRUDAsyncListConfig = {
     isMultiSelection: false,
     withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
@@ -38,14 +39,16 @@ export const taxesListConfig: ICRUDAsyncListConfig = {
         { name: "endDate", title: langPage.fields.endDate, format: "date" },
         { name: "nickname", title: "", hidden: true },
     ],
-    transform: (data: IMedicalPoliciesDto) => ({
+    transform: (data: ITaxeDto) => ({
         ...data,
         user: data.user?.firstName || lang.unknown,
         nickname: data.user?.nickname || "",
+        value: sprintf(lang.money, data.value),
+        title: cutText(data.title, 30),
     }),
 };
 
-export const taxesEditConfig: ICRUDAsyncEditConfig = {
+const editConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "title",
@@ -92,11 +95,41 @@ export const taxesEditConfig: ICRUDAsyncEditConfig = {
         },
     ],
 };
-
-function Taxes({ roles, icon }: IPageWithRoles) {
+const defInitialData: ITaxeDto = {
+    id: 0,
+    value: 0,
+    title: "",
+    uid: 0,
+    status: TaxeStatusEnum.Active,
+    endDate: dayjs().add(8, "hour").toDate(),
+};
+interface IProps {
+    userId?: number;
+}
+function Taxes({ userId }: IProps) {
     const currentUserRoleTaxes = useAppSelector((s) => s.user.user?.role?.params?.taxes);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
-    const onSaveStart: TCRUDAsyncActionCb = async (data: ITaxeDto) => {
+    const props = useMemo(() => {
+        const newProps: { actions: ICRUDAsyncAction[]; initialData: ITaxeDto; listConfig: ICRUDAsyncListConfig } = {
+            actions: [
+                { name: "list", cb: taxes.crudList },
+                { name: "save", cb: onSaveStart as any },
+                { name: "edit", cb: taxes.crudGet },
+                { name: "delete", cb: taxes.crudDelete },
+            ],
+            initialData: { ...defInitialData },
+            listConfig: { ...listConfig },
+        };
+
+        if (userId) {
+            newProps.actions[0].cbArgs = [userId];
+            newProps.actions[0].cb = taxes.crudUserList;
+            newProps.initialData.uid = userId;
+            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
+        }
+        return newProps;
+    }, [userId]);
+    function onSaveStart(data: ITaxeDto) {
         return new Promise((resolve, reject) => {
             taxes.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
@@ -110,7 +143,7 @@ function Taxes({ roles, icon }: IPageWithRoles) {
                 ),
             });
         });
-    };
+    }
     const hideNotificationData = () => {
         setNotificationData(null);
     };
@@ -125,25 +158,15 @@ function Taxes({ roles, icon }: IPageWithRoles) {
             )}
             <CRUDAsync
                 backUrl="/taxes"
-                roles={roles}
+                roles={[["taxes"]]}
+                icon="taxes"
                 title={langPage.title}
-                icon={icon}
-                listConfig={taxesListConfig}
-                editConfig={taxesEditConfig}
-                actions={[
-                    { name: "list", cb: taxes.crudList },
-                    { name: "delete", cb: taxes.crudDelete },
-                    { name: "edit", cb: taxes.crudGet },
-                    { name: "save", cb: onSaveStart },
-                ]}
+                listConfig={props.listConfig}
+                editConfig={editConfig}
+                actions={props.actions}
                 permissions={currentUserRoleTaxes}
-                initialValue={{
-                    id: 0,
-                    value: 0,
-                    uid: 0,
-                    status: TaxeStatusEnum.Active,
-                    endDate: dayjs().add(8, "hour").toDate(),
-                }}
+                initialValue={props.initialData}
+                withOutPage={!!userId}
             />
         </>
     );

@@ -338,13 +338,17 @@ function GoodTable<T>({
 
     if (responsiveView) {
         return (
-            <TableContainer component={variant === "paper" ? Paper : Box}>
+            <TableContainer
+                component={variant === "paper" ? Paper : Box}
+                sx={stickyHeader ? { position: "relative", height: "100%" } : undefined}
+            >
                 <GoodTableToolbar
                     title={title}
                     actions={actions}
                     selectedRows={selectedRows}
                     withoutSimpleTextFilter={withoutSimpleTextFilter}
                     onChangeSimpleSearchText={setSimpleSearchText}
+                    sticky={stickyHeader}
                 />
                 <GoodTableMobile
                     fields={fields}

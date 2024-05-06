@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from "react";
-import { Box, List, Divider, Button } from "@mui/material";
+import { Box, List, Divider, Button, Link as MuiLink } from "@mui/material";
 
 import lang from "lang";
 import { Fieldset, Icon, Link, LinkButton, Page } from "components";
@@ -53,6 +53,7 @@ function Links({ backUrl, icon }: IPage) {
             title={langPage.title}
             isLoading={isLoading}
             icon={icon}
+            backUrl={"/"}
         >
             {!!activeLink && (
                 <LinksLink
@@ -65,6 +66,15 @@ function Links({ backUrl, icon }: IPage) {
                     }}
                 />
             )}
+            <Fieldset label={langPage.helpTitle}>
+                <MuiLink
+                    href="https://teleport-games.ru/gusislugi_site/help/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {langPage.help}
+                </MuiLink>
+            </Fieldset>
             {result?.map((x) => (
                 <Fieldset
                     label={x.title}

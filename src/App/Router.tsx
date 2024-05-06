@@ -122,7 +122,7 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/claims/*"
-                            element={<Claims roles={[["claims"]]} />}
+                            element={<Claims />}
                         />
                         <Route
                             path="/myClaims"
@@ -182,50 +182,23 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/medicalInfo/*"
-                            element={
-                                <MedicalInfo
-                                    roles={[["medicalInfo"]]}
-                                    icon="medicalInfo"
-                                />
-                            }
+                            element={<MedicalInfo />}
                         />
                         <Route
                             path="/taxes/*"
-                            element={
-                                <Taxes
-                                    roles={[["taxes"]]}
-                                    icon="taxes"
-                                />
-                            }
+                            element={<Taxes />}
                         />
                         <Route
                             path="/fines/*"
-                            element={
-                                <Fines
-                                    roles={[["fines"]]}
-                                    icon="fines"
-                                />
-                            }
+                            element={<Fines />}
                         />
                         <Route
                             path="/wanteds/*"
-                            element={
-                                <Wanteds
-                                    roles={[["wanteds"]]}
-                                    icon="wanteds"
-                                    backUrl={"/wanteds"}
-                                />
-                            }
+                            element={<Wanteds />}
                         />
                         <Route
                             path="/wanteds2/*"
-                            element={
-                                <Wanteds2
-                                    roles={[["wanteds2"]]}
-                                    icon="wanteds2"
-                                    backUrl={"/wanteds2"}
-                                />
-                            }
+                            element={<Wanteds2 />}
                         />
 
                         <Route

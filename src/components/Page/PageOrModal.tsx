@@ -24,6 +24,8 @@ function PageOrModal({ modalProps, isLoading = false, ...props }: IPageOrModal) 
                 {...modalProps}
                 title={props?.title || ""}
                 children={props.children}
+                scrollTop={props?.scrollTop}
+                fabMargin={props?.fabMargin}
             />
         );
     }

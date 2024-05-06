@@ -10,10 +10,14 @@ import { medicalInfo } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { IMedicalInfoDto } from "api/interfaces/user/IMedicalInfoDto";
 import { useAppSelector } from "api/hooks/redux";
+import { useMemo } from "react";
+import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import { title } from "process";
+import { cutText } from "api/common/helper";
 
 const langPage = lang.pages.medicalInfo;
 
-export const medicalInfoListConfig: ICRUDAsyncListConfig = {
+const listConfig: ICRUDAsyncListConfig = {
     isMultiSelection: false,
     withRefresh: true,
     orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
@@ -33,10 +37,11 @@ export const medicalInfoListConfig: ICRUDAsyncListConfig = {
         status: data.status ? langPage.statusActive : langPage.statusNotActive,
         user: data.user?.firstName || lang.unknown,
         nickname: data.user?.nickname || "",
+        title: cutText(data.title, 30),
     }),
 };
 
-export const medicalInfoEditConfig: ICRUDAsyncEditConfig = {
+const editConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
             name: "title",
@@ -70,31 +75,57 @@ export const medicalInfoEditConfig: ICRUDAsyncEditConfig = {
     ],
 };
 
-function MedicalInfo({ roles, icon }: IPageWithRoles) {
+const defInitialData: IMedicalInfoDto = {
+    id: 0,
+    title: "",
+    uid: 0,
+    status: true,
+    endDate: dayjs().add(24, "hour").toDate(),
+};
+interface IProps {
+    userId?: number;
+}
+
+function MedicalInfo({ userId }: IProps) {
     const currentUserRolePermissions = useAppSelector((s) => s.user.user?.role?.params?.medicalInfo);
+    const props = useMemo(() => {
+        const newProps: {
+            actions: ICRUDAsyncAction[];
+            initialData: IMedicalInfoDto;
+            listConfig: ICRUDAsyncListConfig;
+        } = {
+            actions: [
+                { name: "list", cb: medicalInfo.crudList },
+                { name: "save", cb: medicalInfo.crudSave },
+                { name: "edit", cb: medicalInfo.crudGet },
+                { name: "delete", cb: medicalInfo.crudDelete },
+            ],
+            initialData: { ...defInitialData },
+            listConfig: { ...listConfig },
+        };
+
+        if (userId) {
+            newProps.actions[0].cbArgs = [userId];
+            newProps.actions[0].cb = medicalInfo.crudUserList;
+            newProps.initialData.uid = userId;
+            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
+        }
+        return newProps;
+    }, [userId]);
+
     return (
         <>
             <CRUDAsync
                 backUrl="/medicalInfo"
-                roles={roles}
+                roles={[["medicalInfo"]]}
+                icon="medicalInfo"
                 title={langPage.title}
-                icon={icon}
-                listConfig={medicalInfoListConfig}
-                editConfig={medicalInfoEditConfig}
-                actions={[
-                    { name: "save", cb: medicalInfo.crudSave },
-                    { name: "edit", cb: medicalInfo.crudGet },
-                    { name: "delete", cb: medicalInfo.crudDelete },
-                    { name: "list", cb: medicalInfo.crudList },
-                ]}
-                initialValue={{
-                    id: 0,
-                    title: "",
-                    uid: 0,
-                    status: true,
-                    endDate: dayjs().add(24, "hour").toDate(),
-                }}
+                listConfig={props.listConfig}
+                editConfig={editConfig}
+                actions={props.actions}
+                initialValue={props.initialData}
                 permissions={currentUserRolePermissions}
+                withOutPage={!!userId}
             />
         </>
     );
