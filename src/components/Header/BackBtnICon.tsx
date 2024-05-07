@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import Icon from "components/Icon";
+import Icon, { TIconName } from "components/Icon";
 import Link from "components/Link/Link";
 
 interface IBackBtnICon {
     backUrl: string | null;
-    icon: string | null;
+    icon?: TIconName | "";
     deviceScreenName: string;
 }
-function BackBtnICon({ backUrl = "", icon = "", deviceScreenName = "" }: IBackBtnICon) {
+function BackBtnICon({ backUrl = "", icon, deviceScreenName = "" }: IBackBtnICon) {
     if ((!backUrl && !icon) || deviceScreenName === "mobile") {
         return null;
     }

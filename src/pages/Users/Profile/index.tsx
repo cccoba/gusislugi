@@ -47,7 +47,7 @@ function Profile() {
         <Page
             title={langPage.title}
             isLoading={isLoading}
-            icon="person_pin"
+            icon="profile"
             backUrl={"/"}
         >
             {!!user && (

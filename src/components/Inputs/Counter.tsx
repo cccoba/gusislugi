@@ -98,7 +98,7 @@ function Counter({
                             onClick={toMinus}
                             disabled={value <= minValue}
                         >
-                            <Icon name="remove" />
+                            <Icon name="minus" />
                         </Button>
                     </InputAdornment>
                 ),

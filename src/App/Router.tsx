@@ -154,7 +154,7 @@ export default function RouterPage() {
                             element={
                                 <Persons
                                     roles={[["users"]]}
-                                    icon="group"
+                                    icon="users"
                                 />
                             }
                         />
@@ -172,7 +172,7 @@ export default function RouterPage() {
                             element={
                                 <QrScanner
                                     roles={[["qr"]]}
-                                    icon="qr_code_scanner"
+                                    icon="qrScanner"
                                 />
                             }
                         />
@@ -248,7 +248,7 @@ export default function RouterPage() {
                             element={
                                 <Roles
                                     roles={[["admins"]]}
-                                    icon="engineering"
+                                    icon="roles"
                                 />
                             }
                         />

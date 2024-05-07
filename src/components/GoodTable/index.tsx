@@ -12,8 +12,9 @@ import {
 
 import { sortArray } from "lang";
 import { ISelectValue } from "components/Inputs/Select";
+import { TIconName } from "components/Icon";
 
-import { IPaginationData, ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
+import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
 import { objCopyWithType } from "api/common/helper";
 import {
     FilterDateEqualsEnum,
@@ -34,7 +35,7 @@ import GoodTableToolbar from "./TableToolbar";
 
 export interface IGoodTableToolbarAction<T> {
     name: string;
-    icon: string;
+    icon: TIconName;
     onClick: (selectedRows: T[]) => void;
     color?: IconButtonProps["color"];
     disable?: (selectedRows: T[]) => boolean;

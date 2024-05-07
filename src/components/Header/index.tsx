@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Box, SxProps, Divider } from "@mui/material";
 
 import { menuToggle } from "store/reducers/ComponentsSlice";
+import { TIconName } from "components/Icon";
 
 import getConst from "api/common/getConst";
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
@@ -13,12 +14,12 @@ import AppVersion from "./AppVersion";
 
 interface IProps {
     title: string;
-    icon: string | null;
+    icon?: TIconName | "";
     backUrl: string | null;
 }
 const drawerWidth = getConst("menu-width");
 
-export default function Header({ title = "", icon = null, backUrl = null }: IProps) {
+export default function Header({ title = "", icon, backUrl = null }: IProps) {
     const menuShowed = useAppSelector((state) => state.components.menu.show);
     const deviceScreenName = useAppSelector((state) => state.device.screen.name);
 

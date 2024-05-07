@@ -8,7 +8,7 @@ const langPage = lang.components.navigationMenu;
 
 const menuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
-    { name: "profile", title: langPage.profile, icon: "person_pin", link: "/profile" },
+    { name: "profile", title: langPage.profile, icon: "profile", link: "/profile" },
     { name: "sgp", title: langPage.sgp, icon: "sgp", link: "/sgp" },
     { name: "links", title: lang.pages.links.title, icon: "links", link: "/links" },
     {
@@ -78,21 +78,21 @@ const menuList: INavigationMenu[] = [
     {
         name: "roles",
         title: langPage.roles,
-        icon: "engineering",
+        icon: "roles",
         link: "/roles",
         roles: [["admins"]],
     },
     {
         name: "users",
         title: langPage.users,
-        icon: "group",
+        icon: "users",
         link: "/users",
         roles: [["admins"]],
     },
     {
         name: "persons",
         title: langPage.persons,
-        icon: "group",
+        icon: "users",
         link: "/persons",
         roles: [["users"]],
     },

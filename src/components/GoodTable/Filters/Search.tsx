@@ -52,14 +52,14 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
             </Menu>
             {isActive && (
                 <IconButton
-                    name="filter_alt"
+                    name="filter"
                     size="small"
                     color="primary"
                     onClick={toFilterClear}
                 />
             )}
             <IconButton
-                name="more_vert"
+                name="more"
                 size="small"
                 onClick={toMenuShow}
             />

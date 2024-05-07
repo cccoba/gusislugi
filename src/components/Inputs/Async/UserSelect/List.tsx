@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 
 import lang from "lang";
 import Modal from "components/Modal";
-import List from "components/List";
+import List, { IListItem } from "components/List";
 import GoodTable, { IGoodTableField } from "components/GoodTable";
 
 import { IUserDto } from "api/interfaces/user/IUserDto";
@@ -27,7 +27,7 @@ interface IUserSelectList {
     multiple?: boolean;
 }
 
-const defTypeList = [
+const defTypeList: IListItem[] = [
     { id: "roles", title: langPage.roles, icon: "user" },
     { id: "citizenships", title: langPage.citizenships, icon: "user" },
     { id: "allList", title: langPage.allList, icon: "user" },

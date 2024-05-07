@@ -23,7 +23,7 @@ export default function CRUDAsyncMain({
     listConfig,
     editConfig,
     actions,
-    icon = "",
+    icon,
     initialValue,
     title,
     roles,

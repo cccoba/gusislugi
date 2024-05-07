@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import Icon from "components/Icon";
+import Icon, { TIconName } from "components/Icon";
 import { menuToggle } from "store/reducers/ComponentsSlice";
 import IconButton from "components/Icon/IconButton";
 import { checkUserRoleAccess } from "components/RoleChecker";
@@ -16,7 +16,7 @@ import menuList from "./menuList";
 export interface INavigationMenu {
     name: string;
     title: string;
-    icon: string;
+    icon: TIconName;
     link: string;
     roles?: TRoleCheckerRole[];
 }

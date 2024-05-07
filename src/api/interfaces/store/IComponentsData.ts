@@ -1,7 +1,9 @@
+import { TIconName } from "components/Icon";
+
 export interface IComponentsData {
     header: {
         title: string | "";
-        icon: string | null;
+        icon?: TIconName | "";
         backUrl: string | null;
     };
     menu: {

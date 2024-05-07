@@ -22,7 +22,7 @@ const fields: IGoodTableField[] = [
     { name: "created_at", title: langPage.fields.date, format: "date" },
 ];
 
-function getIconName(status: MessageStatusEnum) {
+function getIconName(status: MessageStatusEnum): any {
     const result = getEnumValue(MessageStatusEnum, status) || "";
     if (!!result?.length) {
         return result.charAt(0).toLowerCase() + result.slice(1);

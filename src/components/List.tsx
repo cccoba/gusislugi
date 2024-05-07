@@ -15,13 +15,13 @@ import lang from "lang";
 
 import { textFilter } from "api/common/filters";
 
-import Icon from "./Icon";
+import Icon, { TIconName } from "./Icon";
 import IconButton from "./Icon/IconButton";
 import Image from "./Image";
 import InputSearch from "./Inputs/InputSearch";
 
 interface IListItemAction {
-    icon: string;
+    icon: TIconName;
     color?: IconButtonProps["color"];
     size?: IconButtonProps["size"];
     cb: (id: IListItem["id"]) => void;
@@ -37,7 +37,7 @@ export interface IListItem {
     subTitle?: string;
     mediaId?: string;
     mediaType?: MediaType;
-    icon?: string;
+    icon?: TIconName;
     selected?: boolean;
     otherProps?: any;
     actions?: IListItemAction[];

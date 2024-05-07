@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import getConst from "api/common/getConst";
+
+import { TIconName } from "components/Icon";
+
 import { IComponentsData } from "api/interfaces/store/IComponentsData";
 
 const COMPONENTS_INITIAL_STATE: IComponentsData = {
     header: {
         title: "",
-        icon: null,
+        icon: "",
         backUrl: null,
     },
     menu: {
@@ -36,7 +38,7 @@ const HeaderSlice = createSlice({
         setHeaderTitle(state, { payload }: PayloadAction<string>) {
             state.header.title = payload;
         },
-        setHeaderIcon(state, { payload }: PayloadAction<string | null>) {
+        setHeaderIcon(state, { payload }: PayloadAction<TIconName | "">) {
             state.header.icon = payload;
         },
         setHeaderBackUrl(state, { payload }: PayloadAction<string | null>) {

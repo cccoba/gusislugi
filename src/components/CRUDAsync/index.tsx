@@ -1,6 +1,7 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { loaderChange } from "store/reducers/ComponentsSlice";
+import { TIconName } from "components/Icon";
 
 import { useAppDispatch } from "api/hooks/redux";
 import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
@@ -14,7 +15,7 @@ export interface ICRUDAsyncProps {
     listConfig: ICRUDAsyncListConfig;
     editConfig: ICRUDAsyncEditConfig;
     actions: ICRUDAsyncAction[];
-    icon?: string;
+    icon?: TIconName | "";
     title: string;
     initialValue?: any;
     roles?: TRoleCheckerRole[];

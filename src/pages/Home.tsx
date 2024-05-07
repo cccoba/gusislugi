@@ -8,11 +8,12 @@ import QrUserData from "components/QrPrint/QrUserData";
 import { useAppSelector } from "api/hooks/redux";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { TIconName } from "components/Icon";
 
 const langPage = lang.pages.home;
 interface IHomeItem {
     title: string;
-    icon: string;
+    icon: TIconName;
     url?: string;
     onClick?: () => void;
 }
@@ -59,7 +60,7 @@ function Home() {
                         <HomeItem
                             url="/persons"
                             title={langPage.actions.persons}
-                            icon="group"
+                            icon="users"
                         />
                     )}
                     {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
@@ -72,7 +73,7 @@ function Home() {
                     <HomeItem
                         url="/profile"
                         title={langPage.actions.profile}
-                        icon="person_pin"
+                        icon="profile"
                     />
                     <HomeItem
                         url="/sgp"
@@ -94,7 +95,7 @@ function Home() {
                     <HomeItem
                         url="/myMessages"
                         title={langPage.actions.messages}
-                        icon="sms"
+                        icon="messages"
                     />
                     <HomeItem
                         url="/myClaims"

@@ -104,7 +104,7 @@ export default function UserSelect({
             />
         ) : (
             <IconButton
-                name="cancel"
+                name="close"
                 onClick={() => updateValue(null)}
                 size="small"
             />

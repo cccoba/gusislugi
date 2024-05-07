@@ -1,25 +1,17 @@
 import { Box, Fab, FabProps, Tooltip } from "@mui/material";
 
-import Icon from ".";
+import Icon, { TIconName } from ".";
 
 interface IProps extends FabProps {
     onClick: () => void;
-    icon?: string;
+    icon: TIconName;
     tooltip?: string;
     bottom?: number;
     right?: number;
     disabled?: boolean;
 }
 
-function FabIcon({
-    onClick,
-    icon = "save",
-    color = "primary",
-    tooltip,
-    bottom = 16,
-    right = 16,
-    disabled = false,
-}: IProps) {
+function FabIcon({ onClick, icon, color = "primary", tooltip, bottom = 16, right = 16, disabled = false }: IProps) {
     return (
         <Box
             role="presentation"

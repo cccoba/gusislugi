@@ -94,7 +94,7 @@ function MoneySgp({ icon }: IPage) {
                         <Typography>{langPage.fields.money} : </Typography>
                         <Typography variant="h4">{sprintf(lang.money, currentUserMoney || 0)} </Typography>
                         <IconButton
-                            name="update"
+                            name="refresh"
                             color="primary"
                             onClick={loadMoneyCount}
                         />

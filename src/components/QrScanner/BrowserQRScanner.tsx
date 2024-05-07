@@ -130,7 +130,7 @@ function BrowserQRScanner({ onRead, onCancel }: IProps) {
                 ) : (
                     <Box className={classes.errorHint}>
                         <Icon
-                            name="no_photography"
+                            name="noCamera"
                             style={{ fontSize: "10em" }}
                         />
                         <Button

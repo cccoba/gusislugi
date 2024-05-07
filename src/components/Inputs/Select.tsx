@@ -1,12 +1,12 @@
 import { FormControl, InputLabel, Select as MuiSelect, SelectProps, MenuItem, FormHelperText } from "@mui/material";
-import Icon from "components/Icon";
+import Icon, { TIconName } from "components/Icon";
 
 import InputAutocomplete from "./InputAutocomplete";
 
 export interface ISelectValue {
     title: string;
     image?: string;
-    icon?: string;
+    icon?: TIconName;
     key?: any;
     id: any;
     otherProps?: any;

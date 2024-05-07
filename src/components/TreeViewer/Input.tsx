@@ -71,7 +71,7 @@ function InputTreeViewer({
                 {!required && !!value && (
                     <Box sx={{ maxWidth: "24px", position: "absolute", right: 0, top: "-24px" }}>
                         <IconButton
-                            name="cancel"
+                            name="close"
                             size="small"
                             onClick={onClearValue}
                             color="primary"

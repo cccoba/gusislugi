@@ -183,7 +183,7 @@ function AdminUserList({ roles }: IPageWithRoles) {
     return (
         <Page
             title={langPage.title}
-            icon="group"
+            icon="users"
             roles={roles}
             isLoading={isLoading || initLoading}
         >

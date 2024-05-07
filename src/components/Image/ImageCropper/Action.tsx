@@ -51,7 +51,7 @@ function ImageCropperActions({ actions = [], onAction, cropVariant, cropVariants
                         break;
                     case "reset":
                         newActions.push({
-                            icon: "autorenew",
+                            icon: "reset",
                             tooltip: langPage[actionName],
                             name: actionName,
                         });

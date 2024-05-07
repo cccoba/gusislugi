@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const actions: IFooterAction[] = [
-    { icon: "cancel", name: "cancel", tooltip: lang.cancel },
+    { icon: "close", name: "cancel", tooltip: lang.cancel },
     { icon: "ok", name: "save", tooltip: lang.save, color: "primary" },
 ];
 

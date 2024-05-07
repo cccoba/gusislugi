@@ -103,7 +103,7 @@ function TreeItem({ type = "table", value, childrens = [], id, icon, mediaId, ti
     }
     return (
         <Accordion
-            TransitionProps={{ unmountOnExit: true }}
+            slotProps={{ transition: { unmountOnExit: true } }}
             expanded={!!isSelected}
             sx={{
                 boxShadow: "none",
@@ -134,7 +134,7 @@ function TreeItem({ type = "table", value, childrens = [], id, icon, mediaId, ti
                         onClick={itemClick}
                         sx={itemButtonSx}
                     >
-                        {<Icon name={!!isSelected ? "indeterminate_check_box" : "add_box"} />}
+                        {<Icon name={!!isSelected ? "minusBox" : "addBox"} />}
                         {!!icon ? (
                             <ListItemIcon>
                                 <Icon name={icon} />

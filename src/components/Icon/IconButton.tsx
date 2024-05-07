@@ -1,16 +1,15 @@
-import { IconButton as MaterialIconButton, IconButtonProps, IconProps, Tooltip } from "@mui/material";
+import { IconButton as MaterialIconButton, IconButtonProps, Tooltip, SvgIconProps } from "@mui/material";
 
-import Icon, { IBadgeProps } from ".";
+import Icon, { TIconName } from ".";
 
 interface IProps extends IconButtonProps {
-    name?: string;
-    badge?: IBadgeProps;
-    iconProps?: IconProps;
+    name: TIconName;
+    iconProps?: SvgIconProps;
     color?: IconButtonProps["color"];
     size?: IconButtonProps["size"];
     tooltip?: string;
 }
-export default function IconButton({ name, badge, size = "medium", tooltip = "", iconProps, ...props }: IProps) {
+export default function IconButton({ name, size = "medium", tooltip = "", iconProps, ...props }: IProps) {
     if (tooltip) {
         return (
             <Tooltip title={tooltip}>
@@ -23,7 +22,6 @@ export default function IconButton({ name, badge, size = "medium", tooltip = "",
                             fontSize={size}
                             {...iconProps}
                             name={name}
-                            badge={badge}
                         />
                     </MaterialIconButton>
                 </span>
@@ -39,7 +37,6 @@ export default function IconButton({ name, badge, size = "medium", tooltip = "",
                 fontSize={size}
                 {...iconProps}
                 name={name}
-                badge={badge}
             />
         </MaterialIconButton>
     );

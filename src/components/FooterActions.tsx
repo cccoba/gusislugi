@@ -2,9 +2,10 @@ import { ReactNode } from "react";
 import { AppBar, IconButtonProps, SxProps, Tooltip } from "@mui/material";
 
 import IconButton from "./Icon/IconButton";
+import { TIconName } from "./Icon";
 
 export interface IFooterAction {
-    icon: string;
+    icon: TIconName;
     color?: IconButtonProps["color"];
     name: string;
     tooltip?: string;
