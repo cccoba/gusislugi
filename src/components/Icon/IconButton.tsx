@@ -9,7 +9,14 @@ interface IProps extends IconButtonProps {
     size?: IconButtonProps["size"];
     tooltip?: string;
 }
-export default function IconButton({ name, size = "medium", tooltip = "", iconProps, ...props }: IProps) {
+export default function IconButton({
+    name,
+    size = "medium",
+    color = "inherit",
+    tooltip = "",
+    iconProps,
+    ...props
+}: IProps) {
     if (tooltip) {
         return (
             <Tooltip title={tooltip}>
@@ -17,6 +24,7 @@ export default function IconButton({ name, size = "medium", tooltip = "", iconPr
                     <MaterialIconButton
                         {...props}
                         size={size}
+                        color={color}
                     >
                         <Icon
                             fontSize={size}
@@ -32,6 +40,7 @@ export default function IconButton({ name, size = "medium", tooltip = "", iconPr
         <MaterialIconButton
             {...props}
             size={size}
+            color={color}
         >
             <Icon
                 fontSize={size}
