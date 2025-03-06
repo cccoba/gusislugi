@@ -5,13 +5,11 @@ import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { fines } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 
 import { useAppSelector } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";

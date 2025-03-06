@@ -55,6 +55,7 @@ const ruPipes = {
         fines: "Штрафы Север",
         wanteds: "Розыск Юг",
         wanteds2: "Розыск Север",
+        shop: "Магазин",
     },
     rolePermissionAction: {
         view: "Просмотр",

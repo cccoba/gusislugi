@@ -52,6 +52,7 @@ import {
     Badge,
     Engineering,
     QuestionMark,
+    ShoppingCart,
 } from "@mui/icons-material";
 
 //export type TIconName = keyof typeof iconsPath;
@@ -108,7 +109,8 @@ type TIconNameAdditional =
     | "links"
     | "profile"
     | "badge"
-    | "roles";
+    | "roles"
+    | "shop";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 
 interface IProps extends SvgIconProps {
@@ -220,7 +222,8 @@ export default function Icon({ name, color = "inherit", ...props }: IProps) {
             return <Badge {...totalProps} />;
         case "roles":
             return <Engineering {...totalProps} />;
-
+        case "shop":
+            return <ShoppingCart {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

@@ -36,6 +36,7 @@ import Persons from "pages/Users/Persons";
 import MedicalInfo from "pages/MedicalInfo";
 import Links from "pages/Links";
 import LinksLink from "pages/Links/Link";
+import Shop from "pages/Shop";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user.isAuth);
@@ -200,7 +201,10 @@ export default function RouterPage() {
                             path="/wanteds2/*"
                             element={<Wanteds2 />}
                         />
-
+                        <Route
+                            path="/shop/*"
+                            element={<Shop />}
+                        />
                         <Route
                             path="/money/*"
                             element={

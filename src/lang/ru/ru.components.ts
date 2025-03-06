@@ -122,6 +122,7 @@ const ruComponents = {
         roles: "Роли",
         taxes: "Платежи",
         fines: "Штрафы Север",
+        shop: "Магазин",
     },
     rolePermissions: {},
     sendUserNotification: {

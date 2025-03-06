@@ -105,6 +105,7 @@ export default function CRUDAsyncList({
         ) {
             tableActions.push(getTableAction("refresh"));
         }
+
         if (typeof initialValue !== "undefined" && checkFlagIncludes(permissions, RolePermissionFlag.Add)) {
             tableActions.push(getTableAction("add"));
         }
@@ -187,7 +188,6 @@ export default function CRUDAsyncList({
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
-
     return (
         <>
             {!!config?.toTreeView ? (

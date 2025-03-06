@@ -309,6 +309,19 @@ const ruPages = {
             addUserId: "Кто подал",
         },
     },
+    shop: {
+        title: "Магазин",
+        fields: {
+            id: "ID",
+            user: "Пользователь",
+            sum: "Сумма заказа",
+            details: "Детали заказа",
+            created_at: "Дата создания",
+            eventDate: "Дата заказа",
+            count: "Кол-во товаров",
+            countText: "%s товаров, %s шт.",
+        },
+    },
     users: {
         title: "Пользователи",
         messageSenderTitle: "Отправить пользователю %s",

@@ -26,6 +26,7 @@ const permissionList = [
     "wanteds",
     "wanteds2",
     "users",
+    "shop",
 ];
 const permissions = permissionList.map((x) => ({
     id: x,
@@ -43,6 +44,7 @@ const defValue = {
     fines: [],
     wanteds: [],
     wanteds2: [],
+    shop: [],
 };
 
 const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
