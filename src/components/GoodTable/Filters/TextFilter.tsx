@@ -16,9 +16,14 @@ interface IProps {
     onCloseSearchFilter: () => void;
 }
 
-const langPage = lang.components.goodTable.filters;
-
-function GoodTableSearchTextFilter({ label, fieldName, filter, onChangeValue, onCloseSearchFilter }: IProps) {
+export default function GoodTableSearchTextFilter({
+    label,
+    fieldName,
+    filter,
+    onChangeValue,
+    onCloseSearchFilter,
+}: IProps) {
+    const langPage = lang.components.goodTable.filters;
     const defFilterValue = useMemo<IFilterTextValue>(() => {
         if (filter) {
             return filter;
@@ -55,4 +60,3 @@ function GoodTableSearchTextFilter({ label, fieldName, filter, onChangeValue, on
         </Fieldset>
     );
 }
-export default GoodTableSearchTextFilter;

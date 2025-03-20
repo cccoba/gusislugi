@@ -28,9 +28,9 @@ const editConfig: ICRUDAsyncEditConfig = {
 
 function Nationalities({ roles }: IPageWithRoles) {
     const actions: ICRUDAsyncAction[] = [
-        { name: "list", cb: nationalities.crudList },
-        { name: "edit", cb: nationalities.crudGet },
-        { name: "delete", cb: nationalities.crudDelete },
+        { name: "getAll", cb: nationalities.crudList },
+        { name: "getRecord", cb: nationalities.crudGet },
+        { name: "remove", cb: nationalities.crudDelete },
         { name: "save", cb: nationalities.crudSave },
     ];
 

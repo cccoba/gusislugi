@@ -37,10 +37,11 @@ import MedicalInfo from "pages/MedicalInfo";
 import Links from "pages/Links";
 import LinksLink from "pages/Links/Link";
 import Shop from "pages/Shop";
+import MedicineRouter from "pages/Medicine/Router";
 
 export default function RouterPage() {
-    const userIsAuth = useAppSelector((s) => s.user.isAuth);
-    const userIsRegister = useAppSelector((s) => !!s.user.user);
+    const userIsAuth = useAppSelector((s) => s.user?.isAuth);
+    const userIsRegister = useAppSelector((s) => !!s.user?.user);
     const header = useAppSelector((s) => s.components.header);
     const deviceScreenName = useAppSelector((s) => s.device.screen.name);
     const deviceIsMobile = useAppSelector((s) => s.device.isMobile);
@@ -277,7 +278,16 @@ export default function RouterPage() {
                                 />
                             }
                         />
-
+                        <Route
+                            path="/medicine/*"
+                            element={
+                                <MedicineRouter
+                                    roles={[["medicineAdmin"]]}
+                                    icon="medicine"
+                                    backUrl="/medicine"
+                                />
+                            }
+                        />
                         <Route
                             path="*"
                             element={

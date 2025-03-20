@@ -13,6 +13,7 @@ import { checkFlagIncludes } from "api/common/enumHelper";
 import Confirm, { IConfirmProps } from "../Confirm";
 
 import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
+import { TIconName } from "components/Icon";
 
 const langPage = lang.components.crud;
 
@@ -55,11 +56,19 @@ export default function CRUDAsyncList({
     }, [needUpdate]);
     const actionsList = useMemo(() => {
         const getTableAction = (actionName: TCRUDAsyncActionCbName | "add" | "refresh") => {
+            const iconName: TIconName =
+                actionName === "getAll"
+                    ? "list"
+                    : actionName === "getRecord"
+                    ? "edit"
+                    : actionName === "remove"
+                    ? "delete"
+                    : actionName;
             const res: IGoodTableToolbarAction<any> = {
                 name: actionName,
-                icon: actionName,
-                onClick: (a: any) => {},
+                icon: iconName,
                 disable: () => false,
+                onClick: () => {},
             };
             switch (actionName) {
                 case "add":
@@ -72,7 +81,7 @@ export default function CRUDAsyncList({
                     res.color = "primary";
                     res.onClick = loadList;
                     break;
-                case "edit":
+                case "getRecord":
                     res.color = "primary";
                     res.disable = (selectedRows) => selectedRows?.length !== 1;
                     res.onClick = (data: any) => {
@@ -81,7 +90,7 @@ export default function CRUDAsyncList({
                         }
                     };
                     break;
-                case "delete":
+                case "remove":
                     res.color = "error";
                     res.disable = (selectedRows) => !selectedRows?.length;
                     res.onClick = (selectedRows) => {
@@ -100,7 +109,7 @@ export default function CRUDAsyncList({
         const tableActions = [];
         if (
             config.withRefresh &&
-            actions.findIndex((x) => x.name === "list") > -1 &&
+            actions.findIndex((x) => x.name === "getAll") > -1 &&
             checkFlagIncludes(permissions, RolePermissionFlag.View)
         ) {
             tableActions.push(getTableAction("refresh"));
@@ -110,14 +119,14 @@ export default function CRUDAsyncList({
             tableActions.push(getTableAction("add"));
         }
         for (const action of actions) {
-            if (action.name !== "list" && action.name !== "save") {
+            if (action.name !== "getAll" && action.name !== "save") {
                 switch (action.name) {
-                    case "delete":
+                    case "remove":
                         if (checkFlagIncludes(permissions, RolePermissionFlag.Delete)) {
                             tableActions.push(getTableAction(action.name));
                         }
                         break;
-                    case "edit":
+                    case "getRecord":
                         if (checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
                             tableActions.push(getTableAction(action.name));
                         }
@@ -129,7 +138,7 @@ export default function CRUDAsyncList({
         return tableActions;
     }, [actions, selectedRows, initialValue, rowId, permissions]);
     function loadList() {
-        const action = actions.find((x) => x.name === "list");
+        const action = actions.find((x) => x.name === "getAll");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.View)) {
             onIsLoading(true);
             const cb = !!action.cbArgs ? action.cb(...action.cbArgs) : action.cb();
@@ -140,7 +149,7 @@ export default function CRUDAsyncList({
                     throw error;
                 }
                 if (result) {
-                    setListData(result?.length ? (!!config.transform ? result.map(config.transform) : result) : []);
+                    setListData(result?.length ? (config?.transform ? result.map(config.transform) : result) : []);
                 }
             })
                 .catch((err) => {
@@ -153,14 +162,14 @@ export default function CRUDAsyncList({
         }
     }
     const onRowDoubleClick = (row: any) => {
-        const action = actions.find((x) => x.name === "edit");
+        const action = actions.find((x) => x.name === "getRecord");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
             onSelectId(row.id);
         }
     };
     const onDeleteConfirmed = (result: boolean) => {
         if (result && deleteConfirm?.otherProps.length) {
-            const action = actions.find((x) => x.name === "delete");
+            const action = actions.find((x) => x.name === "remove");
             if (action) {
                 onIsLoading(true);
                 action
@@ -188,9 +197,10 @@ export default function CRUDAsyncList({
     const onSelected = (rows: any[]) => {
         setSelectedRows(rows);
     };
+
     return (
         <>
-            {!!config?.toTreeView ? (
+            {config?.toTreeView ? (
                 <TreeViewer
                     values={config.toTreeView(listData)}
                     actions={actionsList}

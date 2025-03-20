@@ -79,7 +79,7 @@ function MoneyList({ roles, icon }: IPageWithRoles) {
 
     const [actions, initialValue] = useMemo(() => {
         const newActions: ICRUDAsyncAction[] = [
-            { name: "list", cb: money.crudList },
+            { name: "getAll", cb: money.crudList },
             { name: "save", cb: money.crudSave },
         ];
         let newInitialValue: IMoneyAddDto | undefined = undefined;

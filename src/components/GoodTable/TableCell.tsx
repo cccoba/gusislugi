@@ -3,13 +3,14 @@ import { Box, TableCell as MuiTableCell } from "@mui/material";
 
 import CutText from "components/CutText";
 import Image from "components/Image";
+import { ISelectValue } from "components/Inputs/Select";
 
 import dateTime from "api/common/dateTime";
 
 import { getFieldTitle } from "./TableHead";
 
 import { IGoodTableField } from ".";
-import { ISelectValue } from "components/Inputs/Select";
+import Icon from "components/Icon";
 
 interface IProps {
     value?: any;
@@ -18,19 +19,18 @@ interface IProps {
     responsiveView: boolean;
 }
 
-const defSxProps = {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-};
-
-function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProps) {
+export default function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProps) {
+    const defSxProps = {
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+    };
     const sx = useMemo(() => {
         if (responsiveView) {
             return { cell: { display: "flex", p: 1.5 }, box: { overflowWrap: "break-word", width: "50%" } };
         }
         const newSxProps: any = { box: { ...defSxProps }, cell: { p: 1 } };
-        if (!!cursor) {
+        if (cursor) {
             newSxProps.cell.cursor = cursor;
         }
         return newSxProps;
@@ -54,12 +54,14 @@ function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProp
                         return field?.formatProps.find((x: ISelectValue) => x.id === value)?.title || value;
                     }
                     return value;
+                case "icon":
+                    return value ? <Icon name={value} /> : "";
             }
             return value.toString();
         }
         return "";
     }, [value, field]);
-    if (!!field?.hidden) {
+    if (field?.hidden) {
         return null;
     }
     if (responsiveView) {
@@ -87,4 +89,3 @@ function GoodTableCell({ value = "", field, cursor = "", responsiveView }: IProp
         </MuiTableCell>
     );
 }
-export default GoodTableCell;

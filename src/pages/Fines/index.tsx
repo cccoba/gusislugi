@@ -111,10 +111,10 @@ function Fines({ userId }: IProps) {
     const props = useMemo(() => {
         const newProps: { actions: ICRUDAsyncAction[]; initialData: IFineDto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
-                { name: "list", cb: fines.crudList },
+                { name: "getAll", cb: fines.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "edit", cb: fines.crudGet },
-                { name: "delete", cb: fines.crudDelete },
+                { name: "getRecord", cb: fines.crudGet },
+                { name: "remove", cb: fines.crudDelete },
             ],
             initialData: { ...defInitialData },
             listConfig: { ...listConfig },

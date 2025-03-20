@@ -112,10 +112,10 @@ function Taxes({ userId }: IProps) {
     const props = useMemo(() => {
         const newProps: { actions: ICRUDAsyncAction[]; initialData: ITaxeDto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
-                { name: "list", cb: taxes.crudList },
+                { name: "getAll", cb: taxes.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "edit", cb: taxes.crudGet },
-                { name: "delete", cb: taxes.crudDelete },
+                { name: "getRecord", cb: taxes.crudGet },
+                { name: "remove", cb: taxes.crudDelete },
             ],
             initialData: { ...defInitialData },
             listConfig: { ...listConfig },

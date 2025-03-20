@@ -38,14 +38,10 @@ export default function Select({
     ...props
 }: ISelectProps) {
     const toChangeValueSelect = (e: any) => {
-        if (!!onChangeValue) {
-            onChangeValue(e.target.value);
-        }
+        onChangeValue?.(e.target.value);
     };
     const toChangeValueInputAutocomplete = (value: any) => {
-        if (!!onChangeValue) {
-            onChangeValue(value);
-        }
+        onChangeValue?.(value);
     };
 
     if (type === "selectFiltered") {

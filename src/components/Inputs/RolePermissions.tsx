@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { Box } from "@mui/material";
 
 import lang, { getLangValue, getEnumSelectValues } from "lang";
@@ -15,46 +15,7 @@ import Select from "./Select";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
-const permissionList = [
-    "admins",
-    "claims",
-    "qr",
-    "medicalPolicies",
-    "medicalInfo",
-    "taxes",
-    "fines",
-    "wanteds",
-    "wanteds2",
-    "users",
-    "shop",
-];
-const permissions = permissionList.map((x) => ({
-    id: x,
-    title: getLangValue(lang.pipes.rolePermissions, x),
-}));
-
-const defValue = {
-    admins: [],
-    claims: [],
-    qr: [],
-    users: [],
-    medicalInfo: [],
-    medicalPolicies: [],
-    taxes: [],
-    fines: [],
-    wanteds: [],
-    wanteds2: [],
-    shop: [],
-};
-
-const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
-    (x) => x.id !== RolePermissionActionFlag.None
-);
-const userValues = getEnumSelectValues(UserRolePermissionActionFlag, "UserRolePermissionActionFlag").filter(
-    (x) => x.id !== UserRolePermissionActionFlag.None
-);
-
-function RolePermissions({
+export default function RolePermissions({
     value,
     onChangeValue,
     label = "",
@@ -65,8 +26,46 @@ function RolePermissions({
     helperText = "",
     disabled = false,
 }: IProps) {
+    const permissionList = [
+        "admins",
+        "claims",
+        "qr",
+        "medicalPolicies",
+        "medicalInfo",
+        "taxes",
+        "fines",
+        "wanteds",
+        "wanteds2",
+        "users",
+        "shop",
+        "medicineAdmin",
+    ];
+    const permissions = permissionList.map((x) => ({
+        id: x,
+        title: getLangValue(lang.pipes.rolePermissions, x),
+    }));
+
+    const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
+        (x) => x.id !== RolePermissionActionFlag.None
+    );
+    const userValues = getEnumSelectValues(UserRolePermissionActionFlag, "UserRolePermissionActionFlag").filter(
+        (x) => x.id !== UserRolePermissionActionFlag.None
+    );
     const inputValue = useMemo(() => {
-        const newValue: any = { ...defValue };
+        const newValue: any = {
+            admins: [],
+            claims: [],
+            qr: [],
+            users: [],
+            medicalInfo: [],
+            medicalPolicies: [],
+            taxes: [],
+            fines: [],
+            wanteds: [],
+            wanteds2: [],
+            shop: [],
+            medicineAdmin: [],
+        };
         if (toArray(value).length > 0) {
             for (const idName in value) {
                 if (Object.prototype.hasOwnProperty.call(value, idName)) {
@@ -84,6 +83,7 @@ function RolePermissions({
         const newValue = getFlagValuesToFlag(values);
         onChangeValue({ ...value, [idName]: newValue });
     };
+
     return (
         <FormControl
             fullWidth={fullWidth}
@@ -114,4 +114,3 @@ function RolePermissions({
         </FormControl>
     );
 }
-export default RolePermissions;

@@ -89,13 +89,13 @@ export default function Form({
         }
     }, [dispatch, isInit]);
     useEffect(() => {
-        if (!isInit && !!values && !!fields) {
+        if (!isInit && values && fields) {
             setIsInit(true);
         }
     }, [values, fields]);
 
     useEffect(() => {
-        if (!!isInit && !!values) {
+        if (isInit && values) {
             reset(values);
         }
     }, [values, isInit]);
@@ -108,20 +108,14 @@ export default function Form({
     }, [fields, isInit]);
 
     useEffect(() => {
-        if (!!onIsValidChanged) {
-            onIsValidChanged(isValid);
-        }
+        onIsValidChanged?.(isValid);
     }, [isValid]);
 
     const onFormSubmit = (data: any) => {
-        if (!!onSubmit) {
-            onSubmit(data);
-        }
+        onSubmit?.(data);
     };
     const onFormCancel = () => {
-        if (!!onCancel) {
-            onCancel();
-        }
+        onCancel?.();
     };
     const formSubmit = () => {
         if (formRef?.current) {
@@ -131,13 +125,12 @@ export default function Form({
     const onInputChange = (name: string, value: any) => {
         setValue(name, value);
         trigger(name);
-        if (!!onInputChanged) {
-            onInputChanged(getValues(), errors);
-        }
+        onInputChanged?.(getValues(), errors);
     };
     if (!isInit) {
         return null;
     }
+
     return (
         <form
             onSubmit={handleSubmit(onFormSubmit)}
@@ -146,7 +139,7 @@ export default function Form({
         >
             {!!title && <Typography variant="h2">{title}</Typography>}
             <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", ...sx }}>
-                {!!groups?.length
+                {groups?.length
                     ? groups.map((g) => {
                           return (
                               <Fieldset
@@ -158,14 +151,14 @@ export default function Form({
                                   {formFields
                                       .filter((f) => f?.group === g.name)
                                       .map((formField: TFormField, index) => {
-                                          const variant = !!formField?.variant ? formField.variant : fieldsVariant;
+                                          const variant = formField?.variant ? formField.variant : fieldsVariant;
                                           let sx: SxProps = {};
                                           if (variant === "outlined") {
                                               sx = { ...columnSx, mb: 1 };
                                           } else {
                                               sx = { ...columnSx, mt: index === 0 ? 0 : 2 };
                                           }
-                                          if (!!formField?.hidden) {
+                                          if (formField?.hidden) {
                                               return null;
                                           }
                                           return (

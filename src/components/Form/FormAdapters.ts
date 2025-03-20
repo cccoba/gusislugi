@@ -1,8 +1,10 @@
 import CounterAdapter, { IFormFieldCounter } from "./Adapters/Counter";
 import DateAdapter, { IFormFieldDate } from "./Adapters/Date";
 import DateTimeAdapter, { IFormFieldDateTime } from "./Adapters/DateTime";
+import IconSelectorAdapter, { IFormFieldIconSelector } from "./Adapters/IconSelector";
 import ImageAdapter, { IFormFieldImage } from "./Adapters/Image";
 import JsonAdapter, { IFormFieldJson } from "./Adapters/Json";
+import MedicineDiseaseParamAdapter, { IFormFieldMedicineDiseaseParam } from "./Adapters/MedicineDiseaseParam";
 import NumberAdapter, { IFormFieldNumber } from "./Adapters/Number";
 import PasswordAdapter, { IFormFieldPassword } from "./Adapters/Password";
 import RolePermissionsAdapter, { IFormFieldRolePermissions } from "./Adapters/RolePermissions";
@@ -50,8 +52,10 @@ export type TFormField =
     | IFormFieldCounter
     | IFormFieldDate
     | IFormFieldDateTime
+    | IFormFieldIconSelector
     | IFormFieldImage
     | IFormFieldJson
+    | IFormFieldMedicineDiseaseParam
     | IFormFieldNumber
     | IFormFieldPassword
     | IFormFieldRolePermissions
@@ -65,8 +69,10 @@ const FormAdapters: IFormAdapter[] = [
     CounterAdapter,
     DateAdapter,
     DateTimeAdapter,
+    IconSelectorAdapter,
     ImageAdapter,
     JsonAdapter,
+    MedicineDiseaseParamAdapter,
     NumberAdapter,
     PasswordAdapter,
     RolePermissionsAdapter,

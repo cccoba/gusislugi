@@ -86,10 +86,10 @@ function Claims({ userId }: IProps) {
     const props = useMemo(() => {
         const newProps: { actions: ICRUDAsyncAction[]; initialData: IClaimDto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
-                { name: "list", cb: claims.crudList },
+                { name: "getAll", cb: claims.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "edit", cb: claims.crudGet },
-                { name: "delete", cb: claims.crudDelete },
+                { name: "getRecord", cb: claims.crudGet },
+                { name: "remove", cb: claims.crudDelete },
             ],
             initialData: { ...defInitialData },
             listConfig: { ...listConfig },

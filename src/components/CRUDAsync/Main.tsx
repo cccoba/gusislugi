@@ -11,7 +11,7 @@ import CRUDAsyncList from "./List";
 
 import { ICRUDAsyncProps } from ".";
 
-export type TCRUDAsyncActionCbName = "list" | "add" | "edit" | "delete" | "save";
+export type TCRUDAsyncActionCbName = "getAll" | "add" | "getRecord" | "remove" | "save";
 export type TCRUDAsyncActionCb = (params?: any, initDAta?: any) => Promise<IWebDataResult<any>>;
 export interface ICRUDAsyncAction {
     name: TCRUDAsyncActionCbName;
@@ -19,11 +19,21 @@ export interface ICRUDAsyncAction {
     cbArgs?: any[];
 }
 
+export function getCRUDActions(
+    dataActions: any,
+    returnList: TCRUDAsyncActionCbName[] = ["getAll", "save", "getRecord", "remove"]
+): ICRUDAsyncAction[] {
+    return returnList.map((x) => ({
+        name: x as TCRUDAsyncActionCbName,
+        cb: dataActions[x],
+    }));
+}
 export default function CRUDAsyncMain({
     listConfig,
     editConfig,
     actions,
     icon,
+    backUrl,
     initialValue,
     title,
     roles,
@@ -73,6 +83,7 @@ export default function CRUDAsyncMain({
             icon={icon}
             isLoading={isLoading}
             roles={roles}
+            backUrl={backUrl}
         >
             {activeId !== null && (
                 <CRUDAsyncEdit

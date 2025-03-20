@@ -53,6 +53,8 @@ import {
     Engineering,
     QuestionMark,
     ShoppingCart,
+    DeviceThermostat,
+    TireRepair,
 } from "@mui/icons-material";
 
 //export type TIconName = keyof typeof iconsPath;
@@ -110,8 +112,59 @@ type TIconNameAdditional =
     | "profile"
     | "badge"
     | "roles"
-    | "shop";
+    | "shop"
+    | "medicine"
+    | "temperature"
+    | "tire_repair";
 export type TIconName = TIconNameBase | TIconNameAdditional;
+export const IconList: TIconName[] = [
+    "edit",
+    "refresh",
+    "send",
+    "search",
+    "download",
+    "add",
+    "minus",
+    "delete",
+    "back",
+    "down",
+    "up",
+    "ok",
+    "user",
+    "close",
+    "show",
+    "hide",
+    "userAdd",
+    "users",
+    "home",
+    "menu",
+    "save",
+    "more",
+    "filter",
+    "list",
+    "settings",
+    "taxes",
+    "fines",
+    "wanteds",
+    "wanteds2",
+    "sgp",
+    "qrScanner",
+    "noCamera",
+    "medicalPolicies",
+    "medicalInfo",
+    "id",
+    "messages",
+    "money",
+    "claims",
+    "links",
+    "profile",
+    "badge",
+    "roles",
+    "shop",
+    "medicine",
+    "temperature",
+    "tire_repair",
+];
 
 interface IProps extends SvgIconProps {
     name: TIconName;
@@ -224,6 +277,12 @@ export default function Icon({ name, color = "inherit", ...props }: IProps) {
             return <Engineering {...totalProps} />;
         case "shop":
             return <ShoppingCart {...totalProps} />;
+        case "medicine":
+            return <MedicalServices {...totalProps} />;
+        case "temperature":
+            return <DeviceThermostat {...totalProps} />;
+        case "tire_repair":
+            return <TireRepair {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

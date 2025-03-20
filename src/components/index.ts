@@ -33,6 +33,7 @@ export { default as RoleChecker } from "./RoleChecker";
 export { default as UserSelect } from "./Inputs/Async/UserSelect";
 export { default as Counter } from "./Inputs/Counter";
 export { default as Date } from "./Inputs/Date";
+export { default as IconSelector } from "./Inputs/IconSelector";
 export { default as InputSearch } from "./Inputs/InputSearch";
 export { default as Select } from "./Inputs/Select";
 export { default as InputImage } from "./Inputs/InputImage";

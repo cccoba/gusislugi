@@ -19,8 +19,13 @@ interface IGoodTableSearchFilter {
     onCloseSearchFilter: () => void;
 }
 
-function GoodTableSearchFilter({ field, filter, onChangeValue, onCloseSearchFilter }: IGoodTableSearchFilter) {
-    if (!field?.format || field.format === "text") {
+export default function GoodTableSearchFilter({
+    field,
+    filter,
+    onChangeValue,
+    onCloseSearchFilter,
+}: IGoodTableSearchFilter) {
+    if (!field?.format || field.format === "text" || field.format === "icon") {
         return (
             <GoodTableSearchTextFilter
                 filter={filter as IFilterTextValue | undefined}
@@ -67,4 +72,3 @@ function GoodTableSearchFilter({ field, filter, onChangeValue, onCloseSearchFilt
     }
     return null;
 }
-export default GoodTableSearchFilter;

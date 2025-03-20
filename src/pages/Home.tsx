@@ -122,7 +122,7 @@ function Home() {
         </Page>
     );
 }
-function HomeItem({ url, title, icon, onClick }: IHomeItem) {
+export function HomeItem({ url, title, icon, onClick }: IHomeItem) {
     return (
         <Grid
             item

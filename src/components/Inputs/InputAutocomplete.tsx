@@ -8,8 +8,10 @@ import {
     FilterOptionsState,
     Checkbox,
     AutocompleteRenderOptionState,
+    InputAdornment,
 } from "@mui/material";
 
+import Icon, { TIconName } from "components/Icon";
 import { textFilter } from "api/common/filters";
 
 import lang from "lang";
@@ -25,8 +27,7 @@ interface IProps extends StandardTextFieldProps {
     disableClearable?: boolean;
     values: ISelectValue[];
     rightArrow?: boolean;
-    onChangeSearchValue?: (data: string) => void;
-    onSelectValue?: (data: any) => void;
+
     onChange?: any;
     error?: boolean;
     multiple?: boolean;
@@ -36,8 +37,11 @@ interface IProps extends StandardTextFieldProps {
     selectAllId?: string;
     limitTags?: number;
     loading?: boolean;
+    showIconInResult?: boolean;
     onSearch?: (data: ISelectValue[], inputValue: string) => ISelectValue[];
     groupBy?: (option: any) => any;
+    onChangeSearchValue?: (data: string) => void;
+    onSelectValue?: (data: any) => void;
 }
 export default function InputAutocomplete({
     sx,
@@ -47,7 +51,7 @@ export default function InputAutocomplete({
     onChangeSearchValue,
     onSelectValue,
     onChange,
-
+    showIconInResult,
     value = "",
     multiple = false,
     clearOnBlur = true,
@@ -96,9 +100,7 @@ export default function InputAutocomplete({
         setStateValue(newStateValue);
     }, [value, options, multiple]);
     const onSearchTextChange = (e: any) => {
-        if (!!onChangeSearchValue) {
-            onChangeSearchValue(e?.target?.value);
-        }
+        onChangeSearchValue?.(e?.target?.value);
     };
     const onValueSelected = (changedValue: any) => {
         let newValue = multiple ? [...changedValue] : { ...changedValue };
@@ -119,7 +121,7 @@ export default function InputAutocomplete({
         if (!!onSelectValue && !!newValue) {
             onSelectValue(newValue);
         }
-        if (!!onChange) {
+        if (onChange) {
             if (multiple) {
                 onChange(!!newValue && newValue?.length ? newValue.map((x: ISelectValue) => x.id) : []);
             } else {
@@ -128,19 +130,17 @@ export default function InputAutocomplete({
         }
     };
     const onSearchTextClear = () => {
-        if (!!onSelectValue) {
-            onSelectValue(!!multiple ? [] : null);
-        }
+        onSelectValue?.(!!multiple ? [] : null);
     };
     const onStartSearch = (data: ISelectValue[], { inputValue }: FilterOptionsState<any>) => {
-        if (!!onSearch) {
+        if (onSearch) {
             return onSearch(data, inputValue);
         }
         return data.filter((v) => textFilter(inputValue, v.title));
     };
     const getOptionLabel = (option: any) => {
-        if (!!option) {
-            return !!option?.title ? option.title : "";
+        if (option) {
+            return option?.title ? option.title : "";
         }
         return "";
     };
@@ -157,10 +157,16 @@ export default function InputAutocomplete({
                 {...data}
                 key={option?.key ? option?.key : option.id}
             >
-                {!!option.image ? (
+                {option.image ? (
                     <Image
                         avatar
                         image={option.image}
+                        style={{ marginRight: "4px" }}
+                    />
+                ) : null}
+                {option.icon ? (
+                    <Icon
+                        name={option.icon}
                         style={{ marginRight: "4px" }}
                     />
                 ) : null}
@@ -203,6 +209,14 @@ export default function InputAutocomplete({
                 return option.id === val;
             }}
             renderInput={({ inputProps = {}, InputProps, ...params }) => {
+                if (showIconInResult) {
+                    const iconValue = values.find((v) => v.id === value);
+                    InputProps.startAdornment = (
+                        <InputAdornment position="start">
+                            {iconValue ? <Icon name={iconValue.id as TIconName} /> : " "}
+                        </InputAdornment>
+                    );
+                }
                 return (
                     <TextField
                         variant="standard"

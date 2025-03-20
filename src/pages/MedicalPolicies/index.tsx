@@ -114,10 +114,10 @@ function MedicalPolicies({ userId }: IProps) {
             listConfig: ICRUDAsyncListConfig;
         } = {
             actions: [
-                { name: "list", cb: medicalPolicies.crudList },
+                { name: "getAll", cb: medicalPolicies.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "edit", cb: medicalPolicies.crudGet },
-                { name: "delete", cb: medicalPolicies.crudDelete },
+                { name: "getRecord", cb: medicalPolicies.crudGet },
+                { name: "remove", cb: medicalPolicies.crudDelete },
             ],
             initialData: { ...defInitialData, number: generateRandomString(10, "1234567890") },
             listConfig: { ...listConfig },

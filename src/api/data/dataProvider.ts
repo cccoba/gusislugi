@@ -1,6 +1,7 @@
 import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 
 import getConst from "../common/getConst";
+export type TCRUDDataProviderAction = "getAll" | "getRecord" | "save" | "remove";
 interface IDataProviderExtraProps {
     withoutInterceptors?: boolean;
     responseType?: "json" | "blob";
@@ -25,7 +26,48 @@ const webApiResultError = (message: string) => {
         message: message,
     };
 };
-
+export class CRUDDataProvider<T> {
+    private baseUrl: string;
+    constructor(baseUrl: string, softDelete: boolean = true) {
+        this.baseUrl = baseUrl;
+    }
+    getData(actions: TCRUDDataProviderAction[] = ["getAll", "getRecord", "remove", "save"]) {
+        return {
+            getAll: (): Promise<IWebDataResult<T[]>> => {
+                if (!actions.includes("getAll")) {
+                    return new Promise<IWebDataResult<T[]>>((_, reject) =>
+                        reject(webApiResultError("method not included"))
+                    );
+                }
+                return dataProvider(`${this.baseUrl}list`);
+            },
+            getRecord: (id: number): Promise<IWebDataResult<T>> => {
+                if (!actions.includes("getRecord")) {
+                    return new Promise<IWebDataResult<T>>((_, reject) =>
+                        reject(webApiResultError("method not included"))
+                    );
+                }
+                return dataProvider(`${this.baseUrl}record&id=${id}`, "get");
+            },
+            save: (data: T): Promise<IWebDataResult<number>> => {
+                if (!actions.includes("save")) {
+                    return new Promise<IWebDataResult<number>>((_, reject) =>
+                        reject(webApiResultError("method not included"))
+                    );
+                }
+                return dataProvider(`${this.baseUrl}save`, "post", data);
+            },
+            remove: (ids: number[]): Promise<IWebDataResult<boolean>> => {
+                if (!actions.includes("remove")) {
+                    return new Promise<IWebDataResult<boolean>>((_, reject) =>
+                        reject(webApiResultError("method not included"))
+                    );
+                }
+                return dataProvider(`${this.baseUrl}remove`, "delete", ids);
+            },
+        };
+    }
+}
 export const webApiResultData = <T>(data: IWebDataResult<T>): ICheckDataResult<T> => {
     if (data.error) {
         return {

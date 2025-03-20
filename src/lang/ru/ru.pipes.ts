@@ -5,6 +5,16 @@ const ruPipes = {
         inProgress: "В работе",
         failed: "Отклонена",
     },
+    medicineDiseaseType: {
+        disease: "Заболевание",
+        addiction: "Зависимость",
+        mentalDisorder: "Псих. расстройство",
+    },
+    medicineParamsType: {
+        digital: "Число",
+        boolean: "Да/нет",
+        ball: "Баллы",
+    },
     messageStatus: {
         claims: "Заявка",
         fines: "Штраф",
@@ -56,6 +66,7 @@ const ruPipes = {
         wanteds: "Розыск Юг",
         wanteds2: "Розыск Север",
         shop: "Магазин",
+        medicineAdmin: "Болезни",
     },
     rolePermissionAction: {
         view: "Просмотр",

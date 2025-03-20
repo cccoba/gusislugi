@@ -103,6 +103,13 @@ const menuList: INavigationMenu[] = [
         link: "/shop",
         roles: [["shop"]],
     },
+    {
+        name: "medicine",
+        title: lang.pages.medicine.title,
+        icon: "medicine",
+        link: "/medicine",
+        roles: [["medicineAdmin"]],
+    },
 ];
 
 export default menuList;

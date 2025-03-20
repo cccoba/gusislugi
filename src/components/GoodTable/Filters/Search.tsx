@@ -15,7 +15,7 @@ interface IProps {
     onFilterChanged: (newFilter: TFilterValue | null, name: string) => void;
 }
 
-function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
+export default function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const isActive = useMemo(() => {
@@ -66,5 +66,3 @@ function GoodTableSearch({ field, filter, onFilterChanged }: IProps) {
         </Box>
     );
 }
-
-export default GoodTableSearch;

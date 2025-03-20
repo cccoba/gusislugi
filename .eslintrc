@@ -3,9 +3,13 @@
     "rules": {
         "prefer-const": "warn",
         "no-console": "warn",
+        "no-extra-boolean-cast": "warn",
+        "no-empty-pattern": "error",
+        "no-var": "error",
         "import/order":["warn",{
             "groups":["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
             "newlines-between": "always-and-inside-groups"
         }]
+        
     }
 }

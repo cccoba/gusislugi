@@ -6,6 +6,7 @@ export interface IFormFieldText extends IFormField {
     minLength?: number;
     maxLength?: number;
     type: "text";
+    multiline?: boolean;
 }
 
 const TextAdapter: IFormAdapter = {
@@ -26,11 +27,14 @@ function FormInput({ onChangeValue, value = "", fieldProps, fieldParams, ...prop
     if (!fieldProps?.inputProps) {
         fieldProps.inputProps = {};
     }
-    if (!!fieldParams.maxLength) {
+    if (fieldParams?.maxLength) {
         fieldProps.inputProps.maxLength = fieldParams.maxLength;
     }
-    if (!!fieldParams.minLength) {
+    if (fieldParams?.minLength) {
         fieldProps.inputProps.minLength = fieldParams.minLength;
+    }
+    if (fieldParams?.multiline) {
+        fieldProps.multiline = true;
     }
     return (
         <TextField

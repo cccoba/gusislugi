@@ -69,7 +69,7 @@ export interface IGoodTableField {
     title?: string;
     noSort?: boolean;
     noSearch?: boolean;
-    format?: "text" | "date" | "number" | "image" | "list" | "component";
+    format?: "text" | "date" | "number" | "image" | "list" | "component" | "icon";
     formatProps?: any;
     disablePadding?: boolean;
     minWidth?: string;
@@ -100,6 +100,7 @@ const filterValue = (values: any, filter: TFilterValue, field: IGoodTableField) 
         case "list":
             return value === filter.value;
         case "text":
+        case "icon":
             return textFilter((filter?.value as string) || "", value, filter.searchType as FilterTextEqualsEnum);
         case "number":
             return numberFilter(filter?.value as number, value, filter.searchType as FilterNumberEqualsEnum);
@@ -125,7 +126,7 @@ const filterValues = (values: any[], filters: TFilterValue[], fields: IGoodTable
     return values;
 };
 const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGoodTableField[]) => {
-    if (!!simpleSearchText?.length) {
+    if (simpleSearchText?.length) {
         const filteredRows = values.filter((row: any) => {
             return fields.some((field: any) => {
                 if (field.name in row) {
@@ -133,7 +134,7 @@ const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGood
                     if (value === null) {
                         return false;
                     }
-                    if (!!field?.format) {
+                    if (field?.format) {
                         switch (field?.format) {
                             case "component":
                             case "image":
@@ -142,7 +143,7 @@ const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGood
                                 return textFilter(simpleSearchText.toString(), dateTime(value, field?.formatProps));
                             case "list":
                                 const selectedValue = field.formatProps.find((x: ISelectValue) => x.id === value);
-                                if (!!selectedValue?.title) {
+                                if (selectedValue?.title) {
                                     return textFilter(simpleSearchText.toString(), selectedValue.title);
                                 }
                                 return false;

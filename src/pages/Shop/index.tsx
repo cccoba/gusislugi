@@ -16,10 +16,10 @@ export default function Shop() {
     const crudProps = useMemo<ICRUDAsyncProps>(() => {
         return {
             actions: [
-                { name: "list", cb: shop.crudList },
+                { name: "getAll", cb: shop.crudList },
                 { name: "save", cb: shop.crudSave },
-                { name: "edit", cb: shop.crudGet },
-                { name: "delete", cb: shop.crudDelete },
+                { name: "getRecord", cb: shop.crudGet },
+                { name: "remove", cb: shop.crudDelete },
             ],
             initialValue: {
                 id: 0,

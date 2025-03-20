@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import lang from "lang";
 import PageOrModal from "components/Page/PageOrModal";
 import { TFormField } from "components/Form/FormAdapters";
+import { IFormGroup } from "components/Form";
 
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { checkFlagIncludes } from "api/common/enumHelper";
@@ -17,6 +18,7 @@ export interface ICRUDAsyncEditConfig {
     editTitle?: string;
     addTitle?: string;
     fields: TFormField[];
+    groups?: IFormGroup[];
 }
 
 interface IProps {
@@ -66,14 +68,14 @@ export default function CRUDAsyncEdit({
     }, [showVariant, id, paramId]);
 
     const title = useMemo(() => {
-        if (!!idValue) {
+        if (idValue) {
             return config?.editTitle || langPage.editTitle;
         }
         return config?.addTitle || langPage.addTitle;
     }, [idValue, config.editTitle, config.addTitle]);
     useEffect(() => {
         if (idValue) {
-            const action = actions.find((x) => x.name === "edit");
+            const action = actions.find((x) => x.name === "getRecord");
             if (action && checkFlagIncludes(permissions, RolePermissionFlag.Edit)) {
                 onIsLoading(true);
                 action
@@ -137,6 +139,7 @@ export default function CRUDAsyncEdit({
             <CRUDAsyncForm
                 values={data}
                 fields={config.fields}
+                groups={config?.groups}
                 onSubmit={toSubmit}
                 onCancel={onClose}
             />

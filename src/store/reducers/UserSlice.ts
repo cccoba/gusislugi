@@ -7,6 +7,7 @@ import { webApiResultData } from "api/data/dataProvider";
 import { IUserData } from "api/interfaces/store/IUserData";
 import { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { IUserDto } from "api/interfaces/user/IUserDto";
+
 import { setServerAppVersion } from "./DeviceSlice";
 
 const USER_INITIAL_STATE: IUserData = {

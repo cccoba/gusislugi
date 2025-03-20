@@ -1,6 +1,7 @@
 import { enumToArray, enumToValuesArray, getEnumValue } from "api/common/enumHelper";
-import ruLang from "./ru";
 import { ISelectValue } from "components/Inputs/Select";
+
+import ruLang from "./ru";
 type TLangTypes = "ru";
 const shortName: TLangTypes = "ru";
 const name = "ru-RU";

@@ -18,5 +18,6 @@ export interface IRoleDto {
         wanteds2?: RolePermissionFlag;
         messages?: RolePermissionFlag;
         shop?: RolePermissionFlag;
+        medicineAdmin?: RolePermissionFlag;
     };
 }

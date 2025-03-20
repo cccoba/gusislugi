@@ -52,10 +52,10 @@ export default function GoodTableHead({
 
     const cellSx = (field: IGoodTableField) => {
         const newSx: any = { pl: 1.5, pr: 0, py: 0 };
-        if (!!field?.maxWidth) {
+        if (field?.maxWidth) {
             newSx.maxWidth = field.maxWidth;
         }
-        if (!!field?.minWidth) {
+        if (field?.minWidth) {
             newSx.minWidth = field.minWidth;
         }
 
@@ -91,7 +91,7 @@ export default function GoodTableHead({
                         </TableCell>
                     )}
                     {fields.map((field) => {
-                        if (!!field?.hidden) {
+                        if (field?.hidden) {
                             return null;
                         }
                         return (

@@ -33,10 +33,10 @@ function Wanteds2({ userId }: IProps) {
     const props = useMemo(() => {
         const newProps: { actions: ICRUDAsyncAction[]; initialData: IWantedDto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
-                { name: "list", cb: wanteds2.crudList },
+                { name: "getAll", cb: wanteds2.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "edit", cb: wanteds2.crudGet },
-                { name: "delete", cb: wanteds2.crudDelete },
+                { name: "getRecord", cb: wanteds2.crudGet },
+                { name: "remove", cb: wanteds2.crudDelete },
             ],
             initialData: { ...defInitialData },
             listConfig: { ...wantedsListConfig },

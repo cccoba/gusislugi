@@ -14,13 +14,13 @@ import { useAppDispatch } from "api/hooks/redux";
 
 import RoleForm from "./Form";
 
-const langPage = lang.pages.roles;
+export default function Roles({ roles, icon }: IPageWithRoles) {
+    const langPage = lang.pages.roles;
 
-const fields: IGoodTableField[] = [
-    { name: "id", title: langPage.fields.id, format: "number", width: "85px" },
-    { name: "title", title: langPage.fields.title },
-];
-function Roles({ roles, icon }: IPageWithRoles) {
+    const fields: IGoodTableField[] = [
+        { name: "id", title: langPage.fields.id, format: "number", width: "85px" },
+        { name: "title", title: langPage.fields.title },
+    ];
     const { data, isLoading: initLoading, refetch } = useLoadApiData<IRoleDto[]>(rolesService.crudList, []);
     const { showError, showSuccess } = useNotifier();
     const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +31,6 @@ function Roles({ roles, icon }: IPageWithRoles) {
         dispatch(setRoles(newData));
         return newData;
     }, [data]);
-    const toEdit = (data: any) => {
-        setSelectedRole(data);
-    };
     const toAdd = () => {
         setSelectedRole({
             id: 0,
@@ -45,21 +42,21 @@ function Roles({ roles, icon }: IPageWithRoles) {
     const hideForm = () => {
         setSelectedRole(null);
     };
-    const toSave = (data: IRoleDto) => {
+    const toSave = (newValue: IRoleDto) => {
         const newParams: any = {};
-        for (const idName in data.params) {
-            if (Object.prototype.hasOwnProperty.call(data.params, idName)) {
-                const element = (data.params as any)[idName];
+        for (const idName in newValue.params) {
+            if (Object.prototype.hasOwnProperty.call(newValue.params, idName)) {
+                const element = (newValue.params as any)[idName];
                 if (element > 0) {
                     newParams[idName] = element;
                 }
             }
         }
-        data.params = newParams;
+        newValue.params = newParams;
 
         setIsLoading(true);
         rolesService
-            .crudSave(data)
+            .crudSave(newValue)
             .then((res) => {
                 const { error, result } = webApiResultData<IRoleDto>(res);
                 if (error) {
@@ -92,10 +89,10 @@ function Roles({ roles, icon }: IPageWithRoles) {
                     role={selectedRole}
                 />
             )}
-            <GoodTable
+            <GoodTable<IRoleDto>
                 fields={fields}
                 values={values}
-                onRowClick={toEdit}
+                onRowClick={setSelectedRole}
                 actions={[
                     { icon: "refresh", name: "refresh", onClick: refetch },
                     { icon: "add", name: "add", onClick: toAdd },
@@ -104,4 +101,3 @@ function Roles({ roles, icon }: IPageWithRoles) {
         </Page>
     );
 }
-export default Roles;
