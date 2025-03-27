@@ -4,6 +4,8 @@ import DateTimeAdapter, { IFormFieldDateTime } from "./Adapters/DateTime";
 import IconSelectorAdapter, { IFormFieldIconSelector } from "./Adapters/IconSelector";
 import ImageAdapter, { IFormFieldImage } from "./Adapters/Image";
 import JsonAdapter, { IFormFieldJson } from "./Adapters/Json";
+import ListAdapter, { IFormFieldList } from "./Adapters/List";
+import ListMultipleAdapter, { IFormFieldListMultiple } from "./Adapters/ListMultiple";
 import MedicineDiseaseParamAdapter, { IFormFieldMedicineDiseaseParam } from "./Adapters/MedicineDiseaseParam";
 import NumberAdapter, { IFormFieldNumber } from "./Adapters/Number";
 import PasswordAdapter, { IFormFieldPassword } from "./Adapters/Password";
@@ -13,7 +15,8 @@ import SelectFilteredAdapter, { IFormFieldSelectFiltered } from "./Adapters/Sele
 import SwitcherAdapter, { IFormFieldSwitcher } from "./Adapters/Switcher";
 import TextAdapter, { IFormFieldText } from "./Adapters/Text";
 import UserAdapter, { IFormFieldUser } from "./Adapters/User";
-
+import MedicineParamsSelectorAdapter, { IFormFieldMedicineParamsSelector } from "./Adapters/MedicineParamsSelector";
+import MedicineParamsActionsAdapter, { IFormFieldMedicineParamsActions } from "./Adapters/MedicineParamsActions";
 export interface IFormField {
     name: string;
     title: string;
@@ -54,8 +57,12 @@ export type TFormField =
     | IFormFieldDateTime
     | IFormFieldIconSelector
     | IFormFieldImage
+    | IFormFieldList
+    | IFormFieldListMultiple
     | IFormFieldJson
     | IFormFieldMedicineDiseaseParam
+    | IFormFieldMedicineParamsSelector
+    | IFormFieldMedicineParamsActions
     | IFormFieldNumber
     | IFormFieldPassword
     | IFormFieldRolePermissions
@@ -71,8 +78,12 @@ const FormAdapters: IFormAdapter[] = [
     DateTimeAdapter,
     IconSelectorAdapter,
     ImageAdapter,
+    ListAdapter,
+    ListMultipleAdapter,
     JsonAdapter,
     MedicineDiseaseParamAdapter,
+    MedicineParamsSelectorAdapter,
+    MedicineParamsActionsAdapter,
     NumberAdapter,
     PasswordAdapter,
     RolePermissionsAdapter,

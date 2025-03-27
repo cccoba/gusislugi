@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
-import GoodTable, { IGoodTableToolbarAction, IGoodTableField } from "components/GoodTable";
+import GoodTable, { IGoodTableToolbarAction, IGoodTableField, ITablePagination } from "components/GoodTable";
 import TreeViewer, { ITreeItem } from "components/TreeViewer";
 
 import { useNotifier } from "api/hooks/useNotifier";
@@ -22,6 +22,7 @@ export interface ICRUDAsyncListConfig {
     fields: IGoodTableField[];
     orderBy: ISortData;
     withRefresh?: boolean;
+    pagination?: ITablePagination;
     toTreeView?: (data: any[]) => ITreeItem[];
     transform?: (data: any) => any;
 }
@@ -211,6 +212,7 @@ export default function CRUDAsyncList({
                 <GoodTable
                     fields={config.fields}
                     values={listData}
+                    pagination={config?.pagination}
                     order={config.orderBy}
                     onSelectedRows={onSelected}
                     isMultiSelection={config.isMultiSelection}

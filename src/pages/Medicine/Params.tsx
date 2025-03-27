@@ -21,6 +21,7 @@ export default function MedicineParams({ ...pageProps }: IPage) {
         isMultiSelection: false,
         withRefresh: true,
         orderBy: { direction: SortOrderEnum.Ascending, sort: "title" },
+        pagination: { rowsPerPage: [10, 25, 100], pageSize: 25 },
         transform: (item: IMedicineParam) => {
             const arr: string[] = [];
             if (item?.type === MedicineParamsTypeEnum.Digital && item?.minValue) {

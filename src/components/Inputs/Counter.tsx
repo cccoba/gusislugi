@@ -28,6 +28,7 @@ function Counter({
     onChangeValue,
     compact = false,
     sx = {},
+    variant = "standard",
     ...props
 }: IProps) {
     useEffect(() => {
@@ -84,6 +85,7 @@ function Counter({
     return (
         <TextField
             {...props}
+            variant={variant}
             type="number"
             value={value}
             fullWidth={fullWidth}

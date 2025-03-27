@@ -5,6 +5,10 @@ import { IPage } from "api/interfaces/components/Page/IPage";
 import MedicineMain from "./Main";
 import MedicineDiseases from "./Diseases";
 import MedicineParams from "./Params";
+import MedicineTests from "./Tests";
+import MedicineProcedures from "./Procedures";
+import MedicinePatientList from "./Patients/List";
+import MedicinePatientRouter from "./Patients/Router";
 export default function MedicineRouter({ ...pageProps }: IPage) {
     return (
         <Routes>
@@ -22,6 +26,33 @@ export default function MedicineRouter({ ...pageProps }: IPage) {
                     <MedicineParams
                         {...pageProps}
                         icon="settings"
+                    />
+                }
+            />
+            <Route
+                path="/tests/*"
+                element={
+                    <MedicineTests
+                        {...pageProps}
+                        icon="labs"
+                    />
+                }
+            />
+            <Route
+                path="/procedures/*"
+                element={
+                    <MedicineProcedures
+                        {...pageProps}
+                        icon="local_pharmacy"
+                    />
+                }
+            />
+            <Route
+                path="/patients/*"
+                element={
+                    <MedicinePatientRouter
+                        {...pageProps}
+                        icon="users"
                     />
                 }
             />

@@ -28,6 +28,21 @@ export default function MedicineMain({ backUrl, ...pageProps }: IPage) {
                         title={langPage.params.title}
                         icon="settings"
                     />
+                    <HomeItem
+                        url={`${backUrl}/tests`}
+                        title={langPage.params.tests}
+                        icon="labs"
+                    />
+                    <HomeItem
+                        url={`${backUrl}/procedures`}
+                        title={langPage.params.procedures}
+                        icon="local_pharmacy"
+                    />
+                    <HomeItem
+                        url={`${backUrl}/patients`}
+                        title={langPage.params.patients}
+                        icon="users"
+                    />
                 </Grid>
             </Fieldset>
         </Page>

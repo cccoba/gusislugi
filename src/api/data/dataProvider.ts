@@ -49,9 +49,9 @@ export class CRUDDataProvider<T> {
                 }
                 return dataProvider(`${this.baseUrl}record&id=${id}`, "get");
             },
-            save: (data: T): Promise<IWebDataResult<number>> => {
+            save: (data: T): Promise<IWebDataResult<T>> => {
                 if (!actions.includes("save")) {
-                    return new Promise<IWebDataResult<number>>((_, reject) =>
+                    return new Promise<IWebDataResult<T>>((_, reject) =>
                         reject(webApiResultError("method not included"))
                     );
                 }

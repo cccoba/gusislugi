@@ -1,11 +1,14 @@
-import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import { useEffect, useState } from "react";
+import { Box, TextField, Typography } from "@mui/material";
+
+import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
 
 import lang from "lang";
-import { Box, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import IconButton from "components/Icon/IconButton";
-import Select from "components/Inputs/Select";
-import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
+import Counter from "components/Inputs/Counter";
+
+import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import MedicineParamsAction, { IMedicineDiseaseParamAction } from "components/Inputs/MedicineParamsAction";
 
 export interface IFormFieldMedicineDiseaseParam extends IFormField {
     type: "medicineDiseaseParam";
@@ -25,14 +28,11 @@ const MedicineDiseaseParamAdapter: IFormAdapter = {
         return true;
     },
 };
-interface IMedicineDiseaseParamAction {
-    paramId: number;
-    value: string;
-    action: string;
-}
+
 interface IMedicineDiseaseParam {
     description: string;
     actions: IMedicineDiseaseParamAction[];
+    paramTimer: number;
 }
 interface IMedicineDiseaseParamFormAdapterInputProps extends IFormAdapterInputProps {
     value: IMedicineDiseaseParam;
@@ -49,37 +49,59 @@ function FormInput({
 }: IMedicineDiseaseParamFormAdapterInputProps) {
     const [description, setDescription] = useState(value?.description || "");
     const [actions, setActions] = useState<IMedicineDiseaseParamAction[]>(value?.actions || []);
+    const [paramTimer, setParamTimer] = useState(value?.paramTimer || 0);
     useEffect(() => {
         setDescription(value?.description || "");
-    }, [value]);
+    }, [value?.description]);
     useEffect(() => {
-        onChangeValue({ actions, description });
-    }, [description, actions]);
+        setActions(value?.actions || []);
+    }, [value?.actions]);
+    useEffect(() => {
+        setParamTimer(value?.paramTimer || 0);
+    }, [value?.paramTimer]);
     const defAction: IMedicineDiseaseParamAction = {
         paramId: 0,
-        value: "",
-        action: "",
+        value: 0,
+        action: "equal",
     };
 
-    const toChangeValue = (data: any, type: "description" | "actions") => {
-        if (type === "description") {
-            setDescription(data);
-        }
-        if (type === "actions") {
-            //setActions(data);
+    const toChangeValue = (data: any, type: "description" | "actions" | "paramTimer") => {
+        switch (type) {
+            case "description":
+                setDescription(data);
+                onChangeValue({ description: data, actions, paramTimer });
+                break;
+            case "actions":
+                setActions(data);
+                onChangeValue({ description, actions: data, paramTimer });
+                break;
+            case "paramTimer":
+                setParamTimer(data);
+                onChangeValue({ description, actions, paramTimer: data });
+                break;
         }
     };
     const toActionChange = (action: IMedicineDiseaseParamAction, index: number) => {
-        console.log("toActionChange", action, index);
+        const newActions = [...actions];
+        if (newActions?.[index]) {
+            newActions[index] = action;
+        } else {
+            newActions.push(action);
+        }
+        toChangeValue(newActions, "actions");
     };
     const toAddAction = () => {
         setActions([...actions, defAction]);
+    };
+    const toChangeParamTimer = (data: number) => {
+        setParamTimer(data);
+        toChangeValue(data, "paramTimer");
     };
 
     return (
         <>
             {!!label && (
-                <Typography variant="button">
+                <Typography variant="caption">
                     {label}
                     {props?.required && "*"}
                 </Typography>
@@ -92,7 +114,7 @@ function FormInput({
                     />
                 </Box>
                 {actions.map((x, index) => (
-                    <MedicineDiseaseParamAction
+                    <MedicineParamsAction
                         key={index}
                         action={x}
                         index={index}
@@ -101,6 +123,13 @@ function FormInput({
                     />
                 ))}
             </Box>
+            <Counter
+                value={paramTimer}
+                onChangeValue={toChangeParamTimer}
+                label={lang.components.medicineDisease.paramTimer}
+                maxValue={10000}
+                helperText={lang.components.medicineDisease.paramTimerHelperText}
+            />
             <TextField
                 {...props}
                 {...fieldProps}
@@ -112,26 +141,5 @@ function FormInput({
         </>
     );
 }
-interface IMedicineDiseaseParamActionProps {
-    action: IMedicineDiseaseParamAction;
-    params: IMedicineParam[];
-    index: number;
-    onChangeValue: (value: IMedicineDiseaseParamAction, index: number) => void;
-}
-function MedicineDiseaseParamAction({ params, action, index, onChangeValue }: IMedicineDiseaseParamActionProps) {
-    const toChangeParamId = (paramId: number) => {
-        onChangeValue({ ...action, paramId }, index);
-    };
-    return (
-        <Box>
-            <Select
-                type="select"
-                values={params.map((x) => ({ title: x.title, id: x.id }))}
-                onChangeValue={toChangeParamId}
-                label={lang.pages.medicine.params.param}
-                value={action.paramId}
-            />
-        </Box>
-    );
-}
+
 export default MedicineDiseaseParamAdapter;

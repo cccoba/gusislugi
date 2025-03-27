@@ -1,58 +1,55 @@
 import lang, { getEnumSelectValues } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
-import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { medicine } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import { useMemo } from "react";
-import { getCRUDActions, ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import { getCRUDActions } from "components/CRUDAsync/Main";
 
 import { IPage } from "api/interfaces/components/Page/IPage";
 import { MedicineDiseaseTypeEnum } from "api/enums/MedicineDiseaseTypeEnum";
-import { IMedicineDiseases } from "api/interfaces/Medicine/IMedicineDiseases";
 import useLoadApiData from "api/hooks/useLoadApiData";
+import { ICRUDAsyncProps } from "components/CRUDAsync";
+import useGetData from "store/rtkProvider";
 import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
 
 export default function MedicineDiseases({ ...pageProps }: IPage) {
     const langPage = lang.pages.medicine.diseases;
-    const { data: paramsList, isLoading, error, refetch } = useLoadApiData<any[]>(medicine.params.getAll, []);
+    const { data: paramsList } = useGetData<IMedicineParam[]>("medicineParams", []);
 
-    const listConfig: ICRUDAsyncListConfig = {
-        isMultiSelection: false,
-        withRefresh: true,
-        orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-        fields: [
-            { name: "id", title: lang.id, width: "30px" },
-            {
-                name: "title",
-                title: lang.title,
-            },
-            {
-                name: "type",
-                title: langPage.type,
-                format: "list",
-                formatProps: getEnumSelectValues(MedicineDiseaseTypeEnum, "MedicineDiseaseTypeEnum"),
-            },
-        ],
-    };
-
-    const defInitialData: IMedicineDiseases = {
-        id: 0,
-        title: "",
-        type: MedicineDiseaseTypeEnum.Disease,
-        description: "",
-        param1: [],
-        param2: [],
-        param3: [],
-    };
     const currentUserRolePermissions = useAppSelector((s) => s.user.user?.role?.params?.medicineAdmin);
-    const props = useMemo(() => {
+    const props = useMemo<ICRUDAsyncProps>(() => {
         return {
+            title: langPage.title,
             actions: getCRUDActions(medicine.diseases),
-            initialValue: { ...defInitialData },
-            listConfig: { ...listConfig },
+            initialValue: {
+                id: 0,
+                title: "",
+                type: MedicineDiseaseTypeEnum.Disease,
+                description: "",
+                param1: [],
+                param2: [],
+                param3: [],
+            },
+            listConfig: {
+                isMultiSelection: false,
+                withRefresh: true,
+                orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+                fields: [
+                    { name: "id", title: lang.id, width: "30px" },
+                    {
+                        name: "title",
+                        title: lang.title,
+                    },
+                    {
+                        name: "type",
+                        title: langPage.type,
+                        format: "list",
+                        formatProps: getEnumSelectValues(MedicineDiseaseTypeEnum, "MedicineDiseaseTypeEnum"),
+                    },
+                ],
+            },
             editConfig: {
                 fields: [
                     {
@@ -77,7 +74,7 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
                         group: "main",
                     },
                     {
-                        name: "param1",
+                        name: "params1",
                         title: "",
                         type: "medicineDiseaseParam",
                         required: true,
@@ -85,7 +82,7 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
                         params: paramsList || [],
                     },
                     {
-                        name: "param2",
+                        name: "params2",
                         title: "",
                         type: "medicineDiseaseParam",
                         required: true,
@@ -93,7 +90,7 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
                         params: paramsList || [],
                     },
                     {
-                        name: "param3",
+                        name: "params3",
                         title: "",
                         type: "medicineDiseaseParam",
                         required: true,
@@ -114,7 +111,6 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
     return (
         <CRUDAsync
             {...pageProps}
-            title={langPage.title}
             permissions={currentUserRolePermissions}
             {...props}
         />

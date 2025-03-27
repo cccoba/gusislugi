@@ -11,4 +11,6 @@ export interface IInputProps<T> {
     disabled?: boolean;
     variant?: "filled" | "outlined" | "standard";
     sx?: SxProps;
+    readOnly?: boolean;
+    autoComplete?: string;
 }

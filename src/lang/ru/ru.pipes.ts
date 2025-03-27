@@ -47,12 +47,29 @@ const ruPipes = {
         less: "<=",
         notEquals: "Не равно",
     },
+    medicinePatientStatus: {
+        waiting: "Ожидание",
+        active0: "Вызревает",
+        active1: "Легкое состояние",
+        active2: "Среднее состояние",
+        active3: "Тяжелое состояние",
+        finished: "Завершенный",
+    },
     medicalPoliciesType: {
         oms: "ОМС",
         base: "Базовый",
         advanced: "Продвинутый",
         platinum: "Платиновый",
         corporate: "Корпоративный",
+    },
+    medicineProcedureType: {
+        procedure: "Лечение",
+        pill: "Таблетка",
+    },
+    medicineTest: {
+        test: "Анализ",
+        poll: "Опрос",
+        measurement: "Измерение",
     },
     rolePermissions: {
         admins: "Администрирование",

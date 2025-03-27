@@ -42,7 +42,7 @@ export function parseUserData(user: IUserDto, roles: IRoleDto[], citizenships: I
         citizenshipId: user?.citizenshipId || 0,
         citizenship: citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.no,
         nickname: user?.nickname || "",
-        tgLogin: !!user?.tgLogin ? "@" + user.tgLogin : "",
+        tgLogin: user?.tgLogin ? "@" + user.tgLogin : "",
     };
 }
 
@@ -67,12 +67,12 @@ export default function UserSelect({
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
     useEffect(() => {
         if (data?.length) {
-            const newUsers = !!data?.length ? [...data].sort((a, b) => a?.firstName.localeCompare(b?.firstName)) : [];
+            const newUsers = data?.length ? [...data].sort((a, b) => a?.firstName.localeCompare(b?.firstName)) : [];
             setUsers(newUsers);
-            if (!!value) {
+            if (value) {
                 if (!multiple) {
                     let newSelectedUserText = "";
-                    if (!!value) {
+                    if (value) {
                         const foundedUser = newUsers.find((u) => u.id === value);
                         if (foundedUser?.id) {
                             newSelectedUserText = foundedUser.firstName;
@@ -85,7 +85,7 @@ export default function UserSelect({
                     if (typeof value === "object") {
                         const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
                         setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList)));
-                        onChangeValue(!!newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
+                        onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
                     }
                 }
             }
@@ -118,7 +118,7 @@ export default function UserSelect({
     }
     const addUsers = (data: any) => {
         if (multiple) {
-            if (!!data?.length) {
+            if (data?.length) {
                 let needUpdate = false;
                 const oldUsers = users.filter((u) => (value as number[]).includes(u.id));
                 const newUsers = users.filter((u) => data.includes(u.id));
@@ -140,7 +140,7 @@ export default function UserSelect({
     const updateValue = (newValue: any) => {
         if (!multiple) {
             let newSelectedUserText = "";
-            if (!!newValue) {
+            if (newValue) {
                 const foundedUser = users.find((u) => u.id === newValue);
                 if (foundedUser?.id) {
                     newSelectedUserText = foundedUser.firstName;
@@ -148,12 +148,12 @@ export default function UserSelect({
             }
 
             setSelectedUserText(newSelectedUserText);
-            onChangeValue(!!newValue ? users.find((u) => u.id === newValue)?.id || 0 : 0);
+            onChangeValue(newValue ? users.find((u) => u.id === newValue)?.id || 0 : 0);
         } else {
             if (typeof value === "object") {
                 const newSelectedUsers = users.filter((x) => newValue.includes(x.id));
                 setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList)));
-                onChangeValue(!!newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
+                onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
             }
         }
     };

@@ -107,6 +107,18 @@ const ruComponents = {
             scanerFormat: "Данный код сюда не подходит",
         },
     },
+    medicineDisease: {
+        param: "Показатель",
+        paramTimer: "Минут до начала",
+        paramTimerHelperText: "Введите количество минут до начала состояния. 0 - сразу",
+        actions: {
+            title: "Действие",
+            value: "Значение",
+            add: "+",
+            minus: "-",
+            equal: "=",
+        },
+    },
     navigationMenu: {
         home: "Главное",
         profile: "Профиль",

@@ -16,7 +16,7 @@ interface IImageZoom {
     actions?: TImageViewerAction[];
 }
 
-interface IProps {
+export interface IImageProps {
     url?: string;
     image?: string;
     alt?: string;
@@ -54,7 +54,7 @@ export default function Image({
     height = "",
     zoom = false,
     onClick,
-}: IProps) {
+}: IImageProps) {
     const [sxProps, setSxProps] = useState<SxProps>(sx);
     const [styleProps, setStyleProps] = useState(style);
     const [zoomShowed, setZoomShowed] = useState(false);

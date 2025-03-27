@@ -55,6 +55,8 @@ import {
     ShoppingCart,
     DeviceThermostat,
     TireRepair,
+    Biotech,
+    LocalPharmacy,
 } from "@mui/icons-material";
 
 //export type TIconName = keyof typeof iconsPath;
@@ -115,7 +117,9 @@ type TIconNameAdditional =
     | "shop"
     | "medicine"
     | "temperature"
-    | "tire_repair";
+    | "tire_repair"
+    | "labs"
+    | "local_pharmacy";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -164,6 +168,8 @@ export const IconList: TIconName[] = [
     "medicine",
     "temperature",
     "tire_repair",
+    "labs",
+    "local_pharmacy",
 ];
 
 interface IProps extends SvgIconProps {
@@ -283,6 +289,10 @@ export default function Icon({ name, color = "inherit", ...props }: IProps) {
             return <DeviceThermostat {...totalProps} />;
         case "tire_repair":
             return <TireRepair {...totalProps} />;
+        case "labs":
+            return <Biotech {...totalProps} />;
+        case "local_pharmacy":
+            return <LocalPharmacy {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }
