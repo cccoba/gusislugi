@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { Accordion as MuiAccordion, AccordionSummary, AccordionDetails, Typography, SxProps, Box } from "@mui/material";
 
 import Icon from "./Icon";
@@ -8,7 +8,7 @@ import RawHtml from "./RawHtml";
 export interface IAccordionItem {
     id: number | string;
     key?: number | string;
-    title: string;
+    title: string | ReactNode;
     description?: string;
     html?: string;
     icon?: string;
@@ -16,13 +16,11 @@ export interface IAccordionItem {
     child?: ReactNode;
     titleAction?: ReactNode;
     sx?: SxProps;
-    autoMount?: boolean;
 }
 
 interface IProps {
     values: IAccordionItem[];
-    defaultActiveId?: number | string;
-    autoMountAll?: boolean;
+    defaultId?: number | string;
     titleVariant?:
         | "button"
         | "caption"
@@ -39,18 +37,11 @@ interface IProps {
         | "body2"
         | "overline";
 }
-
-function getSlotProps(mountAll?: boolean, mount?: boolean) {
-    if (mountAll === true || mount === true) {
-        if (mount === true || (mountAll === true && typeof mount === "undefined")) {
-            return { transition: { unmountOnExit: true } };
-        }
-    }
-    return undefined;
-}
-
-function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0, autoMountAll = false }: IProps) {
-    const [active, setActive] = useState(defaultActiveId);
+export default function Accordion({ values = [], titleVariant = "h5", defaultId = 0 }: IProps) {
+    const [active, setActive] = useState(defaultId);
+    useEffect(() => {
+        setActive(defaultId);
+    }, [defaultId]);
     const onChange = (id: any) => {
         setActive(active === id ? 0 : id);
     };
@@ -66,13 +57,13 @@ function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0, auto
                         onChange={() => onChange(v.id)}
                         expanded={active === v.id}
                         sx={v.sx}
-                        slotProps={getSlotProps(autoMountAll, v.autoMount)}
                     >
                         <AccordionSummary
                             expandIcon={<Icon name="down" />}
                             sx={{
                                 "& .MuiAccordionSummary-content": {
                                     display: "block",
+                                    m: 0,
                                 },
                             }}
                         >
@@ -91,7 +82,11 @@ function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0, auto
                                         image={v.image}
                                     />
                                 )}
-                                <Typography variant={titleVariant}>{v.title}</Typography>
+                                {typeof v.title === "object" ? (
+                                    v.title
+                                ) : (
+                                    <Typography variant={titleVariant}>{v.title}</Typography>
+                                )}
                                 {!!v.titleAction && v.titleAction}
                             </Box>
                         </AccordionSummary>
@@ -106,5 +101,3 @@ function Accordion({ values = [], titleVariant = "h5", defaultActiveId = 0, auto
         </>
     );
 }
-
-export default Accordion;

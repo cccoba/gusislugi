@@ -80,6 +80,11 @@ const ruPages = {
     medicine: {
         title: "Болезни",
         main: "Основное",
+        history: {
+            title: "История болезни",
+            noHistory: "Еще нет данных по лечению",
+            add: "Назначить лечение",
+        },
         diseases: {
             title: "Болезни",
             type: "Тип болезни",
@@ -97,6 +102,9 @@ const ruPages = {
             baseValue: "Базовое значение",
             minValue: "Минимальное значение",
             maxValue: "Максимальное значение",
+            lastSeen: "Последнее наблюдение",
+            add: "Назначить анализ",
+            edit: "Изменить значение параметра",
             icon: "Иконка",
             patients: "Пациенты",
         },
@@ -107,8 +115,17 @@ const ruPages = {
             disease: "Болезнь",
             add: "Новый пациент",
             status: "Статус",
+            statusActive: "Болен",
+            statusNotActive: "Здоров",
+            createdAt: "Дата начала",
+            updatedAt: "Дата последнего изменения",
+            isActive: "Активна",
+            success: {
+                addTest: "Анализ %s назначен",
+            },
             errors: {
                 add: "Не удалось добавить пациента!",
+                addTest: "Не удалось назначить анализ!",
             },
         },
         procedures: {

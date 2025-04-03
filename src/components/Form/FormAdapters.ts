@@ -17,6 +17,7 @@ import TextAdapter, { IFormFieldText } from "./Adapters/Text";
 import UserAdapter, { IFormFieldUser } from "./Adapters/User";
 import MedicineParamsSelectorAdapter, { IFormFieldMedicineParamsSelector } from "./Adapters/MedicineParamsSelector";
 import MedicineParamsActionsAdapter, { IFormFieldMedicineParamsActions } from "./Adapters/MedicineParamsActions";
+import MedicineTestAdapter, { IFormFieldMedicineTest } from "./Adapters/MedicineTest";
 export interface IFormField {
     name: string;
     title: string;
@@ -63,6 +64,7 @@ export type TFormField =
     | IFormFieldMedicineDiseaseParam
     | IFormFieldMedicineParamsSelector
     | IFormFieldMedicineParamsActions
+    | IFormFieldMedicineTest
     | IFormFieldNumber
     | IFormFieldPassword
     | IFormFieldRolePermissions
@@ -84,6 +86,7 @@ const FormAdapters: IFormAdapter[] = [
     MedicineDiseaseParamAdapter,
     MedicineParamsSelectorAdapter,
     MedicineParamsActionsAdapter,
+    MedicineTestAdapter,
     NumberAdapter,
     PasswordAdapter,
     RolePermissionsAdapter,

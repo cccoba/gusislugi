@@ -17,7 +17,7 @@ export interface IFormGroup {
     title: string;
     name: string;
 }
-interface IProps {
+export interface IFormProps {
     onSubmit?: (values: any) => void;
     onCancel?: () => void;
     onInputChanged?: (values: any, errors: any) => void;
@@ -59,7 +59,7 @@ export default function Form({
     groupVariant = "fieldset",
     autoCompleteForm = "off",
     saveDisabled = false,
-}: IProps) {
+}: IFormProps) {
     const [isInit, setIsInit] = useState<boolean>(false);
     const formRef = useRef<HTMLFormElement>(null);
     const {

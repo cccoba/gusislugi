@@ -1,8 +1,8 @@
-import { IUserShortDto } from "../user/IUserShortDto";
+import { IUserMedicineDto } from "../user/IUserMedicineDto";
 
-import { IMedicineDiseases } from "./IMedicineDiseases";
+import { IMedicinePatient } from "./IMedicinePatient";
 
 export interface IMedicinePatientFullData {
-    user: IUserShortDto;
-    diseases: IMedicineDiseases[];
+    user: IUserMedicineDto;
+    patients: IMedicinePatient[];
 }

@@ -5,9 +5,7 @@ import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import AdminUserList from "./AdminUserList";
 import User from "./User";
 
-interface IProps {}
-
-function Users({ roles }: IPageWithRoles) {
+export default function UsersRouter({ roles }: IPageWithRoles) {
     return (
         <Routes>
             <Route
@@ -21,4 +19,3 @@ function Users({ roles }: IPageWithRoles) {
         </Routes>
     );
 }
-export default Users;

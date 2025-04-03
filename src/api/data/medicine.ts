@@ -5,6 +5,7 @@ import { IMedicineTest } from "api/interfaces/Medicine/IMedicineTest";
 import { IMedicineProcedure } from "api/interfaces/Medicine/IMedicineProcedure";
 import { IMedicinePatient } from "api/interfaces/Medicine/IMedicinePatient";
 import { IMedicinePatientFullData } from "api/interfaces/Medicine/IMedicinePatientFullData";
+import { IMedicinePatientTestDto } from "api/interfaces/Medicine/IMedicinePatientTestDto";
 
 import { CRUDDataProvider, dataProvider } from "./dataProvider";
 
@@ -22,6 +23,12 @@ const MedicinePoliciesProvider = {
         },
         user: (userId: number): Promise<IWebDataResult<IMedicinePatientFullData>> => {
             return dataProvider(`medicinePatients&view=getUser&id=${userId}`);
+        },
+        addTest: (patientId: number, testId: number): Promise<IWebDataResult<IMedicinePatientTestDto>> => {
+            return dataProvider(`medicinePatients&view=addTest`, "post", { patientId, testId });
+        },
+        updateParam: (patientId: number, paramId: number, value: string): Promise<IWebDataResult<boolean>> => {
+            return dataProvider(`medicinePatients&view=updateParam`, "put", { patientId, paramId, value });
         },
     },
 };

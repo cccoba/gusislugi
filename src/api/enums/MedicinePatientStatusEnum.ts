@@ -4,5 +4,5 @@ export enum MedicinePatientStatusEnum {
     Active1,
     Active2,
     Active3,
-    Finished = 2,
+    Finished,
 }

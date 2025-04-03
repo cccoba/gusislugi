@@ -53,7 +53,7 @@ const ruPipes = {
         active1: "Легкое состояние",
         active2: "Среднее состояние",
         active3: "Тяжелое состояние",
-        finished: "Завершенный",
+        finished: "Излечено",
     },
     medicalPoliciesType: {
         oms: "ОМС",

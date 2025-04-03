@@ -57,7 +57,10 @@ import {
     TireRepair,
     Biotech,
     LocalPharmacy,
+    CalendarToday,
+    History,
 } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
 
 //export type TIconName = keyof typeof iconsPath;
 
@@ -119,7 +122,9 @@ type TIconNameAdditional =
     | "temperature"
     | "tire_repair"
     | "labs"
-    | "local_pharmacy";
+    | "local_pharmacy"
+    | "dateTime"
+    | "medicineHistory";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -170,14 +175,30 @@ export const IconList: TIconName[] = [
     "tire_repair",
     "labs",
     "local_pharmacy",
+    "dateTime",
+    "medicineHistory",
 ];
 
 interface IProps extends SvgIconProps {
     name: TIconName;
+    tooltip?: string;
 }
 
-export default function Icon({ name, color = "inherit", ...props }: IProps) {
+export default function Icon({ tooltip, name, color = "inherit", ...props }: IProps) {
     const totalProps = { ...props, color };
+    if (tooltip) {
+        return (
+            <Tooltip title={tooltip}>
+                <span>
+                    <Icon
+                        name={name}
+                        {...totalProps}
+                    />
+                </span>
+            </Tooltip>
+        );
+    }
+
     switch (name) {
         case "edit":
             return <Edit {...totalProps} />;
@@ -293,6 +314,10 @@ export default function Icon({ name, color = "inherit", ...props }: IProps) {
             return <Biotech {...totalProps} />;
         case "local_pharmacy":
             return <LocalPharmacy {...totalProps} />;
+        case "dateTime":
+            return <CalendarToday {...totalProps} />;
+        case "medicineHistory":
+            return <History {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

@@ -14,6 +14,12 @@ interface IProps {
     redirectLink?: string | null;
 }
 
+/**
+ * Проверяет, имеет ли пользователь доступ к определенным ролям
+ * @param roles - массив ролей, которые нужно проверить
+ * @param userRoleParams - параметры роли пользователя
+ * @returns true, если пользователь имеет доступ к ролям, иначе false
+ */
 export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRoleDto["params"]): boolean => {
     if (!userRoleParams) {
         return false;

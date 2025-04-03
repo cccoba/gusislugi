@@ -6,7 +6,7 @@ interface IProps extends ButtonProps {
     state?: NavLinkProps["state"];
 }
 
-export default function Link({ url = "", state, ...props }: IProps) {
+export default function LinkButton({ url = "", state, ...props }: IProps) {
     return (
         <Button
             component={NavLink}

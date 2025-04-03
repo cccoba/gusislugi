@@ -10,7 +10,7 @@ import Home from "pages/Home";
 import Registration from "pages/Users/Registration";
 import Profile from "pages/Users/Profile";
 import Claims from "pages/Claims";
-import Users from "pages/Users";
+import UsersRouter from "pages/Users/Router";
 import Citizenships from "pages/Citizenships";
 import Nationalities from "pages/Nationalities";
 import QrScanner from "pages/QR/QrScanner";
@@ -149,7 +149,7 @@ export default function RouterPage() {
 
                         <Route
                             path="/users/*"
-                            element={<Users roles={[["admins"]]} />}
+                            element={<UsersRouter roles={[["admins"]]} />}
                         />
                         <Route
                             path="/persons/*"

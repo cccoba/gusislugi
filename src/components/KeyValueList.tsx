@@ -18,7 +18,7 @@ const defItemSxProps: ListItemBaseProps["sx"] = {
     alignItems: "center",
 };
 
-function KeyValueList({
+export default function KeyValueList({
     values = [],
     disablePadding = true,
     label,
@@ -72,4 +72,3 @@ function KeyValueList({
         </List>
     );
 }
-export default KeyValueList;

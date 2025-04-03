@@ -12,12 +12,13 @@ import {
     Typography,
 } from "@mui/material";
 
-import Icon from "./Icon";
+import Icon, { TIconName } from "./Icon";
 
 interface IProps extends Omit<BoxProps, "title"> {
     label?: string | ReactNode;
 
     children?: ReactNode;
+    icon?: TIconName;
     variant?: "fieldset" | "card" | "accordion";
     accordionProps?: {
         defaultHide?: boolean;
@@ -28,6 +29,7 @@ interface IProps extends Omit<BoxProps, "title"> {
 export default function Fieldset({
     label = "",
     children = null,
+    icon,
     variant = "fieldset",
     accordionProps,
     ...props
@@ -53,7 +55,10 @@ export default function Fieldset({
                         alignItems="center"
                         justifyContent="space-between"
                     >
-                        {typeof label === "object" ? label : <Typography variant="h5">{label}</Typography>}
+                        <Box display="flex">
+                            {!!icon && <Icon name={icon} />}
+                            {typeof label === "object" ? label : <Typography variant="h5">{label}</Typography>}
+                        </Box>
                         {!!accordionProps?.action && accordionProps.action}
                     </Box>
                 </AccordionSummary>
@@ -69,7 +74,12 @@ export default function Fieldset({
                 {...props}
                 sx={props.sx}
             >
-                {!!label && <CardHeader title={label} />}
+                {!!label && (
+                    <CardHeader
+                        title={label}
+                        avatar={!!icon && <Icon name={icon} />}
+                    />
+                )}
                 <CardContent>{children}</CardContent>
             </Box>
         );
