@@ -1,8 +1,10 @@
-import { MedicinePatientTestEnum } from "api/enums/MedicinePatientTestEnum";
+import { MedicinePatientTestStatusEnum } from "api/enums/MedicinePatientTestStatusEnum";
 
-export interface IMedicinePatientHistoryDto {
-    id: number;
+export interface IMedicinePatientHistoryDto<T> {
+    id: string;
     type: "test" | "procedure";
-    updatedAt: string;
-    status: MedicinePatientTestEnum;
+    updated_at: string;
+    created_at: string;
+    status: MedicinePatientTestStatusEnum;
+    value: T;
 }

@@ -5,16 +5,25 @@ import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
 
 import lang from "lang";
 import IconButton from "components/Icon/IconButton";
-import Counter from "components/Inputs/Counter";
+import InputTimeDuration from "components/Inputs/InputTimeDuration";
+import MedicineParamsAction, { IMedicineDiseaseParamAction } from "components/Inputs/MedicineParamsAction";
 
 import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
-import MedicineParamsAction, { IMedicineDiseaseParamAction } from "components/Inputs/MedicineParamsAction";
 
 export interface IFormFieldMedicineDiseaseParam extends IFormField {
     type: "medicineDiseaseParam";
     params: IMedicineParam[];
 }
-
+interface IMedicineDiseaseParam {
+    description: string;
+    actions: IMedicineDiseaseParamAction[];
+    paramTimer: number;
+    maxParamTimer: number;
+}
+interface IMedicineDiseaseParamFormAdapterInputProps extends IFormAdapterInputProps {
+    value: IMedicineDiseaseParam;
+    onChangeValue: (value: IMedicineDiseaseParam) => void;
+}
 const MedicineDiseaseParamAdapter: IFormAdapter = {
     name: "medicineDiseaseParam",
     input: FormInput,
@@ -29,16 +38,6 @@ const MedicineDiseaseParamAdapter: IFormAdapter = {
     },
 };
 
-interface IMedicineDiseaseParam {
-    description: string;
-    actions: IMedicineDiseaseParamAction[];
-    paramTimer: number;
-}
-interface IMedicineDiseaseParamFormAdapterInputProps extends IFormAdapterInputProps {
-    value: IMedicineDiseaseParam;
-    onChangeValue: (value: IMedicineDiseaseParam) => void;
-}
-
 function FormInput({
     value,
     fieldParams,
@@ -50,6 +49,7 @@ function FormInput({
     const [description, setDescription] = useState(value?.description || "");
     const [actions, setActions] = useState<IMedicineDiseaseParamAction[]>(value?.actions || []);
     const [paramTimer, setParamTimer] = useState(value?.paramTimer || 0);
+    const [maxParamTimer, setMaxParamTimer] = useState(value?.maxParamTimer || 0);
     useEffect(() => {
         setDescription(value?.description || "");
     }, [value?.description]);
@@ -59,25 +59,32 @@ function FormInput({
     useEffect(() => {
         setParamTimer(value?.paramTimer || 0);
     }, [value?.paramTimer]);
+    useEffect(() => {
+        setMaxParamTimer(value?.maxParamTimer || 0);
+    }, [value?.maxParamTimer]);
     const defAction: IMedicineDiseaseParamAction = {
         paramId: 0,
         value: 0,
         action: "equal",
     };
 
-    const toChangeValue = (data: any, type: "description" | "actions" | "paramTimer") => {
+    const toChangeValue = (data: any, type: "description" | "actions" | "paramTimer" | "maxParamTimer") => {
         switch (type) {
             case "description":
                 setDescription(data);
-                onChangeValue({ description: data, actions, paramTimer });
+                onChangeValue({ description: data, actions, paramTimer, maxParamTimer });
                 break;
             case "actions":
                 setActions(data);
-                onChangeValue({ description, actions: data, paramTimer });
+                onChangeValue({ description, actions: data, paramTimer, maxParamTimer });
                 break;
             case "paramTimer":
                 setParamTimer(data);
-                onChangeValue({ description, actions, paramTimer: data });
+                onChangeValue({ description, actions, paramTimer: data, maxParamTimer });
+                break;
+            case "maxParamTimer":
+                setMaxParamTimer(data);
+                onChangeValue({ description, actions, paramTimer, maxParamTimer: data });
                 break;
         }
     };
@@ -96,6 +103,10 @@ function FormInput({
     const toChangeParamTimer = (data: number) => {
         setParamTimer(data);
         toChangeValue(data, "paramTimer");
+    };
+    const toChangeMaxParamTimer = (data: number) => {
+        setMaxParamTimer(data);
+        toChangeValue(data, "maxParamTimer");
     };
 
     return (
@@ -123,12 +134,18 @@ function FormInput({
                     />
                 ))}
             </Box>
-            <Counter
+            <InputTimeDuration
                 value={paramTimer}
                 onChangeValue={toChangeParamTimer}
                 label={lang.components.medicineDisease.paramTimer}
-                maxValue={10000}
                 helperText={lang.components.medicineDisease.paramTimerHelperText}
+                withOutDays
+            />
+            <InputTimeDuration
+                value={maxParamTimer}
+                onChangeValue={toChangeMaxParamTimer}
+                label={lang.components.medicineDisease.maxParamTimer}
+                withOutDays
             />
             <TextField
                 {...props}

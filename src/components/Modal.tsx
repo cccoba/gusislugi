@@ -53,7 +53,6 @@ export default function Modal({
     withOkButton = false,
     contentSx = { mt: 1 },
     scrollTop = true,
-    fabMargin = true,
     ...props
 }: IModalProps) {
     const deviceScreenType = useAppSelector((s) => s.device.screen.type);
@@ -64,11 +63,8 @@ export default function Modal({
     const [maxWidthState, setMaxWidthState] = useState(maxWidth);
     const sx = useMemo(() => {
         const newSx: any = contentSx || {};
-        if (fabMargin) {
-            newSx.pb = 8;
-        }
         return newSx;
-    }, [contentSx, fabMargin]);
+    }, [contentSx]);
     useEffect(() => {
         if (responsiveWidth) {
             if (deviceScreenName === "mobile") {
@@ -85,7 +81,6 @@ export default function Modal({
         }
     };
     const actionsSx: SxProps = withShadow ? { boxShadow: withShadow ? 3 : 0, mt: 1 } : {};
-
     return (
         <Dialog
             maxWidth={maxWidthState}

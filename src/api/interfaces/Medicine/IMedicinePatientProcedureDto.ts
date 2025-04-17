@@ -2,17 +2,16 @@ import { MedicinePatientTestStatusEnum } from "api/enums/MedicinePatientTestStat
 
 import { IUserShortDto } from "../user/IUserShortDto";
 
-import { IMedicineTest } from "./IMedicineTest";
+import { IMedicineProcedure } from "./IMedicineProcedure";
 
-export interface IMedicinePatientTestDto {
+export interface IMedicinePatientProcedureDto {
     id: number;
     patientId: number;
-    testId: number;
+    procedureId: number;
     status: MedicinePatientTestStatusEnum;
     created_at: string;
     updated_at: string;
-    test?: IMedicineTest;
-    params: any;
+    procedure?: IMedicineProcedure;
     created_user?: IUserShortDto;
     updated_user?: IUserShortDto;
 }

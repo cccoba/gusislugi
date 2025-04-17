@@ -20,7 +20,7 @@ interface IVariantProps {
     labelSx: SxProps;
 }
 
-function FormControl({
+export default function FormControl({
     variant = "standard",
     children,
     helperText = "",
@@ -117,4 +117,3 @@ function FormControl({
         </>
     );
 }
-export default FormControl;

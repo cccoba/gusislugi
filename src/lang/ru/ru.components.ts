@@ -99,6 +99,12 @@ const ruComponents = {
         deleteTitle: "Удалить изображение?",
         deleteText: "Вы уверены, что хотите удалить изображение?",
     },
+    inputTimeDuration: {
+        days: "Дней",
+        hours: "Часов",
+        minutes: "Минут",
+        seconds: "Секунд",
+    },
     inputUser: {
         userSelect: "Введите Имя и фамилию пользователя или Telegram login",
         scan: "Считать QR",
@@ -111,8 +117,14 @@ const ruComponents = {
         param: "Показатель",
         paramTimer: "Минут до начала",
         paramTimerHelperText: "Введите количество минут до начала состояния. 0 - сразу",
+        maxParamTimer: "Максимальное время (минут)",
+        conditions: {
+            title: "Условие",
+        },
         actions: {
             title: "Действие",
+            addTitle: "Новое действие",
+            editTitle: "Редактирование действия",
             value: "Значение",
             add: "+",
             minus: "-",

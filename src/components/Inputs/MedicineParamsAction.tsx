@@ -9,6 +9,7 @@ import InputSelect from "components/Inputs/InputSelect/InputSelect";
 import Select, { ISelectValue } from "components/Inputs/Select";
 import Counter from "components/Inputs/Counter";
 import Fieldset from "components/Fieldset";
+import { IMedicineDiseaseCondition } from "api/interfaces/Medicine/IMedicineDiseaseCondition";
 export interface IMedicineDiseaseParamAction {
     paramId: number;
     value: number;

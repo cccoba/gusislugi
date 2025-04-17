@@ -6,23 +6,28 @@ import MedicineParamViewer, { TMedicineParamAction } from "components/MedicinePa
 import lang, { sprintf } from "lang";
 
 import { IMedicinePatient } from "api/interfaces/Medicine/IMedicinePatient";
-
 import dateTime from "api/common/dateTime";
 import { medicine, webApiResultData } from "api/data";
 import { useLoader } from "api/hooks/redux";
 import { useNotifier } from "api/hooks/useNotifier";
 import { IMedicinePatientTestDto } from "api/interfaces/Medicine/IMedicinePatientTestDto";
+
+import { IMedicinePatientHistoryDto } from "api/interfaces/Medicine/IMedicinePatientHistoryDto";
+import { IMedicinePatientProcedureDto } from "api/interfaces/Medicine/IMedicinePatientProcedureDto";
+
 import MedicinePatientHistory from "./History";
 
 interface IProps {
     patient: IMedicinePatient;
     isAdmin?: boolean;
+    needUpdate: () => void;
 }
 
-export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
+export default function MedicinePatientInfo({ patient, isAdmin, needUpdate }: IProps) {
+    const langPage = lang.pages.medicine.patients;
+
     const { setIsLoading } = useLoader();
     const { showError, showSuccess } = useNotifier();
-    const langPage = lang.pages.medicine.patients;
     const baseData = useMemo(() => {
         return [
             {
@@ -35,6 +40,36 @@ export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
             },
         ];
     }, [patient]);
+    const histories = useMemo<
+        IMedicinePatientHistoryDto<IMedicinePatientTestDto | IMedicinePatientProcedureDto>[]
+    >(() => {
+        const result: IMedicinePatientHistoryDto<IMedicinePatientTestDto | IMedicinePatientProcedureDto>[] = [];
+        if (patient?.tests?.length) {
+            for (const test of patient.tests) {
+                result.push({
+                    id: "test-" + test.id,
+                    type: "test",
+                    updated_at: test.updated_at,
+                    created_at: test.created_at,
+                    status: test.status,
+                    value: test,
+                });
+            }
+        }
+        if (patient?.procedures?.length) {
+            for (const procedure of patient.procedures) {
+                result.push({
+                    id: "procedure-" + procedure.id,
+                    type: "procedure",
+                    updated_at: procedure.updated_at,
+                    created_at: procedure.created_at,
+                    status: procedure.status,
+                    value: procedure,
+                });
+            }
+        }
+        return result;
+    }, [patient?.tests, patient?.procedures]);
 
     const toAction: TMedicineParamAction = (action, param) => {
         switch (action) {
@@ -50,6 +85,7 @@ export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
                             }
                             if (result) {
                                 showSuccess(sprintf(langPage.success.addTest, result.test?.title || ""));
+                                needUpdate();
                             }
                         })
                         .catch((err) => {
@@ -71,6 +107,7 @@ export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
         e.stopPropagation();
         console.log("toAddHistory");
     };
+
     return (
         <Box>
             <KeyValueList
@@ -103,6 +140,7 @@ export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
                                         param={param}
                                         isAdmin={!!isAdmin}
                                         onAction={toAction}
+                                        readOnly={!patient.isActive}
                                     />
                                 </Grid>
                             ))}
@@ -111,25 +149,24 @@ export default function MedicinePatientInfo({ patient, isAdmin }: IProps) {
                 </Fieldset>
             )}
             <Fieldset
-                label={
-                    lang.pages.medicine.history.title +
-                    (!patient?.history?.length ? "" : " (" + lang.pages.medicine.history.noHistory + ")")
-                }
+                label={`${lang.pages.medicine.history.title} (${
+                    histories?.length || lang.pages.medicine.history.noHistory
+                })`}
                 icon="medicineHistory"
                 variant="accordion"
                 accordionProps={{
                     withDivider: true,
-                    action: (
+                    action: patient.isActive ? (
                         <IconButton
                             name="add"
                             onClick={toAddHistory}
                             color="primary"
                             tooltip={lang.pages.medicine.history.add}
                         />
-                    ),
+                    ) : null,
                 }}
             >
-                <MedicinePatientHistory histories={patient.history || []} />
+                <MedicinePatientHistory histories={histories} />
             </Fieldset>
         </Box>
     );

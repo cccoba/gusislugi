@@ -20,9 +20,11 @@ export { default as Form } from "./Form";
 export { default as Loader } from "./Loader";
 export { default as MenuList } from "./MenuList";
 export { default as KeyValueList } from "./KeyValueList";
+export type { IKeyValueListItem } from "./KeyValueList";
 export { default as Link } from "./Link/Link";
 export { default as LinkButton } from "./Link/LinkButton";
 export { default as List } from "./List";
+export type { IListItem } from "./List";
 
 export { default as Modal } from "./Modal";
 export { default as RawHtml } from "./RawHtml";
@@ -43,3 +45,5 @@ export { default as InputUser } from "./Inputs/Async/InputUser";
 
 export { default as InputAutocomplete } from "./Inputs/InputAutocomplete";
 export { default as Switcher } from "./Inputs/Switcher";
+
+export { default as UserView } from "./UserViewer";

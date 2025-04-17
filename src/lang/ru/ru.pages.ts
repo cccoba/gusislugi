@@ -82,8 +82,15 @@ const ruPages = {
         main: "Основное",
         history: {
             title: "История болезни",
+            type: "Тип",
             noHistory: "Еще нет данных по лечению",
             add: "Назначить лечение",
+            test: "Анализ",
+            procedure: "Лечение",
+            created_at: "Дата назначения",
+            updated_at: "Дата прохождения",
+            created_user: "Кто назначил",
+            updated_user: "Кто провел",
         },
         diseases: {
             title: "Болезни",
@@ -92,6 +99,9 @@ const ruPages = {
             param1: "Легкое состояние",
             param2: "Среднее состояние",
             param3: "Тяжелое состояние",
+            conditions: "Граничные условия",
+            cureConditions: "Условия лечения",
+            deathConditions: "Условия смерти",
         },
         params: {
             title: "Показатели",

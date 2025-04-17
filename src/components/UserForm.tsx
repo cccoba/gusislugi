@@ -20,24 +20,23 @@ interface IProps {
     onChangeValue: (userData: IUserDto) => void;
 }
 
-const langPage = lang.components.userForm;
+export default function UserForm({ user, onChangeValue }: IProps) {
+    const langPage = lang.components.userForm;
 
-const defFields: TFormField[] = [
-    { name: "image", title: langPage.image, type: "image", fieldProps: { previewWidth: "200px" } },
+    const defFields: TFormField[] = [
+        { name: "image", title: langPage.image, type: "image", fieldProps: { previewWidth: "200px" } },
 
-    { type: "text", name: "firstName", title: langPage.firstName },
+        { type: "text", name: "firstName", title: langPage.firstName },
 
-    { name: "nationalityId", title: langPage.nationality, type: "select", values: [] },
-    { name: "citizenshipId", title: langPage.citizenship, type: "select", values: [] },
-    { type: "text", name: "passport", title: langPage.passport },
-    { type: "text", name: "registration", title: langPage.registration },
-    { type: "text", name: "nickname", title: langPage.nickname },
-    { name: "roleId", title: langPage.role, type: "select", values: [] },
-    { type: "text", name: "tgLogin", title: langPage.tgLogin, disabled: true },
-    { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
-];
-
-function UserForm({ user, onChangeValue }: IProps) {
+        { name: "nationalityId", title: langPage.nationality, type: "select", values: [] },
+        { name: "citizenshipId", title: langPage.citizenship, type: "select", values: [] },
+        { type: "text", name: "passport", title: langPage.passport },
+        { type: "text", name: "registration", title: langPage.registration },
+        { type: "text", name: "nickname", title: langPage.nickname },
+        { name: "roleId", title: langPage.role, type: "select", values: [] },
+        { type: "text", name: "tgLogin", title: langPage.tgLogin, disabled: true },
+        { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
+    ];
     const currentUserRoleParams = useAppSelector((s) => s.user.user?.role.params.admins);
     const currentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     const isEditable = useMemo(() => {
@@ -99,6 +98,7 @@ interface IShowQRProps {
     user: IUserDto;
 }
 function ShowQR({ user }: IShowQRProps) {
+    const langPage = lang.components.userForm;
     const [isIdShowed, setIsIdShowed] = useState(false);
     const showMyId = () => {
         setIsIdShowed(true);
@@ -126,6 +126,7 @@ function ShowQR({ user }: IShowQRProps) {
     );
 }
 function ShowPasport({ user }: IShowQRProps) {
+    const langPage = lang.components.userForm;
     const [isIdShowed, setIsIdShowed] = useState(false);
     const showMyId = () => {
         setIsIdShowed(true);
@@ -158,4 +159,3 @@ function ShowPasport({ user }: IShowQRProps) {
         </>
     );
 }
-export default UserForm;

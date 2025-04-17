@@ -18,6 +18,10 @@ import UserAdapter, { IFormFieldUser } from "./Adapters/User";
 import MedicineParamsSelectorAdapter, { IFormFieldMedicineParamsSelector } from "./Adapters/MedicineParamsSelector";
 import MedicineParamsActionsAdapter, { IFormFieldMedicineParamsActions } from "./Adapters/MedicineParamsActions";
 import MedicineTestAdapter, { IFormFieldMedicineTest } from "./Adapters/MedicineTest";
+import MedicineDiseaseConditionsAdapter, {
+    IFormFieldMedicineDiseaseConditions,
+} from "./Adapters/MedicineDiseaseConditions";
+import TimeDurationAdapter, { IFormFieldTimeDuration } from "./Adapters/TimeDuration";
 export interface IFormField {
     name: string;
     title: string;
@@ -61,6 +65,7 @@ export type TFormField =
     | IFormFieldList
     | IFormFieldListMultiple
     | IFormFieldJson
+    | IFormFieldMedicineDiseaseConditions
     | IFormFieldMedicineDiseaseParam
     | IFormFieldMedicineParamsSelector
     | IFormFieldMedicineParamsActions
@@ -72,6 +77,7 @@ export type TFormField =
     | IFormFieldSelectFiltered
     | IFormFieldSwitcher
     | IFormFieldText
+    | IFormFieldTimeDuration
     | IFormFieldUser;
 
 const FormAdapters: IFormAdapter[] = [
@@ -83,6 +89,7 @@ const FormAdapters: IFormAdapter[] = [
     ListAdapter,
     ListMultipleAdapter,
     JsonAdapter,
+    MedicineDiseaseConditionsAdapter,
     MedicineDiseaseParamAdapter,
     MedicineParamsSelectorAdapter,
     MedicineParamsActionsAdapter,
@@ -94,6 +101,7 @@ const FormAdapters: IFormAdapter[] = [
     SelectFilteredAdapter,
     SwitcherAdapter,
     TextAdapter,
+    TimeDurationAdapter,
     UserAdapter,
 ];
 

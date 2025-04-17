@@ -4,7 +4,8 @@ import { IUserShortDto } from "../user/IUserShortDto";
 
 import { IMedicineDiseasesShort } from "./IMedicineDiseasesShort";
 import { IMedicinePatientParamDto } from "./IMedicinePatientParamDto";
-import { IMedicinePatientHistoryDto } from "./IMedicinePatientHistoryDto";
+import { IMedicinePatientTestDto } from "./IMedicinePatientTestDto";
+import { IMedicinePatientProcedureDto } from "./IMedicinePatientProcedureDto";
 
 export interface IMedicinePatient {
     id: number;
@@ -17,5 +18,6 @@ export interface IMedicinePatient {
     created_at?: string;
     updated_at?: string;
     params?: IMedicinePatientParamDto[];
-    history?: IMedicinePatientHistoryDto[];
+    tests?: IMedicinePatientTestDto[];
+    procedures?: IMedicinePatientProcedureDto[];
 }

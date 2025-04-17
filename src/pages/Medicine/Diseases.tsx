@@ -9,7 +9,6 @@ import { getCRUDActions } from "components/CRUDAsync/Main";
 
 import { IPage } from "api/interfaces/components/Page/IPage";
 import { MedicineDiseaseTypeEnum } from "api/enums/MedicineDiseaseTypeEnum";
-import useLoadApiData from "api/hooks/useLoadApiData";
 import { ICRUDAsyncProps } from "components/CRUDAsync";
 import useGetData from "store/rtkProvider";
 import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
@@ -31,6 +30,8 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
                 param1: [],
                 param2: [],
                 param3: [],
+                cureConditions: [],
+                deathConditions: [],
             },
             listConfig: {
                 isMultiSelection: false,
@@ -97,12 +98,27 @@ export default function MedicineDiseases({ ...pageProps }: IPage) {
                         group: "param3",
                         params: paramsList || [],
                     },
+                    {
+                        name: "cureConditions",
+                        title: langPage.cureConditions,
+                        type: "medicineDiseaseConditions",
+                        required: true,
+                        group: "conditions",
+                    },
+                    {
+                        name: "deathConditions",
+                        title: langPage.deathConditions,
+                        type: "medicineDiseaseConditions",
+                        required: true,
+                        group: "conditions",
+                    },
                 ],
                 groups: [
                     { title: langPage.main, name: "main" },
                     { title: langPage.param1, name: "param1" },
                     { title: langPage.param2, name: "param2" },
                     { title: langPage.param3, name: "param3" },
+                    { title: langPage.conditions, name: "conditions" },
                 ],
             },
         };

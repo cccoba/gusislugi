@@ -57,6 +57,7 @@ export default function MedicinePatientEdit({ ...pageProps }: IPage) {
                 <MedicinePatientInfo
                     patient={patient}
                     isAdmin={isAdmin}
+                    needUpdate={refetch}
                 />
             ),
         }));

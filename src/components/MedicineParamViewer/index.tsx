@@ -17,9 +17,10 @@ export type TMedicineParamAction = ((action: "edit", param: { id: number; value:
 interface IProps {
     param: IMedicinePatientParamDto;
     isAdmin: boolean;
+    readOnly: boolean;
     onAction: TMedicineParamAction;
 }
-export default function MedicineParamViewer({ param, isAdmin, onAction }: IProps) {
+export default function MedicineParamViewer({ param, isAdmin, onAction, readOnly }: IProps) {
     const [showedAdd, setShowedAdd] = useState(false);
     const [showedEdit, setShowedEdit] = useState(false);
     const showAdd = () => {
@@ -32,10 +33,14 @@ export default function MedicineParamViewer({ param, isAdmin, onAction }: IProps
         setShowedEdit(false);
     };
     const toEdit = (value: string) => {
+        if (readOnly) {
+            return;
+        }
+
         onAction("edit", { id: param.id, value });
     };
     const toAdd = (testId?: number) => {
-        if (testId) {
+        if (testId && !readOnly) {
             onAction("add", { id: param.id, testId });
         }
         setShowedAdd(false);
@@ -60,30 +65,32 @@ export default function MedicineParamViewer({ param, isAdmin, onAction }: IProps
                         </Avatar>
                     }
                     action={
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "flex-end",
-                                flexDirection: "column",
-                            }}
-                        >
-                            <IconButton
-                                name="add"
-                                onClick={showAdd}
-                                color="primary"
-                                tooltip={lang.pages.medicine.params.add}
-                                size="small"
-                            />
-                            {isAdmin && (
+                        readOnly ? undefined : (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "flex-end",
+                                    flexDirection: "column",
+                                }}
+                            >
                                 <IconButton
-                                    name="edit"
-                                    onClick={showEdit}
-                                    tooltip={lang.edit}
+                                    name="add"
+                                    onClick={showAdd}
+                                    color="primary"
+                                    tooltip={lang.pages.medicine.params.add}
                                     size="small"
                                 />
-                            )}
-                        </Box>
+                                {isAdmin && (
+                                    <IconButton
+                                        name="edit"
+                                        onClick={showEdit}
+                                        tooltip={lang.edit}
+                                        size="small"
+                                    />
+                                )}
+                            </Box>
+                        )
                     }
                     subheader={
                         param?.lastSeen?.date ? (

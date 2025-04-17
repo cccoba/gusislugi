@@ -1,5 +1,7 @@
 import { MedicineDiseaseTypeEnum } from "api/enums/MedicineDiseaseTypeEnum";
+
 import { IMedicineDiseasesParam } from "./IMedicineDiseasesParam";
+import { IMedicineDiseaseCondition } from "./IMedicineDiseaseCondition";
 
 export interface IMedicineDiseases {
     id: number;
@@ -9,4 +11,6 @@ export interface IMedicineDiseases {
     param1: IMedicineDiseasesParam[];
     param2: IMedicineDiseasesParam[];
     param3: IMedicineDiseasesParam[];
+    cureConditions: IMedicineDiseaseCondition[];
+    deathConditions: IMedicineDiseaseCondition[];
 }
