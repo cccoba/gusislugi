@@ -53,6 +53,7 @@ export default function Modal({
     withOkButton = false,
     contentSx = { mt: 1 },
     scrollTop = true,
+    fabMargin,
     ...props
 }: IModalProps) {
     const deviceScreenType = useAppSelector((s) => s.device.screen.type);
@@ -100,12 +101,12 @@ export default function Modal({
                 {scrollTop && (
                     <ScrollTo
                         id={"PageScrollTop"}
-                        bottom={!!actions?.length ? 56 : 4}
+                        bottom={actions?.length ? 56 : 4}
                     />
                 )}
-                {!!children ? children : null}
+                {children || null}
             </DialogContent>
-            {!!actions?.length ? (
+            {actions?.length ? (
                 <DialogActions sx={actionsSx}>
                     {actions.map((action, index) => (
                         <React.Fragment key={index}>{action}</React.Fragment>

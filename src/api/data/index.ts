@@ -16,6 +16,6 @@ export { default as shop } from "./shop";
 export { default as fines } from "./fines";
 export { default as users } from "./users";
 export { default as wanteds } from "./wanteds";
-export { default as wanteds2 } from "./wanteds2";
+export { default as company } from "./company";
 
 export { webApiResultData } from "./dataProvider";

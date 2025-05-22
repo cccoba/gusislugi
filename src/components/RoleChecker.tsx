@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { IRoleDto, TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
+import { CompanyPermissionFlagAll } from "api/enums/CompanyPermissionActionFlag";
 
 interface IProps {
     roles: TRoleCheckerRole[];
@@ -24,9 +25,16 @@ export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRo
     if (!userRoleParams) {
         return false;
     }
-    for (const [roleName, flagValue = RolePermissionFlagAll] of roles) {
+    for (const [roleName, flagValue] of roles) {
+        let defaultFlagValue = RolePermissionFlagAll;
         if (roleName in userRoleParams) {
-            if (checkFlagIncludes(flagValue, (userRoleParams as any)[roleName])) {
+            if (roleName === "company") {
+                defaultFlagValue = CompanyPermissionFlagAll;
+            }
+
+            const flagValue2 = flagValue || defaultFlagValue;
+
+            if (checkFlagIncludes(flagValue2, (userRoleParams as any)[roleName])) {
                 return true;
             }
         }

@@ -22,7 +22,7 @@ export default function KeyValueList({
     values = [],
     disablePadding = true,
     label,
-    withDivider = false,
+    withDivider = true,
     itemSxProps,
     ...props
 }: IProps) {

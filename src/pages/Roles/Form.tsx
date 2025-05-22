@@ -16,7 +16,6 @@ export default function RoleForm({ role, onCancel, onSave }: IProps) {
         { name: "description", title: langPage.fields.description, type: "text", fieldProps: { multiline: true } },
         { name: "params", title: langPage.fields.params, type: "rolePermissions" },
     ];
-
     return (
         <PageOrModal
             modalProps={{

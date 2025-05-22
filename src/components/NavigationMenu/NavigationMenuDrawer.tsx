@@ -65,7 +65,7 @@ function NavigationMenuDrawer() {
                     }
                 >
                     <ListItemAvatar>
-                        {!!user?.image ? (
+                        {user?.image ? (
                             <Avatar src={getServerFileUrl(user?.image)} />
                         ) : (
                             <Avatar>{user?.firstName[0]}</Avatar>

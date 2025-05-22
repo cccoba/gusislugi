@@ -11,9 +11,9 @@ export interface IPage {
     backUrl?: string | null;
     isLoading?: boolean;
     children?: ReactNode;
-    parepProps?: PaperProps;
+    paperProps?: PaperProps;
     redirectLink?: string;
-    loadintText?: string;
+    loadingText?: string;
     scrollTop?: boolean;
     fabMargin?: boolean;
     roles?: TRoleCheckerRole[];

@@ -9,7 +9,6 @@ const langPage = lang.components.navigationMenu;
 const menuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
     { name: "profile", title: langPage.profile, icon: "profile", link: "/profile" },
-    { name: "sgp", title: langPage.sgp, icon: "sgp", link: "/sgp" },
     { name: "links", title: lang.pages.links.title, icon: "links", link: "/links" },
     {
         name: "qrScanner",
@@ -25,14 +24,6 @@ const menuList: INavigationMenu[] = [
         link: "/claims",
         roles: [["claims"]],
     },
-    {
-        name: "money",
-        title: langPage.money,
-        icon: "money",
-        link: "/money",
-        roles: [["admins"]],
-    },
-
     {
         name: "medicalPolicies",
         title: langPage.medicalPolicies,
@@ -69,11 +60,11 @@ const menuList: INavigationMenu[] = [
         roles: [["wanteds"]],
     },
     {
-        name: "wanteds2",
-        title: lang.pages.wanteds.title2,
-        icon: "wanteds2",
-        link: "/wanteds2",
-        roles: [["wanteds2"]],
+        name: "company",
+        title: lang.pages.companies.title,
+        icon: "company",
+        link: "/company",
+        roles: [["company"]],
     },
     {
         name: "roles",

@@ -22,7 +22,7 @@ const ruPipes = {
         messages: "Сообщение",
         taxes: "Платеж",
         wanteds: "Розыск Юг",
-        wanteds2: "Розыск Север",
+        companies: "Компания",
     },
     filterTextEquals: {
         contains: "Содержит",
@@ -85,8 +85,8 @@ const ruPipes = {
         medicalPolicies: "Мед. полис",
         taxes: "Платежи",
         fines: "Штрафы Север",
-        wanteds: "Розыск Юг",
-        wanteds2: "Розыск Север",
+        wanteds: "Розыск",
+        company: "Компании",
         shop: "Магазин",
         medicineAdmin: "Болезни",
     },
@@ -95,6 +95,18 @@ const ruPipes = {
         add: "Создавать",
         edit: "Редактировать",
         delete: "Удалять",
+    },
+    companyPermissionAction: {
+        view: "Просмотр",
+        add: "Создавать",
+        edit: "Редактировать",
+        delete: "Удалять",
+        moneyAdd: "Добавлять деньги",
+        moneySubtract: "Снимать деньги",
+    },
+    companyMoneyType: {
+        add: "Пополнение счета",
+        subtract: "Списание co счета",
     },
     userRolePermissionAction: {
         barsogoria: "Барсогория",

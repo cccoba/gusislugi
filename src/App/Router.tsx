@@ -31,13 +31,14 @@ import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
 import MyTaxes from "pages/Taxes/MyTaxes";
 import MyFines from "pages/Fines/MyFines";
 import Fines from "pages/Fines";
-import Wanteds2 from "pages/Wanteds/Wanteds2";
+import Companies from "pages/Companies/Index";
 import Persons from "pages/Users/Persons";
 import MedicalInfo from "pages/MedicalInfo";
 import Links from "pages/Links";
 import LinksLink from "pages/Links/Link";
 import Shop from "pages/Shop";
 import MedicineRouter from "pages/Medicine/Router";
+import MyRouter from "pages/My/Router";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -146,6 +147,10 @@ export default function RouterPage() {
                             path="/myFines"
                             element={<MyFines />}
                         />
+                        <Route
+                            path="/my/*"
+                            element={<MyRouter baseUrl="/my" />}
+                        />
 
                         <Route
                             path="/users/*"
@@ -199,8 +204,8 @@ export default function RouterPage() {
                             element={<Wanteds />}
                         />
                         <Route
-                            path="/wanteds2/*"
-                            element={<Wanteds2 />}
+                            path="/company/*"
+                            element={<Companies />}
                         />
                         <Route
                             path="/shop/*"

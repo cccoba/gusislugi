@@ -18,9 +18,9 @@ export default function Page({
     backUrl = "",
     roles = [],
     redirectLink = "/",
-    parepProps = { elevation: 0 },
+    paperProps = { elevation: 0 },
     isLoading = false,
-    loadintText = undefined,
+    loadingText = undefined,
     scrollTop = true,
     fabMargin = true,
 }: IPage) {
@@ -39,10 +39,10 @@ export default function Page({
         dispatch(
             loaderChange({
                 show: isLoading,
-                text: loadintText,
+                text: loadingText,
             })
         );
-    }, [isLoading, loadintText, roles, dispatch]);
+    }, [isLoading, loadingText, roles, dispatch]);
     return (
         <RoleChecker
             roles={roles}
@@ -62,8 +62,8 @@ export default function Page({
                     </Button>
                 )}
                 <Paper
-                    sx={!!fabMargin ? { mb: 8 } : {}}
-                    {...parepProps}
+                    sx={fabMargin ? { mb: 8 } : {}}
+                    {...paperProps}
                 >
                     {scrollTop && <ScrollTo id={"ModalScrollTop"} />}
                     {children}

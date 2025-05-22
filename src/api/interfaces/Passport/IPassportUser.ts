@@ -6,7 +6,7 @@ export interface IPassportUser {
     taxes?: boolean;
     fines?: boolean;
     wanteds?: boolean;
-    wanteds2?: boolean;
+    companies?: boolean;
     medicalPolicies?: boolean;
     medicalInfo?: boolean;
 }

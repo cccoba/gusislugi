@@ -10,7 +10,6 @@ import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { TIconName } from "components/Icon";
 
-const langPage = lang.pages.home;
 interface IHomeItem {
     title: string;
     icon: TIconName;
@@ -18,7 +17,8 @@ interface IHomeItem {
     onClick?: () => void;
 }
 
-function Home() {
+export default function Home() {
+    const langPage = lang.pages.home;
     const currentUser = useAppSelector((s) => s.user.user);
     const [isMyIdShowed, setIsMyIdShowed] = useState(false);
     const showMyId = () => {
@@ -76,11 +76,6 @@ function Home() {
                         icon="profile"
                     />
                     <HomeItem
-                        url="/sgp"
-                        title={lang.pages.money.sgp.title}
-                        icon="sgp"
-                    />
-                    <HomeItem
                         url="/links"
                         title={lang.pages.links.title}
                         icon="links"
@@ -117,6 +112,11 @@ function Home() {
                         title={langPage.actions.fines}
                         icon="fines"
                     />
+                    <HomeItem
+                        url="/my/companies"
+                        title={langPage.actions.companies}
+                        icon="company"
+                    />
                 </Grid>
             </Fieldset>
         </Page>
@@ -130,7 +130,7 @@ export function HomeItem({ url, title, icon, onClick }: IHomeItem) {
             sm={6}
             xl={4}
         >
-            {!!url ? (
+            {url ? (
                 <Link url={url}>
                     <Card raised>
                         <CardActionArea>
@@ -154,4 +154,3 @@ export function HomeItem({ url, title, icon, onClick }: IHomeItem) {
         </Grid>
     );
 }
-export default Home;

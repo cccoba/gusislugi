@@ -59,6 +59,7 @@ import {
     LocalPharmacy,
     CalendarToday,
     History,
+    Store,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -103,7 +104,6 @@ type TIconNameAdditional =
     | "taxes"
     | "fines"
     | "wanteds"
-    | "wanteds2"
     | "sgp"
     | "qrScanner"
     | "noCamera"
@@ -124,7 +124,8 @@ type TIconNameAdditional =
     | "labs"
     | "local_pharmacy"
     | "dateTime"
-    | "medicineHistory";
+    | "medicineHistory"
+    | "company";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -155,7 +156,6 @@ export const IconList: TIconName[] = [
     "taxes",
     "fines",
     "wanteds",
-    "wanteds2",
     "sgp",
     "qrScanner",
     "noCamera",
@@ -177,6 +177,7 @@ export const IconList: TIconName[] = [
     "local_pharmacy",
     "dateTime",
     "medicineHistory",
+    "company",
 ];
 
 interface IProps extends SvgIconProps {
@@ -274,8 +275,6 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <Savings {...totalProps} />;
         case "wanteds":
             return <LocalPolice {...totalProps} />;
-        case "wanteds2":
-            return <Gavel {...totalProps} />;
         case "sgp":
             return <CurrencyExchange {...totalProps} />;
         case "qrScanner":
@@ -318,6 +317,8 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <CalendarToday {...totalProps} />;
         case "medicineHistory":
             return <History {...totalProps} />;
+        case "company":
+            return <Store {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

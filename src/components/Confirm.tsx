@@ -4,7 +4,7 @@ import lang from "lang";
 
 export interface IConfirmProps {
     open: boolean;
-    onClose?: (confirm: boolean, oterProps?: any) => void;
+    onClose?: (confirm: boolean, otherProps?: any) => void;
     title?: string;
     text?: string;
     okText?: string;
@@ -22,14 +22,10 @@ export default function Confirm({
     otherProps,
 }: IConfirmProps) {
     const handleCloseNo = () => {
-        if (!!onClose) {
-            onClose(false, typeof otherProps !== "undefined" ? otherProps : undefined);
-        }
+        onClose?.(false, typeof otherProps !== "undefined" ? otherProps : undefined);
     };
     const handleCloseYes = () => {
-        if (!!onClose) {
-            onClose(true, typeof otherProps !== "undefined" ? otherProps : undefined);
-        }
+        onClose?.(true, typeof otherProps !== "undefined" ? otherProps : undefined);
     };
     return (
         <Dialog

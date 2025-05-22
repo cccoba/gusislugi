@@ -9,6 +9,7 @@ import { RolePermissionFlag as RolePermissionActionFlag } from "api/enums/RolePe
 import { toArray } from "api/common/helper";
 import { getFlagToFlagValues, getFlagValuesToFlag } from "api/common/enumHelper";
 import { UserRolePermissionActionFlag } from "api/enums/UserRolePermissionActionFlag";
+import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
 
 import FormControl from "./FormControl";
 import Select from "./Select";
@@ -35,7 +36,7 @@ export default function RolePermissions({
         "taxes",
         "fines",
         "wanteds",
-        "wanteds2",
+        "company",
         "users",
         "shop",
         "medicineAdmin",
@@ -51,6 +52,9 @@ export default function RolePermissions({
     const userValues = getEnumSelectValues(UserRolePermissionActionFlag, "UserRolePermissionActionFlag").filter(
         (x) => x.id !== UserRolePermissionActionFlag.None
     );
+    const companyValues = getEnumSelectValues(CompanyPermissionActionFlag, "CompanyPermissionActionFlag").filter(
+        (x) => x.id !== CompanyPermissionActionFlag.None
+    );
     const inputValue = useMemo(() => {
         const newValue: any = {
             admins: [],
@@ -62,7 +66,7 @@ export default function RolePermissions({
             taxes: [],
             fines: [],
             wanteds: [],
-            wanteds2: [],
+            company: [],
             shop: [],
             medicineAdmin: [],
         };
@@ -71,6 +75,8 @@ export default function RolePermissions({
                 if (Object.prototype.hasOwnProperty.call(value, idName)) {
                     if (idName === "users") {
                         newValue[idName] = getFlagToFlagValues((value as any)[idName], UserRolePermissionActionFlag);
+                    } else if (idName === "company") {
+                        newValue[idName] = getFlagToFlagValues((value as any)[idName], CompanyPermissionActionFlag);
                     } else {
                         newValue[idName] = getFlagToFlagValues((value as any)[idName], RolePermissionActionFlag);
                     }
@@ -96,7 +102,7 @@ export default function RolePermissions({
         >
             <Box sx={{ mx: 1 }}>
                 {permissions.map((x) => {
-                    const valueList = x.id === "users" ? userValues : values;
+                    const valueList = x.id === "users" ? userValues : x.id === "company" ? companyValues : values;
 
                     return (
                         <Select

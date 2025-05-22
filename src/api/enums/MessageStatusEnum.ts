@@ -5,5 +5,5 @@ export enum MessageStatusEnum {
     MedicalPolicies,
     Taxes,
     Wanteds,
-    Wanteds2,
+    Companies,
 }
