@@ -57,10 +57,10 @@ export function toArray<T>(obj: any): T[] {
 }
 
 export function getCookie(name: string) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
         while (c.charAt(0) === " ") c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
@@ -72,7 +72,7 @@ export function isGuid(value: string) {
 }
 export function generateGuid() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-        var r = (Math.random() * 16) | 0,
+        const r = (Math.random() * 16) | 0,
             v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
@@ -117,10 +117,10 @@ export function stripTag(html: string) {
 export function numberFixed(number: string | number, fixed: number): number | undefined {
     if (typeof number === "number" || typeof number === "string" /*&& !isNaN(number - parseFloat(number))*/) {
         number = String(number);
-        var split = number.split(".");
+        const split = number.split(".");
         if (split.length > 1) {
-            var left = split[0];
-            var right = split[1].substr(0, !fixed ? 4 : fixed);
+            const left = split[0];
+            const right = split[1].substr(0, !fixed ? 4 : fixed);
             return Number(left + (fixed !== 0 ? "." + right : ""));
         }
         return Number(number);

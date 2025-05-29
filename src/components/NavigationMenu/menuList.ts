@@ -94,12 +94,19 @@ const menuList: INavigationMenu[] = [
         link: "/shop",
         roles: [["shop"]],
     },
-    {
+    /*{
         name: "medicine",
         title: lang.pages.medicine.title,
         icon: "medicine",
         link: "/medicine",
         roles: [["medicineAdmin"]],
+    },*/
+    {
+        name: "documentPrint",
+        title: lang.pages.documentPrint.title,
+        icon: "print",
+        link: "/documentPrint",
+        roles: [["admins"]],
     },
 ];
 

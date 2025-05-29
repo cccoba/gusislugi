@@ -16,4 +16,5 @@ export interface IUserDto {
     description: string;
     money: number;
     role: IRoleDto;
+    birthDate: string;
 }

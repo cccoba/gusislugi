@@ -1,5 +1,5 @@
+import { type ReactNode } from "react";
 import { Avatar, Backdrop, Box, Typography } from "@mui/material";
-import { ReactNode } from "react";
 
 import lang from "lang";
 

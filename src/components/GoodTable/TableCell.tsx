@@ -3,14 +3,14 @@ import { Box, TableCell as MuiTableCell } from "@mui/material";
 
 import CutText from "components/CutText";
 import Image from "components/Image";
-import { ISelectValue } from "components/Inputs/Select";
+import Icon from "components/Icon";
+import { type ISelectValue } from "components/Inputs/Select";
 
 import dateTime from "api/common/dateTime";
 
 import { getFieldTitle } from "./TableHead";
 
-import { IGoodTableField } from ".";
-import Icon from "components/Icon";
+import { type IGoodTableField } from ".";
 
 interface IProps {
     value?: any;

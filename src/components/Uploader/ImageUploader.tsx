@@ -55,12 +55,10 @@ export default function ImageUploader({
     }, []);
     const showLoader = (loading: boolean) => {
         setIsLoading(loading);
-        if (!!onLoading) {
-            onLoading(loading);
-        }
+        onLoading?.(loading);
     };
     const toSave = (imageBlob: any) => {
-        var file = new File([dataURLtoBlob(imageBlob)], fileName.current);
+        const file = new File([dataURLtoBlob(imageBlob)], fileName.current);
         setIsLoading(true);
         files
             .uploadFile(file)

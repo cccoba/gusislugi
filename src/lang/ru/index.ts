@@ -36,6 +36,7 @@ const ru = {
     loaderText: "Идет загрузка данных. Подождите...",
     unknown: "Неизвестно",
     updated_at: "Дата обновления",
+    users: "Пользователи",
     message: "Сообщение",
     value: "Значение",
     components: ruComponents,

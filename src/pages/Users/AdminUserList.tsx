@@ -59,6 +59,7 @@ const addValue: IUserDto = {
     firstName: "",
     nationalityId: 1,
     citizenshipId: 1,
+    birthDate: "",
     passport: "",
     registration: "",
     image: "",

@@ -1,19 +1,19 @@
 import { useMemo, useState } from "react";
+import { Button } from "@mui/material";
 
 import Form from "components/Form";
-import lang from "lang";
 import { TFormField } from "components/Form/FormAdapters";
+import lang from "lang";
+import Passport from "pages/Passport";
 
+import { checkFlagIncludes } from "api/common/enumHelper";
 import { objCopy } from "api/common/helper";
+import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { useAppSelector } from "api/hooks/redux";
 import { IUserDto } from "api/interfaces/user/IUserDto";
 
-import { checkFlagIncludes } from "api/common/enumHelper";
-import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
-import { Button } from "@mui/material";
 import Icon from "./Icon";
 import QrUserData from "./QrPrint/QrUserData";
-import Passport from "pages/Passport";
 
 interface IProps {
     user: IUserDto;

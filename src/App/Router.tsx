@@ -2,43 +2,43 @@ import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Box, SxProps, Toolbar } from "@mui/material";
 
-import NavigationMenu from "components/NavigationMenu";
 import Header from "components/Header";
-
-import Login from "pages/Users/Login";
-import Home from "pages/Home";
-import Registration from "pages/Users/Registration";
-import Profile from "pages/Users/Profile";
+import NavigationMenu from "components/NavigationMenu";
 import Claims from "pages/Claims";
-import UsersRouter from "pages/Users/Router";
-import Citizenships from "pages/Citizenships";
-import Nationalities from "pages/Nationalities";
-import QrScanner from "pages/QR/QrScanner";
-import Passport from "pages/Passport";
 import MyClaims from "pages/Claims/MyClaims";
+import CompanyRouter from "pages/Companies/Router";
+import Fines from "pages/Fines";
+import MyFines from "pages/Fines/MyFines";
+import Home from "pages/Home";
+import Links from "pages/Links";
+import LinksLink from "pages/Links/Link";
+import MedicalInfo from "pages/MedicalInfo";
+import MedicalPolicies from "pages/MedicalPolicies";
+import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
+import MedicineRouter from "pages/Medicine/Router";
 import MyMessages from "pages/Messages/MyMessages";
 import MoneyList from "pages/Money";
+import MoneySgp from "pages/Money/Sgp";
+import MoneyUser from "pages/Money/User";
+import MyRouter from "pages/My/Router";
+import Nationalities from "pages/Nationalities";
+import Passport from "pages/Passport";
+import QrScanner from "pages/QR/QrScanner";
 import Roles from "pages/Roles";
+import Shop from "pages/Shop";
+import Taxes from "pages/Taxes";
+import MyTaxes from "pages/Taxes/MyTaxes";
+import Login from "pages/Users/Login";
+import Persons from "pages/Users/Persons";
+import Profile from "pages/Users/Profile";
+import Registration from "pages/Users/Registration";
+import UsersRouter from "pages/Users/Router";
+import Wanteds from "pages/Wanteds/Wanteds";
+import Citizenships from "pages/Citizenships";
 
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
-import MoneyUser from "pages/Money/User";
-import MedicalPolicies from "pages/MedicalPolicies";
-import Taxes from "pages/Taxes";
-import Wanteds from "pages/Wanteds/Wanteds";
-import MoneySgp from "pages/Money/Sgp";
-import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
-import MyTaxes from "pages/Taxes/MyTaxes";
-import MyFines from "pages/Fines/MyFines";
-import Fines from "pages/Fines";
-import Companies from "pages/Companies/Index";
-import Persons from "pages/Users/Persons";
-import MedicalInfo from "pages/MedicalInfo";
-import Links from "pages/Links";
-import LinksLink from "pages/Links/Link";
-import Shop from "pages/Shop";
-import MedicineRouter from "pages/Medicine/Router";
-import MyRouter from "pages/My/Router";
+import DocumentPrint from "pages/DocumentsPrint";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -118,6 +118,15 @@ export default function RouterPage() {
                         <Route
                             path="/"
                             element={<Home />}
+                        />
+                        <Route
+                            path="/documentPrint"
+                            element={
+                                <DocumentPrint
+                                    roles={[["admins"]]}
+                                    icon="print"
+                                />
+                            }
                         />
                         <Route
                             path="/profile"
@@ -205,7 +214,7 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/company/*"
-                            element={<Companies />}
+                            element={<CompanyRouter baseUrl="/company" />}
                         />
                         <Route
                             path="/shop/*"

@@ -179,14 +179,14 @@ export default function Form({
                           );
                       })
                     : formFields.map((formField: TFormField, index) => {
-                          const variant = !!formField?.variant ? formField.variant : fieldsVariant;
+                          const variant = formField?.variant ? formField.variant : fieldsVariant;
                           let sx: SxProps = {};
                           if (variant === "outlined") {
                               sx = { ...columnSx, mb: 1.5 };
                           } else {
                               sx = { ...columnSx, mt: index === 0 && columnCount === 1 ? 0 : 2 };
                           }
-                          if (!!formField?.hidden) {
+                          if (formField?.hidden) {
                               return null;
                           }
                           return (

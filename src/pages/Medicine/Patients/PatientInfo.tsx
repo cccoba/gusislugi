@@ -152,7 +152,7 @@ export default function MedicinePatientInfo({ patient, isAdmin, needUpdate }: IP
                 label={`${lang.pages.medicine.history.title} (${
                     histories?.length || lang.pages.medicine.history.noHistory
                 })`}
-                icon="medicineHistory"
+                icon="history"
                 variant="accordion"
                 accordionProps={{
                     withDivider: true,

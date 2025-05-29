@@ -6,8 +6,9 @@
         "no-extra-boolean-cast": "warn",
         "no-empty-pattern": "error",
         "no-var": "error",
+        "@typescript-eslint/consistent-type-imports": ["warn", { "prefer": "type-imports" }],
         "import/order":["warn",{
-            "groups":["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+            "groups":["builtin", "external", "internal", "parent", "sibling", "index", "object"],
             "newlines-between": "always-and-inside-groups"
         }]
         

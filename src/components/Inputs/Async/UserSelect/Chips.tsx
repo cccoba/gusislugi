@@ -3,21 +3,22 @@ import { Box, Chip, Typography } from "@mui/material";
 import { IconButton, Image } from "components";
 import lang from "lang";
 
-import { IUserRowDto } from ".";
+import type { IUserRowDto } from ".";
 
 interface IProps {
     loading: boolean;
     users: IUserRowDto[];
+    withImage: boolean;
     onDel: (ids: number[]) => void;
     onAdd: () => void;
 }
 const langPage = lang.components.userSelect;
 
-function UserSelectChips({ loading = true, users = [], onDel, onAdd }: IProps) {
+function UserSelectChips({ loading = true, users = [], withImage, onDel, onAdd }: IProps) {
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <Box sx={{ flexGrow: 3 }}>
-                {!!users?.length ? (
+                {users?.length ? (
                     users.map((user) => (
                         <Chip
                             sx={{
@@ -26,12 +27,14 @@ function UserSelectChips({ loading = true, users = [], onDel, onAdd }: IProps) {
                             key={user.id}
                             label={user.firstName}
                             avatar={
-                                <Image
-                                    width="32px"
-                                    avatar
-                                    image={user.image}
-                                    variant="circular"
-                                />
+                                !!withImage ? (
+                                    <Image
+                                        width="32px"
+                                        avatar
+                                        image={user.image}
+                                        variant="circular"
+                                    />
+                                ) : undefined
                             }
                             onDelete={() => onDel([user.id])}
                         />

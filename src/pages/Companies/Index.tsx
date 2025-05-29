@@ -18,12 +18,14 @@ import { IConfirmProps } from "components/Confirm";
 import CompanyMoneyAdd from "./AddMoney";
 import { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
+import { useNavigate } from "react-router-dom";
+import { IPage } from "api/interfaces/components/Page/IPage";
 
-interface IProps {
+interface IProps extends IPage {
     userId?: number;
 }
 
-export default function Companies({ userId }: IProps) {
+export default function Companies({ userId, ...pageProps }: IProps) {
     const langPage = lang.pages.companies;
     const { setIsLoading } = useLoader();
     const { showError, showSuccess } = useNotifier();
@@ -31,6 +33,7 @@ export default function Companies({ userId }: IProps) {
     const [selectedRecord, setSelectedRecord] = useState<ICompanyDto | null>(null);
     const [deleteConfirm, setDeleteConfirm] = useState<null | IConfirmProps>(null);
     const [isAddMoneyShowed, setIsAddMoneyShowed] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadList();
@@ -65,6 +68,12 @@ export default function Companies({ userId }: IProps) {
         }
         if (currentUserRoleParams & CompanyPermissionActionFlag.View) {
             newActions.push({ icon: "refresh", name: "refresh", onClick: loadList });
+        }
+        if (
+            currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd ||
+            currentUserRoleParams & CompanyPermissionActionFlag.MoneySubtract
+        ) {
+            newActions.push({ icon: "history", name: "history", onClick: () => navigate("/company/history") });
         }
         if (currentUserRoleParams & CompanyPermissionActionFlag.Add) {
             newActions.push({ icon: "add", name: "add", onClick: toAddRecord });
@@ -174,8 +183,8 @@ export default function Companies({ userId }: IProps) {
                 return;
             }
             setIsLoading(true);
-            company
-                .addMoney(data)
+            company.money
+                .add(data)
                 .then((res) => {
                     const { error, result } = webApiResultData<number>(res);
                     if (error) {
@@ -203,6 +212,7 @@ export default function Companies({ userId }: IProps) {
         <Page
             title={langPage.title}
             icon="company"
+            {...pageProps}
         >
             {!!deleteConfirm && (
                 <Confirm
@@ -212,7 +222,7 @@ export default function Companies({ userId }: IProps) {
             )}
             {!!isAddMoneyShowed && !!selectedRecord && (
                 <CompanyMoneyAdd
-                    company={selectedRecord}
+                    companyId={selectedRecord.id}
                     onSave={onAddMoneySave}
                     onCancel={() => setIsAddMoneyShowed(false)}
                     withAdd={

@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 
 import Loader from "components/Loader";
 import lang from "lang";
-
-import { userInit } from "store/reducers/UserSlice";
-import { deviceInit, setDeviceSize } from "store/reducers/DeviceSlice";
 import { RootState } from "store";
+import { deviceInit, setDeviceSize } from "store/reducers/DeviceSlice";
+import { userInit } from "store/reducers/UserSlice";
 
 import { deviceLoad } from "api/common/device";
 import { IUserData } from "api/interfaces/store/IUserData";

@@ -7,7 +7,7 @@ import { IFormProps } from "components/Form";
 
 import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 
-import CompanyMoneyHistory from "./History";
+import CompanyMoneyHistory from "./CompanyHistory";
 
 interface IProps {
     data: ICompanyDto;

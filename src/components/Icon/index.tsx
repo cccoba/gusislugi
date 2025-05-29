@@ -60,6 +60,8 @@ import {
     CalendarToday,
     History,
     Store,
+    Print,
+    ContentPaste,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -124,8 +126,10 @@ type TIconNameAdditional =
     | "labs"
     | "local_pharmacy"
     | "dateTime"
-    | "medicineHistory"
-    | "company";
+    | "history"
+    | "company"
+    | "print"
+    | "paste";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -176,8 +180,10 @@ export const IconList: TIconName[] = [
     "labs",
     "local_pharmacy",
     "dateTime",
-    "medicineHistory",
+    "history",
     "company",
+    "print",
+    "paste",
 ];
 
 interface IProps extends SvgIconProps {
@@ -315,10 +321,14 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <LocalPharmacy {...totalProps} />;
         case "dateTime":
             return <CalendarToday {...totalProps} />;
-        case "medicineHistory":
+        case "history":
             return <History {...totalProps} />;
         case "company":
             return <Store {...totalProps} />;
+        case "print":
+            return <Print {...totalProps} />;
+        case "paste":
+            return <ContentPaste {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

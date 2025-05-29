@@ -6,11 +6,11 @@ import lang from "lang";
 import FormControl from "components/Inputs/FormControl";
 import useGetData from "store/rtkProvider";
 
-import { IInputProps } from "api/interfaces/components/IInputProps";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
-import { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 
 import UserSelectList from "./List";
 import UserSelectChips from "./Chips";
@@ -18,6 +18,7 @@ import UserSelectChips from "./Chips";
 interface IProps extends IInputProps<number | number[]> {
     multiple?: boolean;
     multipleVariant?: "table" | "chips";
+    withOutImage?: boolean;
 }
 
 export interface IUserRowDto {
@@ -50,6 +51,7 @@ export default function UserSelect({
     label = "",
     value,
     multiple = false,
+    withOutImage = false,
     variant = "standard",
     fullWidth = true,
     error = false,
@@ -208,6 +210,7 @@ export default function UserSelect({
                     users={selectedUsers}
                     onDel={delUsers}
                     onAdd={toAdd}
+                    withImage={!withOutImage}
                 />
                 {/*})*/}
                 {!!helperText && <FormHelperText>{helperText}</FormHelperText>}

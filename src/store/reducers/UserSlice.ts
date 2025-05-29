@@ -1,12 +1,12 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
 
 import getConst from "api/common/getConst";
 import { users } from "api/data";
-import { IFirstLoadView } from "api/data/IFirstLoadView";
+import type { IFirstLoadView } from "api/data/IFirstLoadView";
 import { webApiResultData } from "api/data/dataProvider";
-import { IUserData } from "api/interfaces/store/IUserData";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IUserData } from "api/interfaces/store/IUserData";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 
 import { setServerAppVersion } from "./DeviceSlice";
 

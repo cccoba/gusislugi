@@ -10,6 +10,7 @@ const getConst = (
         | "env-mode"
         | "images-url"
         | "dock-url"
+        | "document-print-generator-url"
 ): any => {
     switch (name) {
         case "auth-token-name":
@@ -32,6 +33,8 @@ const getConst = (
             return process.env.REACT_APP_BOT_NAME;
         case "env-mode":
             return process.env.REACT_APP_ENVIRONMENT;
+        case "document-print-generator-url":
+            return process.env.REACT_APP_DOCUMET_GENERATOR_URL;
     }
 };
 export default getConst;

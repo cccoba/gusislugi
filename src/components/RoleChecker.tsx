@@ -33,7 +33,6 @@ export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRo
             }
 
             const flagValue2 = flagValue || defaultFlagValue;
-
             if (checkFlagIncludes(flagValue2, (userRoleParams as any)[roleName])) {
                 return true;
             }

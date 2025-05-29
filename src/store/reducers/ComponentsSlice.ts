@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { TIconName } from "components/Icon";
+import { type TIconName } from "components/Icon";
 
-import { IComponentsData } from "api/interfaces/store/IComponentsData";
+import { type IComponentsData } from "api/interfaces/store/IComponentsData";
 
 const COMPONENTS_INITIAL_STATE: IComponentsData = {
     header: {
@@ -77,7 +77,7 @@ const HeaderSlice = createSlice({
             state.alert = { ...COMPONENTS_INITIAL_STATE.alert };
         },
         setRedirect(state, { payload }: PayloadAction<IComponentsData["redirect"]>) {
-            state.redirect = !!payload ? payload : null;
+            state.redirect = payload || null;
         },
     },
 });

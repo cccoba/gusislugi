@@ -1,8 +1,10 @@
 import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 
-import reportWebVitals from "./reportWebVitals";
 import Loader from "./components/Loader";
+
+import "./reportWebVitals";
+
 const App = React.lazy(() => import("./App"));
 
 const container = document.getElementById("root");

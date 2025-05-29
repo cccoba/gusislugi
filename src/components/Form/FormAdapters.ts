@@ -1,27 +1,31 @@
-import CounterAdapter, { IFormFieldCounter } from "./Adapters/Counter";
-import DateAdapter, { IFormFieldDate } from "./Adapters/Date";
-import DateTimeAdapter, { IFormFieldDateTime } from "./Adapters/DateTime";
-import IconSelectorAdapter, { IFormFieldIconSelector } from "./Adapters/IconSelector";
-import ImageAdapter, { IFormFieldImage } from "./Adapters/Image";
-import JsonAdapter, { IFormFieldJson } from "./Adapters/Json";
-import ListAdapter, { IFormFieldList } from "./Adapters/List";
-import ListMultipleAdapter, { IFormFieldListMultiple } from "./Adapters/ListMultiple";
-import MedicineDiseaseParamAdapter, { IFormFieldMedicineDiseaseParam } from "./Adapters/MedicineDiseaseParam";
-import NumberAdapter, { IFormFieldNumber } from "./Adapters/Number";
-import PasswordAdapter, { IFormFieldPassword } from "./Adapters/Password";
-import RolePermissionsAdapter, { IFormFieldRolePermissions } from "./Adapters/RolePermissions";
-import SelectAdapter, { IFormFieldSelect } from "./Adapters/Select";
-import SelectFilteredAdapter, { IFormFieldSelectFiltered } from "./Adapters/SelectFiltered";
-import SwitcherAdapter, { IFormFieldSwitcher } from "./Adapters/Switcher";
-import TextAdapter, { IFormFieldText } from "./Adapters/Text";
-import UserAdapter, { IFormFieldUser } from "./Adapters/User";
-import MedicineParamsSelectorAdapter, { IFormFieldMedicineParamsSelector } from "./Adapters/MedicineParamsSelector";
-import MedicineParamsActionsAdapter, { IFormFieldMedicineParamsActions } from "./Adapters/MedicineParamsActions";
-import MedicineTestAdapter, { IFormFieldMedicineTest } from "./Adapters/MedicineTest";
+import CounterAdapter, { type IFormFieldCounter } from "./Adapters/Counter";
+import CompanyAdapter, { type IFormFieldCompany } from "./Adapters/Company";
+import DateAdapter, { type IFormFieldDate } from "./Adapters/Date";
+import DateTimeAdapter, { type IFormFieldDateTime } from "./Adapters/DateTime";
+import IconSelectorAdapter, { type IFormFieldIconSelector } from "./Adapters/IconSelector";
+import ImageAdapter, { type IFormFieldImage } from "./Adapters/Image";
+import JsonAdapter, { type IFormFieldJson } from "./Adapters/Json";
+import ListAdapter, { type IFormFieldList } from "./Adapters/List";
+import ListMultipleAdapter, { type IFormFieldListMultiple } from "./Adapters/ListMultiple";
+import MedicineDiseaseParamAdapter, { type IFormFieldMedicineDiseaseParam } from "./Adapters/MedicineDiseaseParam";
+import NumberAdapter, { type IFormFieldNumber } from "./Adapters/Number";
+import PasswordAdapter, { type IFormFieldPassword } from "./Adapters/Password";
+import RolePermissionsAdapter, { type IFormFieldRolePermissions } from "./Adapters/RolePermissions";
+import SelectAdapter, { type IFormFieldSelect } from "./Adapters/Select";
+import SelectFilteredAdapter, { type IFormFieldSelectFiltered } from "./Adapters/SelectFiltered";
+import SwitcherAdapter, { type IFormFieldSwitcher } from "./Adapters/Switcher";
+import TextAdapter, { type IFormFieldText } from "./Adapters/Text";
+import UserAdapter, { type IFormFieldUser } from "./Adapters/User";
+import MedicineParamsSelectorAdapter, {
+    type IFormFieldMedicineParamsSelector,
+} from "./Adapters/MedicineParamsSelector";
+import MedicineParamsActionsAdapter, { type IFormFieldMedicineParamsActions } from "./Adapters/MedicineParamsActions";
+import MedicineTestAdapter, { type IFormFieldMedicineTest } from "./Adapters/MedicineTest";
 import MedicineDiseaseConditionsAdapter, {
-    IFormFieldMedicineDiseaseConditions,
+    type IFormFieldMedicineDiseaseConditions,
 } from "./Adapters/MedicineDiseaseConditions";
-import TimeDurationAdapter, { IFormFieldTimeDuration } from "./Adapters/TimeDuration";
+import TimeDurationAdapter, { type IFormFieldTimeDuration } from "./Adapters/TimeDuration";
+import DocumentPrintParamsAdapter, { type IFormFieldDocumentPrintParams } from "./Adapters/DocumentPrintParams";
 export interface IFormField {
     name: string;
     title: string;
@@ -58,8 +62,10 @@ export interface IFormAdapter {
 
 export type TFormField =
     | IFormFieldCounter
+    | IFormFieldCompany
     | IFormFieldDate
     | IFormFieldDateTime
+    | IFormFieldDocumentPrintParams
     | IFormFieldIconSelector
     | IFormFieldImage
     | IFormFieldList
@@ -82,8 +88,10 @@ export type TFormField =
 
 const FormAdapters: IFormAdapter[] = [
     CounterAdapter,
+    CompanyAdapter,
     DateAdapter,
     DateTimeAdapter,
+    DocumentPrintParamsAdapter,
     IconSelectorAdapter,
     ImageAdapter,
     ListAdapter,

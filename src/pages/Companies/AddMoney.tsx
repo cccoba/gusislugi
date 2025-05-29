@@ -1,20 +1,28 @@
 import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
-import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 import { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 import { Form, Modal } from "components";
 import { ISelectValue } from "components/Inputs/Select";
 import lang, { getEnumTitleValue } from "lang";
 import { useMemo } from "react";
+import { TFormField } from "components/Form/FormAdapters";
 
 interface IProps {
-    company: ICompanyDto;
+    companyId: number;
     onSave: (data: ICompanyMoneyDto) => void;
     onCancel: () => void;
+    withCompanySelector?: boolean;
     withAdd?: boolean;
     withSubtract?: boolean;
 }
 
-export default function CompanyMoneyAdd({ company, onSave, onCancel, withAdd, withSubtract }: IProps) {
+export default function CompanyMoneyAdd({
+    companyId,
+    onSave,
+    onCancel,
+    withAdd,
+    withSubtract,
+    withCompanySelector,
+}: IProps) {
     const langPage = lang.pages.companies;
 
     const availableTypes = useMemo<ISelectValue[]>(() => {
@@ -33,6 +41,38 @@ export default function CompanyMoneyAdd({ company, onSave, onCancel, withAdd, wi
         }
         return types;
     }, [withAdd, withSubtract]);
+    const fields = useMemo<TFormField[]>(() => {
+        const newFields: TFormField[] = [
+            {
+                name: "money",
+                title: langPage.money,
+                type: "counter",
+                minValue: 0,
+                required: true,
+            },
+            {
+                name: "type",
+                title: lang.type,
+                type: "select",
+                values: availableTypes,
+            },
+            {
+                name: "message",
+                title: lang.description,
+                type: "text",
+                multiline: true,
+            },
+        ];
+        if (withCompanySelector) {
+            newFields.unshift({
+                name: "companyId",
+                title: langPage.company,
+                type: "company",
+                required: true,
+            });
+        }
+        return newFields;
+    }, [withCompanySelector]);
     return (
         <Modal
             open
@@ -43,32 +83,12 @@ export default function CompanyMoneyAdd({ company, onSave, onCancel, withAdd, wi
         >
             <Form
                 values={{
-                    companyId: company.id,
+                    companyId,
                     message: "",
                     type: availableTypes?.[0]?.id,
                     value: 0,
                 }}
-                fields={[
-                    {
-                        name: "money",
-                        title: langPage.money,
-                        type: "counter",
-                        minValue: 0,
-                        required: true,
-                    },
-                    {
-                        name: "type",
-                        title: lang.type,
-                        type: "select",
-                        values: availableTypes,
-                    },
-                    {
-                        name: "message",
-                        title: lang.description,
-                        type: "text",
-                        multiline: true,
-                    },
-                ]}
+                fields={fields}
                 onCancel={onCancel}
                 onSubmit={onSave}
             />

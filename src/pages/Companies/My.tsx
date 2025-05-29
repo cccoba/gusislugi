@@ -13,7 +13,7 @@ import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import CompanyList from "./List";
-import CompanyMoneyHistory from "./History";
+import CompanyMoneyHistory from "./CompanyHistory";
 
 export default function MyCompanies() {
     const langPage = lang.pages.companies;

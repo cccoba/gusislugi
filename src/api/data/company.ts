@@ -1,8 +1,8 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
+import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
+import type { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 
 import { dataProvider } from "./dataProvider";
-import { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 
 const baseUrl = "companies&view=";
 
@@ -25,8 +25,13 @@ const CompanyProvider = {
     getMyData: (): Promise<IWebDataResult<ICompanyDto[]>> => {
         return dataProvider(baseUrl + "getMyData");
     },
-    addMoney: (data: ICompanyMoneyDto): Promise<IWebDataResult<number>> => {
-        return dataProvider(baseUrl + "addMoney", "post", data);
+    money: {
+        add: (data: ICompanyMoneyDto): Promise<IWebDataResult<number>> => {
+            return dataProvider(baseUrl + "addMoney", "post", data);
+        },
+        getList: (): Promise<IWebDataResult<ICompanyMoneyDto[]>> => {
+            return dataProvider(baseUrl + "moneyList");
+        },
     },
 };
 export default CompanyProvider;

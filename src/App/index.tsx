@@ -2,8 +2,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 
-import theme from "styles";
 import store from "store";
+import theme from "styles";
 
 import Main from "./Main";
 

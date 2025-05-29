@@ -25,6 +25,19 @@ const ruComponents = {
             initialValue: "Не указаны данные по умолчанию",
         },
     },
+    documentPrintParams: {
+        type: "Тип",
+        size: "Размер",
+        x: "X",
+        y: "Y",
+        width: "Ширина",
+        height: "Высота",
+        example: "Образец",
+        result: "Результат",
+        color: "Цвет",
+        pastePosition: "Вставить позицию",
+        copiedPosition: "Скопированная позиция",
+    },
     header: {
         appLast: "Вы используете последнюю версию приложения!",
         appNotLast: "Вы используете не последнюю версию приложения! Обновить страницу.",
@@ -46,6 +59,7 @@ const ruComponents = {
         isEmail: "Укажите корректный Email",
         isSelectValue: "Выберите значение из списка",
         pattern: "Поле содержит недопустимые символы",
+        invalidColor: "Неверный формат цвета. Используйте формат #RRGGBB",
     },
     goodTable: {
         loading: "Загрузка...",
@@ -201,6 +215,7 @@ const ruComponents = {
         showPasport: "Показать Паспорт",
         titleShowId: "ID пользователя",
         tgLogin: "Telegram",
+        birthDate: "Дата рождения",
     },
     userSelect: {
         multiplePlaceholder: "Выберите пользователей",

@@ -5,6 +5,15 @@ const ruPipes = {
         inProgress: "В работе",
         failed: "Отклонена",
     },
+    documentPrintParamType: {
+        firstName: "Имя Фамилия",
+        birthDate: "Дата рождения",
+        nationality: "Национальность",
+        citizenship: "Гражданство",
+        passport: "Паспорт",
+        image: "Изображение",
+        qrGuid: "QR-код",
+    },
     medicineDiseaseType: {
         disease: "Заболевание",
         addiction: "Зависимость",

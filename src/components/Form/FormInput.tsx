@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 import lang, { sprintf } from "lang";
 
-import FormAdapters, { IFormAdapter, IFormField } from "./FormAdapters";
+import FormAdapters, { type IFormAdapter, type IFormField } from "./FormAdapters";
 
 interface IProps extends IFormField {
     fieldsVariant: "filled" | "outlined" | "standard";
@@ -46,27 +46,27 @@ function FormInput({
 
     ...fieldParams
 }: IProps) {
-    const variant = !!fieldParams?.variant ? fieldParams.variant : fieldsVariant;
+    const variant = fieldParams?.variant ? fieldParams.variant : fieldsVariant;
     const rules = useMemo(() => {
         const newRules: any = {};
-        if (!!required) {
+        if (required) {
             newRules.required = langPage.isRequired;
         }
-        if (!!fieldParams?.maxLength) {
+        if (fieldParams?.maxLength) {
             newRules.maxLength = {
                 value: fieldParams.maxLength,
                 message: sprintf(langPage.maxLength, fieldParams.maxLength),
             };
         }
-        if (!!fieldParams?.minLength) {
+        if (fieldParams?.minLength) {
             newRules.minLength = {
                 value: fieldParams.minLength,
                 message: sprintf(langPage.minLength, fieldParams.minLength),
             };
         }
-        if (!!fieldParams?.validateFn) {
+        if (fieldParams?.validateFn) {
             newRules.validate = fieldParams?.validateFn;
-        } else if (!!fieldParams?.pattern) {
+        } else if (fieldParams?.pattern) {
             newRules.validate = (v: any) => {
                 if (!required && v?.length === 0) {
                     return true;
@@ -75,18 +75,19 @@ function FormInput({
             };
         } else {
             const validateFn = getValidate(FormAdapters, type);
-            if (!!validateFn) {
+            if (validateFn) {
                 newRules.validate = (v: any) => validateFn(v, required, fieldParams);
             }
         }
         return newRules;
     }, [fieldParams, type, required]);
 
-    if (!!hidden) {
+    if (hidden) {
         return null;
     }
 
     const Input: any = getInput(FormAdapters, type);
+
     if (Input !== null) {
         return (
             <Controller

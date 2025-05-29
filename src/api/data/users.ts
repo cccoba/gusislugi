@@ -1,12 +1,12 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
-import { IUserDto } from "api/interfaces/user/IUserDto";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
-import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
-import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { IUserRegistrationDto } from "api/interfaces/user/IUserRegistrationDto";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IClaimDto } from "api/interfaces/user/IClaimDto";
+import type { IUserShortDto } from "api/interfaces/user/IUserShortDto";
+
+import type { IFirstLoadView } from "./IFirstLoadView";
 
 import { dataProvider } from "./dataProvider";
-import { IFirstLoadView } from "./IFirstLoadView";
 
 const baseUrl = "users&view=";
 

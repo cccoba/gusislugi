@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { setHeaderAll, loaderChange } from "store/reducers/ComponentsSlice";
 import lang from "lang";
 
-import { IPage } from "api/interfaces/components/Page/IPage";
+import { type IPage } from "api/interfaces/components/Page/IPage";
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 
 import { Icon, RoleChecker } from "..";

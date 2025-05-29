@@ -1,5 +1,5 @@
-import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
-import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import type { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
+import type { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
 export type TRoleCheckerRole = [keyof IRoleDto["params"], RolePermissionFlag?];
 export interface IRoleDto {
