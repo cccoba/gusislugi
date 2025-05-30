@@ -1,4 +1,4 @@
-import { Area } from "react-easy-crop/types";
+import type { Area } from "react-easy-crop/types";
 
 export const createImage = (url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
@@ -93,8 +93,6 @@ export default async function getCroppedImg(
     );
 
     if (returnType === "dataURL") {
-        console.log("returnFormat", returnFormat);
-
         if (returnFormat === "jpeg") {
             return croppedCanvas.toDataURL("image/jpeg", 0.75);
         }

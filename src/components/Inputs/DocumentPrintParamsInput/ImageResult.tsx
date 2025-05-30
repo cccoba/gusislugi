@@ -9,8 +9,7 @@ import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import type { INationalityDto } from "api/interfaces/user/INationalityDto";
 import type { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
-
-import type { IDocumentPrintParamsCopyPosition } from ".";
+import { DocumentPrintParamAlignEnum } from "api/enums/DocumentPrintParamAlignEnum";
 
 interface IProps {
     url: string;
@@ -21,7 +20,6 @@ interface IProps {
 export default function DocumentPrintParamsImageResult({ url, params, onItemClick }: IProps) {
     const langPage = lang.components.documentPrintParams;
     const nationalities = useAppSelector((s) => s.user.nationalities);
-    const citizenships = useAppSelector((s) => s.user.citizenships);
     const toItemClick = (e: React.MouseEvent<HTMLDivElement>, param: IDocumentPrintParamDto) => {
         e.stopPropagation();
         onItemClick(param);
@@ -53,8 +51,12 @@ export default function DocumentPrintParamsImageResult({ url, params, onItemClic
                         color: param.color,
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center",
-
+                        justifyContent:
+                            param.align === DocumentPrintParamAlignEnum.Center
+                                ? "center"
+                                : param.align === DocumentPrintParamAlignEnum.Right
+                                ? "flex-end"
+                                : "flex-start",
                         backgroundColor: "rgba(255,255,255,0.1)",
                         fontFamily: "Arial, sans-serif",
                         fontWeight: "normal",
@@ -67,17 +69,14 @@ export default function DocumentPrintParamsImageResult({ url, params, onItemClic
                         },
                     }}
                 >
-                    {getTypeContent(param, { nationalities, citizenships })}
+                    {getTypeContent(param, { nationalities })}
                 </Box>
             ))}
         </Box>
     );
 }
 
-function getTypeContent(
-    param: IDocumentPrintParamDto,
-    { nationalities, citizenships }: { nationalities: INationalityDto[]; citizenships: ICitizenshipDto[] }
-) {
+function getTypeContent(param: IDocumentPrintParamDto, { nationalities }: { nationalities: INationalityDto[] }) {
     const userExample: IUserDto = {
         id: 1,
         guid: "1",
@@ -90,19 +89,28 @@ function getTypeContent(
         registration: "1234567890",
         image: getConst("document-print-generator-url") + "userExample.jpg",
         description: "Описание",
+        jobPosition: "Должность",
         money: 1000,
         birthDate: "20.08.1984",
         role: { id: 1, title: "Admin", description: "", params: {} },
     };
     switch (param.type) {
-        case DocumentPrintParamTypeEnum.FirstName:
+        case DocumentPrintParamTypeEnum.Name:
             return userExample.firstName;
+        case DocumentPrintParamTypeEnum.FirstName: {
+            const arr = userExample.firstName.split(" ");
+            return arr?.[0] || "";
+        }
+        case DocumentPrintParamTypeEnum.LastName: {
+            const arr = userExample.firstName.split(" ");
+            return arr?.[1] || "";
+        }
         case DocumentPrintParamTypeEnum.BirthDate:
             return userExample.birthDate;
         case DocumentPrintParamTypeEnum.Nationality:
             return nationalities.find((x) => x.id === userExample.nationalityId)?.title || lang.unknown;
-        case DocumentPrintParamTypeEnum.Citizenship:
-            return citizenships.find((x) => x.id === userExample.citizenshipId)?.title || lang.unknown;
+        case DocumentPrintParamTypeEnum.JobPosition:
+            return userExample.jobPosition;
         case DocumentPrintParamTypeEnum.Passport:
             return userExample.passport;
         case DocumentPrintParamTypeEnum.Image: {

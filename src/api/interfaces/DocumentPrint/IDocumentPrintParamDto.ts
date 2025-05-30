@@ -1,3 +1,4 @@
+import type { DocumentPrintParamAlignEnum } from "api/enums/DocumentPrintParamAlignEnum";
 import type { DocumentPrintParamTypeEnum } from "api/enums/DocumentPrintParamTypeEnum";
 
 export interface IDocumentPrintParamDto {
@@ -8,4 +9,5 @@ export interface IDocumentPrintParamDto {
     y: number;
     width: number;
     height: number;
+    align: DocumentPrintParamAlignEnum;
 }

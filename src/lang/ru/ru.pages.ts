@@ -11,10 +11,11 @@ const ruPages = {
         editTitle: "Редактирование документа",
         addTitle: "Добавление документа",
         document: "Тип документа",
-        image: "Название файла",
-        params: {
-            title: "Параметры",
-        },
+        zipName: "Название архива",
+        originalName: "Шаблон документа",
+        originalNameHelperText: "Формат: png",
+        exampleName: "Пример документа",
+        params: "Параметры",
         errors: {
             create: "Не удалось создать архив",
             remove: "Не удалось удалить документ!",

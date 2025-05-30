@@ -7,6 +7,8 @@ import { DocumentPrintParamTypeEnum } from "api/enums/DocumentPrintParamTypeEnum
 import lang, { getEnumSelectValues } from "lang";
 import Icon from "components/Icon";
 
+import { DocumentPrintParamAlignEnum } from "api/enums/DocumentPrintParamAlignEnum";
+
 import ColorPicker from "../ColorPicker";
 import Modal from "../../Modal";
 import Select from "../Select";
@@ -66,6 +68,13 @@ export default function DocumentPrintParamsEdit({
                 label={langPage.color}
                 value={localValue.color}
                 onChangeValue={(v) => toChangeValue(v, "color")}
+            />
+            <Select
+                label={langPage.align}
+                value={localValue.align}
+                onChangeValue={(v) => toChangeValue(v, "align")}
+                required
+                values={getEnumSelectValues(DocumentPrintParamAlignEnum, "DocumentPrintParamAlignEnum")}
             />
             <Counter
                 label={langPage.size}

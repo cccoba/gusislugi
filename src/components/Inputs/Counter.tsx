@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Button, InputAdornment, TextField } from "@mui/material";
 
 import Icon from "components/Icon";
-import { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
 
 interface IProps extends IInputProps<number> {
     minValue?: number;
@@ -23,7 +23,7 @@ function Counter({
     fullWidth = true,
     value = 0,
     minValue = 0,
-    maxValue = 1000,
+    maxValue = 100000,
     step = 1,
     onChangeValue,
     compact = false,

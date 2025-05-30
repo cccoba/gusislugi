@@ -5,7 +5,7 @@ import { IconButton, Confirm, Icon, Image } from "components";
 import ImageUploader from "components/Uploader/ImageUploader";
 
 import { files } from "api/data";
-import { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
 import { useNotifier } from "api/hooks/useNotifier";
 
 import FormControl from "../FormControl";
@@ -42,13 +42,13 @@ export default function InputImage({
     onChangeValue,
 }: IProps) {
     const [isLoading, setIsLoading] = useState(false);
-    const [imageName, setImageName] = useState<TImageName>(!!value ? value : null);
+    const [imageName, setImageName] = useState<TImageName>(value ? value : null);
     const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
     const [imageUploader, setImageUploader] = useState<boolean>(false);
     const { showError } = useNotifier();
 
     useEffect(() => {
-        setImageName(!!value ? value : null);
+        setImageName(value ? value : null);
     }, [value]);
 
     const updateImage = (newName: TImageName) => {
@@ -62,7 +62,7 @@ export default function InputImage({
         setImageUploader(false);
     };
     const onSave = (fileName: TImageName, error?: string) => {
-        if (!!fileName) {
+        if (fileName) {
             updateImage(fileName);
             hideImageUploader();
         } else if (error) {
@@ -96,7 +96,7 @@ export default function InputImage({
                 helperText={helperText}
             >
                 <Box sx={{ mx: 1 }}>
-                    {!!isLoading ? (
+                    {isLoading ? (
                         <Box
                             sx={{
                                 position: "relative",
@@ -115,7 +115,7 @@ export default function InputImage({
                                 }}
                             />
                         </Box>
-                    ) : !!imageName ? (
+                    ) : imageName ? (
                         <Box>
                             <Image
                                 image={imageName}

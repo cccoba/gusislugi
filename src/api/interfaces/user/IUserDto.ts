@@ -1,4 +1,4 @@
-import { IRoleDto } from "./IRoleDto";
+import type { IRoleDto } from "./IRoleDto";
 
 export interface IUserDto {
     id: number;
@@ -17,4 +17,5 @@ export interface IUserDto {
     money: number;
     role: IRoleDto;
     birthDate: string;
+    jobPosition: string;
 }

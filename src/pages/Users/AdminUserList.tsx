@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 import lang, { sprintf } from "lang";
 import { Form, GoodTable, IconButton, Modal, Page, RoleChecker, Switcher } from "components";
-import { IGoodTableField } from "components/GoodTable";
+import type { IGoodTableField } from "components/GoodTable";
 import useGetData from "store/rtkProvider";
 import SendUserNotification from "components/SendUserNotification";
-import { TFormField } from "components/Form/FormAdapters";
+import type { TFormField } from "components/Form/FormAdapters";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
-import { IFormFieldSelect } from "components/Form/Adapters/Select";
+import type { IFormFieldSelect } from "components/Form/Adapters/Select";
 import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
@@ -41,6 +41,7 @@ const defAddFields: TFormField[] = [
     { name: "image", title: langAddForm.image, type: "image", fieldProps: { previewWidth: "200px" } },
 
     { type: "text", name: "firstName", title: langAddForm.firstName },
+    { type: "date", name: "birthDate", title: langAddForm.birthDate },
 
     { name: "nationalityId", title: langAddForm.nationality, type: "select", values: [] },
     { name: "citizenshipId", title: langAddForm.citizenship, type: "select", values: [] },
@@ -60,6 +61,7 @@ const addValue: IUserDto = {
     nationalityId: 1,
     citizenshipId: 1,
     birthDate: "",
+    jobPosition: "",
     passport: "",
     registration: "",
     image: "",
@@ -85,7 +87,7 @@ function AdminUserList({ roles }: IPageWithRoles) {
     const allRoles = useAppSelector((x) => x.user.roles);
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
-        let fields = { fields: [...defFields], addFields: [...defAddFields] };
+        const fields = { fields: [...defFields], addFields: [...defAddFields] };
         if (!withImage) {
             fields.fields = fields.fields.filter((x) => x.name !== "image");
         }

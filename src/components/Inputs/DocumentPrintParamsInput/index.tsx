@@ -10,6 +10,8 @@ import lang, { getEnumSelectValues } from "lang";
 import Fieldset from "components/Fieldset";
 import GoodTable from "components/GoodTable";
 
+import { DocumentPrintParamAlignEnum } from "api/enums/DocumentPrintParamAlignEnum";
+
 import FormControl from "../FormControl";
 
 import DocumentPrintParamsEdit from "./Edit";
@@ -17,7 +19,8 @@ import DocumentPrintParamsImageResult from "./ImageResult";
 import DocumentPrintParamsImageExample from "./ImageExaple";
 
 interface IProps extends IInputProps<IDocumentPrintParamDto[]> {
-    documentId: number;
+    originalName: string;
+    exampleName: string;
 }
 
 export interface IDocumentPrintParamsCopyPosition {
@@ -35,17 +38,18 @@ export default function DocumentPrintParamsInput({
     helperText = "",
     disabled = false,
     value,
-    documentId,
+    originalName,
+    exampleName,
     onChangeValue,
 }: IProps) {
     const langPage = lang.components.documentPrintParams;
     const [editItem, setEditItem] = useState<IDocumentPrintParamDto | null>(null);
     const imageData = useMemo(() => {
         return {
-            example: `${getConst("document-print-generator-url")}${documentId}-example.png`,
-            model: `${getConst("document-print-generator-url")}${documentId}.png`,
+            example: exampleName ? `${getConst("images-url")}${exampleName}` : "",
+            model: originalName ? `${getConst("images-url")}${originalName}` : "",
         };
-    }, [documentId]);
+    }, [originalName, exampleName]);
     const [copyPosition, setCopyPosition] = useState<IDocumentPrintParamsCopyPosition | null>(null);
     const toAdd = () => {
         setEditItem({
@@ -56,6 +60,7 @@ export default function DocumentPrintParamsInput({
             y: 0,
             width: 100,
             height: 100,
+            align: DocumentPrintParamAlignEnum.Center,
         });
     };
     const toEdit = ([item]: IDocumentPrintParamDto[]) => {
@@ -105,35 +110,6 @@ export default function DocumentPrintParamsInput({
                 label={label}
                 helperText={helperText}
             >
-                <Box
-                    display="flex"
-                    gap={2}
-                >
-                    <Fieldset label={langPage.example}>
-                        <DocumentPrintParamsImageExample
-                            url={imageData.example}
-                            onCopyPosition={onCopyPosition}
-                        />
-                    </Fieldset>
-                    <Fieldset label={langPage.result}>
-                        <DocumentPrintParamsImageResult
-                            url={imageData.model}
-                            params={value}
-                            onItemClick={(x) => toEdit([x])}
-                        />
-                    </Fieldset>
-                </Box>
-                {copyPosition && (
-                    <Box mt={1}>
-                        <Typography
-                            variant="caption"
-                            color="primary"
-                        >
-                            {langPage.copiedPosition}: x={copyPosition.x}, y={copyPosition.y}, ширина=
-                            {copyPosition.width}, высота={copyPosition.height}
-                        </Typography>
-                    </Box>
-                )}
                 <GoodTable<IDocumentPrintParamDto>
                     fields={[
                         {
@@ -171,6 +147,47 @@ export default function DocumentPrintParamsInput({
                     values={value}
                     onRowDoubleClick={(x) => toEdit([x])}
                 />
+                <Box
+                    sx={{
+                        maxHeight: "40vh",
+                        maxWidth: "100vw",
+                        overflow: "auto",
+                    }}
+                >
+                    <Box
+                        display="flex"
+                        gap={2}
+                    >
+                        {!!imageData.model && (
+                            <Fieldset label={langPage.result}>
+                                <DocumentPrintParamsImageResult
+                                    url={imageData.model}
+                                    params={value}
+                                    onItemClick={(x) => toEdit([x])}
+                                />
+                            </Fieldset>
+                        )}
+                        {!!imageData.example && (
+                            <Fieldset label={langPage.example}>
+                                <DocumentPrintParamsImageExample
+                                    url={imageData.example}
+                                    onCopyPosition={onCopyPosition}
+                                />
+                            </Fieldset>
+                        )}
+                    </Box>
+                    {copyPosition && (
+                        <Box mt={1}>
+                            <Typography
+                                variant="caption"
+                                color="primary"
+                            >
+                                {langPage.copiedPosition}: {langPage.x}={copyPosition.x}, {langPage.y}={copyPosition.y},{" "}
+                                {langPage.width}={copyPosition.width}, {langPage.height}={copyPosition.height}
+                            </Typography>
+                        </Box>
+                    )}
+                </Box>
             </FormControl>
         </>
     );

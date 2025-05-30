@@ -1,6 +1,8 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, SxProps, Typography } from "@mui/material";
+import type { SxProps } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import lang from "lang";
 import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
@@ -11,7 +13,7 @@ import { Fieldset } from "..";
 
 import FormInput from "./FormInput";
 import FormButtons from "./FormButtons";
-import { TFormField } from "./FormAdapters";
+import type { TFormField } from "./FormAdapters";
 
 export interface IFormGroup {
     title: string;

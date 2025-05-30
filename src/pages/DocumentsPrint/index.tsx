@@ -8,8 +8,9 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import type { IDocumentPrintDto } from "api/interfaces/DocumentPrint/IDocumentPrintDto";
 import { useLoader } from "api/hooks/redux";
 
-import DocumentPrintEdit from "./Edit";
 import { useNotifier } from "api/hooks/useNotifier";
+
+import DocumentPrintEdit from "./Edit";
 import DocumentPrintGenerator from "./Generator";
 
 export default function DocumentsPrint({ ...pageProps }: IPage) {
@@ -23,7 +24,9 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
         setSelectedDocument({
             id: 0,
             title: "",
-            image: "",
+            zipName: "",
+            originalName: "",
+            exampleName: "",
             params: [],
         });
     };
@@ -113,6 +116,7 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
                         name: "id",
                         title: lang.id,
                         format: "number",
+                        width: "100px",
                     },
                     {
                         name: "title",
@@ -139,6 +143,10 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
                         disable: (selectedRows) => selectedRows.length !== 1,
                     },
                 ]}
+                pagination={{
+                    pageSize: 25,
+                    rowsPerPage: [10, 25, 100],
+                }}
             />
         </Page>
     );

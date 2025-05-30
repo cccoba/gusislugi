@@ -20,6 +20,10 @@ export default function DocumentPrintGenerator({ documentId, ...pageProps }: IPr
     const [result, setResult] = useState<null | IDocumentPrintCreateResultDto>(null);
     const { showError } = useNotifier();
     const { setIsLoading } = useLoader();
+    const defaultValues: IDocumentPrintCreateDto = {
+        userIds: [320, 160],
+        documentId: documentId,
+    };
     const toCreate = (values: IDocumentPrintCreateDto) => {
         setIsLoading(true);
         documentPrint
@@ -64,10 +68,7 @@ export default function DocumentPrintGenerator({ documentId, ...pageProps }: IPr
                         required: true,
                     },
                 ]}
-                values={{
-                    userIds: [320, 160],
-                    documentId: documentId,
-                }}
+                values={defaultValues}
                 onSubmit={toCreate}
                 onCancel={pageProps?.modalProps?.onClose}
             />

@@ -1,8 +1,10 @@
 export enum DocumentPrintParamTypeEnum {
+    Name,
     FirstName,
+    LastName,
     BirthDate,
     Nationality,
-    Citizenship,
+    JobPosition,
     Passport,
     Image,
     QrGuid,

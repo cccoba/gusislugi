@@ -2,11 +2,10 @@ import DocumentPrintParamsInput from "components/Inputs/DocumentPrintParamsInput
 import lang from "lang";
 
 import type { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
-
-const langPage = lang.components.form;
 export interface IFormFieldDocumentPrintParams extends IFormField {
     type: "documentPrintParams";
-    documentId: number;
+    originalName?: string;
+    exampleName?: string;
 }
 
 const DocumentPrintParamsAdapter: IFormAdapter = {
@@ -22,7 +21,8 @@ const DocumentPrintParamsAdapter: IFormAdapter = {
             <DocumentPrintParamsInput
                 {...props}
                 {...fieldProps}
-                documentId={fieldParams.documentId}
+                originalName={fieldParams.originalName}
+                exampleName={fieldParams.exampleName}
                 value={value}
             />
         );

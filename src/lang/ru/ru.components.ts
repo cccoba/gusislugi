@@ -28,6 +28,7 @@ const ruComponents = {
     documentPrintParams: {
         type: "Тип",
         size: "Размер",
+        align: "Выравнивание",
         x: "X",
         y: "Y",
         width: "Ширина",

@@ -7,8 +7,8 @@ import lang from "lang";
 import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import useParamsId from "api/hooks/useParamsId";
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 
 const langPage = lang.pages.users;
 
@@ -68,7 +68,7 @@ function User({ roles }: IPageWithRoles) {
             icon="user"
             backUrl="/users"
         >
-            {!!error ? (
+            {error ? (
                 <Alert
                     type="error"
                     text={error}
