@@ -10,7 +10,6 @@ import type { IInputProps } from "api/interfaces/components/IInputProps";
 import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
 import type { IRoleDto } from "api/interfaces/user/IRoleDto";
-import type { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 
 import UserSelectList from "./List";
 import UserSelectChips from "./Chips";
@@ -27,21 +26,17 @@ export interface IUserRowDto {
     firstName: string;
     roleId: number;
     role: string;
-    citizenshipId: number;
-    citizenship: string;
     nickname: string;
     tgLogin: string;
 }
 
-export function parseUserData(user: IUserDto, roles: IRoleDto[], citizenships: ICitizenshipDto[]): IUserRowDto {
+export function parseUserData(user: IUserDto, roles: IRoleDto[]): IUserRowDto {
     return {
         id: user.id,
         image: user.image,
         firstName: user.firstName,
         roleId: user?.roleId || 0,
         role: roles.find((x) => x.id === user.roleId)?.title || lang.no,
-        citizenshipId: user?.citizenshipId || 0,
-        citizenship: citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.no,
         nickname: user?.nickname || "",
         tgLogin: user?.tgLogin ? "@" + user.tgLogin : "",
     };
@@ -64,7 +59,6 @@ export default function UserSelect({
     const [selectedUsers, setSelectedUsers] = useState<IUserRowDto[]>([]);
     const [selectedUserText, setSelectedUserText] = useState<string>("");
     const roleList = useAppSelector((s) => s.user.roles);
-    const citizenshipList = useAppSelector((s) => s.user.citizenships);
     const [modalShow, setModalShow] = useState<boolean>(false);
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
     useEffect(() => {
@@ -86,7 +80,7 @@ export default function UserSelect({
                 } else {
                     if (typeof value === "object") {
                         const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
-                        setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList)));
+                        setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList)));
                         onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
                     }
                 }
@@ -154,7 +148,7 @@ export default function UserSelect({
         } else {
             if (typeof value === "object") {
                 const newSelectedUsers = users.filter((x) => newValue.includes(x.id));
-                setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, citizenshipList)));
+                setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList)));
                 onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
             }
         }
@@ -182,7 +176,6 @@ export default function UserSelect({
                     onClose={addUsers}
                     userList={users}
                     rolesList={roleList}
-                    citizenshipList={citizenshipList}
                     multiple={multiple}
                 />
             </>
@@ -220,7 +213,6 @@ export default function UserSelect({
                 onClose={addUsers}
                 userList={users}
                 rolesList={roleList}
-                citizenshipList={citizenshipList}
                 multiple={multiple}
             />
         </>

@@ -21,7 +21,7 @@ export default function DocumentPrintGenerator({ documentId, ...pageProps }: IPr
     const { showError } = useNotifier();
     const { setIsLoading } = useLoader();
     const defaultValues: IDocumentPrintCreateDto = {
-        userIds: [320, 160],
+        userIds: [],
         documentId: documentId,
     };
     const toCreate = (values: IDocumentPrintCreateDto) => {

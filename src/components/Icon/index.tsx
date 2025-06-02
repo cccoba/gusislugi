@@ -1,4 +1,4 @@
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import type { SvgIconProps } from "@mui/material/SvgIcon";
 import {
     Edit,
     Refresh,
@@ -62,6 +62,7 @@ import {
     Store,
     Print,
     ContentPaste,
+    Public,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -129,7 +130,8 @@ type TIconNameAdditional =
     | "history"
     | "company"
     | "print"
-    | "paste";
+    | "paste"
+    | "map";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -184,6 +186,7 @@ export const IconList: TIconName[] = [
     "company",
     "print",
     "paste",
+    "map",
 ];
 
 interface IProps extends SvgIconProps {
@@ -329,6 +332,8 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <Print {...totalProps} />;
         case "paste":
             return <ContentPaste {...totalProps} />;
+        case "map":
+            return <Public {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

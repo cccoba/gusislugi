@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
 import { GoodTable, Page, Switcher } from "components";
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { IGoodTableField } from "components/GoodTable";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { IGoodTableField } from "components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import { users } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import Passport from "pages/Passport";
 
@@ -23,7 +23,6 @@ const defFields: IGoodTableField[] = [
     },
     { name: "firstName", title: langPage.fields.firstName },
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
-    { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "tgLogin", title: "", hidden: true },
     { name: "passport", title: "", hidden: true },
 ];
@@ -31,7 +30,6 @@ function Persons({ roles, icon }: IPageWithRoles) {
     const [withImage, setWithImage] = useState(false);
     const [selectedUer, setSelectedUser] = useState<IUserDto | null>(null);
     const nationalities = useAppSelector((x) => x.user.nationalities);
-    const citizenships = useAppSelector((x) => x.user.citizenships);
     const { data, isLoading, error, refetch } = useLoadApiData<IUserDto[]>(users.getPersons, []);
     const { showError } = useNotifier();
     useEffect(() => {
@@ -48,15 +46,10 @@ function Persons({ roles, icon }: IPageWithRoles) {
         if (nationalityId) {
             nationalityId.formatProps = nationalities;
         }
-
-        const citizenshipId = newFields.find((x) => x.name === "citizenshipId");
-        if (citizenshipId) {
-            citizenshipId.formatProps = citizenships;
-        }
         return newFields;
-    }, [nationalities, citizenships, withImage]);
+    }, [nationalities, withImage]);
     const toPassport = (data: any) => {
-        setSelectedUser(!!data ? data : null);
+        setSelectedUser(data ? data : null);
     };
     const hidePassport = () => {
         setSelectedUser(null);

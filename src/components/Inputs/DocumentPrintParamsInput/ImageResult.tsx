@@ -8,8 +8,8 @@ import type { IUserDto } from "api/interfaces/user/IUserDto";
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import type { INationalityDto } from "api/interfaces/user/INationalityDto";
-import type { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 import { DocumentPrintParamAlignEnum } from "api/enums/DocumentPrintParamAlignEnum";
+import { WeaponEnum } from "api/enums/WeaponEnum";
 
 interface IProps {
     url: string;
@@ -83,10 +83,10 @@ function getTypeContent(param: IDocumentPrintParamDto, { nationalities }: { nati
         nickname: "Логин",
         firstName: "Имя Фамилия",
         nationalityId: 1,
-        citizenshipId: 1,
+        weapon: WeaponEnum.MachineGun,
         roleId: 1,
         passport: "000-281951",
-        registration: "1234567890",
+        registration: "Надгорная 4",
         image: getConst("document-print-generator-url") + "userExample.jpg",
         description: "Описание",
         jobPosition: "Должность",
@@ -113,6 +113,28 @@ function getTypeContent(param: IDocumentPrintParamDto, { nationalities }: { nati
             return userExample.jobPosition;
         case DocumentPrintParamTypeEnum.Passport:
             return userExample.passport;
+        case DocumentPrintParamTypeEnum.Registration:
+            return userExample.registration;
+        case DocumentPrintParamTypeEnum.Weapon0:
+            if (userExample.weapon >= 0) {
+                return "_0_";
+            }
+            return "";
+        case DocumentPrintParamTypeEnum.Weapon1:
+            if (userExample.weapon >= 1) {
+                return "1";
+            }
+            return "";
+        case DocumentPrintParamTypeEnum.Weapon2:
+            if (userExample.weapon >= 2) {
+                return "2";
+            }
+            return "";
+        case DocumentPrintParamTypeEnum.Weapon3:
+            if (userExample.weapon >= 3) {
+                return "3";
+            }
+            return "";
         case DocumentPrintParamTypeEnum.Image: {
             const width = param.width;
             const height = Math.round((531 * width) / 412);

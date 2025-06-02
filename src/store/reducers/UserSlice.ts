@@ -13,7 +13,6 @@ import { setServerAppVersion } from "./DeviceSlice";
 const USER_INITIAL_STATE: IUserData = {
     user: null,
     tg: null,
-    citizenships: [],
     nationalities: [],
     roles: [],
     isLoading: false,
@@ -35,7 +34,6 @@ const UserSlice = createSlice({
             state.tg = payload?.tgUser || null;
             state.user = payload?.user || null;
             state.isAuth = !!payload?.tgUser?.id;
-            state.citizenships = payload.citizenships;
             state.nationalities = payload.nationalities;
             state.roles = payload.roles;
         },

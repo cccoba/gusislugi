@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { Box, SxProps, Toolbar } from "@mui/material";
+import type { SxProps } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 
 import Header from "components/Header";
 import NavigationMenu from "components/NavigationMenu";
@@ -34,11 +35,11 @@ import Profile from "pages/Users/Profile";
 import Registration from "pages/Users/Registration";
 import UsersRouter from "pages/Users/Router";
 import Wanteds from "pages/Wanteds/Wanteds";
-import Citizenships from "pages/Citizenships";
 
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import DocumentPrint from "pages/DocumentsPrint";
+import Maps from "pages/Maps";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -160,6 +161,10 @@ export default function RouterPage() {
                             path="/my/*"
                             element={<MyRouter baseUrl="/my" />}
                         />
+                        <Route
+                            path="/maps"
+                            element={<Maps />}
+                        />
 
                         <Route
                             path="/users/*"
@@ -173,11 +178,6 @@ export default function RouterPage() {
                                     icon="users"
                                 />
                             }
-                        />
-
-                        <Route
-                            path="/citizenships/*"
-                            element={<Citizenships roles={[["admins"]]} />}
                         />
                         <Route
                             path="/nationalities/*"

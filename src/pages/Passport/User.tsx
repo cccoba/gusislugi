@@ -4,7 +4,7 @@ import { Fieldset, Icon, Image, Link, LinkButton } from "components";
 import lang from "lang";
 
 import { useAppSelector } from "api/hooks/redux";
-import { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
@@ -17,7 +17,6 @@ const langPage = lang.pages.passport.user;
 const langUser = lang.components.userForm;
 
 function PassportUser({ user, hideEdit }: IProps) {
-    const citizenships = useAppSelector((s) => s.user.citizenships);
     const nationalities = useAppSelector((s) => s.user.nationalities);
     const roles = useAppSelector((s) => s.user.roles);
     const curentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
@@ -49,10 +48,6 @@ function PassportUser({ user, hideEdit }: IProps) {
                 <Fieldset label={`${langPage.mainData}`}>
                     <Typography>
                         {langUser.firstName}: {user.firstName}
-                    </Typography>
-                    <Typography>
-                        {langUser.citizenship}:{" "}
-                        {citizenships.find((x) => x.id === user.citizenshipId)?.title || lang.unknown}
                     </Typography>
                     {!!curentUserIsAdmin && (
                         <Typography>

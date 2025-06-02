@@ -16,6 +16,7 @@ import type { IFormFieldSelect } from "components/Form/Adapters/Select";
 import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import { WeaponEnum } from "api/enums/WeaponEnum";
 
 const langPage = lang.pages.users;
 const langAddForm = lang.components.userForm;
@@ -25,7 +26,6 @@ const defFields: IGoodTableField[] = [
     { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
     { name: "firstName", title: langPage.fields.firstName },
     { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
-    { name: "citizenshipId", title: langPage.fields.citizenshipId, format: "list" },
     { name: "nickname", title: langPage.fields.nickname },
     { name: "roleId", title: langPage.fields.roleId, format: "list" },
     { name: "tgLogin", title: langPage.fields.tgLogin },
@@ -41,10 +41,9 @@ const defAddFields: TFormField[] = [
     { name: "image", title: langAddForm.image, type: "image", fieldProps: { previewWidth: "200px" } },
 
     { type: "text", name: "firstName", title: langAddForm.firstName },
-    { type: "date", name: "birthDate", title: langAddForm.birthDate },
+    { type: "text", name: "birthDate", title: langAddForm.birthDate, required: true },
 
     { name: "nationalityId", title: langAddForm.nationality, type: "select", values: [] },
-    { name: "citizenshipId", title: langAddForm.citizenship, type: "select", values: [] },
     { type: "text", name: "passport", title: langAddForm.passport },
     { type: "text", name: "registration", title: langAddForm.registration },
     { type: "text", name: "nickname", title: langAddForm.nickname },
@@ -59,7 +58,7 @@ const addValue: IUserDto = {
     roleId: 1,
     firstName: "",
     nationalityId: 1,
-    citizenshipId: 1,
+    weapon: WeaponEnum.Knife,
     birthDate: "",
     jobPosition: "",
     passport: "",
@@ -83,7 +82,6 @@ function AdminUserList({ roles }: IPageWithRoles) {
     const { showError, showSuccess } = useNotifier();
     const [isLoading, setIsLoading] = useState(false);
     const nationalities = useAppSelector((x) => x.user.nationalities);
-    const citizenships = useAppSelector((x) => x.user.citizenships);
     const allRoles = useAppSelector((x) => x.user.roles);
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
@@ -95,11 +93,6 @@ function AdminUserList({ roles }: IPageWithRoles) {
         if (nationalityId) {
             nationalityId.formatProps = nationalities;
         }
-
-        const citizenshipId = fields.fields.find((x) => x.name === "citizenshipId");
-        if (citizenshipId) {
-            citizenshipId.formatProps = citizenships;
-        }
         const roleId = fields.fields.find((x) => x.name === "roleId");
         if (roleId) {
             roleId.formatProps = allRoles;
@@ -109,17 +102,12 @@ function AdminUserList({ roles }: IPageWithRoles) {
         if (nationalityId2) {
             nationalityId2.values = nationalities;
         }
-
-        const citizenshipId2 = fields.addFields.find((x) => x.name === "citizenshipId") as IFormFieldSelect;
-        if (citizenshipId2) {
-            citizenshipId2.values = citizenships;
-        }
         const roleId2 = fields.addFields.find((x) => x.name === "roleId") as IFormFieldSelect;
         if (roleId2) {
             roleId2.values = allRoles;
         }
         return fields;
-    }, [nationalities, citizenships, allRoles, withImage]);
+    }, [nationalities, allRoles, withImage]);
 
     const values = useMemo(() => {
         if (data?.length) {

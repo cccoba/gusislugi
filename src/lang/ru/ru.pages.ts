@@ -1,11 +1,4 @@
 const ruPages = {
-    citizenships: {
-        title: "Гражданство",
-        fields: {
-            id: "ID",
-            title: "Название",
-        },
-    },
     documentPrint: {
         title: "Печать документов",
         editTitle: "Редактирование документа",
@@ -56,6 +49,9 @@ const ruPages = {
         errors: {
             getLink: "Не удалось получить информацию о файле",
         },
+    },
+    maps: {
+        title: "2Гусь",
     },
     messages: {
         title: "Оповещения",
@@ -466,7 +462,6 @@ const ruPages = {
             id: "ID",
             firstName: "Имя Фамилия",
             nationalityId: "Национальность",
-            citizenshipId: "Гражданство",
             image: "Фото",
             nickname: "Позывной",
             actions: "Действие",

@@ -3,33 +3,34 @@ import { Box, Button } from "@mui/material";
 
 import lang from "lang";
 import Modal from "components/Modal";
-import List, { IListItem } from "components/List";
-import GoodTable, { IGoodTableField } from "components/GoodTable";
+import type { IListItem } from "components/List";
+import List from "components/List";
+import type { IGoodTableField } from "components/GoodTable";
+import GoodTable from "components/GoodTable";
 
-import { IUserDto } from "api/interfaces/user/IUserDto";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { IUserDto } from "api/interfaces/user/IUserDto";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { ICitizenshipDto } from "api/interfaces/user/ICitizenshipDto";
 
-import { IUserRowDto, parseUserData } from ".";
 import { useAppSelector } from "api/hooks/redux";
+
+import type { IUserRowDto } from ".";
+import { parseUserData } from ".";
 
 const langPage = lang.components.userSelect.list;
 
-type IUserSelectListType = "type" | "roles" | "citizenships" | "allList" | "userList";
+type IUserSelectListType = "type" | "roles" | "allList" | "userList";
 interface IUserSelectList {
     open?: boolean;
     onClose?: (data: any) => void;
     initType?: IUserSelectListType;
     userList: IUserDto[];
     rolesList: IRoleDto[];
-    citizenshipList: ICitizenshipDto[];
     multiple?: boolean;
 }
 
 const defTypeList: IListItem[] = [
     { id: "roles", title: langPage.roles, icon: "user" },
-    { id: "citizenships", title: langPage.citizenships, icon: "user" },
     { id: "allList", title: langPage.allList, icon: "user" },
 ];
 
@@ -43,7 +44,6 @@ export const defUserFields: IGoodTableField[] = [
     },*/
     { name: "firstName", title: langPage.fields.firstName, maxWidth: "180px" },
     { name: "role", title: langPage.fields.role, maxWidth: "100px" },
-    { name: "citizenship", title: langPage.fields.citizenship, maxWidth: "100px" },
     { name: "nickname", title: "", hidden: true },
     { name: "tgLogin", title: "", hidden: true },
 ];
@@ -54,7 +54,6 @@ export default function UserSelectList({
     initType = "type",
     userList = [],
     rolesList = [],
-    citizenshipList = [],
     multiple = false,
 }: IUserSelectList) {
     const [type, setType] = useState<IUserSelectListType>(initType);
@@ -80,22 +79,17 @@ export default function UserSelectList({
                         return u.roleId === filterValue;
                     }
                     return false;
-                case "citizenships":
-                    if (typeof filterValue === "number") {
-                        return u.citizenshipId === filterValue;
-                    }
-                    return false;
                 case "allList":
                 case "userList":
                     return true;
             }
             return false;
         });
-        setFilteredUsers(newFilteredUsers.map((user) => parseUserData(user, rolesList, citizenshipList)));
+        setFilteredUsers(newFilteredUsers.map((user) => parseUserData(user, rolesList)));
         setType("userList");
     };
     const onCancel = (value: any = null) => {
-        if (!!onClose) {
+        if (onClose) {
             onClose(value);
         }
         setType(initType);
@@ -116,14 +110,6 @@ export default function UserSelectList({
                         filter={true}
                         values={rolesList}
                         onSelectValue={(t) => showUsersList("roles", t.id)}
-                    />
-                );
-            case "citizenships":
-                return (
-                    <List
-                        filter={true}
-                        values={citizenshipList}
-                        onSelectValue={(t) => showUsersList("citizenships", t.id)}
                     />
                 );
             case "allList":

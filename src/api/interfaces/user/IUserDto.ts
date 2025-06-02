@@ -1,3 +1,5 @@
+import type { WeaponEnum } from "api/enums/WeaponEnum";
+
 import type { IRoleDto } from "./IRoleDto";
 
 export interface IUserDto {
@@ -9,7 +11,7 @@ export interface IUserDto {
     roleId: number;
     firstName: string;
     nationalityId?: number;
-    citizenshipId?: number;
+    weapon: WeaponEnum;
     passport: string;
     registration: string;
     image: string;

@@ -2,7 +2,7 @@ import lang from "lang";
 
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 
-import { INavigationMenu } from "./NavigationMenuDrawer";
+import type { INavigationMenu } from "./NavigationMenuDrawer";
 
 const langPage = lang.components.navigationMenu;
 
@@ -10,6 +10,7 @@ const menuList: INavigationMenu[] = [
     { name: "home", title: langPage.home, icon: "home", link: "/" },
     { name: "profile", title: langPage.profile, icon: "profile", link: "/profile" },
     { name: "links", title: lang.pages.links.title, icon: "links", link: "/links" },
+    { name: "maps", title: lang.components.map.title, icon: "map", link: "/maps" },
     {
         name: "qrScanner",
         title: langPage.qrScanner,

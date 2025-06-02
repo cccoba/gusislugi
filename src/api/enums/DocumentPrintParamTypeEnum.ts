@@ -8,4 +8,9 @@ export enum DocumentPrintParamTypeEnum {
     Passport,
     Image,
     QrGuid,
+    Registration,
+    Weapon0,
+    Weapon1,
+    Weapon2,
+    Weapon3,
 }

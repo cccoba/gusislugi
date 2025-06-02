@@ -154,7 +154,6 @@ const ruComponents = {
         money: "Финансы",
         users: "Пользователи",
         persons: "База пользователей",
-        citizenships: "Гражданство",
         nationalities: "Национальность",
         medicalPolicies: "Мед. полисы",
         qrScanner: "QR сканер",
@@ -162,6 +161,10 @@ const ruComponents = {
         taxes: "Платежи",
         fines: "Штрафы Север",
         shop: "Магазин",
+    },
+    map: {
+        title: "2Гусь",
+        you: "Вы",
     },
     rolePermissions: {},
     sendUserNotification: {
@@ -208,7 +211,7 @@ const ruComponents = {
         nickname: "Позывной",
         role: "Роль",
         nationality: "Национальность",
-        citizenship: "Гражданство",
+        weapon: "Оружие",
         passport: "Паспорт",
         registration: "Прописка",
         description: "Секретно. не для всех",
@@ -223,13 +226,11 @@ const ruComponents = {
         list: {
             title: "Добавить пользователей",
             roles: "По роли",
-            citizenships: "По гражданству",
             allList: "По имя фамилия",
             addBtn: "Добавить",
             fields: {
                 firstName: "Имя Фамилия",
                 role: "Роль",
-                citizenship: "Гражданство",
                 imageId: "Фото",
             },
         },

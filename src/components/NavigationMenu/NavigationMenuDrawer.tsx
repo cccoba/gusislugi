@@ -2,14 +2,15 @@ import { useMemo } from "react";
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Paper } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import Icon, { TIconName } from "components/Icon";
+import type { TIconName } from "components/Icon";
+import Icon from "components/Icon";
 import { menuToggle } from "store/reducers/ComponentsSlice";
 import IconButton from "components/Icon/IconButton";
 import { checkUserRoleAccess } from "components/RoleChecker";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { getServerFileUrl } from "api/common/helper";
-import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import type { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
 import menuList from "./menuList";
 

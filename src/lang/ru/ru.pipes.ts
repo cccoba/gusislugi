@@ -20,6 +20,11 @@ const ruPipes = {
         passport: "Паспорт",
         image: "Фото",
         qrGuid: "QR-код ID",
+        registration: "Регистрация",
+        weapon0: "Навык 0",
+        weapon1: "Навык 1",
+        weapon2: "Навык 2",
+        weapon3: "Навык 3",
     },
     medicineDiseaseType: {
         disease: "Заболевание",
@@ -138,6 +143,12 @@ const ruPipes = {
         minoris: "Минорис",
         majoris: "Майорис",
         ekstremis: "Экстремис",
+    },
+    weapon: {
+        knife: "Нож",
+        pistol: "Пистолет/гранаты",
+        automatic: "Автомат",
+        machineGun: "Пулемет",
     },
 };
 export default ruPipes;

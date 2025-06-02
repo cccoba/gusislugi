@@ -47,4 +47,6 @@ export { default as InputUser } from "./Inputs/Async/InputUser";
 export { default as InputAutocomplete } from "./Inputs/InputAutocomplete";
 export { default as Switcher } from "./Inputs/Switcher";
 
+export { default as Map } from "./Map";
+
 export { default as UserView } from "./UserViewer";
