@@ -1,10 +1,10 @@
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { Box } from "@mui/material";
 
 import lang, { getLangValue, getEnumSelectValues } from "lang";
 
-import { IInputProps } from "api/interfaces/components/IInputProps";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { RolePermissionFlag as RolePermissionActionFlag } from "api/enums/RolePermissionFlag";
 import { toArray } from "api/common/helper";
 import { getFlagToFlagValues, getFlagValuesToFlag } from "api/common/enumHelper";

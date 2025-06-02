@@ -4,11 +4,11 @@ import { Box, List, Divider, Button, Link as MuiLink } from "@mui/material";
 import lang from "lang";
 import { Fieldset, Icon, Link, LinkButton, Page } from "components";
 
-import { IPage } from "api/interfaces/components/Page/IPage";
+import type { IPage } from "api/interfaces/components/Page/IPage";
 import { links } from "api/data";
-import { ILinkDto } from "api/interfaces/user/ILinkDto";
+import type { ILinkDto } from "api/interfaces/user/ILinkDto";
 import useLoadApiData from "api/hooks/useLoadApiData";
-import { ILinkCategoryDto } from "api/interfaces/user/ILinkCategoryDto";
+import type { ILinkCategoryDto } from "api/interfaces/user/ILinkCategoryDto";
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 
@@ -23,7 +23,7 @@ function Links({ backUrl, icon }: IPage) {
     const result = useMemo(() => {
         if (data?.length) {
             return data.filter((x) => {
-                if (!!x.links.length) {
+                if (x.links.length) {
                     if (x.roles?.length) {
                         const roleList = x.roles.split(",");
                         return roleList.includes((currentRoleId || 1).toString());
@@ -66,15 +66,6 @@ function Links({ backUrl, icon }: IPage) {
                     }}
                 />
             )}
-            <Fieldset label={langPage.helpTitle}>
-                <MuiLink
-                    href="https://teleport-games.ru/gusislugi_site/help/"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    {langPage.help}
-                </MuiLink>
-            </Fieldset>
             {result?.map((x) => (
                 <Fieldset
                     label={x.title}

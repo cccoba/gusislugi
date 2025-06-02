@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardHeader, Grid } from "@mui/material";
 
 import { Fieldset, Icon, Link, Page, RoleChecker } from "components";
 import QrUserData from "components/QrPrint/QrUserData";
-import { TIconName } from "components/Icon";
+import type { TIconName } from "components/Icon";
 import lang from "lang";
 
 import { checkFlagIncludes } from "api/common/enumHelper";

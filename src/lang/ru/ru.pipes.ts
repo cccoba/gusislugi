@@ -42,7 +42,7 @@ const ruPipes = {
         medicalPolicies: "Мед. полис",
         messages: "Сообщение",
         taxes: "Платеж",
-        wanteds: "Розыск Юг",
+        wanteds: "Розыск",
         companies: "Компания",
     },
     filterTextEquals: {
@@ -105,7 +105,7 @@ const ruPipes = {
         medicalInfo: "Мед. информация",
         medicalPolicies: "Мед. полис",
         taxes: "Платежи",
-        fines: "Штрафы Север",
+        fines: "Штрафы",
         wanteds: "Розыск",
         company: "Компании",
         shop: "Магазин",

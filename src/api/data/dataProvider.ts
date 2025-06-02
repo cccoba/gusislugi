@@ -1,4 +1,4 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 
 import getConst from "../common/getConst";
 export type TCRUDDataProviderAction = "getAll" | "getRecord" | "save" | "remove";
@@ -116,7 +116,7 @@ export const dataProvider = async (
         if (data !== "undefined") {
             if (typeof data === "object" && data !== null) {
                 const paramsString = new URLSearchParams(data).toString();
-                if (!!paramsString) {
+                if (paramsString) {
                     url += "?" + paramsString;
                 }
             }
@@ -142,7 +142,7 @@ export const getHeaders = (extraProps: IDataProviderExtraProps): Headers => {
         if (getConst("env-mode") === "development") {
             params["Authorization"] = window.localStorage.getItem(getConst("auth-token-name"));
         } else {
-            if (!!(window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+            if ((window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
                 params["Authorization"] = `Telegram ${(window as any).Telegram.WebApp.initDataUnsafe.user.username}`;
             }
         }

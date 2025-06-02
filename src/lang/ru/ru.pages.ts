@@ -26,9 +26,9 @@ const ruPages = {
         },
     },
     fines: {
-        title: "Штрафы Север",
+        title: "Штрафы",
         message: {
-            title: "Штрафы Север",
+            title: "Штрафы",
             text: 'Штраф "%s" на сумму %s в статусе "%s"',
         },
         fields: {
@@ -212,8 +212,8 @@ const ruPages = {
         },
     },
     login: {
-        text: "У вас нет доступа к сайту. Попросите бота вас пустить",
-        toBot: "К боту",
+        text: "У вас нет доступа к сайту. Попросите гуся вас пустить",
+        toBot: "К гусю",
     },
     money: {
         title: "Финансы",
@@ -421,8 +421,7 @@ const ruPages = {
         },
     },
     wanteds: {
-        title: "Розыск Юг",
-        title2: "Розыск Север",
+        title: "Розыск",
         statusActive: "Активен",
         statusNotActive: "Не активен",
         message: {

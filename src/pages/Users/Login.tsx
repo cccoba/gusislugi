@@ -1,10 +1,14 @@
 import { Typography, Box, Button, Link, Paper } from "@mui/material";
+
 import getConst from "api/common/getConst";
+import { useAppSelector } from "api/hooks/redux";
+
 import lang from "lang";
 
 const langPage = lang.pages.login;
 
 function Login() {
+    const tgLogin = useAppSelector((s) => s.user.user?.tgLogin);
     return (
         <Box
             sx={{
@@ -34,6 +38,13 @@ function Login() {
                 >
                     {langPage.toBot}
                 </Button>
+                <Typography
+                    sx={{ mt: 3 }}
+                    variant="caption"
+                    display="block"
+                >
+                    {getConst("app-version")} {tgLogin ? ` - @${tgLogin}` : ""}
+                </Typography>
             </Paper>
         </Box>
     );

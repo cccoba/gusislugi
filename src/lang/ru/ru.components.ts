@@ -159,7 +159,7 @@ const ruComponents = {
         qrScanner: "QR сканер",
         roles: "Роли",
         taxes: "Платежи",
-        fines: "Штрафы Север",
+        fines: "Штрафы",
         shop: "Магазин",
     },
     map: {
