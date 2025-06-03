@@ -36,6 +36,12 @@ const ruPipes = {
         boolean: "Да/нет",
         ball: "Баллы",
     },
+    medicalPoliciesType: {
+        bronze: "Bronze",
+        silver: "Silver",
+        gold: "Gold",
+        platinum: "Platinum",
+    },
     messageStatus: {
         claims: "Заявка",
         fines: "Штраф",
@@ -76,6 +82,11 @@ const ruPipes = {
         moreOrEqual: ">=",
         lessOrEqual: "<=",
     },
+    licenseType: {
+        selfDefense: "Орудие самозащиты",
+        hunting: "Оружие для охоты",
+        driver: "Водительское удостоверение",
+    },
     medicinePatientStatus: {
         waiting: "Ожидание",
         active0: "Вызревает",
@@ -110,6 +121,8 @@ const ruPipes = {
         company: "Компании",
         shop: "Магазин",
         medicineAdmin: "Болезни",
+        licenses: "Лицензии",
+        weapons: "Оружие",
     },
     rolePermissionAction: {
         view: "Просмотр",
@@ -131,7 +144,7 @@ const ruPipes = {
     },
     userRolePermissionAction: {
         barsogoria: "Барсогория",
-        lacedonia: "Лакедония",
+        other: "Иностранцы",
     },
     taxeStatus: {
         active: "Не оплачен",
@@ -145,10 +158,10 @@ const ruPipes = {
         ekstremis: "Экстремис",
     },
     weapon: {
-        knife: "Нож",
-        pistol: "Пистолет/гранаты",
-        automatic: "Автомат",
-        machineGun: "Пулемет",
+        knife: "Навык 0 - Нож",
+        pistol: "Навык 1 - Пистолет/гранаты",
+        automatic: "Навык 2 - Автомат",
+        machineGun: "Навык 3 - Пулемет",
     },
 };
 export default ruPipes;

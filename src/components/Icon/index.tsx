@@ -37,7 +37,6 @@ import {
     ReceiptLong,
     Savings,
     LocalPolice,
-    Gavel,
     CurrencyExchange,
     QrCodeScanner,
     NoPhotography,
@@ -63,6 +62,8 @@ import {
     Print,
     ContentPaste,
     Public,
+    GppGood,
+    Security,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -131,7 +132,9 @@ type TIconNameAdditional =
     | "company"
     | "print"
     | "paste"
-    | "map";
+    | "map"
+    | "licenses"
+    | "weapons";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -187,6 +190,8 @@ export const IconList: TIconName[] = [
     "print",
     "paste",
     "map",
+    "licenses",
+    "weapons",
 ];
 
 interface IProps extends SvgIconProps {
@@ -334,6 +339,10 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <ContentPaste {...totalProps} />;
         case "map":
             return <Public {...totalProps} />;
+        case "licenses":
+            return <GppGood {...totalProps} />;
+        case "weapons":
+            return <Security {...totalProps} />;
         default:
             return <QuestionMark {...totalProps} />;
     }

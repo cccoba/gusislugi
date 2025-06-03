@@ -42,6 +42,7 @@ export { default as Select } from "./Inputs/Select";
 export { default as InputSelect } from "./Inputs/InputSelect/InputSelect";
 export { default as InputSelectMultiple } from "./Inputs/InputSelect/InputSelectMultiple";
 export { default as InputImage } from "./Inputs/InputImage";
+export { default as InputText } from "./Inputs/InputText";
 export { default as InputUser } from "./Inputs/Async/InputUser";
 
 export { default as InputAutocomplete } from "./Inputs/InputAutocomplete";

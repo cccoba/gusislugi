@@ -11,22 +11,22 @@ import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import Passport from "pages/Passport";
 
-const langPage = lang.pages.users;
-const defFields: IGoodTableField[] = [
-    {
-        name: "image",
-        title: langPage.fields.image,
-        format: "image",
-        noSort: true,
-        maxWidth: "30px",
-        formatProps: { width: "32px" },
-    },
-    { name: "firstName", title: langPage.fields.firstName },
-    { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
-    { name: "tgLogin", title: "", hidden: true },
-    { name: "passport", title: "", hidden: true },
-];
-function Persons({ roles, icon }: IPageWithRoles) {
+export default function Persons({ roles, icon }: IPageWithRoles) {
+    const langPage = lang.pages.users;
+    const defFields: IGoodTableField[] = [
+        {
+            name: "image",
+            title: langPage.fields.image,
+            format: "image",
+            noSort: true,
+            maxWidth: "30px",
+            formatProps: { width: "32px" },
+        },
+        { name: "firstName", title: langPage.fields.firstName },
+        { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
+        { name: "tgLogin", title: "", hidden: true },
+        { name: "passport", title: "", hidden: true },
+    ];
     const [withImage, setWithImage] = useState(false);
     const [selectedUer, setSelectedUser] = useState<IUserDto | null>(null);
     const nationalities = useAppSelector((x) => x.user.nationalities);
@@ -88,4 +88,3 @@ function Persons({ roles, icon }: IPageWithRoles) {
         </Page>
     );
 }
-export default Persons;

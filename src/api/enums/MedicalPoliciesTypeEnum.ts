@@ -1,7 +1,6 @@
 export enum MedicalPoliciesTypeEnum {
-    Oms,
-    Base,
-    Advanced,
+    Bronze,
+    Silver,
+    Gold,
     Platinum,
-    Corporate,
 }

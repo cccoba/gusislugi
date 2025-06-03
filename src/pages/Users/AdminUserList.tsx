@@ -66,6 +66,7 @@ const addValue: IUserDto = {
     image: "",
     description: "",
     money: 0,
+    weaponPoints: 0,
     role: {
         id: 1,
         description: "",

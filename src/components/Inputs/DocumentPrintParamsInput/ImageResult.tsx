@@ -90,6 +90,7 @@ function getTypeContent(param: IDocumentPrintParamDto, { nationalities }: { nati
         image: getConst("document-print-generator-url") + "userExample.jpg",
         description: "Описание",
         jobPosition: "Должность",
+        weaponPoints: 0,
         money: 1000,
         birthDate: "20.08.1984",
         role: { id: 1, title: "Admin", description: "", params: {} },

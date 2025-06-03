@@ -31,7 +31,7 @@ export function enumToArrayObject(enums: any, transformCb: Function | null = nul
             id: enumValues[i],
             value: enumArr[i],
         };
-        if (!!transformCb) {
+        if (transformCb) {
             row.title = transformCb(enumArr[i]);
         }
         result.push(row);
@@ -91,8 +91,8 @@ export function getFlagToFlagValues(value: number, enumValue: any): number[] {
 
 /**
  * проверяем входит ли mask2 в подмножество mask1
- * @param mask1 маска с которой сравниваем
- * @param mask2 что сравниваем
+ * @param mask1 маска с которой сравниваем (наше значение)
+ * @param mask2 что сравниваем (значение которое можно)
  * @returns
  */
 export function checkFlagIncludes(mask1: number, mask2: number): boolean {

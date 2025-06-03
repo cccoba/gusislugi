@@ -5,7 +5,7 @@ import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch, useAppSelector } from "api/hooks/redux";
 import { checkFlagIncludes } from "api/common/enumHelper";
-import { IRoleDto, TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import type { IRoleDto, TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 import { CompanyPermissionFlagAll } from "api/enums/CompanyPermissionActionFlag";
 

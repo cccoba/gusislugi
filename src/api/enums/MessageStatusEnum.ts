@@ -6,4 +6,6 @@ export enum MessageStatusEnum {
     Taxes,
     Wanteds,
     Companies,
+    Licenses,
+    Weapons,
 }

@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
-import { IconButton, Modal, GoodTable, Icon } from "components";
-import { IGoodTableField } from "components/GoodTable";
-import lang, { getEnumTitleValue, sprintf } from "lang";
+import { Modal, GoodTable, Icon } from "components";
+import type { IGoodTableField } from "components/GoodTable";
+import lang, { sprintf } from "lang";
 
 import dateTime from "api/common/dateTime";
-import { messages, webApiResultData } from "api/data";
+import { messages } from "api/data";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import useLoadApiData from "api/hooks/useLoadApiData";
-import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
+import type { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { getEnumValue } from "api/common/enumHelper";
 import { cutText } from "api/common/helper";
+import type { TIconName } from "components/Icon";
 
 const langPage = lang.pages.messages;
 
@@ -22,10 +23,10 @@ const fields: IGoodTableField[] = [
     { name: "created_at", title: langPage.fields.date, format: "date" },
 ];
 
-function getIconName(status: MessageStatusEnum): any {
+function getIconName(status: MessageStatusEnum): TIconName {
     const result = getEnumValue(MessageStatusEnum, status) || "";
-    if (!!result?.length) {
-        return result.charAt(0).toLowerCase() + result.slice(1);
+    if (result?.length) {
+        return (result.charAt(0).toLowerCase() + result.slice(1)) as TIconName;
     }
     return "messages";
 }
@@ -36,6 +37,8 @@ function ProfileMessages() {
     const [values, setValues] = useState<any[]>([]);
     useEffect(() => {
         if (data?.length) {
+            console.log("aaa", getIconName(data[2].status));
+
             setValues(
                 data.map((x) => ({
                     ...x,

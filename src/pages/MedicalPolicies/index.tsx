@@ -3,14 +3,15 @@ import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import type { ISendUserNotificationProps } from "components/SendUserNotification";
+import SendUserNotification from "components/SendUserNotification";
+import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
-import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
+import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { medicalPolicies } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
+import type { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { generateRandomString } from "api/common/helper";
 import { useAppSelector } from "api/hooks/redux";
@@ -96,7 +97,7 @@ const defInitialData: IMedicalPoliciesDto = {
     id: 0,
     number: "",
     uid: 0,
-    type: MedicalPoliciesTypeEnum.Oms,
+    type: MedicalPoliciesTypeEnum.Bronze,
     trauma_rescue: false,
     status: true,
     endDate: dayjs().add(24, "hour").toDate(),

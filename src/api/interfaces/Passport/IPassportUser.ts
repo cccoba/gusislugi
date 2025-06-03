@@ -1,4 +1,5 @@
-import { IUserDto } from "../user/IUserDto";
+import type { IUserDto } from "../user/IUserDto";
+import type { IWeaponHistoryDto } from "../user/IWeaponHistoryDto";
 
 export interface IPassportUser {
     user: IUserDto;
@@ -9,4 +10,9 @@ export interface IPassportUser {
     companies?: boolean;
     medicalPolicies?: boolean;
     medicalInfo?: boolean;
+    licenses?: boolean;
+    weapons?: {
+        weaponPoints: number;
+        history: IWeaponHistoryDto[];
+    };
 }

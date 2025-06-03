@@ -4,6 +4,8 @@ import type { IUserDto } from "api/interfaces/user/IUserDto";
 import type { IClaimDto } from "api/interfaces/user/IClaimDto";
 import type { IUserShortDto } from "api/interfaces/user/IUserShortDto";
 
+import type { IWeaponUpdaterDto } from "api/interfaces/user/IWeaponUpdaterDto";
+
 import type { IFirstLoadView } from "./IFirstLoadView";
 
 import { dataProvider } from "./dataProvider";
@@ -41,6 +43,14 @@ const UsersDataProvider = {
     },
     getPersons: (): Promise<IWebDataResult<IUserDto[]>> => {
         return dataProvider(baseUrl + "getPersons", "get");
+    },
+    weapons: {
+        add: (data: IWeaponUpdaterDto): Promise<IWebDataResult<boolean>> => {
+            return dataProvider(baseUrl + "addWeapon", "post", data);
+        },
+        save: (data: IWeaponUpdaterDto): Promise<IWebDataResult<boolean>> => {
+            return dataProvider(baseUrl + "updateWeapon", "put", data);
+        },
     },
 };
 export default UsersDataProvider;

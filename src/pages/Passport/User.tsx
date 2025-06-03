@@ -1,25 +1,25 @@
 import { Box, Button, Typography } from "@mui/material";
 
 import { Fieldset, Icon, Image, Link, LinkButton } from "components";
-import lang from "lang";
+import lang, { getEnumTitleValue } from "lang";
 
 import { useAppSelector } from "api/hooks/redux";
 import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { WeaponEnum } from "api/enums/WeaponEnum";
 
 interface IProps {
     user: IUserDto;
     hideEdit?: boolean;
 }
 
-const langPage = lang.pages.passport.user;
-const langUser = lang.components.userForm;
-
-function PassportUser({ user, hideEdit }: IProps) {
+export default function PassportUser({ user, hideEdit }: IProps) {
+    const langPage = lang.pages.passport.user;
+    const langUser = lang.components.userForm;
     const nationalities = useAppSelector((s) => s.user.nationalities);
     const roles = useAppSelector((s) => s.user.roles);
-    const curentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
+    const currentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     const adminPermissions = useAppSelector((s) => s.user.user?.role.params.admins);
     return (
         <>
@@ -49,7 +49,10 @@ function PassportUser({ user, hideEdit }: IProps) {
                     <Typography>
                         {langUser.firstName}: {user.firstName}
                     </Typography>
-                    {!!curentUserIsAdmin && (
+                    <Typography>
+                        {langUser.weapon}: {getEnumTitleValue(WeaponEnum, "WeaponEnum", user.weapon)}
+                    </Typography>
+                    {!!currentUserIsAdmin && (
                         <Typography>
                             {langUser.role}: {roles.find((x) => x.id === user.roleId)?.title || lang.unknown}
                         </Typography>
@@ -60,6 +63,11 @@ function PassportUser({ user, hideEdit }: IProps) {
                         {langUser.nationality}:{" "}
                         {nationalities.find((x) => x.id === user.nationalityId)?.title || lang.unknown}
                     </Typography>
+                    {!!currentUserIsAdmin && !!user.jobPosition && (
+                        <Typography>
+                            {langUser.jobPosition}: {user.jobPosition}
+                        </Typography>
+                    )}
                     <Typography>
                         {langUser.passport}: {user.passport}
                     </Typography>
@@ -71,4 +79,3 @@ function PassportUser({ user, hideEdit }: IProps) {
         </>
     );
 }
-export default PassportUser;

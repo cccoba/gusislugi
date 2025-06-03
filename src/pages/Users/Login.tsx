@@ -5,9 +5,8 @@ import { useAppSelector } from "api/hooks/redux";
 
 import lang from "lang";
 
-const langPage = lang.pages.login;
-
-function Login() {
+export default function Login() {
+    const langPage = lang.pages.login;
     const tgLogin = useAppSelector((s) => s.user.user?.tgLogin);
     return (
         <Box
@@ -49,5 +48,3 @@ function Login() {
         </Box>
     );
 }
-
-export default Login;

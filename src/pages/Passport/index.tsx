@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import lang from "lang";
+import lang, { sprintf } from "lang";
 import { Alert, PageOrModal } from "components";
 
-import { IPageOrModal } from "api/interfaces/components/Page/IPageOrModal";
+import type { IPageOrModal } from "api/interfaces/components/Page/IPageOrModal";
 import { passport, webApiResultData } from "api/data";
-import { IPassportUser } from "api/interfaces/Passport/IPassportUser";
+import type { IPassportUser } from "api/interfaces/Passport/IPassportUser";
 
 import PassportUser from "./User";
 import PassportClaims from "./Claims";
@@ -16,6 +16,8 @@ import PassportWanteds from "./Wanteds";
 import PassportCompanies from "./Companies";
 import PassportFines from "./Fines";
 import PassportMedicalInfo from "./MedicalInfo";
+import PassportLicenses from "./Licenses";
+import PassportWeapons from "./Weapons";
 
 interface IProps extends IPageOrModal {
     idName: "guid" | "telegramLogin";
@@ -36,6 +38,14 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
     const [backUrl, setBackUrl] = useState("/");
     const [error, setError] = useState("");
     useEffect(() => {
+        loadData();
+    }, [id, userGuid]);
+    useEffect(() => {
+        if (state?.backUrl) {
+            setBackUrl(state.backUrl);
+        }
+    }, [state]);
+    function loadData() {
         const newUserId = userGuid || id;
         if (newUserId) {
             const cb = idName === "telegramLogin" ? passport.getUserByTelegramLogin : passport.getUserByGuid;
@@ -57,12 +67,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                     setIsLoading(false);
                 });
         }
-    }, [id, userGuid]);
-    useEffect(() => {
-        if (state?.backUrl) {
-            setBackUrl(state.backUrl);
-        }
-    }, [state]);
+    }
 
     return (
         <PageOrModal
@@ -86,42 +91,42 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                     />
                     {typeof userData.claims !== "undefined" && (
                         <PassportClaims
-                            subTitle={!!userData.claims ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.claims ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.claims.title}
                             userId={userData.user.id}
                         />
                     )}
                     {typeof userData.taxes !== "undefined" && (
                         <PassportTaxes
-                            subTitle={!!userData.taxes ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.taxes ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.taxes.title}
                             userId={userData.user.id}
                         />
                     )}
                     {typeof userData.fines !== "undefined" && (
                         <PassportFines
-                            subTitle={!!userData.fines ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.fines ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.fines.title}
                             userId={userData.user.id}
                         />
                     )}
                     {typeof userData.medicalInfo !== "undefined" && (
                         <PassportMedicalInfo
-                            subTitle={!!userData.medicalInfo ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.medicalInfo ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalInfo.title}
                             userId={userData.user.id}
                         />
                     )}
                     {typeof userData.medicalPolicies !== "undefined" && (
                         <PassportMedicalPolicies
-                            subTitle={!!userData.medicalPolicies ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.medicalPolicies ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalPolicies.title}
                             userId={userData.user.id}
                         />
                     )}
                     {typeof userData.wanteds !== "undefined" && (
                         <PassportWanteds
-                            subTitle={!!userData.wanteds ? langPage.haveData : langPage.notHaveData}
+                            subTitle={userData.wanteds ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.wanteds.title}
                             userId={userData.user.id}
                         />
@@ -131,6 +136,21 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.companies ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.companies.title}
                             userId={userData.user.id}
+                        />
+                    )}
+                    {typeof userData.licenses !== "undefined" && (
+                        <PassportLicenses
+                            subTitle={userData.licenses ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.licenses.title}
+                            userId={userData.user.id}
+                        />
+                    )}
+                    {typeof userData.weapons !== "undefined" && (
+                        <PassportWeapons
+                            user={userData.user}
+                            weaponPoints={userData.weapons.weaponPoints}
+                            data={userData.weapons.history}
+                            onUpdate={() => loadData()}
                         />
                     )}
                 </>

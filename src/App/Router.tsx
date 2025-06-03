@@ -40,6 +40,7 @@ import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import DocumentPrint from "pages/DocumentsPrint";
 import Maps from "pages/Maps";
+import Licenses from "pages/Licenses";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -204,6 +205,14 @@ export default function RouterPage() {
                             path="/taxes/*"
                             element={<Taxes />}
                         />
+                        <Route
+                            path="/licenses/*"
+                            element={<Licenses />}
+                        />
+                        {/* <Route
+                            path="/weapons/*"
+                            element={<Weapons />}
+                        /> */}
                         <Route
                             path="/fines/*"
                             element={<Fines />}

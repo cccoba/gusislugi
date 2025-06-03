@@ -1,15 +1,18 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { loaderChange } from "store/reducers/ComponentsSlice";
-import { TIconName } from "components/Icon";
+import type { TIconName } from "components/Icon";
 
 import { useAppDispatch } from "api/hooks/redux";
-import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
-import { RolePermissionFlag, RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
+import type { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import type { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
-import CRUDAsyncMain, { ICRUDAsyncAction } from "./Main";
-import CRUDAsyncEdit, { ICRUDAsyncEditConfig } from "./Edit";
-import { ICRUDAsyncListConfig } from "./List";
+import type { ICRUDAsyncAction } from "./Main";
+import CRUDAsyncMain from "./Main";
+import type { ICRUDAsyncEditConfig } from "./Edit";
+import CRUDAsyncEdit from "./Edit";
+import type { ICRUDAsyncListConfig } from "./List";
 
 export interface ICRUDAsyncProps {
     listConfig: ICRUDAsyncListConfig;

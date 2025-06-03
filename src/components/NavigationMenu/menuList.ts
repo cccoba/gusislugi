@@ -109,6 +109,12 @@ const menuList: INavigationMenu[] = [
         link: "/documentPrint",
         roles: [["admins"]],
     },
+    {
+        name: "licenses",
+        title: lang.pages.licenses.title,
+        icon: "licenses",
+        link: "/licenses",
+    },
 ];
 
 export default menuList;

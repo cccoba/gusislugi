@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, InputAdornment, Link } from "@mui/material";
 
 import Form from "components/Form";
 import type { TFormField } from "components/Form/FormAdapters";
@@ -16,6 +16,7 @@ import { WeaponEnum } from "api/enums/WeaponEnum";
 
 import Icon from "./Icon";
 import QrUserData from "./QrPrint/QrUserData";
+import InputText from "./Inputs/InputText";
 
 interface IProps {
     user: IUserDto;
@@ -40,9 +41,11 @@ export default function UserForm({ user, onChangeValue }: IProps) {
         },
         { type: "text", name: "passport", title: langPage.passport },
         { type: "text", name: "registration", title: langPage.registration },
+        { type: "text", name: "jobPosition", title: langPage.jobPosition },
+        { type: "text", name: "birthDate", title: langPage.birthDate, required: true, minLength: 10 },
         { type: "text", name: "nickname", title: langPage.nickname },
+        { type: "text", name: "weaponPoints", title: langPage.weaponPoints },
         { name: "roleId", title: langPage.role, type: "select", values: [] },
-        { type: "text", name: "tgLogin", title: langPage.tgLogin, disabled: true },
         { type: "text", name: "description", title: langPage.description, fieldProps: { multiline: true } },
     ];
     const currentUserRoleParams = useAppSelector((s) => s.user.user?.role.params.admins);
@@ -94,6 +97,27 @@ export default function UserForm({ user, onChangeValue }: IProps) {
                 submitBtnType={isEditable ? "save" : "no"}
                 columnCount={isMobile ? 1 : 3}
                 onSubmit={onChangeValue}
+            />
+            <InputText
+                disabled
+                value={user?.tgLogin || ""}
+                onChangeValue={() => {}}
+                label={langPage.tgLogin}
+                InputProps={{
+                    startAdornment: user?.tgLogin && (
+                        <InputAdornment position="start">
+                            <Button
+                                component={Link}
+                                variant="contained"
+                                href={"https://t.me/" + user.tgLogin}
+                                target="_blank"
+                            >
+                                <Icon name="links" />
+                            </Button>
+                        </InputAdornment>
+                    ),
+                }}
+                variant="standard"
             />
         </>
     );

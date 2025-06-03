@@ -2,24 +2,27 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
 import { Confirm, Page } from "components";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { IGoodTableToolbarAction } from "components/GoodTable";
+import type { ISendUserNotificationProps } from "components/SendUserNotification";
+import SendUserNotification from "components/SendUserNotification";
+import type { IGoodTableToolbarAction } from "components/GoodTable";
 
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { company, webApiResultData } from "api/data";
 import { useAppSelector, useLoader } from "api/hooks/redux";
-import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
+import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
 import { useNotifier } from "api/hooks/useNotifier";
 
-import CompanyList from "./List";
-import CompaniesEdit from "./Edit";
-import { IConfirmProps } from "components/Confirm";
-import CompanyMoneyAdd from "./AddMoney";
-import { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
+import type { IConfirmProps } from "components/Confirm";
+
+import type { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
 import { useNavigate } from "react-router-dom";
-import { IPage } from "api/interfaces/components/Page/IPage";
+import type { IPage } from "api/interfaces/components/Page/IPage";
+
+import CompanyMoneyAdd from "./AddMoney";
+import CompaniesEdit from "./Edit";
+import CompanyList from "./List";
 
 interface IProps extends IPage {
     userId?: number;

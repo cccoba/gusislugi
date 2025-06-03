@@ -3,19 +3,18 @@ import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import type { ISendUserNotificationProps } from "components/SendUserNotification";
+import SendUserNotification from "components/SendUserNotification";
+import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
+import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { taxes } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 
 import { useAppSelector } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
-import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
+import type { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { cutText } from "api/common/helper";
 

@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
+import MyLicenses from "pages/Licenses/My";
+
 import MyCompanies from "../Companies/My";
 
 interface IProps {
@@ -12,6 +14,10 @@ export default function MyRouter({ baseUrl }: IProps) {
             <Route
                 path="/companies"
                 element={<MyCompanies />}
+            />
+            <Route
+                path="/licenses"
+                element={<MyLicenses />}
             />
         </Routes>
     );

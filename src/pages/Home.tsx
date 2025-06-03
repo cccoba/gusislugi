@@ -39,86 +39,82 @@ export default function Home() {
                     user={currentUser}
                 />
             )}
-            <Fieldset label={langPage.main}>
-                <Grid
-                    container
-                    spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
-                >
-                    <RoleChecker roles={[["qr"]]}>
-                        <HomeItem
-                            url="/qrScanner"
-                            title={langPage.actions.qr}
-                            icon="qrScanner"
-                        />
-                    </RoleChecker>
+            <Grid
+                container
+                spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
+            >
+                <RoleChecker roles={[["qr"]]}>
                     <HomeItem
-                        onClick={showMyId}
-                        title={langPage.actions.showId}
-                        icon="id"
+                        url="/qrScanner"
+                        title={langPage.actions.qr}
+                        icon="qrScanner"
                     />
-                    {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
-                        <HomeItem
-                            url="/persons"
-                            title={langPage.actions.persons}
-                            icon="users"
-                        />
-                    )}
-                    {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
-                        <HomeItem
-                            url="/users"
-                            title={lang.pages.users.title}
-                            icon="users"
-                        />
-                    )}
+                </RoleChecker>
+                <HomeItem
+                    onClick={showMyId}
+                    title={langPage.actions.showId}
+                    icon="id"
+                />
+                {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
                     <HomeItem
-                        url="/profile"
-                        title={langPage.actions.profile}
-                        icon="profile"
+                        url="/persons"
+                        title={langPage.actions.persons}
+                        icon="users"
                     />
+                )}
+                {checkFlagIncludes(currentUser?.role?.params?.admins || 0, RolePermissionFlag.View) && (
                     <HomeItem
-                        url="/links"
-                        title={lang.pages.links.title}
-                        icon="links"
+                        url="/users"
+                        title={lang.pages.users.title}
+                        icon="users"
                     />
-                </Grid>
-            </Fieldset>
-            <Fieldset label={langPage.services}>
-                <Grid
-                    container
-                    spacing={{ xs: 2, md: 3, lg: 4, xl: 5 }}
-                >
-                    <HomeItem
-                        url="/myMessages"
-                        title={langPage.actions.messages}
-                        icon="messages"
-                    />
-                    <HomeItem
-                        url="/myClaims"
-                        title={langPage.actions.claims}
-                        icon="claims"
-                    />
-                    <HomeItem
-                        url="/myMedicalPolicies"
-                        title={langPage.actions.medicalPolicies}
-                        icon="medicalPolicies"
-                    />
-                    <HomeItem
-                        url="/myTaxes"
-                        title={langPage.actions.taxes}
-                        icon="taxes"
-                    />
-                    <HomeItem
-                        url="/myFines"
-                        title={langPage.actions.fines}
-                        icon="fines"
-                    />
-                    <HomeItem
-                        url="/my/companies"
-                        title={langPage.actions.companies}
-                        icon="company"
-                    />
-                </Grid>
-            </Fieldset>
+                )}
+                <HomeItem
+                    url="/profile"
+                    title={langPage.actions.profile}
+                    icon="profile"
+                />
+                <HomeItem
+                    url="/links"
+                    title={lang.pages.links.title}
+                    icon="links"
+                />
+                <HomeItem
+                    url="/myMessages"
+                    title={langPage.actions.messages}
+                    icon="messages"
+                />
+                <HomeItem
+                    url="/myClaims"
+                    title={langPage.actions.claims}
+                    icon="claims"
+                />
+                <HomeItem
+                    url="/myMedicalPolicies"
+                    title={langPage.actions.medicalPolicies}
+                    icon="medicalPolicies"
+                />
+                <HomeItem
+                    url="/myTaxes"
+                    title={langPage.actions.taxes}
+                    icon="taxes"
+                />
+                <HomeItem
+                    url="/myFines"
+                    title={langPage.actions.fines}
+                    icon="fines"
+                />
+                <HomeItem
+                    url="/my/companies"
+                    title={langPage.actions.companies}
+                    icon="company"
+                />
+                <HomeItem
+                    url="/my/licenses"
+                    title={langPage.actions.licenses}
+                    icon="licenses"
+                />
+            </Grid>
         </Page>
     );
 }

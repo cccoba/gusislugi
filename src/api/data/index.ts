@@ -1,6 +1,7 @@
 export { default as claims } from "./claims";
 export { default as documentPrint } from "./documentPrint";
 export { default as files } from "./files";
+export { default as licenses } from "./licenses";
 export { default as links } from "./links";
 export { default as medicalInfo } from "./medicalInfo";
 export { default as medicalPolicies } from "./medicalPolicies";

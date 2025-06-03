@@ -1,6 +1,6 @@
 import RolePermissions from "components/Inputs/RolePermissions";
 
-import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import type { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
 
 export interface IFormFieldRolePermissions extends IFormField {
     type: "rolePermissions";

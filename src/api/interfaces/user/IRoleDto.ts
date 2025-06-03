@@ -14,11 +14,14 @@ export interface IRoleDto {
         medicalPolicies?: RolePermissionFlag;
         medicalInfo?: RolePermissionFlag;
         taxes?: RolePermissionFlag;
+        licenses?: RolePermissionFlag;
         fines?: RolePermissionFlag;
         wanteds?: RolePermissionFlag;
         company?: CompanyPermissionActionFlag;
         messages?: RolePermissionFlag;
         shop?: RolePermissionFlag;
         medicineAdmin?: RolePermissionFlag;
+        weapons?: RolePermissionFlag;
+        medicalAdd?: RolePermissionFlag;
     };
 }

@@ -40,6 +40,8 @@ export default function RolePermissions({
         "users",
         "shop",
         "medicineAdmin",
+        "licenses",
+        "weapons",
     ];
     const permissions = permissionList.map((x) => ({
         id: x,
@@ -69,6 +71,8 @@ export default function RolePermissions({
             company: [],
             shop: [],
             medicineAdmin: [],
+            licenses: [],
+            weapons: [],
         };
         if (toArray(value).length > 0) {
             for (const idName in value) {
