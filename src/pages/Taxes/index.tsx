@@ -18,94 +18,94 @@ import type { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { cutText } from "api/common/helper";
 
-const langPage = lang.pages.taxes;
-
-const listConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: false,
-    withRefresh: true,
-    orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-    fields: [
-        { name: "id", title: langPage.fields.id, width: "30px" },
-        { name: "title", title: langPage.fields.title },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            format: "list",
-            formatProps: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
-        },
-        { name: "value", title: langPage.fields.value },
-        { name: "user", title: langPage.fields.uid },
-        { name: "endDate", title: langPage.fields.endDate, format: "date" },
-        { name: "nickname", title: "", hidden: true },
-    ],
-    transform: (data: ITaxeDto) => ({
-        ...data,
-        user: data.user?.firstName || lang.unknown,
-        nickname: data.user?.nickname || "",
-        value: sprintf(lang.money, data.value),
-        title: cutText(data.title, 30),
-    }),
-};
-
-const editConfig: ICRUDAsyncEditConfig = {
-    fields: [
-        {
-            name: "title",
-            title: langPage.fields.title,
-            type: "text",
-            required: true,
-        },
-        {
-            name: "value",
-            title: langPage.fields.value,
-            type: "counter",
-            minValue: 1,
-            required: true,
-            validateFn: (value) => {
-                return (!!value && value > 0) || lang.pages.money.send.errors.positiveCount;
-            },
-        },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            type: "select",
-            required: true,
-            values: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
-        },
-
-        {
-            name: "uid",
-            title: langPage.fields.uid,
-            type: "user",
-            required: true,
-        },
-        {
-            name: "created_at",
-            title: langPage.fields.created_at,
-            type: "dateTime",
-            disabled: true,
-        },
-
-        {
-            name: "endDate",
-            title: langPage.fields.endDate,
-            type: "dateTime",
-            required: true,
-        },
-    ],
-};
-const defInitialData: ITaxeDto = {
-    id: 0,
-    value: 0,
-    title: "",
-    uid: 0,
-    status: TaxeStatusEnum.Active,
-    endDate: dayjs().add(8, "hour").toDate(),
-};
 interface IProps {
     userId?: number;
 }
-function Taxes({ userId }: IProps) {
+export default function Taxes({ userId }: IProps) {
+    const langPage = lang.pages.taxes;
+
+    const listConfig: ICRUDAsyncListConfig = {
+        isMultiSelection: false,
+        withRefresh: true,
+        orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+        fields: [
+            { name: "id", title: langPage.fields.id, width: "30px" },
+            { name: "title", title: langPage.fields.title },
+            {
+                name: "status",
+                title: langPage.fields.status,
+                format: "list",
+                formatProps: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
+            },
+            { name: "value", title: langPage.fields.value },
+            { name: "user", title: langPage.fields.uid },
+            { name: "endDate", title: langPage.fields.endDate, format: "date" },
+            { name: "nickname", title: "", hidden: true },
+        ],
+        transform: (data: ITaxeDto) => ({
+            ...data,
+            user: data.user?.firstName || lang.unknown,
+            nickname: data.user?.nickname || "",
+            value: sprintf(lang.money, data.value),
+            title: cutText(data.title, 30),
+        }),
+    };
+
+    const editConfig: ICRUDAsyncEditConfig = {
+        fields: [
+            {
+                name: "title",
+                title: langPage.fields.title,
+                type: "text",
+                required: true,
+            },
+            {
+                name: "value",
+                title: langPage.fields.value,
+                type: "counter",
+                minValue: 1,
+                required: true,
+                validateFn: (value) => {
+                    return (!!value && value > 0) || lang.pages.money.send.errors.positiveCount;
+                },
+            },
+            {
+                name: "status",
+                title: langPage.fields.status,
+                type: "select",
+                required: true,
+                values: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
+            },
+
+            {
+                name: "uid",
+                title: langPage.fields.uid,
+                type: "user",
+                required: true,
+            },
+            {
+                name: "created_at",
+                title: langPage.fields.created_at,
+                type: "dateTime",
+                disabled: true,
+            },
+
+            {
+                name: "endDate",
+                title: langPage.fields.endDate,
+                type: "dateTime",
+                required: true,
+            },
+        ],
+    };
+    const defInitialData: ITaxeDto = {
+        id: 0,
+        value: 0,
+        title: "",
+        uid: 0,
+        status: TaxeStatusEnum.Active,
+        endDate: dayjs().add(8, "hour").toDate(),
+    };
     const currentUserRoleTaxes = useAppSelector((s) => s.user.user?.role?.params?.taxes);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
@@ -170,5 +170,3 @@ function Taxes({ userId }: IProps) {
         </>
     );
 }
-
-export default Taxes;

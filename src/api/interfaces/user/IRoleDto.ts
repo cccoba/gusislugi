@@ -13,6 +13,7 @@ export interface IRoleDto {
         users?: RolePermissionFlag;
         medicalPolicies?: RolePermissionFlag;
         medicalInfo?: RolePermissionFlag;
+        medicalSickness?: RolePermissionFlag;
         taxes?: RolePermissionFlag;
         licenses?: RolePermissionFlag;
         fines?: RolePermissionFlag;

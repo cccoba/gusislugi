@@ -3,6 +3,7 @@ export enum MessageStatusEnum {
     Fines,
     Messages,
     MedicalPolicies,
+    MedicalSickness,
     Taxes,
     Wanteds,
     Companies,

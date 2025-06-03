@@ -46,6 +46,7 @@ const ruPipes = {
         claims: "Заявка",
         fines: "Штраф",
         medicalPolicies: "Мед. полис",
+        medicalSickness: "Мед. заболевание",
         messages: "Сообщение",
         taxes: "Платеж",
         wanteds: "Розыск",
@@ -115,6 +116,7 @@ const ruPipes = {
         users: "Видеть пользователей",
         medicalInfo: "Мед. информация",
         medicalPolicies: "Мед. полис",
+        medicalSickness: "Мед. заболевания",
         taxes: "Платежи",
         fines: "Штрафы",
         wanteds: "Розыск",
@@ -141,6 +143,11 @@ const ruPipes = {
     companyMoneyType: {
         add: "Пополнение счета",
         subtract: "Списание co счета",
+    },
+    medicalInfoStatus: {
+        active: "Активный",
+        hard: "Тяжелый",
+        inactive: "Вылечен",
     },
     userRolePermissionAction: {
         barsogoria: "Барсогория",

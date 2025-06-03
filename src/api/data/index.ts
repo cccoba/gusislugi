@@ -5,6 +5,7 @@ export { default as licenses } from "./licenses";
 export { default as links } from "./links";
 export { default as medicalInfo } from "./medicalInfo";
 export { default as medicalPolicies } from "./medicalPolicies";
+export { default as medicalSickness } from "./medicalSickness";
 export { default as medicine } from "./medicine";
 export { default as messages } from "./messages";
 export { default as money } from "./money";

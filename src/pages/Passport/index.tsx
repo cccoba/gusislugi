@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import lang, { sprintf } from "lang";
+import lang from "lang";
 import { Alert, PageOrModal } from "components";
 
 import type { IPageOrModal } from "api/interfaces/components/Page/IPageOrModal";

@@ -41,6 +41,7 @@ import { useAppSelector } from "api/hooks/redux";
 import DocumentPrint from "pages/DocumentsPrint";
 import Maps from "pages/Maps";
 import Licenses from "pages/Licenses";
+import MedicalSickness from "pages/MedicalSickness";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -209,10 +210,10 @@ export default function RouterPage() {
                             path="/licenses/*"
                             element={<Licenses />}
                         />
-                        {/* <Route
-                            path="/weapons/*"
-                            element={<Weapons />}
-                        /> */}
+                        <Route
+                            path="/medicalSickness/*"
+                            element={<MedicalSickness />}
+                        />
                         <Route
                             path="/fines/*"
                             element={<Fines />}

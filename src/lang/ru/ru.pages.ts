@@ -99,6 +99,22 @@ const ruPages = {
             uid: "Пользователь",
         },
     },
+    medicalSickness: {
+        title: "Мед. заболевания",
+        message: {
+            title: "Мед. заболевания",
+            text: 'Заболевание "%s" обновлено (%s)',
+            public: "публично",
+            private: "приватно",
+        },
+        fields: {
+            id: "ID",
+            title: "Название",
+            description: "Описание",
+            userDescription: "Описание пользователя",
+            public: "Публичный",
+        },
+    },
     medicine: {
         title: "Болезни",
         main: "Основное",
