@@ -105,7 +105,7 @@ const defInitialData: IMedicalPoliciesDto = {
 interface IProps {
     userId?: number;
 }
-function MedicalPolicies({ userId }: IProps) {
+export default function MedicalPolicies({ userId }: IProps) {
     const currentUserRoleMedicalPolicies = useAppSelector((s) => s.user.user?.role?.params?.medicalPolicies);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
@@ -203,5 +203,3 @@ function MedicalPolicies({ userId }: IProps) {
         </>
     );
 }
-
-export default MedicalPolicies;

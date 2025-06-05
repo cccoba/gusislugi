@@ -64,6 +64,7 @@ import {
     Public,
     GppGood,
     Security,
+    KeyboardArrowRight,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -134,7 +135,8 @@ type TIconNameAdditional =
     | "paste"
     | "map"
     | "licenses"
-    | "weapons";
+    | "weapons"
+    | "right";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -192,6 +194,7 @@ export const IconList: TIconName[] = [
     "map",
     "licenses",
     "weapons",
+    "right",
 ];
 
 interface IProps extends SvgIconProps {
@@ -237,6 +240,8 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <KeyboardArrowDown {...totalProps} />;
         case "up":
             return <KeyboardArrowUp {...totalProps} />;
+        case "right":
+            return <KeyboardArrowRight {...totalProps} />;
         case "ok":
             return <Done {...totalProps} />;
         case "user":

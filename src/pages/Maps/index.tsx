@@ -28,7 +28,7 @@ export default function Maps() {
             title={langPage.title}
             isLoading={isLoading}
         >
-            {isLoading || !data?.center ? (
+            {isLoading ? (
                 <Loader />
             ) : (
                 <Map

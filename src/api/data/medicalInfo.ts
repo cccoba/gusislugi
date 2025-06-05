@@ -1,5 +1,7 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { IMedicalInfoDto } from "api/interfaces/user/IMedicalInfoDto";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { IMedicalInfoDto } from "api/interfaces/user/IMedicalInfoDto";
+
+import type { IMedicalInfoAddDto } from "api/interfaces/user/IMedicalInfoAddDto";
 
 import { dataProvider } from "./dataProvider";
 
@@ -20,6 +22,9 @@ const MedicalPoliciesProvider = {
     },
     crudUserList: (userId: number): Promise<IWebDataResult<IMedicalInfoDto[]>> => {
         return dataProvider(baseUrl + "userList&id=" + userId);
+    },
+    addUsers: (data: IMedicalInfoAddDto): Promise<IWebDataResult<number>> => {
+        return dataProvider(baseUrl + "addUsers", "post", data);
     },
 };
 export default MedicalPoliciesProvider;

@@ -72,6 +72,24 @@ export function getFlagValuesToFlag(values: number[]): number {
     }
     return result;
 }
+/**
+ * делает из числа его флаг
+ * @param roleId роль
+ * @returns
+ */
+export function getFlagByValue(value: number): number {
+    if (!value) {
+        return 0;
+    }
+    if (value === 1) {
+        return 1;
+    }
+    let flag = 1;
+    for (let i = 2; i <= value; i++) {
+        flag *= 2;
+    }
+    return flag;
+}
 
 /**
  *  из битовой маски получает массив значений
@@ -97,4 +115,27 @@ export function getFlagToFlagValues(value: number, enumValue: any): number[] {
  */
 export function checkFlagIncludes(mask1: number, mask2: number): boolean {
     return (mask1 & mask2) === mask2;
+}
+
+/**
+ * Возвращает массив значений по флагу
+ * @param flag флаг (битовая маска)
+ * @returns массив значений (не флагов)
+ */
+export function getValuesByFlag(flag: number): number[] {
+    const result: number[] = [];
+
+    // Проверяем каждый бит
+    let position = 1; // Начинаем с позиции 1
+    while (flag > 0) {
+        // Если младший бит установлен
+        if (flag & 1) {
+            result.push(position);
+        }
+        // Сдвигаем биты вправо на одну позицию
+        flag >>= 1;
+        position++;
+    }
+
+    return result;
 }

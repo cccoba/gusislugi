@@ -9,10 +9,12 @@ import { loaderHide, loaderShow } from "store/reducers/ComponentsSlice";
 
 import { useAppDispatch } from "api/hooks/redux";
 
-import { Fieldset } from "..";
+import type { IModalProps } from "components/Modal";
 
-import FormInput from "./FormInput";
-import FormButtons from "./FormButtons";
+import Modal from "components/Modal";
+
+import FormButtons, { getFormModalActions } from "./FormButtons";
+import FormFields from "./FormFields";
 import type { TFormField } from "./FormAdapters";
 
 export interface IFormGroup {
@@ -39,6 +41,7 @@ export interface IFormProps {
     groupVariant?: "fieldset" | "card";
     autoCompleteForm?: string;
     saveDisabled?: boolean;
+    modalProps?: IModalProps;
 }
 
 export default function Form({
@@ -61,6 +64,7 @@ export default function Form({
     groupVariant = "fieldset",
     autoCompleteForm = "off",
     saveDisabled = false,
+    modalProps,
 }: IFormProps) {
     const [isInit, setIsInit] = useState<boolean>(false);
     const formRef = useRef<HTMLFormElement>(null);
@@ -132,6 +136,45 @@ export default function Form({
     if (!isInit) {
         return null;
     }
+    if (modalProps) {
+        return (
+            <Modal
+                {...modalProps}
+                actions={getFormModalActions({
+                    submitBtnType: submitBtnType,
+                    isLoading: isLoading,
+                    isValid: isValid,
+                    saveDisabled: saveDisabled,
+                    onFormSubmit: formSubmit,
+                    onFormCancel: onCancel ?? modalProps?.onClose,
+                    cancelBtnText: cancelBtnText,
+                    submitBtnText: submitBtnText,
+                })}
+            >
+                <Box sx={sx}>
+                    <form
+                        onSubmit={handleSubmit(onFormSubmit)}
+                        ref={formRef}
+                        autoComplete={autoCompleteForm}
+                    >
+                        {!!title && <Typography variant="h2">{title}</Typography>}
+                        <FormFields
+                            groups={groups}
+                            formFields={formFields}
+                            groupVariant={groupVariant}
+                            fieldsVariant={fieldsVariant}
+                            columnSx={columnSx}
+                            columnCount={columnCount}
+                            onInputChange={onInputChange}
+                            control={control}
+                            sx={sx}
+                        />
+                        {!!children && children}
+                    </form>
+                </Box>
+            </Modal>
+        );
+    }
 
     return (
         <form
@@ -140,72 +183,17 @@ export default function Form({
             autoComplete={autoCompleteForm}
         >
             {!!title && <Typography variant="h2">{title}</Typography>}
-            <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", ...sx }}>
-                {groups?.length
-                    ? groups.map((g) => {
-                          return (
-                              <Fieldset
-                                  key={"group" + g.name}
-                                  variant={groupVariant}
-                                  label={g.title}
-                                  sx={{ width: "100%", mb: 2 }}
-                              >
-                                  {formFields
-                                      .filter((f) => f?.group === g.name)
-                                      .map((formField: TFormField, index) => {
-                                          const variant = formField?.variant ? formField.variant : fieldsVariant;
-                                          let sx: SxProps = {};
-                                          if (variant === "outlined") {
-                                              sx = { ...columnSx, mb: 1 };
-                                          } else {
-                                              sx = { ...columnSx, mt: index === 0 ? 0 : 2 };
-                                          }
-                                          if (formField?.hidden) {
-                                              return null;
-                                          }
-                                          return (
-                                              <Box
-                                                  sx={sx}
-                                                  key={formField.name}
-                                              >
-                                                  <FormInput
-                                                      fieldsVariant={fieldsVariant}
-                                                      onInputChange={onInputChange}
-                                                      control={control}
-                                                      {...formField}
-                                                  />
-                                              </Box>
-                                          );
-                                      })}
-                              </Fieldset>
-                          );
-                      })
-                    : formFields.map((formField: TFormField, index) => {
-                          const variant = formField?.variant ? formField.variant : fieldsVariant;
-                          let sx: SxProps = {};
-                          if (variant === "outlined") {
-                              sx = { ...columnSx, mb: 1.5 };
-                          } else {
-                              sx = { ...columnSx, mt: index === 0 && columnCount === 1 ? 0 : 2 };
-                          }
-                          if (formField?.hidden) {
-                              return null;
-                          }
-                          return (
-                              <Box
-                                  sx={sx}
-                                  key={formField.name}
-                              >
-                                  <FormInput
-                                      fieldsVariant={fieldsVariant}
-                                      onInputChange={onInputChange}
-                                      control={control}
-                                      {...formField}
-                                  />
-                              </Box>
-                          );
-                      })}
-            </Box>
+            <FormFields
+                groups={groups}
+                formFields={formFields}
+                groupVariant={groupVariant}
+                fieldsVariant={fieldsVariant}
+                columnSx={columnSx}
+                columnCount={columnCount}
+                onInputChange={onInputChange}
+                control={control}
+                sx={sx}
+            />
             {!!children && children}
             <FormButtons
                 submitBtnType={submitBtnType}

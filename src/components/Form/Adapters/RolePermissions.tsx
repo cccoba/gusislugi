@@ -8,7 +8,15 @@ export interface IFormFieldRolePermissions extends IFormField {
 
 const RolePermissionsAdapter: IFormAdapter = {
     name: "rolePermissions",
-    input: FormInput,
+    input: ({ value = {}, fieldProps, fieldParams, ...props }: IFormAdapterInputProps) => {
+        return (
+            <RolePermissions
+                value={value}
+                {...props}
+                {...fieldProps}
+            />
+        );
+    },
     validate: (v, required) => {
         if (!required && !v) {
             return true;
@@ -16,15 +24,5 @@ const RolePermissionsAdapter: IFormAdapter = {
         return !!v;
     },
 };
-
-function FormInput({ value = {}, fieldProps, fieldParams, ...props }: IFormAdapterInputProps) {
-    return (
-        <RolePermissions
-            value={value}
-            {...props}
-            {...fieldProps}
-        />
-    );
-}
 
 export default RolePermissionsAdapter;

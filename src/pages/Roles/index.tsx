@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 
 import lang from "lang";
 import { GoodTable, Page } from "components";
-import { IGoodTableField } from "components/GoodTable";
+import type { IGoodTableField } from "components/GoodTable";
 import { setRoles } from "store/reducers/UserSlice";
 
 import { roles as rolesService, webApiResultData } from "api/data";
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import { useNotifier } from "api/hooks/useNotifier";
 import { useAppDispatch } from "api/hooks/redux";

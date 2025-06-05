@@ -26,6 +26,7 @@ import MedicineDiseaseConditionsAdapter, {
 } from "./Adapters/MedicineDiseaseConditions";
 import TimeDurationAdapter, { type IFormFieldTimeDuration } from "./Adapters/TimeDuration";
 import DocumentPrintParamsAdapter, { type IFormFieldDocumentPrintParams } from "./Adapters/DocumentPrintParams";
+import MedicalSicknessAdapter, { type IFormFieldMedicalSickness } from "./Adapters/MedicalSickness";
 export interface IFormField {
     name: string;
     title: string;
@@ -76,6 +77,7 @@ export type TFormField =
     | IFormFieldMedicineParamsSelector
     | IFormFieldMedicineParamsActions
     | IFormFieldMedicineTest
+    | IFormFieldMedicalSickness
     | IFormFieldNumber
     | IFormFieldPassword
     | IFormFieldRolePermissions
@@ -102,6 +104,7 @@ const FormAdapters: IFormAdapter[] = [
     MedicineParamsSelectorAdapter,
     MedicineParamsActionsAdapter,
     MedicineTestAdapter,
+    MedicalSicknessAdapter,
     NumberAdapter,
     PasswordAdapter,
     RolePermissionsAdapter,

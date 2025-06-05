@@ -1,7 +1,7 @@
-import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
+import type { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
 
-import { ICompanyDto } from "./ICompanyDto";
-import { IUserShortDto } from "./IUserShortDto";
+import type { ICompanyDto } from "./ICompanyDto";
+import type { IUserShortDto } from "./IUserShortDto";
 
 export interface ICompanyMoneyDto {
     id: number;

@@ -1,21 +1,19 @@
-import { title } from "process";
-
-import dayjs from "dayjs";
+import { useMemo, useState, Fragment } from "react";
 
 import lang, { getEnumSelectValues } from "lang";
 import { CRUDAsync } from "components";
 import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
-
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
+
 import { medicalInfo } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import type { IMedicalInfoDto } from "api/interfaces/user/IMedicalInfoDto";
 import { useAppSelector } from "api/hooks/redux";
-import { useMemo } from "react";
-import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 import { cutText } from "api/common/helper";
 import { MedicalInfoStatusEnum } from "api/enums/MedicalInfoStatusEnum";
+
+import MedicalInfoAdd from "./Add";
 
 interface IProps {
     userId?: number;
@@ -23,26 +21,33 @@ interface IProps {
 
 export default function MedicalInfo({ userId }: IProps) {
     const langPage = lang.pages.medicalInfo;
-
+    const [id, setId] = useState(0);
     const listConfig: ICRUDAsyncListConfig = {
         isMultiSelection: false,
         withRefresh: true,
         orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
         fields: [
-            { name: "id", title: langPage.fields.id, width: "30px" },
+            { name: "id", title: lang.id, width: "30px" },
+
             {
-                name: "title",
-                title: langPage.fields.title,
+                name: "medicalSicknessName",
+                title: langPage.fields.medicalSickness,
             },
-            { name: "status", title: langPage.fields.status },
-            { name: "user", title: langPage.fields.uid },
-            { name: "endDate", title: langPage.fields.endDate, format: "date" },
+
+            { name: "userName", title: langPage.fields.uid },
+            {
+                name: "status",
+                title: lang.status,
+                format: "list",
+                formatProps: getEnumSelectValues(MedicalInfoStatusEnum, "MedicalInfoStatusEnum"),
+            },
+            { name: "created_at", title: lang.created_at, format: "date" },
+            { name: "updated_at", title: lang.updated_at, format: "date" },
             { name: "nickname", title: "", hidden: true },
         ],
         transform: (data: IMedicalInfoDto) => ({
             ...data,
-            status: data.status ? langPage.statusActive : langPage.statusNotActive,
-            user: data.user?.firstName || lang.unknown,
+            userName: data.user?.firstName || lang.unknown,
             nickname: data.user?.nickname || "",
             medicalSicknessName: cutText(data.medicalSickness?.title || "", 30),
         }),
@@ -51,24 +56,20 @@ export default function MedicalInfo({ userId }: IProps) {
     const editConfig: ICRUDAsyncEditConfig = {
         fields: [
             {
-                name: "medicalSicknessName",
-                title: langPage.fields.title,
-                type: "select",
+                name: "medicalSicknessId",
+                title: langPage.fields.medicalSickness,
+                type: "medicalSickness",
                 required: true,
-                values: [],
-            },
-            {
-                name: "status",
-                title: langPage.fields.status,
-                type: "select",
-                values: getEnumSelectValues(MedicalInfoStatusEnum, "MedicalInfoStatusEnum"),
+                disabled: true,
             },
             {
                 name: "uid",
                 title: langPage.fields.uid,
                 type: "user",
                 required: true,
+                disabled: true,
             },
+
             {
                 name: "created_at",
                 title: langPage.fields.created_at,
@@ -76,25 +77,35 @@ export default function MedicalInfo({ userId }: IProps) {
                 disabled: true,
             },
             {
-                name: "endDate",
-                title: langPage.fields.endDate,
+                name: "updated_at",
+                title: lang.updated_at,
                 type: "dateTime",
+                disabled: true,
+            },
+            {
+                name: "creatorId",
+                title: lang.creator,
+                type: "user",
+                disabled: true,
+            },
+            {
+                name: "status",
+                title: lang.status,
+                type: "select",
+                values: getEnumSelectValues(MedicalInfoStatusEnum, "MedicalInfoStatusEnum"),
+            },
+            {
+                name: "comments",
+                title: lang.comments,
+                type: "text",
+                multiline: true,
             },
         ],
-    };
-
-    const defInitialData: IMedicalInfoDto = {
-        id: 0,
-        medicalSicknessesId: 0,
-        uid: 0,
-        status: MedicalInfoStatusEnum.Active,
-        endDate: dayjs().add(24, "hour").toDate(),
     };
     const currentUserRolePermissions = useAppSelector((s) => s.user.user?.role?.params?.medicalInfo);
     const props = useMemo(() => {
         const newProps: {
             actions: ICRUDAsyncAction[];
-            initialData: IMedicalInfoDto;
             listConfig: ICRUDAsyncListConfig;
         } = {
             actions: [
@@ -103,21 +114,24 @@ export default function MedicalInfo({ userId }: IProps) {
                 { name: "getRecord", cb: medicalInfo.crudGet },
                 { name: "remove", cb: medicalInfo.crudDelete },
             ],
-            initialData: { ...defInitialData },
             listConfig: { ...listConfig },
         };
 
         if (userId) {
             newProps.actions[0].cbArgs = [userId];
             newProps.actions[0].cb = medicalInfo.crudUserList;
-            newProps.initialData.uid = userId;
             newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
         }
         return newProps;
     }, [userId]);
 
+    const toUpdate = () => {
+        setId((prev) => prev + 1);
+    };
+
     return (
-        <>
+        <Fragment key={id}>
+            <MedicalInfoAdd needRefresh={toUpdate} />
             <CRUDAsync
                 roles={[["medicalInfo"]]}
                 icon="medicalInfo"
@@ -125,10 +139,9 @@ export default function MedicalInfo({ userId }: IProps) {
                 listConfig={props.listConfig}
                 editConfig={editConfig}
                 actions={props.actions}
-                initialValue={props.initialData}
                 permissions={currentUserRolePermissions}
                 withOutPage={!!userId}
             />
-        </>
+        </Fragment>
     );
 }

@@ -10,9 +10,10 @@ export interface IRoleDto {
         admins?: RolePermissionFlag;
         claims?: RolePermissionFlag;
         qr?: RolePermissionFlag;
-        users?: RolePermissionFlag;
+        users?: number;
         medicalPolicies?: RolePermissionFlag;
         medicalInfo?: RolePermissionFlag;
+        medicalInfoAdd?: number;
         medicalSickness?: RolePermissionFlag;
         taxes?: RolePermissionFlag;
         licenses?: RolePermissionFlag;

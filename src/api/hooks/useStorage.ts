@@ -23,10 +23,7 @@ export function useStorage<T>(key: string, initialValue: T, storageType?: TStora
                     return localStorageItem ? JSON.parse(localStorageItem) : initialValue;
             }
         } catch (error) {
-            // If error also return initialValue
-            if (!!onError) {
-                onError(error);
-            }
+            onError?.(error);
             return initialValue;
         }
     });

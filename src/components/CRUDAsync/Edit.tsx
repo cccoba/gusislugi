@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
 import PageOrModal from "components/Page/PageOrModal";
-import { TFormField } from "components/Form/FormAdapters";
-import { IFormGroup } from "components/Form";
+import type { TFormField } from "components/Form/FormAdapters";
+import type { IFormGroup } from "components/Form";
 
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { checkFlagIncludes } from "api/common/enumHelper";
@@ -11,7 +11,7 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data";
 import useParamsId from "api/hooks/useParamsId";
 
-import { ICRUDAsyncAction } from "./Main";
+import type { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncForm from "./Form";
 
 export interface ICRUDAsyncEditConfig {

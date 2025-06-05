@@ -7,10 +7,12 @@ export interface IMedicalInfoDto {
     id: number;
     uid: number;
     status: MedicalInfoStatusEnum;
-    medicalSicknessesId: number;
+    medicalSicknessId: number;
+    creatorId?: number;
     created_at?: Date;
     updated_at?: Date;
-    endDate?: Date;
     user?: IUserShortDto;
     medicalSickness?: IMedicalSicknessDto;
+    creator?: IUserShortDto;
+    comments: string;
 }

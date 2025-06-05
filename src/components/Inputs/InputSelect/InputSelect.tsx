@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 
-import { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
 
 import lang from "lang";
 
+import type { IInputSelectBaseProps } from "./helper";
 import {
-    IInputSelectBaseProps,
     inputSelectBaseProps,
     inputSelectBaseRenderOption,
     inputSelectFilterOptions,

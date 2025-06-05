@@ -7,15 +7,26 @@ import type { IInputProps } from "api/interfaces/components/IInputProps";
 import type { IRoleDto } from "api/interfaces/user/IRoleDto";
 import { RolePermissionFlag as RolePermissionActionFlag } from "api/enums/RolePermissionFlag";
 import { toArray } from "api/common/helper";
-import { getFlagToFlagValues, getFlagValuesToFlag } from "api/common/enumHelper";
-import { UserRolePermissionActionFlag } from "api/enums/UserRolePermissionActionFlag";
+import { getFlagByValue, getFlagToFlagValues, getFlagValuesToFlag } from "api/common/enumHelper";
 import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
 
+import useGetData from "store/rtkProvider";
+
 import FormControl from "./FormControl";
+import type { ISelectValue } from "./Select";
 import Select from "./Select";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
+export function getRoleFlagToFlagValues(value: number, flags: ISelectValue[]): number[] {
+    const result: number[] = [];
+    for (const role of flags) {
+        if (value & role.id) {
+            result.push(role.id);
+        }
+    }
+    return result;
+}
 export default function RolePermissions({
     value,
     onChangeValue,
@@ -33,6 +44,7 @@ export default function RolePermissions({
         "qr",
         "medicalPolicies",
         "medicalInfo",
+        "medicalInfoAdd",
         "medicalSickness",
         "taxes",
         "fines",
@@ -40,7 +52,6 @@ export default function RolePermissions({
         "company",
         "users",
         "shop",
-        "medicineAdmin",
         "licenses",
         "weapons",
     ];
@@ -48,24 +59,38 @@ export default function RolePermissions({
         id: x,
         title: getLangValue(lang.pipes.rolePermissions, x),
     }));
+    const { data: roles } = useGetData<IRoleDto[]>("roles", []);
+    const { data: medicalSicknesses } = useGetData<IRoleDto[]>("medicalSicknesses", []);
 
     const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
         (x) => x.id !== RolePermissionActionFlag.None
     );
-    const userValues = getEnumSelectValues(UserRolePermissionActionFlag, "UserRolePermissionActionFlag").filter(
-        (x) => x.id !== UserRolePermissionActionFlag.None
-    );
+
     const companyValues = getEnumSelectValues(CompanyPermissionActionFlag, "CompanyPermissionActionFlag").filter(
         (x) => x.id !== CompanyPermissionActionFlag.None
     );
+
+    const roleFlags = useMemo<ISelectValue[]>(() => {
+        return (roles || []).map((x) => ({
+            id: getFlagByValue(x.id),
+            title: x.title,
+        }));
+    }, [roles]);
+    const medicalSicknessesFlags = useMemo<ISelectValue[]>(() => {
+        return (medicalSicknesses || []).map((x) => ({
+            id: getFlagByValue(x.id),
+            title: x.title,
+        }));
+    }, [medicalSicknesses]);
     const inputValue = useMemo(() => {
         const newValue: any = {
             admins: [],
             claims: [],
             qr: [],
             users: [],
-            medicalInfo: [],
             medicalPolicies: [],
+            medicalInfo: [],
+            medicalInfoAdd: [],
             medicalSickness: [],
             taxes: [],
             fines: [],
@@ -80,7 +105,7 @@ export default function RolePermissions({
             for (const idName in value) {
                 if (Object.prototype.hasOwnProperty.call(value, idName)) {
                     if (idName === "users") {
-                        newValue[idName] = getFlagToFlagValues((value as any)[idName], UserRolePermissionActionFlag);
+                        newValue[idName] = getRoleFlagToFlagValues((value as any)[idName], roleFlags);
                     } else if (idName === "company") {
                         newValue[idName] = getFlagToFlagValues((value as any)[idName], CompanyPermissionActionFlag);
                     } else {
@@ -90,7 +115,7 @@ export default function RolePermissions({
             }
         }
         return newValue;
-    }, [value]);
+    }, [value, roleFlags]);
     const toChange = (idName: string, values: number[]) => {
         const newValue = getFlagValuesToFlag(values);
         onChangeValue({ ...value, [idName]: newValue });
@@ -108,7 +133,14 @@ export default function RolePermissions({
         >
             <Box sx={{ mx: 1 }}>
                 {permissions.map((x) => {
-                    const valueList = x.id === "users" ? userValues : x.id === "company" ? companyValues : values;
+                    const valueList =
+                        x.id === "users"
+                            ? roleFlags
+                            : x.id === "company"
+                            ? companyValues
+                            : x.id === "medicalInfoAdd"
+                            ? medicalSicknessesFlags
+                            : values;
 
                     return (
                         <Select

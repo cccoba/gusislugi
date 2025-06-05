@@ -1,7 +1,8 @@
-import { ISelectValue } from "components/Inputs/Select";
-import InputSelectMultiple, { IInputSelectMultipleProps } from "components/Inputs/InputSelect/InputSelectMultiple";
+import type { ISelectValue } from "components/Inputs/Select";
+import type { IInputSelectMultipleProps } from "components/Inputs/InputSelect/InputSelectMultiple";
+import InputSelectMultiple from "components/Inputs/InputSelect/InputSelectMultiple";
 
-import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import type { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
 
 export interface IFormFieldListMultiple extends IFormField {
     type: "listMultiple";

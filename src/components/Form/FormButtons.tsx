@@ -1,6 +1,7 @@
 import { Box, Button, Fab } from "@mui/material";
 import Icon from "components/Icon";
 import FabIcon from "components/Icon/FabIcon";
+import type { ReactNode } from "react";
 import { useMemo } from "react";
 
 interface IProps {
@@ -8,12 +9,55 @@ interface IProps {
     isLoading?: boolean;
     isValid?: boolean;
     onFormSubmit: () => void;
-    onFormCancel: () => void;
+    onFormCancel?: () => void;
     cancelBtnText: string;
     submitBtnText: string;
     saveDisabled?: boolean;
 }
-
+export function getFormModalActions({
+    submitBtnType,
+    isLoading = false,
+    isValid = true,
+    cancelBtnText,
+    submitBtnText,
+    saveDisabled = false,
+    onFormSubmit,
+    onFormCancel,
+}: IProps) {
+    const actions: ReactNode[] = [];
+    actions.push();
+    if (submitBtnType === "cancel_save") {
+        return [
+            <Button
+                key="cancel"
+                color="inherit"
+                onClick={onFormCancel}
+            >
+                {cancelBtnText}
+            </Button>,
+            <Button
+                key="submit"
+                onClick={onFormSubmit}
+                color="primary"
+                disabled={isLoading || !isValid || saveDisabled}
+                variant="contained"
+            >
+                {submitBtnText}
+            </Button>,
+        ];
+    }
+    return [
+        <Button
+            key="submit"
+            onClick={onFormSubmit}
+            color="primary"
+            disabled={isLoading || !isValid || saveDisabled}
+            variant="contained"
+        >
+            {submitBtnText}
+        </Button>,
+    ];
+}
 function FormButtons({
     submitBtnType,
     isLoading = false,

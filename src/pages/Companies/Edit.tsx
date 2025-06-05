@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { Box } from "@mui/material";
 
 import lang from "lang";
-import { Accordion, Form, Modal, Page } from "components";
-import { IFormProps } from "components/Form";
+import { Accordion, Form, Modal } from "components";
+import type { IFormProps } from "components/Form";
 
-import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
+import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 
 import CompanyMoneyHistory from "./CompanyHistory";
 

@@ -161,6 +161,20 @@ const ruComponents = {
         taxes: "Платежи",
         fines: "Штрафы",
         shop: "Магазин",
+        notFound: "Ничего не найдено",
+        categories: {
+            main: "Основное",
+            administrative: "Административное",
+            medical: "Медицинские услуги",
+            police: "Полицейские услуги",
+            money: "Финансы",
+            admin: "Администрирование",
+            polices: "Управление персоналом",
+        },
+        actions: {
+            collapse: "Свернуть категорию",
+            expand: "Развернуть категорию",
+        },
     },
     map: {
         title: "2Гусь",

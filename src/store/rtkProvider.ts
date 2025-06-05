@@ -7,7 +7,14 @@ import { getHeaders } from "api/data/dataProvider";
 
 import GlobalStore from "./reducers/GlobalStore";
 
-export type TUseGetDataName = "users" | "medicineParams" | "medicineTests" | "companies" | "maps";
+export type TUseGetDataName =
+    | "users"
+    | "medicineParams"
+    | "medicineTests"
+    | "companies"
+    | "maps"
+    | "roles"
+    | "medicalSicknesses";
 interface IUseGetDataParams<P> {
     isLoading: boolean;
     data: P;
