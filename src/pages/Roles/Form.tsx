@@ -1,7 +1,7 @@
 import lang from "lang";
 import { Form, PageOrModal } from "components";
-import { IRoleDto } from "api/interfaces/user/IRoleDto";
-import { TFormField } from "components/Form/FormAdapters";
+import type { IRoleDto } from "api/interfaces/user/IRoleDto";
+import type { TFormField } from "components/Form/FormAdapters";
 
 interface IProps {
     role: IRoleDto;
@@ -17,20 +17,18 @@ export default function RoleForm({ role, onCancel, onSave }: IProps) {
         { name: "params", title: langPage.fields.params, type: "rolePermissions" },
     ];
     return (
-        <PageOrModal
+        <Form
             modalProps={{
+                open: true,
                 onClose: onCancel,
                 withCloseButton: true,
                 responsiveWidth: true,
+                title: role.title || lang.add,
             }}
-            title={role.title || lang.add}
-        >
-            <Form
-                fields={fields}
-                values={role}
-                onCancel={onCancel}
-                onSubmit={onSave}
-            />
-        </PageOrModal>
+            fields={fields}
+            values={role}
+            onCancel={onCancel}
+            onSubmit={onSave}
+        />
     );
 }

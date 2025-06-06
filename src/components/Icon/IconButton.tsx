@@ -1,6 +1,8 @@
-import { IconButton as MaterialIconButton, IconButtonProps, Tooltip, SvgIconProps } from "@mui/material";
+import type { IconButtonProps, SvgIconProps } from "@mui/material";
+import { IconButton as MaterialIconButton, Tooltip } from "@mui/material";
 
-import Icon, { TIconName } from ".";
+import type { TIconName } from ".";
+import Icon from ".";
 
 interface IProps extends IconButtonProps {
     name: TIconName;

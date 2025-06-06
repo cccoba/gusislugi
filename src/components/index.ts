@@ -28,6 +28,7 @@ export type { IListItem } from "./List";
 
 export { default as Modal } from "./Modal";
 export { default as RawHtml } from "./RawHtml";
+export { default as ParsedHtml } from "./ParsedHtml";
 export { default as Page } from "./Page";
 export { default as PageOrModal } from "./Page/PageOrModal";
 export { default as RoleChecker } from "./RoleChecker";

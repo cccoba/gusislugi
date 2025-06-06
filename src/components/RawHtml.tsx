@@ -9,14 +9,14 @@ interface IProps {
 
 function RawHtml({ html = "", tag = "div", className, onLoad }: IProps) {
     useEffect(() => {
-        if (!!onLoad) {
+        if (onLoad) {
             onLoad();
         }
     }, [html]);
     const props: any = {
         dangerouslySetInnerHTML: { __html: html },
     };
-    if (!!className) {
+    if (className) {
         props.className = className;
     }
     return React.createElement(tag, props);

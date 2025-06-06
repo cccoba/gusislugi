@@ -2,14 +2,15 @@ import { useMemo } from "react";
 
 import lang, { sprintf } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncProps } from "components/CRUDAsync";
+import type { ICRUDAsyncProps } from "components/CRUDAsync";
 
 import { shop } from "api/data";
 import { useAppSelector } from "api/hooks/redux";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { ITransactionDto } from "api/interfaces/Shop/ITransactionDto";
+import type { ITransactionDto } from "api/interfaces/Shop/ITransactionDto";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 
-export default function Shop() {
+export default function Shop({ roles, ...pageProps }: IPageWithRoles) {
     const langPage = lang.pages.shop;
 
     const currentUserRoleParams = useAppSelector((s) => s.user.user?.role?.params?.shop);
@@ -59,14 +60,13 @@ export default function Shop() {
             },
             permissions: currentUserRoleParams,
             title: langPage.title,
+            roles,
         };
-    }, [currentUserRoleParams]);
+    }, [currentUserRoleParams, roles]);
     return (
         <>
             <CRUDAsync
-                roles={[["shop"]]}
-                icon="shop"
-                backUrl={"/shop"}
+                {...pageProps}
                 {...crudProps}
             />
         </>

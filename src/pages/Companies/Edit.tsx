@@ -50,8 +50,8 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                     hidden: !data.id,
                 },
                 {
-                    name: "addUserId",
-                    title: langPage.addUserId,
+                    name: "uid",
+                    title: langPage.userId,
                     type: "user",
                     required: true,
                 },

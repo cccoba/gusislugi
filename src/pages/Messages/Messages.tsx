@@ -15,14 +15,6 @@ import { getEnumValue } from "api/common/enumHelper";
 import { cutText } from "api/common/helper";
 import type { TIconName } from "components/Icon";
 
-const langPage = lang.pages.messages;
-
-const fields: IGoodTableField[] = [
-    { name: "statusComponent", title: "", format: "component" },
-    { name: "shortMessage", title: langPage.fields.message },
-    { name: "created_at", title: langPage.fields.date, format: "date" },
-];
-
 function getIconName(status: MessageStatusEnum): TIconName {
     const result = getEnumValue(MessageStatusEnum, status) || "";
     if (result?.length) {
@@ -31,14 +23,19 @@ function getIconName(status: MessageStatusEnum): TIconName {
     return "messages";
 }
 
-function ProfileMessages() {
+export default function ProfileMessages() {
+    const langPage = lang.pages.messages;
+
+    const fields: IGoodTableField[] = [
+        { name: "statusComponent", title: "", format: "component" },
+        { name: "shortMessage", title: langPage.fields.message, wrap: true },
+        { name: "created_at", title: langPage.fields.date, format: "date" },
+    ];
     const { data = [], isLoading, refetch } = useLoadApiData(messages.getMyMessages, []);
     const [details, setDetails] = useState<IMessageDto | null>(null);
     const [values, setValues] = useState<any[]>([]);
     useEffect(() => {
         if (data?.length) {
-            console.log("aaa", getIconName(data[2].status));
-
             setValues(
                 data.map((x) => ({
                     ...x,
@@ -85,4 +82,3 @@ function ProfileMessages() {
         </>
     );
 }
-export default ProfileMessages;

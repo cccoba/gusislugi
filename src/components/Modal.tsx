@@ -1,15 +1,7 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
-import {
-    Dialog,
-    DialogTitle,
-    DialogProps,
-    DialogContent,
-    DialogContentProps,
-    DialogActions,
-    SxProps,
-    Button,
-    Box,
-} from "@mui/material";
+import type { ReactNode } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import type { DialogProps, DialogContentProps, SxProps } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from "@mui/material";
 
 import lang from "lang";
 
@@ -27,6 +19,7 @@ export interface IModalProps extends DialogProps {
     withCloseButton?: boolean;
     withShadow?: boolean;
     withOkButton?: boolean;
+    okBtnText?: string;
     contentSx?: DialogContentProps["sx"];
     scrollTop?: boolean;
     fabMargin?: boolean;
@@ -51,8 +44,9 @@ export default function Modal({
     withCloseButton = false,
     withShadow = true,
     withOkButton = false,
+    okBtnText,
     contentSx = { mt: 1 },
-    scrollTop = true,
+    scrollTop = false,
     fabMargin,
     ...props
 }: IModalProps) {
@@ -116,7 +110,7 @@ export default function Modal({
                 withOkButton &&
                 !!props.onClose && (
                     <DialogActions sx={actionsSx}>
-                        <Button onClick={props.onClose}>{lang.ok}</Button>
+                        <Button onClick={props.onClose}>{okBtnText ?? lang.ok}</Button>
                     </DialogActions>
                 )
             )}

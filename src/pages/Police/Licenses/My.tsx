@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 
-import lang, { getEnumSelectValues, sprintf } from "lang";
+import lang, { getEnumSelectValues } from "lang";
 import { Form, GoodTable, Modal, Page } from "components";
 import type { IGoodTableField } from "components/GoodTable";
 import type { TFormField } from "components/Form/FormAdapters";
 
-import { licenses, taxes } from "api/data";
+import { licenses } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import type { ILicenseDto } from "api/interfaces/user/ILicenseDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import { LicenseTypeEnum } from "api/enums/LicenseTypeEnum";
+import type { IPage } from "api/interfaces/components/Page/IPage";
 
-export default function MyLicenses() {
+export default function MyLicenses({ ...pageProps }: IPage) {
     const langPage = lang.pages.licenses;
 
     const fields: IGoodTableField[] = [
@@ -66,10 +67,9 @@ export default function MyLicenses() {
     };
     return (
         <Page
-            title={langPage.title}
+            title={langPage.myTitle}
             isLoading={isLoading}
-            backUrl={"/"}
-            icon="licenses"
+            {...pageProps}
         >
             {!!selectedData && (
                 <Modal

@@ -73,7 +73,7 @@ export default function CompanyHistory({ ...pageProps }: IPage) {
                 showSuccess(sprintf(langPage.success.addMoney, selectedCompany.title, result || 0));
                 setIsAddMoneyShowed(false);
                 setNotificationData({
-                    uid: selectedCompany.addUserId,
+                    uid: selectedCompany.uid,
                     title: langPage.message.title,
                     text: sprintf(langPage.message.addUserText, selectedCompany.title, result || 0),
                 });
@@ -102,7 +102,7 @@ export default function CompanyHistory({ ...pageProps }: IPage) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    status={MessageStatusEnum.Companies}
+                    status={MessageStatusEnum.Company}
                     onClose={hideNotificationData}
                 />
             )}

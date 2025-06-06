@@ -4,11 +4,11 @@ import lang, { getEnumSelectValues } from "lang";
 import { Form, GoodTable, Modal, Page } from "components";
 import { medicalPolicies } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";
-import { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
+import type { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { useNotifier } from "api/hooks/useNotifier";
-import { IGoodTableField } from "components/GoodTable";
-import { TFormField } from "components/Form/FormAdapters";
+import type { IGoodTableField } from "components/GoodTable";
+import type { TFormField } from "components/Form/FormAdapters";
 
 const langPage = lang.pages.medicalPolicies;
 
@@ -89,7 +89,7 @@ function MyMedicalPolicies() {
     const [selectedData, setSelectedData] = useState<null | IMedicalPoliciesDto>(null);
     const { data, isLoading, error, refetch } = useLoadApiData<IMedicalPoliciesDto[]>(medicalPolicies.getMyData, []);
     useEffect(() => {
-        if (!!error) {
+        if (error) {
             showError(error);
         }
     }, [error]);
@@ -103,7 +103,7 @@ function MyMedicalPolicies() {
     };
     return (
         <Page
-            title={langPage.title}
+            title={langPage.myTitle}
             isLoading={isLoading}
             backUrl={"/"}
             icon="medicalPolicies"

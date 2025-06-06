@@ -104,7 +104,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                 if (result) {
                     setSelectedRecord(null);
                     setNotificationData({
-                        uid: data.addUserId,
+                        uid: data.uid,
                         title: langPage.message.title,
                         text: data.id
                             ? sprintf(langPage.message.editText, data.title)
@@ -127,7 +127,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
             description: "",
             money: 0,
             address: "",
-            addUserId: userId || 0,
+            uid: userId || 0,
             deputyUserId: null,
         });
     }
@@ -160,7 +160,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                     }
                     if (result) {
                         setNotificationData({
-                            uid: record.addUserId,
+                            uid: record.uid,
                             title: langPage.message.title,
                             text: sprintf(langPage.message.deleteText, record.title),
                         });
@@ -198,7 +198,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                     setIsAddMoneyShowed(false);
                     setSelectedRecord(null);
                     setNotificationData({
-                        uid: selectedRecord.addUserId,
+                        uid: selectedRecord.uid,
                         title: langPage.message.title,
                         text: sprintf(langPage.message.addUserText, selectedRecord.title, result || 0),
                     });
@@ -239,7 +239,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    status={MessageStatusEnum.Companies}
+                    status={MessageStatusEnum.Company}
                     onClose={hideNotificationData}
                 />
             )}

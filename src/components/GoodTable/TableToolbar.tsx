@@ -5,7 +5,7 @@ import IconButton from "components/Icon/IconButton";
 import lang from "lang";
 import InputSearch from "components/Inputs/InputSearch";
 
-import { IGoodTableToolbarAction } from ".";
+import type { IGoodTableToolbarAction } from ".";
 
 interface IProps<T> {
     title?: string;
@@ -13,6 +13,7 @@ interface IProps<T> {
     selectedRows: T[];
     withoutSimpleTextFilter?: boolean;
     sticky?: boolean;
+    autoFocus?: boolean;
     onChangeSimpleSearchText: (search: string) => void;
 }
 
@@ -22,9 +23,10 @@ function GoodTableToolbar<T>({
     title,
     actions = [],
     selectedRows = [],
-    onChangeSimpleSearchText,
+    autoFocus,
     withoutSimpleTextFilter = false,
     sticky = false,
+    onChangeSimpleSearchText,
 }: IProps<T>) {
     const [searchText, setSearchText] = useState("");
     const sx = useMemo(() => {
@@ -81,6 +83,7 @@ function GoodTableToolbar<T>({
                             autoComplete="off"
                             placeholder={langPage.search}
                             variant="standard"
+                            autoFocus={!!autoFocus}
                         />
                     </Box>
                 )}
@@ -95,8 +98,8 @@ function GoodTableToolbar<T>({
                                         key={action.name}
                                         name={action.icon}
                                         onClick={() => onClick(action.name)}
-                                        color={!!action?.color ? action.color : "primary"}
-                                        disabled={!!action?.disable ? action.disable(selectedRows) : false}
+                                        color={action?.color ? action.color : "primary"}
+                                        disabled={action?.disable ? action.disable(selectedRows) : false}
                                         tooltip={action?.tooltip}
                                     />
                                 );

@@ -11,6 +11,7 @@ const getConst = (
         | "images-url"
         | "dock-url"
         | "document-print-generator-url"
+        | "tiny-mce"
 ): any => {
     switch (name) {
         case "auth-token-name":
@@ -33,6 +34,8 @@ const getConst = (
             return process.env.REACT_APP_BOT_NAME;
         case "env-mode":
             return process.env.REACT_APP_ENVIRONMENT;
+        case "tiny-mce":
+            return process.env.REACT_APP_TINYMCE;
         case "document-print-generator-url":
             return process.env.REACT_APP_DOCUMET_GENERATOR_URL;
     }

@@ -11,6 +11,8 @@ import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useAppSelector } from "api/hooks/redux";
 import type { IRoleDto } from "api/interfaces/user/IRoleDto";
 
+import type { INationalityDto } from "api/interfaces/user/INationalityDto";
+
 import UserSelectList from "./List";
 import UserSelectChips from "./Chips";
 
@@ -28,15 +30,19 @@ export interface IUserRowDto {
     role: string;
     nickname: string;
     tgLogin: string;
+    nationalityId: number;
+    nationality: string;
 }
 
-export function parseUserData(user: IUserDto, roles: IRoleDto[]): IUserRowDto {
+export function parseUserData(user: IUserDto, roles: IRoleDto[], nationalities: INationalityDto[]): IUserRowDto {
     return {
         id: user.id,
         image: user.image,
         firstName: user.firstName,
         roleId: user?.roleId || 0,
         role: roles.find((x) => x.id === user.roleId)?.title || lang.no,
+        nationalityId: user?.nationalityId || 0,
+        nationality: nationalities.find((x) => x.id === user?.nationalityId)?.title || lang.no,
         nickname: user?.nickname || "",
         tgLogin: user?.tgLogin ? "@" + user.tgLogin : "",
     };
@@ -59,6 +65,7 @@ export default function UserSelect({
     const [selectedUsers, setSelectedUsers] = useState<IUserRowDto[]>([]);
     const [selectedUserText, setSelectedUserText] = useState<string>("");
     const roleList = useAppSelector((s) => s.user.roles);
+    const nationalityList = useAppSelector((s) => s.user.nationalities);
     const [modalShow, setModalShow] = useState<boolean>(false);
     const { data, isLoading } = useGetData<IUserDto[]>("users", []);
     useEffect(() => {
@@ -80,13 +87,13 @@ export default function UserSelect({
                 } else {
                     if (typeof value === "object") {
                         const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
-                        setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList)));
+                        setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, nationalityList)));
                         onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
                     }
                 }
             }
         }
-    }, [data, value]);
+    }, [data, value, roleList, nationalityList]);
     const endAdornment = useMemo(() => {
         if (disabled) {
             return undefined;
@@ -148,7 +155,7 @@ export default function UserSelect({
         } else {
             if (typeof value === "object") {
                 const newSelectedUsers = users.filter((x) => newValue.includes(x.id));
-                setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList)));
+                setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, nationalityList)));
                 onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
             }
         }
@@ -176,6 +183,7 @@ export default function UserSelect({
                     onClose={addUsers}
                     userList={users}
                     rolesList={roleList}
+                    nationalitiesList={nationalityList}
                     multiple={multiple}
                 />
             </>
@@ -213,6 +221,7 @@ export default function UserSelect({
                 onClose={addUsers}
                 userList={users}
                 rolesList={roleList}
+                nationalitiesList={nationalityList}
                 multiple={multiple}
             />
         </>

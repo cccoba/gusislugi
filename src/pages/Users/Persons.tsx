@@ -58,7 +58,7 @@ export default function Persons({ roles, icon }: IPageWithRoles) {
         <Page
             roles={roles}
             icon={icon}
-            title={langPage.title}
+            title={langPage.persons}
             isLoading={isLoading}
         >
             {!!selectedUer && (

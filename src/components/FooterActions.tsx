@@ -1,8 +1,9 @@
-import { ReactNode } from "react";
-import { AppBar, IconButtonProps, SxProps, Tooltip } from "@mui/material";
+import type { ReactNode } from "react";
+import type { IconButtonProps, SxProps } from "@mui/material";
+import { AppBar, Tooltip } from "@mui/material";
 
 import IconButton from "./Icon/IconButton";
-import { TIconName } from "./Icon";
+import type { TIconName } from "./Icon";
 
 export interface IFooterAction {
     icon: TIconName;
@@ -19,7 +20,7 @@ interface IProps {
     endChildren?: ReactNode;
 }
 
-function FooterActions({ actions = [], onAction, size = "large", startChildren, endChildren }: IProps) {
+export default function FooterActions({ actions = [], onAction, size = "large", startChildren, endChildren }: IProps) {
     const toAction = (e: any, action: string) => {
         e.stopPropagation();
         e.preventDefault();
@@ -96,4 +97,3 @@ function FooterActions({ actions = [], onAction, size = "large", startChildren, 
         </AppBar>
     );
 }
-export default FooterActions;

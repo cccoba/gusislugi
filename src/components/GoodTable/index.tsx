@@ -1,29 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-    Box,
-    Paper,
-    TableContainer,
-    Table as MuiTable,
-    TableFooter,
-    TableRow,
-    TableCell,
-    IconButtonProps,
-} from "@mui/material";
+import type { IconButtonProps } from "@mui/material";
+import { Box, Paper, TableContainer, Table as MuiTable, TableFooter, TableRow, TableCell } from "@mui/material";
 
 import { sortArray } from "lang";
-import { ISelectValue } from "components/Inputs/Select";
-import { TIconName } from "components/Icon";
+import type { ISelectValue } from "components/Inputs/Select";
+import type { TIconName } from "components/Icon";
 
-import { ISortData, SortOrderEnum, TFilterValue } from "api/interfaces/components/GoodTable";
+import type { ISortData, TFilterValue } from "api/interfaces/components/GoodTable";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { objCopyWithType } from "api/common/helper";
-import {
-    FilterDateEqualsEnum,
-    FilterNumberEqualsEnum,
-    FilterTextEqualsEnum,
-    dateFilter,
-    numberFilter,
-    textFilter,
-} from "api/common/filters";
+import type { FilterDateEqualsEnum, FilterNumberEqualsEnum, FilterTextEqualsEnum } from "api/common/filters";
+import { dateFilter, numberFilter, textFilter } from "api/common/filters";
 import { useAppSelector } from "api/hooks/redux";
 import dateTime from "api/common/dateTime";
 
@@ -58,6 +45,7 @@ export interface IGoodTableProps<T> {
     title?: string;
     actions?: IGoodTableToolbarAction<T>[];
     withoutSimpleTextFilter?: boolean;
+    autoFocus?: "simpleSearchInput";
 
     onRowClick?: (data: T) => void;
     onSelectedRows?: (data: T[]) => void;
@@ -149,7 +137,7 @@ const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGood
                                 return false;
                         }
                     }
-                    return textFilter(simpleSearchText.toString(), value.toString());
+                    return textFilter(simpleSearchText.toString().trim(), value.toString().trim());
                 }
                 return false;
             });
@@ -161,9 +149,9 @@ const simpleTextSearch = (simpleSearchText: string, values: any[], fields: IGood
 function sortAndOrder(values: any[], fields: IGoodTableField[], filters: TFilterValue[], order?: ISortData) {
     const res = filterValues(values, filters, fields);
     if (res.length) {
-        if (!!order) {
+        if (order) {
             const field = fields.find((x) => x.name === order.sort);
-            if (!!field) {
+            if (field) {
                 return sortValues(res, field, order.direction);
             }
         }
@@ -193,6 +181,7 @@ function GoodTable<T>({
     title,
     actions = [],
     withoutSimpleTextFilter = false,
+    autoFocus,
     onRowDoubleClick,
     onRowClick,
     onSelectedRows,
@@ -206,7 +195,7 @@ function GoodTable<T>({
         pageNumber: 1,
     });
     useEffect(() => {
-        if (!!onSelectedRows) {
+        if (onSelectedRows) {
             onSelectedRows(selectedRows);
         }
     }, [selectedRows]);
@@ -249,7 +238,7 @@ function GoodTable<T>({
     ]);
     const containerSx = useMemo(() => {
         const newContainerSx: any = {};
-        if (!!height) {
+        if (height) {
             newContainerSx.maxHeight = height;
         } else if (stickyHeader) {
             newContainerSx.maxHeight = defTableMaxHeight;
@@ -385,6 +374,7 @@ function GoodTable<T>({
                 selectedRows={selectedRows}
                 withoutSimpleTextFilter={withoutSimpleTextFilter}
                 onChangeSimpleSearchText={setSimpleSearchText}
+                autoFocus={autoFocus === "simpleSearchInput"}
             />
             <MuiTable
                 stickyHeader={stickyHeader}

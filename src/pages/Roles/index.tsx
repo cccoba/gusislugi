@@ -81,6 +81,7 @@ export default function Roles({ roles, icon }: IPageWithRoles) {
             isLoading={isLoading || initLoading}
             roles={roles}
             icon={icon}
+            backUrl="/"
         >
             {!!selectedRole && (
                 <RoleForm

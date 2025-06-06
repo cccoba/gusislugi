@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardActionArea, CardHeader, Grid } from "@mui/material";
 
-import { Fieldset, Icon, Link, Page, RoleChecker } from "components";
+import { Icon, Link, Page, RoleChecker } from "components";
 import QrUserData from "components/QrPrint/QrUserData";
 import type { TIconName } from "components/Icon";
 import lang from "lang";
@@ -35,7 +35,7 @@ export default function Home() {
             {!!isMyIdShowed && (
                 <QrUserData
                     onClose={hideMyId}
-                    title={langPage.myId.title}
+                    title={langPage.myId}
                     user={currentUser}
                 />
             )}
@@ -46,19 +46,19 @@ export default function Home() {
                 <RoleChecker roles={[["qr"]]}>
                     <HomeItem
                         url="/qrScanner"
-                        title={langPage.actions.qr}
+                        title={langPage.qr}
                         icon="qrScanner"
                     />
                 </RoleChecker>
                 <HomeItem
                     onClick={showMyId}
-                    title={langPage.actions.showId}
+                    title={langPage.showId}
                     icon="id"
                 />
                 {checkFlagIncludes(currentUser?.role?.params?.users || 0, RolePermissionFlag.View) && (
                     <HomeItem
                         url="/persons"
-                        title={langPage.actions.persons}
+                        title={lang.pages.users.persons}
                         icon="users"
                     />
                 )}
@@ -71,47 +71,57 @@ export default function Home() {
                 )}
                 <HomeItem
                     url="/profile"
-                    title={langPage.actions.profile}
+                    title={lang.pages.profile.title}
                     icon="profile"
                 />
-                <HomeItem
+                {/*<HomeItem
                     url="/links"
                     title={lang.pages.links.title}
                     icon="links"
-                />
+                />*/}
                 <HomeItem
-                    url="/myMessages"
-                    title={langPage.actions.messages}
+                    url="/my/messages"
+                    title={lang.pages.messages.title}
                     icon="messages"
                 />
                 <HomeItem
-                    url="/myClaims"
-                    title={langPage.actions.claims}
+                    url="/my/secrets"
+                    title={lang.pages.secrets.myTitle}
+                    icon="secrets"
+                />
+                <HomeItem
+                    url="/my/claims"
+                    title={lang.pages.claims.myTitle}
                     icon="claims"
                 />
                 <HomeItem
-                    url="/myMedicalPolicies"
-                    title={langPage.actions.medicalPolicies}
+                    url="/my/medicalPolicies"
+                    title={lang.pages.medicalPolicies.myTitle}
                     icon="medicalPolicies"
                 />
                 <HomeItem
-                    url="/myTaxes"
-                    title={langPage.actions.taxes}
+                    url="/my/taxes"
+                    title={lang.pages.taxes.myTitle}
                     icon="taxes"
                 />
                 <HomeItem
-                    url="/myFines"
-                    title={langPage.actions.fines}
-                    icon="fines"
+                    url="/my/wanteds2"
+                    title={lang.pages.wanteds2.myTitle}
+                    icon="wanteds2"
                 />
+                {/*<HomeItem
+                    url="/myFines"
+                    title={lang.pages.fines.title}
+                    icon="fines"
+                />*/}
                 <HomeItem
                     url="/my/companies"
-                    title={langPage.actions.companies}
+                    title={lang.pages.companies.myTitle}
                     icon="company"
                 />
                 <HomeItem
                     url="/my/licenses"
-                    title={langPage.actions.licenses}
+                    title={lang.pages.licenses.myTitle}
                     icon="licenses"
                 />
             </Grid>

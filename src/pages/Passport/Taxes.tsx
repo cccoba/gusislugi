@@ -5,10 +5,14 @@ import Taxes from "pages/Taxes";
 
 import type { IPassportItem } from ".";
 
-export default function PassportTaxes({ title, subTitle, userId }: IPassportItem) {
+export default function PassportTaxes({ title, subTitle, userId, icon }: IPassportItem) {
     return (
         <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<Icon name="down" />}>
+                <Icon
+                    name={icon}
+                    sx={{ mr: 1 }}
+                />
                 {title} ( {subTitle} )
             </AccordionSummary>
             <AccordionDetails>

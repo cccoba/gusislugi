@@ -60,8 +60,8 @@ export default function Licenses({ userId }: IProps) {
                 disabled: true,
             },
             {
-                name: "addUser",
-                title: langPage.addUser,
+                name: "creatorId",
+                title: langPage.creator,
                 type: "user",
                 disabled: true,
             },
@@ -74,6 +74,7 @@ export default function Licenses({ userId }: IProps) {
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
             fields: [
                 { name: "id", title: lang.id, width: "30px" },
+                { name: "userName", title: lang.user },
                 {
                     name: "type",
                     title: lang.type,
@@ -83,6 +84,10 @@ export default function Licenses({ userId }: IProps) {
                 { name: "created_at", title: langPage.created_at, format: "date" },
                 { name: "endDate", title: langPage.endDate, format: "date" },
             ],
+            transform: (data: ILicenseDto) => ({
+                ...data,
+                userName: data.user?.firstName || lang.unknown,
+            }),
         };
 
         const newProps: { actions: ICRUDAsyncAction[]; initialData: ILicenseDto; listConfig: ICRUDAsyncListConfig } = {
@@ -100,7 +105,7 @@ export default function Licenses({ userId }: IProps) {
             newProps.actions[0].cbArgs = [userId];
             newProps.actions[0].cb = licenses.crudUserList;
             newProps.initialData.uid = userId;
-            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
+            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "userName");
         }
         return newProps;
     }, [userId]);
@@ -131,7 +136,7 @@ export default function Licenses({ userId }: IProps) {
                 />
             )}
             <CRUDAsync
-                backUrl="/licenses"
+                backUrl="/"
                 roles={[["licenses"]]}
                 icon="licenses"
                 title={langPage.title}

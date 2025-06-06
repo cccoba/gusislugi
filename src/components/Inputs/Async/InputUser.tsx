@@ -1,13 +1,15 @@
+import { useMemo, useState } from "react";
 import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
+
 import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
-import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
+import type { IUserShortDto } from "api/interfaces/user/IUserShortDto";
+
 import Icon from "components/Icon";
 import IconButton from "components/Icon/IconButton";
 import Loader from "components/Loader";
 import QrScanner, { qrResultParser } from "components/QrScanner";
 import lang from "lang";
-import { useEffect, useMemo, useState } from "react";
 
 interface IProps {
     label?: string;
@@ -21,9 +23,14 @@ interface IProps {
     withScan?: boolean;
 }
 
-const langPage = lang.components.inputUser;
-
-function InputUser({ withScan = false, onSelectUser, fullWidth = true, variant = "standard", ...props }: IProps) {
+export default function InputUser({
+    withScan = false,
+    onSelectUser,
+    fullWidth = true,
+    variant = "standard",
+    ...props
+}: IProps) {
+    const langPage = lang.components.inputUser;
     const [search, setSearch] = useState("");
     const [showScaner, setShowScaner] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -128,4 +135,3 @@ function InputUser({ withScan = false, onSelectUser, fullWidth = true, variant =
         </>
     );
 }
-export default InputUser;

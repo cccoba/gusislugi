@@ -15,6 +15,7 @@ import useGetData from "store/rtkProvider";
 import FormControl from "./FormControl";
 import type { ISelectValue } from "./Select";
 import Select from "./Select";
+import InputSelectMultiple from "./InputSelect/InputSelectMultiple";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
@@ -47,8 +48,9 @@ export default function RolePermissions({
         "medicalInfoAdd",
         "medicalSickness",
         "taxes",
-        "fines",
+        //"fines",
         "wanteds",
+        "wanteds2",
         "company",
         "users",
         "shop",
@@ -93,8 +95,9 @@ export default function RolePermissions({
             medicalInfoAdd: [],
             medicalSickness: [],
             taxes: [],
-            fines: [],
+            //fines: [],
             wanteds: [],
+            wanteds2: [],
             company: [],
             shop: [],
             medicineAdmin: [],
@@ -143,14 +146,13 @@ export default function RolePermissions({
                             : values;
 
                     return (
-                        <Select
-                            type="selectFiltered"
-                            multiple
+                        <InputSelectMultiple
+                            withSelectAll
                             key={x.id}
                             label={x.title}
                             values={valueList}
                             value={(inputValue as any)[x.id]}
-                            onChangeValue={(v) => toChange(x.id, v)}
+                            onChangeValue={(v) => toChange(x.id, v as number[])}
                         />
                     );
                 })}

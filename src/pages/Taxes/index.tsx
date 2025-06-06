@@ -32,6 +32,10 @@ export default function Taxes({ userId }: IProps) {
             { name: "id", title: langPage.fields.id, width: "30px" },
             { name: "title", title: langPage.fields.title },
             {
+                name: "taxesType",
+                title: langPage.fields.taxesTypeId,
+            },
+            {
                 name: "status",
                 title: langPage.fields.status,
                 format: "list",
@@ -48,6 +52,7 @@ export default function Taxes({ userId }: IProps) {
             nickname: data.user?.nickname || "",
             value: sprintf(lang.money, data.value),
             title: cutText(data.title, 30),
+            taxesType: data.taxesType?.title || "",
         }),
     };
 
@@ -104,7 +109,9 @@ export default function Taxes({ userId }: IProps) {
         title: "",
         uid: 0,
         status: TaxeStatusEnum.Active,
+        creatorId: 0,
         endDate: dayjs().add(8, "hour").toDate(),
+        taxesTypeId: 1,
     };
     const currentUserRoleTaxes = useAppSelector((s) => s.user.user?.role?.params?.taxes);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
@@ -156,7 +163,7 @@ export default function Taxes({ userId }: IProps) {
                 />
             )}
             <CRUDAsync
-                backUrl="/taxes"
+                backUrl="/"
                 roles={[["taxes"]]}
                 icon="taxes"
                 title={langPage.title}

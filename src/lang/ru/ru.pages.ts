@@ -80,6 +80,7 @@ const ruPages = {
     },
     medicalPolicies: {
         title: "Мед. полис",
+        myTitle: "Мои полис",
         statusActive: "Активен",
         statusNotActive: "Не активен",
         message: {
@@ -203,9 +204,11 @@ const ruPages = {
         },
     },
     taxes: {
-        title: "Платежи",
+        title: "Долги",
+        myTitle: "Мои долги",
+        details: "Долги",
         message: {
-            title: "Платежи",
+            title: "Долги",
             text: 'Платеж "%s" на сумму %s в статусе "%s"',
         },
         fields: {
@@ -216,10 +219,15 @@ const ruPages = {
             created_at: "Дата назначения",
             endDate: "Дата просрочки платежа",
             uid: "Пользователь",
+            taxesTypeId: "Получатель платежа",
         },
+    },
+    taxesTypes: {
+        title: "Типы платежей",
     },
     claims: {
         title: "Заявки в администрацию",
+        myTitle: "Мои заявки в администрацию",
         message: 'Ваша заявка "%s" изменила статус на "%s"',
         fields: {
             id: "Номер",
@@ -233,9 +241,10 @@ const ruPages = {
     },
     licenses: {
         title: "Лицензии",
+        myTitle: "Мои лицензии",
         created_at: "Дата выдачи",
         endDate: "Дата окончания",
-        addUser: "Кто выдал",
+        creator: "Кто выдал",
         errors: {
             add: "Не удалось добавить лицензию!",
             remove: "Не удалось удалить лицензию!",
@@ -320,6 +329,20 @@ const ruPages = {
             },
         },
     },
+    secrets: {
+        title: "Персоналки",
+        myTitle: "Мои персоналки",
+        description: "Данная информация является игротехнической и предназначена только для вашего личного прочтения!",
+        description2:
+            "Уважаемые игроки, пожалуйста, не делитесь подробностями персоналок с другими игроками ДО ИГРЫ или по ситуации. Помните, что утечка информации может только усложнить вашу жизнь или вообще привести к самым печальным последствиям.",
+        confirm: "Мне это понятно, показывай",
+        noData: "Нет данных по вашим персоналкам",
+        medicalInfo: {
+            title: "Болезнь",
+            description: "Симптомы",
+            label: "Симптомы",
+        },
+    },
     profile: {
         title: "Мой профиль",
         userForm: "Общая информация",
@@ -385,9 +408,9 @@ const ruPages = {
         },
     },
     companies: {
-        title: "Компания",
-        myTitle: "Мои компании",
-        addUserId: "Владелец",
+        title: "Компании и счета",
+        myTitle: "Моя компания",
+        userId: "Владелец",
         deputyUserId: "Заместитель",
         address: "Адрес регистрации",
         money: "Баланс",
@@ -420,23 +443,9 @@ const ruPages = {
     home: {
         title: "Главное",
         main: "Основное",
-        services: "Сервисы",
-        actions: {
-            qr: "QR сканер",
-            showId: "Показать ID",
-            profile: "Мой профиль",
-            messages: "Оповещения",
-            claims: "Мои заявки",
-            medicalPolicies: "Мой мед. полис",
-            taxes: "Мои платежи",
-            fines: "Мои штрафы ( Сев. Прешев )",
-            persons: "База пользователей",
-            companies: "Мои компании",
-            licenses: "Мои лицензии",
-        },
-        myId: {
-            title: "Мой ID",
-        },
+        qr: "QR сканер",
+        showId: "Показать ID",
+        myId: "Мой ID",
     },
     passport: {
         byGuid: {
@@ -462,7 +471,7 @@ const ruPages = {
         },
     },
     wanteds: {
-        title: "Розыск",
+        title: "Уголовный розыск",
         statusActive: "Активен",
         statusNotActive: "Не активен",
         message: {
@@ -473,17 +482,37 @@ const ruPages = {
             id: "ID",
             image: "Фото",
             type: "Уровень",
-            status: "Статус розыска",
             created_at: "Дата создания",
             uid: "Разыскиваемый",
             description: "Описание",
-            addUserId: "Кто подал",
+            creatorId: "Кто подал",
+            travelBan: "Подписка о невыезде",
+        },
+    },
+    wanteds2: {
+        title: "Судебный розыск",
+        myTitle: "Мои суд",
+        statusActive: "Активен",
+        statusNotActive: "Не активен",
+        ok: "Обязуюсь исполнить",
+        message: {
+            title: "Судебный розыск",
+            text: 'Статус вашего судебного розыска "%s". %s',
+        },
+        fields: {
+            id: "ID",
+            image: "Фото",
+            uid: "Разыскиваемый",
+            description: "Описание (для судьи)",
+            userDescription: "Сообщение для пользователя",
+            creatorId: "Кто подал",
         },
     },
     weapons: {
         title: "Обучение оружию",
         add: "Улучшить навык",
         weapon: "Навык",
+        creator: "Обучил",
         reason: "Действие",
         isMax: "У пользователя максимальный уровень навыка",
         addTitle: "Доступно %s очков на улучшение оружия",
@@ -517,7 +546,8 @@ const ruPages = {
         },
     },
     users: {
-        title: "Пользователи",
+        title: "Пользователи (админка)",
+        persons: "База пользователей",
         messageSenderTitle: "Отправить пользователю %s",
         withImage: "Показать фото",
         addUser: "Новый пользователь",
@@ -534,7 +564,7 @@ const ruPages = {
         actions: {
             edit: "Редактировать",
             message: "Оповещение",
-            money: "Деньги",
+
             passport: "Паспорт",
         },
         success: {

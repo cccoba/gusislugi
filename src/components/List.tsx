@@ -1,3 +1,4 @@
+import type { ListProps, IconButtonProps } from "@mui/material";
 import {
     Box,
     List as MuiList,
@@ -5,9 +6,7 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    ListProps,
     ListSubheader,
-    IconButtonProps,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -15,7 +14,8 @@ import lang from "lang";
 
 import { textFilter } from "api/common/filters";
 
-import Icon, { TIconName } from "./Icon";
+import type { TIconName } from "./Icon";
+import Icon from "./Icon";
 import IconButton from "./Icon/IconButton";
 import Image from "./Image";
 import InputSearch from "./Inputs/InputSearch";
@@ -72,7 +72,7 @@ export default function List({
         );
     };
     const itemClick = (item: IListItem) => {
-        if (!!onSelectValue) {
+        if (onSelectValue) {
             onSelectValue(item);
         }
     };
@@ -93,7 +93,7 @@ export default function List({
             <MuiList
                 {...props}
                 disablePadding={disablePadding}
-                subheader={!!label ? <ListSubheader>{label}</ListSubheader> : null}
+                subheader={label ? <ListSubheader>{label}</ListSubheader> : null}
             >
                 {filteredValues.map((v) => {
                     return (
@@ -105,7 +105,7 @@ export default function List({
                             divider={withDivider}
                             selected={!!v?.selected}
                             secondaryAction={
-                                !!v?.actions?.length ? (
+                                v?.actions?.length ? (
                                     <>
                                         {v.actions.map(({ icon, cb, size = "small", ...actionProps }, actionIndex) => (
                                             <IconButton
@@ -121,13 +121,13 @@ export default function List({
                                 ) : null
                             }
                         >
-                            {!!v?.actions?.length ? (
+                            {v?.actions?.length ? (
                                 <>
-                                    {!!v.icon ? (
+                                    {v.icon ? (
                                         <ListItemIcon>
                                             <Icon name={v.icon} />
                                         </ListItemIcon>
-                                    ) : !!v?.mediaId ? (
+                                    ) : v?.mediaId ? (
                                         <ListItemIcon>
                                             <Image
                                                 avatar
@@ -144,11 +144,11 @@ export default function List({
                                 </>
                             ) : (
                                 <ListItemButton>
-                                    {!!v.icon ? (
+                                    {v.icon ? (
                                         <ListItemIcon>
                                             <Icon name={v.icon} />
                                         </ListItemIcon>
-                                    ) : !!v?.mediaId ? (
+                                    ) : v?.mediaId ? (
                                         <ListItemIcon>
                                             <Image
                                                 avatar

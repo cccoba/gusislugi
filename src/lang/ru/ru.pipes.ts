@@ -50,6 +50,7 @@ const ruPipes = {
         messages: "Сообщение",
         taxes: "Платеж",
         wanteds: "Розыск",
+        wanteds2: "Судебный розыск",
         companies: "Компания",
     },
     filterTextEquals: {
@@ -121,6 +122,7 @@ const ruPipes = {
         taxes: "Платежи",
         fines: "Штрафы",
         wanteds: "Розыск",
+        wanteds2: "Судебный розыск",
         company: "Компании",
         shop: "Магазин",
         medicineAdmin: "Болезни",
@@ -166,11 +168,17 @@ const ruPipes = {
         majoris: "Майорис",
         ekstremis: "Экстремис",
     },
+    wanteds2Type: {
+        minima: "Минима",
+        minoris: "Минорис",
+        majoris: "Майорис",
+        ekstremis: "Экстремис",
+    },
     weapon: {
-        knife: "Навык 0 - Нож",
-        pistol: "Навык 1 - Пистолет/гранаты",
-        automatic: "Навык 2 - Автомат",
-        machineGun: "Навык 3 - Пулемет",
+        knife: "0",
+        pistol: "1",
+        automatic: "2",
+        machineGun: "3",
     },
 };
 export default ruPipes;

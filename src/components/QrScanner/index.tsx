@@ -1,8 +1,9 @@
 import { useAppSelector } from "api/hooks/redux";
 
+import { isGuid } from "api/common/helper";
+
 import TelegramQRScanner from "./TelegramQRScanner";
 import BrowserQRScanner from "./BrowserQRScanner";
-import { isGuid } from "api/common/helper";
 
 interface IProps {
     onRead: (message: string) => void;

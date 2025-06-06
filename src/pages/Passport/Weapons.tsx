@@ -29,7 +29,10 @@ export default function PassportWeapons({ data, user, weaponPoints, onUpdate }: 
     }, [weaponPermissions, data, weaponPoints]);
     return (
         <Accordion slotProps={{ transition: { unmountOnExit: true } }}>
-            <AccordionSummary expandIcon={<Icon name="down" />}>{title}</AccordionSummary>
+            <AccordionSummary expandIcon={<Icon name="down" />}>
+                <Icon name="weapons" />
+                {title}
+            </AccordionSummary>
             <AccordionDetails>
                 <Weapons
                     data={data}

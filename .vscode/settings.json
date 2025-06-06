@@ -10,5 +10,8 @@
     "typescriptreact"
   ],
   "eslint.format.enable": true,
-  "typescript.preferences.includePackageJsonAutoImports": "off"
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "cSpell.words": [
+    "Taxe"
+  ]
 } 

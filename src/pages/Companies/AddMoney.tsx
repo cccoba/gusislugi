@@ -1,10 +1,10 @@
 import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
-import { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
+import type { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 import { Form, Modal } from "components";
-import { ISelectValue } from "components/Inputs/Select";
+import type { ISelectValue } from "components/Inputs/Select";
 import lang, { getEnumTitleValue } from "lang";
 import { useMemo } from "react";
-import { TFormField } from "components/Form/FormAdapters";
+import type { TFormField } from "components/Form/FormAdapters";
 
 interface IProps {
     companyId: number;
@@ -44,18 +44,19 @@ export default function CompanyMoneyAdd({
     const fields = useMemo<TFormField[]>(() => {
         const newFields: TFormField[] = [
             {
+                name: "type",
+                title: lang.type,
+                type: "select",
+                values: availableTypes,
+            },
+            {
                 name: "money",
                 title: langPage.money,
                 type: "counter",
                 minValue: 0,
                 required: true,
             },
-            {
-                name: "type",
-                title: lang.type,
-                type: "select",
-                values: availableTypes,
-            },
+
             {
                 name: "message",
                 title: lang.description,

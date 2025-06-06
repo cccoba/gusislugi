@@ -18,64 +18,39 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { WeaponEnum } from "api/enums/WeaponEnum";
 
-const langPage = lang.pages.users;
-const langAddForm = lang.components.userForm;
-const defFields: IGoodTableField[] = [
-    { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
-    { name: "actions", title: langPage.fields.actions, format: "component" },
-    { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
-    { name: "firstName", title: langPage.fields.firstName },
-    { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
-    { name: "nickname", title: langPage.fields.nickname },
-    { name: "roleId", title: langPage.fields.roleId, format: "list" },
-    { name: "tgLogin", title: langPage.fields.tgLogin },
-    { name: "passport", title: "", hidden: true },
-];
-
 type TUserAction = "edit" | "message" | "money" | "passport";
 interface IUserActions {
     onAction: (actionName: TUserAction, user: IUserDto) => void;
     user: IUserDto;
 }
-const defAddFields: TFormField[] = [
-    { name: "image", title: langAddForm.image, type: "image", fieldProps: { previewWidth: "200px" } },
 
-    { type: "text", name: "firstName", title: langAddForm.firstName },
-    { type: "text", name: "birthDate", title: langAddForm.birthDate, required: true },
+export default function AdminUserList({ roles }: IPageWithRoles) {
+    const langPage = lang.pages.users;
+    const langAddForm = lang.components.userForm;
 
-    { name: "nationalityId", title: langAddForm.nationality, type: "select", values: [] },
-    { type: "text", name: "passport", title: langAddForm.passport },
-    { type: "text", name: "registration", title: langAddForm.registration },
-    { type: "text", name: "nickname", title: langAddForm.nickname },
-    { name: "roleId", title: langAddForm.role, type: "select", values: [] },
-    { type: "text", name: "description", title: langAddForm.description, fieldProps: { multiline: true } },
-];
-
-const addValue: IUserDto = {
-    id: 0,
-    guid: "",
-    nickname: "",
-    roleId: 1,
-    firstName: "",
-    nationalityId: 1,
-    weapon: WeaponEnum.Knife,
-    birthDate: "",
-    jobPosition: "",
-    passport: "",
-    registration: "",
-    image: "",
-    description: "",
-    money: 0,
-    weaponPoints: 0,
-    role: {
-        id: 1,
+    const addValue: IUserDto = {
+        id: 0,
+        guid: "",
+        nickname: "",
+        roleId: 1,
+        firstName: "",
+        nationalityId: 1,
+        weapon: WeaponEnum.Knife,
+        birthDate: "",
+        jobPosition: "",
+        passport: "",
+        registration: "",
+        image: "",
         description: "",
-        params: {},
-        title: "",
-    },
-};
-
-function AdminUserList({ roles }: IPageWithRoles) {
+        money: 0,
+        weaponPoints: 0,
+        role: {
+            id: 1,
+            description: "",
+            params: {},
+            title: "",
+        },
+    };
     const { data, isLoading: initLoading, refetch } = useGetData<IUserDto[]>("users", []);
     const [messageUser, setMessageUser] = useState<IUserDto | null>(null);
     const [addForm, setAddForm] = useState(false);
@@ -86,6 +61,30 @@ function AdminUserList({ roles }: IPageWithRoles) {
     const allRoles = useAppSelector((x) => x.user.roles);
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
+        const defFields: IGoodTableField[] = [
+            { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
+            { name: "actions", title: langPage.fields.actions, format: "component" },
+            { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
+            { name: "firstName", title: langPage.fields.firstName },
+            { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
+            { name: "nickname", title: langPage.fields.nickname },
+            { name: "roleId", title: langPage.fields.roleId, format: "list" },
+            { name: "tgLogin", title: langPage.fields.tgLogin },
+            { name: "passport", title: "", hidden: true },
+        ];
+        const defAddFields: TFormField[] = [
+            { name: "image", title: langAddForm.image, type: "image", fieldProps: { previewWidth: "200px" } },
+
+            { type: "text", name: "firstName", title: langAddForm.firstName },
+            { type: "text", name: "birthDate", title: langAddForm.birthDate, required: true },
+
+            { name: "nationalityId", title: langAddForm.nationality, type: "select", values: [] },
+            { type: "text", name: "passport", title: langAddForm.passport },
+            { type: "text", name: "registration", title: langAddForm.registration },
+            { type: "text", name: "nickname", title: langAddForm.nickname },
+            { name: "roleId", title: langAddForm.role, type: "select", values: [] },
+            { type: "text", name: "description", title: langAddForm.description, fieldProps: { multiline: true } },
+        ];
         const fields = { fields: [...defFields], addFields: [...defAddFields] };
         if (!withImage) {
             fields.fields = fields.fields.filter((x) => x.name !== "image");
@@ -224,6 +223,7 @@ function AdminUserList({ roles }: IPageWithRoles) {
 }
 
 function UserActions({ onAction, user }: IUserActions) {
+    const langPage = lang.pages.users.actions;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -237,9 +237,6 @@ function UserActions({ onAction, user }: IUserActions) {
     };
     const toMessage = () => {
         onAction("message", user);
-    };
-    const toMoney = () => {
-        onAction("money", user);
     };
     const toPassport = () => {
         onAction("passport", user);
@@ -264,7 +261,7 @@ function UserActions({ onAction, user }: IUserActions) {
                                 variant="inherit"
                                 noWrap
                             >
-                                {langPage.actions.edit}
+                                {langPage.edit}
                             </Typography>
                         </MenuItem>
                         <MenuItem onClick={toMessage}>
@@ -272,15 +269,7 @@ function UserActions({ onAction, user }: IUserActions) {
                                 variant="inherit"
                                 noWrap
                             >
-                                {langPage.actions.message}
-                            </Typography>
-                        </MenuItem>
-                        <MenuItem onClick={toMoney}>
-                            <Typography
-                                variant="inherit"
-                                noWrap
-                            >
-                                {langPage.actions.money}
+                                {langPage.message}
                             </Typography>
                         </MenuItem>
                         <MenuItem onClick={toPassport}>
@@ -288,7 +277,7 @@ function UserActions({ onAction, user }: IUserActions) {
                                 variant="inherit"
                                 noWrap
                             >
-                                {langPage.actions.passport}
+                                {langPage.passport}
                             </Typography>
                         </MenuItem>
                     </>
@@ -297,4 +286,3 @@ function UserActions({ onAction, user }: IUserActions) {
         </>
     );
 }
-export default AdminUserList;

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 
 import AdminUserList from "./AdminUserList";
 import User from "./User";

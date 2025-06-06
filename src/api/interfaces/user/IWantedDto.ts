@@ -1,6 +1,6 @@
-import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
+import type { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 
-import { IUserShortDto } from "./IUserShortDto";
+import type { IUserShortDto } from "./IUserShortDto";
 
 export interface IWantedDto {
     id: number;
@@ -8,9 +8,10 @@ export interface IWantedDto {
     status: boolean;
     type: WantedTypeEnum;
     description: string;
-    addUserId?: number;
+    travelBan: boolean;
+    creatorId?: number;
     created_at?: Date;
     updated_at?: Date;
     user?: IUserShortDto;
-    addUser?: IUserShortDto;
+    creator?: IUserShortDto;
 }

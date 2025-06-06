@@ -7,7 +7,9 @@ export interface ILicenseDto {
     uid: number;
     type: LicenseTypeEnum;
     createdAt?: Date;
-    addUserId?: number;
+    creatorId?: number;
     endDate: Date;
     addUser?: IUserShopDto;
+    user?: IUserShopDto;
+    creator?: IUserShopDto;
 }

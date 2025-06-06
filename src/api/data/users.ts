@@ -6,6 +6,8 @@ import type { IUserShortDto } from "api/interfaces/user/IUserShortDto";
 
 import type { IWeaponUpdaterDto } from "api/interfaces/user/IWeaponUpdaterDto";
 
+import type { IUserSecretsDto } from "api/interfaces/user/IUserSecretsDto";
+
 import type { IFirstLoadView } from "./IFirstLoadView";
 
 import { dataProvider } from "./dataProvider";
@@ -51,6 +53,13 @@ const UsersDataProvider = {
         save: (data: IWeaponUpdaterDto): Promise<IWebDataResult<boolean>> => {
             return dataProvider(baseUrl + "updateWeapon", "put", data);
         },
+    },
+    getSecrets: (userId?: number): Promise<IWebDataResult<IUserSecretsDto>> => {
+        let url = baseUrl + "secrets";
+        if (userId) {
+            url += "&id=" + userId;
+        }
+        return dataProvider(url);
     },
 };
 export default UsersDataProvider;

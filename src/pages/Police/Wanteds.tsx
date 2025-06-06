@@ -15,91 +15,99 @@ import type { IWantedDto } from "api/interfaces/user/IWantedDto";
 import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
-const langPage = lang.pages.wanteds;
-
-export const wantedsListConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: false,
-    withRefresh: true,
-    orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-    fields: [
-        { name: "id", title: langPage.fields.id, width: "30px" },
-        { name: "image", title: langPage.fields.image, width: "30px", format: "image" },
-        { name: "user", title: langPage.fields.uid },
-        {
-            name: "type",
-            title: langPage.fields.type,
-            format: "list",
-            formatProps: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
-        },
-        { name: "status", title: langPage.fields.status },
-        { name: "created_at", title: langPage.fields.created_at, format: "date" },
-        { name: "nickname", title: "", hidden: true },
-    ],
-    transform: (data: IWantedDto) => ({
-        ...data,
-        user: data.user?.firstName || lang.unknown,
-        nickname: data.user?.nickname || "",
-        image: data.user?.image || "",
-        status: data.status ? langPage.statusActive : langPage.statusNotActive,
-    }),
-};
-
-export const wantedsEditConfig: ICRUDAsyncEditConfig = {
-    fields: [
-        {
-            name: "uid",
-            title: langPage.fields.uid,
-            type: "user",
-            required: true,
-        },
-        {
-            name: "type",
-            title: langPage.fields.type,
-            type: "select",
-            required: true,
-            values: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
-        },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            text: langPage.statusActive,
-            type: "switcher",
-        },
-        {
-            name: "description",
-            title: langPage.fields.description,
-            type: "text",
-            required: true,
-            fieldProps: { multiline: true },
-        },
-        {
-            name: "created_at",
-            title: langPage.fields.created_at,
-            type: "dateTime",
-            disabled: true,
-        },
-        {
-            name: "addUserId",
-            title: langPage.fields.addUserId,
-            type: "user",
-            disabled: true,
-        },
-    ],
-};
-const defInitialData: IWantedDto = {
-    id: 0,
-    uid: 0,
-    status: true,
-    type: WantedTypeEnum.Minima,
-    description: "",
-};
 interface IProps {
     userId?: number;
 }
-function Wanteds({ userId }: IProps) {
+export default function Wanteds({ userId }: IProps) {
+    const langPage = lang.pages.wanteds;
+
+    const wantedsEditConfig: ICRUDAsyncEditConfig = {
+        fields: [
+            {
+                name: "uid",
+                title: langPage.fields.uid,
+                type: "user",
+                required: true,
+            },
+            {
+                name: "type",
+                title: langPage.fields.type,
+                type: "select",
+                required: true,
+                values: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
+            },
+            {
+                name: "status",
+                title: "",
+                text: langPage.statusActive,
+                type: "switcher",
+            },
+            {
+                name: "travelBan",
+                title: "",
+                text: langPage.fields.travelBan,
+                type: "switcher",
+            },
+            {
+                name: "description",
+                title: langPage.fields.description,
+                type: "text",
+                multiline: true,
+            },
+            {
+                name: "created_at",
+                title: langPage.fields.created_at,
+                type: "dateTime",
+                disabled: true,
+            },
+            {
+                name: "uid",
+                title: langPage.fields.creatorId,
+                type: "user",
+                disabled: true,
+            },
+        ],
+    };
+
     const currentUserRoleParams = useAppSelector((s) => s.user.user?.role?.params?.wanteds);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
+        const defInitialData: IWantedDto = {
+            id: 0,
+            uid: 0,
+            status: true,
+            type: WantedTypeEnum.Minima,
+            description: "",
+            travelBan: false,
+        };
+        const wantedsListConfig: ICRUDAsyncListConfig = {
+            isMultiSelection: false,
+            withRefresh: true,
+            orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+            fields: [
+                { name: "id", title: langPage.fields.id, width: "30px" },
+                { name: "image", title: langPage.fields.image, width: "30px", format: "image" },
+                { name: "user", title: langPage.fields.uid },
+                {
+                    name: "type",
+                    title: langPage.fields.type,
+                    format: "list",
+                    formatProps: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
+                },
+                { name: "travelBanText", title: langPage.fields.travelBan },
+                { name: "status", title: lang.status },
+                { name: "created_at", title: langPage.fields.created_at, format: "date" },
+                { name: "nickname", title: "", hidden: true },
+            ],
+            transform: (data: IWantedDto) => ({
+                ...data,
+                user: data.user?.firstName || lang.unknown,
+                nickname: data.user?.nickname || "",
+                image: data.user?.image || "",
+                travelBanText: data.travelBan ? lang.yes : lang.no,
+                status: data.status ? langPage.statusActive : langPage.statusNotActive,
+            }),
+        };
         const newProps: { actions: ICRUDAsyncAction[]; initialData: IWantedDto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
                 { name: "getAll", cb: wanteds.crudList },
@@ -146,7 +154,7 @@ function Wanteds({ userId }: IProps) {
             <CRUDAsync
                 roles={[["wanteds"]]}
                 icon="wanteds"
-                backUrl={"/wanteds"}
+                backUrl="/"
                 title={langPage.title}
                 listConfig={props.listConfig}
                 editConfig={wantedsEditConfig}
@@ -158,5 +166,3 @@ function Wanteds({ userId }: IProps) {
         </>
     );
 }
-
-export default Wanteds;

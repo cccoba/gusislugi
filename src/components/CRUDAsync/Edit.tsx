@@ -11,6 +11,8 @@ import { useNotifier } from "api/hooks/useNotifier";
 import { webApiResultData } from "api/data";
 import useParamsId from "api/hooks/useParamsId";
 
+import Page from "components/Page";
+
 import type { ICRUDAsyncAction } from "./Main";
 import CRUDAsyncForm from "./Form";
 
@@ -55,6 +57,7 @@ export default function CRUDAsyncEdit({
             return {
                 withCloseButton: true,
                 responsiveWidth: true,
+                disableEnforceFocus: true,
                 onClose,
             };
         }
@@ -130,9 +133,8 @@ export default function CRUDAsyncEdit({
                 });
         }
     };
-    return (
-        <PageOrModal
-            modalProps={modalProps}
+    if (!modalProps) {
+        <Page
             title={title}
             backUrl={backUrl}
         >
@@ -143,6 +145,16 @@ export default function CRUDAsyncEdit({
                 onSubmit={toSubmit}
                 onCancel={onClose}
             />
-        </PageOrModal>
+        </Page>;
+    }
+    return (
+        <CRUDAsyncForm
+            modalProps={{ ...modalProps, title: title, open: true }}
+            values={data}
+            fields={config.fields}
+            groups={config?.groups}
+            onSubmit={toSubmit}
+            onCancel={onClose}
+        />
     );
 }

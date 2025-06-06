@@ -65,6 +65,9 @@ import {
     GppGood,
     Security,
     KeyboardArrowRight,
+    FactCheck,
+    Category,
+    Gavel,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -103,12 +106,15 @@ type TIconNameBase =
     | "reset"
     | "rotate_left"
     | "rotate_right"
-    | "list";
+    | "list"
+    | "secrets";
 type TIconNameAdditional =
     | "settings"
     | "taxes"
+    | "taxesTypes"
     | "fines"
     | "wanteds"
+    | "wanteds2"
     | "sgp"
     | "qrScanner"
     | "noCamera"
@@ -136,7 +142,8 @@ type TIconNameAdditional =
     | "map"
     | "licenses"
     | "weapons"
-    | "right";
+    | "right"
+    | "secrets";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -165,8 +172,10 @@ export const IconList: TIconName[] = [
     "list",
     "settings",
     "taxes",
+    "taxesTypes",
     "fines",
     "wanteds",
+    "wanteds2",
     "sgp",
     "qrScanner",
     "noCamera",
@@ -204,6 +213,7 @@ interface IProps extends SvgIconProps {
 
 export default function Icon({ tooltip, name, color = "inherit", ...props }: IProps) {
     const totalProps = { ...props, color };
+    totalProps.className = `iconName-${name}`;
     if (tooltip) {
         return (
             <Tooltip title={tooltip}>
@@ -290,10 +300,14 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <Settings {...totalProps} />;
         case "taxes":
             return <ReceiptLong {...totalProps} />;
+        case "taxesTypes":
+            return <Category {...totalProps} />;
         case "fines":
             return <Savings {...totalProps} />;
         case "wanteds":
             return <LocalPolice {...totalProps} />;
+        case "wanteds2":
+            return <Gavel {...totalProps} />;
         case "sgp":
             return <CurrencyExchange {...totalProps} />;
         case "qrScanner":
@@ -310,8 +324,10 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <Forum {...totalProps} />;
         case "money":
             return <Payments {...totalProps} />;
-        case "claims":
+        case "secrets":
             return <Warning {...totalProps} />;
+        case "claims":
+            return <FactCheck {...totalProps} />;
         case "links":
             return <Feed {...totalProps} />;
         case "profile":

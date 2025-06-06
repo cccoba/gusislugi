@@ -1,7 +1,7 @@
 import UserSelect from "components/Inputs/Async/UserSelect";
 import lang from "lang";
 
-import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import type { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
 
 const langPage = lang.components.form;
 export interface IFormFieldUser extends IFormField {

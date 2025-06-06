@@ -27,6 +27,8 @@ export default function Maps() {
         <Page
             title={langPage.title}
             isLoading={isLoading}
+            backUrl="/"
+            icon="map"
         >
             {isLoading ? (
                 <Loader />

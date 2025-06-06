@@ -6,7 +6,8 @@ export enum MessageStatusEnum {
     MedicalSickness,
     Taxes,
     Wanteds,
-    Companies,
+    Wanteds2,
+    Company,
     Licenses,
     Weapons,
 }

@@ -8,13 +8,14 @@ import type { IPageOrModal } from "api/interfaces/components/Page/IPageOrModal";
 import { passport, webApiResultData } from "api/data";
 import type { IPassportUser } from "api/interfaces/Passport/IPassportUser";
 
+import type { TIconName } from "components/Icon";
+
 import PassportUser from "./User";
 import PassportClaims from "./Claims";
 import PassportTaxes from "./Taxes";
 import PassportMedicalPolicies from "./MedicalPolicies";
 import PassportWanteds from "./Wanteds";
 import PassportCompanies from "./Companies";
-import PassportFines from "./Fines";
 import PassportMedicalInfo from "./MedicalInfo";
 import PassportLicenses from "./Licenses";
 import PassportWeapons from "./Weapons";
@@ -27,6 +28,7 @@ export interface IPassportItem {
     title: string;
     subTitle: string;
     userId: number;
+    icon: TIconName;
 }
 
 export default function Passport({ roles, icon, idName, modalProps, userGuid }: IProps) {
@@ -94,6 +96,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.claims ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.claims.title}
                             userId={userData.user.id}
+                            icon="claims"
                         />
                     )}
                     {typeof userData.taxes !== "undefined" && (
@@ -101,13 +104,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.taxes ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.taxes.title}
                             userId={userData.user.id}
-                        />
-                    )}
-                    {typeof userData.fines !== "undefined" && (
-                        <PassportFines
-                            subTitle={userData.fines ? langPage.haveData : langPage.notHaveData}
-                            title={lang.pages.fines.title}
-                            userId={userData.user.id}
+                            icon="taxes"
                         />
                     )}
                     {typeof userData.medicalInfo !== "undefined" && (
@@ -115,6 +112,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.medicalInfo ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalInfo.title}
                             userId={userData.user.id}
+                            icon="medicalInfo"
                         />
                     )}
                     {typeof userData.medicalPolicies !== "undefined" && (
@@ -122,6 +120,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.medicalPolicies ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.medicalPolicies.title}
                             userId={userData.user.id}
+                            icon="medicalPolicies"
                         />
                     )}
                     {typeof userData.wanteds !== "undefined" && (
@@ -129,6 +128,17 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.wanteds ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.wanteds.title}
                             userId={userData.user.id}
+                            type={1}
+                            icon="wanteds"
+                        />
+                    )}
+                    {typeof userData.wanteds2 !== "undefined" && (
+                        <PassportWanteds
+                            subTitle={userData.wanteds2 ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.wanteds2.title}
+                            userId={userData.user.id}
+                            type={2}
+                            icon="wanteds2"
                         />
                     )}
                     {typeof userData.companies !== "undefined" && (
@@ -136,6 +146,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.companies ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.companies.title}
                             userId={userData.user.id}
+                            icon="company"
                         />
                     )}
                     {typeof userData.licenses !== "undefined" && (
@@ -143,6 +154,7 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             subTitle={userData.licenses ? langPage.haveData : langPage.notHaveData}
                             title={lang.pages.licenses.title}
                             userId={userData.user.id}
+                            icon="licenses"
                         />
                     )}
                     {typeof userData.weapons !== "undefined" && (

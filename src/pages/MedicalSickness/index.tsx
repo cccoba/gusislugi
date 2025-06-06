@@ -51,13 +51,11 @@ export default function MedicalSickness({ userId }: IProps) {
                 title: langPage.fields.description,
                 type: "text",
                 multiline: true,
-                required: true,
             },
             {
                 name: "userDescription",
                 title: langPage.fields.userDescription,
-                type: "text",
-                multiline: true,
+                type: "html",
             },
             {
                 name: "public",

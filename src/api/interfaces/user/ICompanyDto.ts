@@ -1,5 +1,5 @@
-import { ICompanyMoneyDto } from "./ICompanyMoneyDto";
-import { IUserShortDto } from "./IUserShortDto";
+import type { ICompanyMoneyDto } from "./ICompanyMoneyDto";
+import type { IUserShortDto } from "./IUserShortDto";
 
 export interface ICompanyDto {
     id: number;
@@ -7,11 +7,13 @@ export interface ICompanyDto {
     description: string;
     money: number;
     address: string;
-    addUserId: number;
+    uid: number;
+    creatorId?: number;
+    deputyUserId: IUserShortDto | null;
     created_at?: Date;
     updated_at?: Date;
-    addUser?: IUserShortDto;
-    deputyUserId: IUserShortDto | null;
+    user?: IUserShortDto;
     deputyUser?: IUserShortDto | null;
     companyMoneys?: ICompanyMoneyDto[];
+    creator?: IUserShortDto;
 }

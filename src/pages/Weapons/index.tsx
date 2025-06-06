@@ -49,7 +49,7 @@ export default function Weapons({ weaponPoints, onUpdate, user, data }: IProps) 
 
             {
                 name: "creatorName",
-                title: lang.creator,
+                title: langPage.creator,
             },
         ];
         if (!user) {

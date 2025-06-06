@@ -25,7 +25,7 @@ export interface INavigationMenu {
     icon: TIconName;
     link: string;
     roles?: TRoleCheckerRole[];
-    category?: "main" | "administrative" | "medical" | "police" | "money" | "admin" | "polices";
+    category: "main" | "administrative" | "medical" | "police" | "admin";
 }
 
 /**
@@ -38,6 +38,7 @@ interface IGroupedMenuCategory {
 }
 
 export default function NavigationMenuDrawer() {
+    const langPage = lang.components.navigationMenu;
     const isAuth = useAppSelector((s) => s.user.isAuth);
     const user = useAppSelector((s) => s.user.user);
     const roles = useAppSelector((s) => s.user.roles);
@@ -47,8 +48,6 @@ export default function NavigationMenuDrawer() {
     const [filterText, setFilterText] = useState("");
     const [collapsedCategories, setCollapsedCategories] = useStorage<string[]>("navigation-menu-collapsed", []);
     const deviceScreenName = useAppSelector((state) => state.device.screen.name);
-
-    const langPage = lang.components.navigationMenu;
 
     const filteredMenuList = useMemo<INavigationMenu[]>(() => {
         return menuList.filter((x) => {
@@ -87,14 +86,13 @@ export default function NavigationMenuDrawer() {
         });
 
         // Предпочтительный порядок категорий
-        const preferredOrder = ["main", "administrative", "medical", "police", "money", "admin", "polices"];
+        const preferredOrder: INavigationMenu["category"][] = ["main", "admin", "administrative", "medical", "police"];
 
-        // Формируем порядок категорий на основе реально имеющихся данных (только непустые категории)
-        const availableCategories = Object.keys(groups).filter((category) => groups[category].length > 0);
+        const availableCategories = Object.keys(groups).filter(
+            (category) => groups[category].length > 0
+        ) as INavigationMenu["category"][];
         const categoryOrder = [
-            // Сначала добавляем категории в предпочтительном порядке, если они есть в данных
             ...preferredOrder.filter((category) => availableCategories.includes(category)),
-            // Затем добавляем остальные категории, которые не в предпочтительном порядке
             ...availableCategories.filter((category) => !preferredOrder.includes(category)),
         ];
 
@@ -272,11 +270,6 @@ export default function NavigationMenuDrawer() {
                                         },
                                     }}
                                     onClick={() => toggleCategoryCollapse(categoryGroup.category)}
-                                    title={
-                                        isCategoryCollapsed(categoryGroup.category)
-                                            ? langPage.actions.expand
-                                            : langPage.actions.collapse
-                                    }
                                 >
                                     <Typography
                                         variant="subtitle2"

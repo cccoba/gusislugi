@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/material";
+import type { SxProps } from "@mui/material";
 
 import getConst from "./getConst";
 
@@ -10,7 +10,7 @@ export function getObjLength(obj: any) {
 }
 
 export function getServerFileUrl(image?: string): string {
-    return !!image ? getConst("images-url") + image.toString() : getConst("assets-images-path") + "nopic.jpg";
+    return image ? getConst("images-url") + image.toString() : getConst("assets-images-path") + "nopic.jpg";
 }
 
 export function cutText(text = "", length = 100) {

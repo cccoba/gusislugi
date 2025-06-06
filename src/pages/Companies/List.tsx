@@ -1,6 +1,6 @@
-import { ICompanyDto } from "api/interfaces/user/ICompanyDto";
+import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 import { GoodTable } from "components";
-import { IGoodTableToolbarAction } from "components/GoodTable";
+import type { IGoodTableToolbarAction } from "components/GoodTable";
 import lang from "lang";
 import { useMemo } from "react";
 
@@ -19,9 +19,9 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
         }
         return data?.map((x) => ({
             ...x,
-            addUserName: x.addUser?.firstName || lang.no,
+            userName: x.user?.firstName || lang.no,
             deputyUserName: x.deputyUser?.firstName || lang.no,
-            nickname: x.addUser?.nickname || "",
+            nickname: x.user?.nickname || "",
         }));
     }, [data]);
     return (
@@ -37,8 +37,8 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
                     title: langPage.money,
                 },
                 {
-                    name: "addUserName",
-                    title: langPage.addUserId,
+                    name: "userName",
+                    title: langPage.userId,
                 },
                 {
                     name: "deputyUserName",

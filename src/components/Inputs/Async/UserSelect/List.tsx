@@ -14,39 +14,23 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 import { useAppSelector } from "api/hooks/redux";
 
+import type { INationalityDto } from "api/interfaces/user/INationalityDto";
+
 import type { IUserRowDto } from ".";
 import { parseUserData } from ".";
 
 const langPage = lang.components.userSelect.list;
 
-type IUserSelectListType = "type" | "roles" | "allList" | "userList";
+type IUserSelectListType = "type" | "roles" | "allList" | "userList" | "nationalities";
 interface IUserSelectList {
     open?: boolean;
     onClose?: (data: any) => void;
     initType?: IUserSelectListType;
     userList: IUserDto[];
     rolesList: IRoleDto[];
+    nationalitiesList: INationalityDto[];
     multiple?: boolean;
 }
-
-const defTypeList: IListItem[] = [
-    { id: "roles", title: langPage.roles, icon: "user" },
-    { id: "allList", title: langPage.allList, icon: "user" },
-];
-
-export const defUserFields: IGoodTableField[] = [
-    /*{
-        name: "image",
-        title: langPage.fields.imageId,
-        maxWidth: "70px",
-        format: "image",
-        noSort: true,
-    },*/
-    { name: "firstName", title: langPage.fields.firstName, maxWidth: "180px" },
-    { name: "role", title: langPage.fields.role, maxWidth: "100px" },
-    { name: "nickname", title: "", hidden: true },
-    { name: "tgLogin", title: "", hidden: true },
-];
 
 export default function UserSelectList({
     onClose,
@@ -54,20 +38,48 @@ export default function UserSelectList({
     initType = "type",
     userList = [],
     rolesList = [],
+    nationalitiesList = [],
     multiple = false,
 }: IUserSelectList) {
     const [type, setType] = useState<IUserSelectListType>(initType);
     const [filteredUsers, setFilteredUsers] = useState<IUserRowDto[]>([]);
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const adminPermissions = useAppSelector((s) => s.user.user?.role.params.admins);
+
     const props = useMemo(() => {
+        const defTypeList: IListItem[] = [
+            { id: "allList", title: langPage.allList, icon: "user" },
+            { id: "roles", title: langPage.roles, icon: "roles" },
+            { id: "nationalities", title: langPage.nationalities, icon: "list" },
+        ];
+
+        const defUserFields: IGoodTableField[] = [
+            /*{
+                name: "image",
+                title: langPage.fields.imageId,
+                maxWidth: "70px",
+                format: "image",
+                noSort: true,
+            },*/
+            { name: "firstName", title: langPage.fields.firstName, maxWidth: "180px" },
+            { name: "roleId", title: langPage.fields.role, maxWidth: "100px", format: "list", formatProps: rolesList },
+            {
+                name: "nationalityId",
+                title: langPage.fields.nationality,
+                maxWidth: "100px",
+                format: "list",
+                formatProps: nationalitiesList,
+            },
+            { name: "nickname", title: "", hidden: true },
+            { name: "tgLogin", title: "", hidden: true },
+        ];
         const newProps = { typeList: [...defTypeList], userFields: [...defUserFields] };
         if (!adminPermissions) {
             newProps.typeList = newProps.typeList.filter((x) => x.id !== "roles");
             newProps.userFields = newProps.userFields.filter((x) => x.name !== "role");
         }
         return newProps;
-    }, [adminPermissions]);
+    }, [adminPermissions, rolesList, nationalitiesList]);
     useEffect(() => {
         setType(initType);
     }, [initType]);
@@ -79,13 +91,18 @@ export default function UserSelectList({
                         return u.roleId === filterValue;
                     }
                     return false;
+                case "nationalities":
+                    if (typeof filterValue === "number") {
+                        return u.nationalityId === filterValue;
+                    }
+                    return false;
                 case "allList":
                 case "userList":
                     return true;
             }
             return false;
         });
-        setFilteredUsers(newFilteredUsers.map((user) => parseUserData(user, rolesList)));
+        setFilteredUsers(newFilteredUsers.map((user) => parseUserData(user, rolesList, nationalitiesList)));
         setType("userList");
     };
     const onCancel = (value: any = null) => {
@@ -110,6 +127,14 @@ export default function UserSelectList({
                         filter={true}
                         values={rolesList}
                         onSelectValue={(t) => showUsersList("roles", t.id)}
+                    />
+                );
+            case "nationalities":
+                return (
+                    <List
+                        filter={true}
+                        values={nationalitiesList}
+                        onSelectValue={(t) => showUsersList("nationalities", t.id)}
                     />
                 );
             case "allList":
@@ -142,6 +167,7 @@ export default function UserSelectList({
                         isMultiSelection={multiple}
                         onSelectedRows={onSelected}
                         fields={props.userFields}
+                        autoFocus="simpleSearchInput"
                         order={{ direction: SortOrderEnum.Ascending, sort: "firstName" }}
                     />
                     {multiple && (

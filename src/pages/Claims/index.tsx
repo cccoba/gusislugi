@@ -2,86 +2,88 @@ import { useMemo, useState } from "react";
 
 import lang, { getEnumTitleValue, getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncAction, TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
-import SendUserNotification, { ISendUserNotificationProps } from "components/SendUserNotification";
-import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
+import type { ISendUserNotificationProps } from "components/SendUserNotification";
+import SendUserNotification from "components/SendUserNotification";
+import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
 import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
+import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { claims } from "api/data";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
+import type { IClaimDto } from "api/interfaces/user/IClaimDto";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { cutText } from "api/common/helper";
 
-const langPage = lang.pages.claims;
-
-const listConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: false,
-    withRefresh: true,
-    orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-    fields: [
-        { name: "id", title: langPage.fields.id },
-        { name: "title", title: langPage.fields.title },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            format: "list",
-            formatProps: getEnumSelectValues(ClaimStatusEnum, "ClaimStatusEnum"),
-        },
-        { name: "created_at", title: langPage.fields.created_at, format: "date" },
-        { name: "user", title: langPage.fields.uid },
-        { name: "nickname", title: "", hidden: true },
-    ],
-    transform: (data: IClaimDto) => ({
-        ...data,
-        status: getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status),
-        user: data.user?.firstName || lang.unknown,
-        nickname: data.user?.nickname || "",
-        title: cutText(data.title, 30),
-    }),
-};
-
-const editConfig: ICRUDAsyncEditConfig = {
-    fields: [
-        { name: "id", title: langPage.fields.id, type: "text", disabled: true },
-        { name: "title", title: langPage.fields.title, type: "text", required: true },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            type: "select",
-            required: true,
-            values: getEnumSelectValues(ClaimStatusEnum, "ClaimStatusEnum"),
-        },
-        {
-            name: "uid",
-            title: langPage.fields.uid,
-            type: "user",
-            required: true,
-        },
-        {
-            name: "description",
-            title: langPage.fields.description,
-            type: "text",
-            required: true,
-            fieldProps: { multiline: true },
-        },
-        { name: "resolution", title: langPage.fields.resolution, type: "text", fieldProps: { multiline: true } },
-    ],
-};
-const defInitialData = {
-    id: 0,
-    uid: 0,
-    status: ClaimStatusEnum.Created,
-    title: "",
-    description: "",
-    resolution: "",
-};
 interface IProps {
     userId?: number;
 }
-function Claims({ userId }: IProps) {
+export default function Claims({ userId }: IProps) {
+    const langPage = lang.pages.claims;
+
+    const listConfig: ICRUDAsyncListConfig = {
+        isMultiSelection: false,
+        withRefresh: true,
+        orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+        fields: [
+            { name: "id", title: langPage.fields.id },
+            { name: "title", title: langPage.fields.title },
+            {
+                name: "status",
+                title: langPage.fields.status,
+                format: "list",
+                formatProps: getEnumSelectValues(ClaimStatusEnum, "ClaimStatusEnum"),
+            },
+            { name: "created_at", title: langPage.fields.created_at, format: "date" },
+            { name: "user", title: langPage.fields.uid },
+            { name: "nickname", title: "", hidden: true },
+        ],
+        transform: (data: IClaimDto) => ({
+            ...data,
+            status: getEnumTitleValue(ClaimStatusEnum, "ClaimStatusEnum", data.status),
+            user: data.user?.firstName || lang.unknown,
+            nickname: data.user?.nickname || "",
+            title: cutText(data.title, 30),
+        }),
+    };
+
+    const editConfig: ICRUDAsyncEditConfig = {
+        fields: [
+            { name: "id", title: langPage.fields.id, type: "text", disabled: true },
+            { name: "title", title: langPage.fields.title, type: "text", required: true },
+            {
+                name: "status",
+                title: langPage.fields.status,
+                type: "select",
+                required: true,
+                values: getEnumSelectValues(ClaimStatusEnum, "ClaimStatusEnum"),
+            },
+            {
+                name: "uid",
+                title: langPage.fields.uid,
+                type: "user",
+                required: true,
+            },
+            {
+                name: "description",
+                title: langPage.fields.description,
+                type: "text",
+                required: true,
+                fieldProps: { multiline: true },
+            },
+            { name: "resolution", title: langPage.fields.resolution, type: "text", fieldProps: { multiline: true } },
+        ],
+    };
+    const defInitialData = {
+        id: 0,
+        uid: 0,
+        status: ClaimStatusEnum.Created,
+        title: "",
+        description: "",
+        resolution: "",
+    };
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
         const newProps: { actions: ICRUDAsyncAction[]; initialData: IClaimDto; listConfig: ICRUDAsyncListConfig } = {
@@ -130,7 +132,7 @@ function Claims({ userId }: IProps) {
                 />
             )}
             <CRUDAsync
-                backUrl="/claims"
+                backUrl="/"
                 roles={[["claims"]]}
                 title={langPage.title}
                 icon="claims"
@@ -143,4 +145,3 @@ function Claims({ userId }: IProps) {
         </>
     );
 }
-export default Claims;

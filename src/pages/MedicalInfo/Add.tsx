@@ -72,7 +72,6 @@ export default function MedicalInfoAdd({ needRefresh }: IProps) {
                 setIsLoading(false);
             });
     };
-    console.log("addProps", addProps);
     return (
         <>
             {!!addProps.statuses.length && (

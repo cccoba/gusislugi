@@ -27,6 +27,9 @@ import MedicineDiseaseConditionsAdapter, {
 import TimeDurationAdapter, { type IFormFieldTimeDuration } from "./Adapters/TimeDuration";
 import DocumentPrintParamsAdapter, { type IFormFieldDocumentPrintParams } from "./Adapters/DocumentPrintParams";
 import MedicalSicknessAdapter, { type IFormFieldMedicalSickness } from "./Adapters/MedicalSickness";
+import TaxesTypesAdapter, { type IFormFieldTaxesTypes } from "./Adapters/TaxesTypes";
+import type { IFormFieldHTML } from "./Adapters/HTML";
+import HTMLAdapter from "./Adapters/HTML";
 export interface IFormField {
     name: string;
     title: string;
@@ -67,6 +70,7 @@ export type TFormField =
     | IFormFieldDate
     | IFormFieldDateTime
     | IFormFieldDocumentPrintParams
+    | IFormFieldHTML
     | IFormFieldIconSelector
     | IFormFieldImage
     | IFormFieldList
@@ -78,6 +82,7 @@ export type TFormField =
     | IFormFieldMedicineParamsActions
     | IFormFieldMedicineTest
     | IFormFieldMedicalSickness
+    | IFormFieldTaxesTypes
     | IFormFieldNumber
     | IFormFieldPassword
     | IFormFieldRolePermissions
@@ -94,6 +99,7 @@ const FormAdapters: IFormAdapter[] = [
     DateAdapter,
     DateTimeAdapter,
     DocumentPrintParamsAdapter,
+    HTMLAdapter,
     IconSelectorAdapter,
     ImageAdapter,
     ListAdapter,
@@ -105,6 +111,7 @@ const FormAdapters: IFormAdapter[] = [
     MedicineParamsActionsAdapter,
     MedicineTestAdapter,
     MedicalSicknessAdapter,
+    TaxesTypesAdapter,
     NumberAdapter,
     PasswordAdapter,
     RolePermissionsAdapter,

@@ -14,7 +14,8 @@ export type TUseGetDataName =
     | "companies"
     | "maps"
     | "roles"
-    | "medicalSicknesses";
+    | "medicalSicknesses"
+    | "taxesTypes";
 interface IUseGetDataParams<P> {
     isLoading: boolean;
     data: P;

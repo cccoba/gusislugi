@@ -120,7 +120,7 @@ export default function MedicalInfo({ userId }: IProps) {
         if (userId) {
             newProps.actions[0].cbArgs = [userId];
             newProps.actions[0].cb = medicalInfo.crudUserList;
-            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "user");
+            newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "userName");
         }
         return newProps;
     }, [userId]);

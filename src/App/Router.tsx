@@ -6,20 +6,14 @@ import { Box, Toolbar } from "@mui/material";
 import Header from "components/Header";
 import NavigationMenu from "components/NavigationMenu";
 import Claims from "pages/Claims";
-import MyClaims from "pages/Claims/MyClaims";
 import CompanyRouter from "pages/Companies/Router";
 import Fines from "pages/Fines";
-import MyFines from "pages/Fines/MyFines";
 import Home from "pages/Home";
 import Links from "pages/Links";
 import LinksLink from "pages/Links/Link";
 import MedicalInfo from "pages/MedicalInfo";
 import MedicalPolicies from "pages/MedicalPolicies";
-import MyMedicalPolicies from "pages/MedicalPolicies/MyMedicalPolicies";
 import MedicineRouter from "pages/Medicine/Router";
-import MyMessages from "pages/Messages/MyMessages";
-import MoneyList from "pages/Money";
-import MoneySgp from "pages/Money/Sgp";
 import MoneyUser from "pages/Money/User";
 import MyRouter from "pages/My/Router";
 import Nationalities from "pages/Nationalities";
@@ -27,21 +21,22 @@ import Passport from "pages/Passport";
 import QrScanner from "pages/QR/QrScanner";
 import Roles from "pages/Roles";
 import Shop from "pages/Shop";
-import Taxes from "pages/Taxes";
-import MyTaxes from "pages/Taxes/MyTaxes";
 import Login from "pages/Users/Login";
 import Persons from "pages/Users/Persons";
 import Profile from "pages/Users/Profile";
 import Registration from "pages/Users/Registration";
 import UsersRouter from "pages/Users/Router";
-import Wanteds from "pages/Wanteds/Wanteds";
+import Wanteds from "pages/Police/Wanteds";
 
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import DocumentPrint from "pages/DocumentsPrint";
 import Maps from "pages/Maps";
-import Licenses from "pages/Licenses";
+import Licenses from "pages/Police/Licenses";
 import MedicalSickness from "pages/MedicalSickness";
+import Wanteds2 from "pages/Police/Wanteds2";
+import Taxes from "pages/Taxes";
+import TaxesTypes from "pages/Taxes/TaxesTypes";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -128,6 +123,7 @@ export default function RouterPage() {
                                 <DocumentPrint
                                     roles={[["admins"]]}
                                     icon="print"
+                                    backUrl="/"
                                 />
                             }
                         />
@@ -139,26 +135,10 @@ export default function RouterPage() {
                             path="/claims/*"
                             element={<Claims />}
                         />
-                        <Route
-                            path="/myClaims"
-                            element={<MyClaims />}
-                        />
-                        <Route
-                            path="/myMessages"
-                            element={<MyMessages />}
-                        />
-                        <Route
-                            path="/myMedicalPolicies"
-                            element={<MyMedicalPolicies />}
-                        />
-                        <Route
-                            path="/myTaxes"
-                            element={<MyTaxes />}
-                        />
-                        <Route
+                        {/*<Route
                             path="/myFines"
                             element={<MyFines />}
-                        />
+                        />*/}
                         <Route
                             path="/my/*"
                             element={<MyRouter baseUrl="/my" />}
@@ -207,6 +187,15 @@ export default function RouterPage() {
                             element={<Taxes />}
                         />
                         <Route
+                            path="/taxesTypes/*"
+                            element={
+                                <TaxesTypes
+                                    roles={[["admins"]]}
+                                    icon="taxesTypes"
+                                />
+                            }
+                        />
+                        <Route
                             path="/licenses/*"
                             element={<Licenses />}
                         />
@@ -223,14 +212,29 @@ export default function RouterPage() {
                             element={<Wanteds />}
                         />
                         <Route
+                            path="/wanteds2/*"
+                            element={<Wanteds2 />}
+                        />
+                        <Route
                             path="/company/*"
-                            element={<CompanyRouter baseUrl="/company" />}
+                            element={
+                                <CompanyRouter
+                                    baseUrl="/company"
+                                    roles={[["company"]]}
+                                />
+                            }
                         />
                         <Route
                             path="/shop/*"
-                            element={<Shop />}
+                            element={
+                                <Shop
+                                    icon="shop"
+                                    backUrl="/"
+                                    roles={[["shop"]]}
+                                />
+                            }
                         />
-                        <Route
+                        {/*<Route
                             path="/money/*"
                             element={
                                 <MoneyList
@@ -242,7 +246,7 @@ export default function RouterPage() {
                         <Route
                             path="/sgp"
                             element={<MoneySgp icon="sgp" />}
-                        />
+                        />*/}
                         <Route
                             path="/links"
                             element={
