@@ -12,10 +12,12 @@ import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFl
 
 import useGetData from "store/rtkProvider";
 
+import type { ITaxesTypesDto } from "api/interfaces/user/ITaxesTypesDto";
+
 import FormControl from "./FormControl";
 import type { ISelectValue } from "./Select";
-import Select from "./Select";
 import InputSelectMultiple from "./InputSelect/InputSelectMultiple";
+import Switcher from "./Switcher";
 
 interface IProps extends IInputProps<IRoleDto["params"]> {}
 
@@ -48,7 +50,8 @@ export default function RolePermissions({
         "medicalInfoAdd",
         "medicalSickness",
         "taxes",
-        //"fines",
+        "taxesTypesView",
+        "taxesTypesEdit",
         "wanteds",
         "wanteds2",
         "company",
@@ -63,6 +66,7 @@ export default function RolePermissions({
     }));
     const { data: roles } = useGetData<IRoleDto[]>("roles", []);
     const { data: medicalSicknesses } = useGetData<IRoleDto[]>("medicalSicknesses", []);
+    const { data: taxesTypes } = useGetData<ITaxesTypesDto[]>("taxesTypes", []);
 
     const values = getEnumSelectValues(RolePermissionActionFlag, "RolePermissionActionFlag").filter(
         (x) => x.id !== RolePermissionActionFlag.None
@@ -84,6 +88,12 @@ export default function RolePermissions({
             title: x.title,
         }));
     }, [medicalSicknesses]);
+    const taxesTypesFlags = useMemo<ISelectValue[]>(() => {
+        return (taxesTypes || []).map((x) => ({
+            id: getFlagByValue(x.id),
+            title: x.title,
+        }));
+    }, [taxesTypes]);
     const inputValue = useMemo(() => {
         const newValue: any = {
             admins: [],
@@ -95,7 +105,8 @@ export default function RolePermissions({
             medicalInfoAdd: [],
             medicalSickness: [],
             taxes: [],
-            //fines: [],
+            taxesTypesView: [],
+            taxesTypesEdit: [],
             wanteds: [],
             wanteds2: [],
             company: [],
@@ -107,12 +118,26 @@ export default function RolePermissions({
         if (toArray(value).length > 0) {
             for (const idName in value) {
                 if (Object.prototype.hasOwnProperty.call(value, idName)) {
-                    if (idName === "users") {
-                        newValue[idName] = getRoleFlagToFlagValues((value as any)[idName], roleFlags);
-                    } else if (idName === "company") {
-                        newValue[idName] = getFlagToFlagValues((value as any)[idName], CompanyPermissionActionFlag);
+                    if ((value as any)[idName] === -1) {
+                        newValue[idName] = [-1];
                     } else {
-                        newValue[idName] = getFlagToFlagValues((value as any)[idName], RolePermissionActionFlag);
+                        switch (idName) {
+                            case "users":
+                                newValue[idName] = getRoleFlagToFlagValues((value as any)[idName], roleFlags);
+                                break;
+                            case "company":
+                                newValue[idName] = getFlagToFlagValues(
+                                    (value as any)[idName],
+                                    CompanyPermissionActionFlag
+                                );
+                                break;
+                            default:
+                                newValue[idName] = getFlagToFlagValues(
+                                    (value as any)[idName],
+                                    RolePermissionActionFlag
+                                );
+                                break;
+                        }
                     }
                 }
             }
@@ -120,10 +145,9 @@ export default function RolePermissions({
         return newValue;
     }, [value, roleFlags]);
     const toChange = (idName: string, values: number[]) => {
-        const newValue = getFlagValuesToFlag(values);
+        const newValue = values.length === 1 && values[0] === -1 ? -1 : getFlagValuesToFlag(values);
         onChangeValue({ ...value, [idName]: newValue });
     };
-
     return (
         <FormControl
             fullWidth={fullWidth}
@@ -143,11 +167,11 @@ export default function RolePermissions({
                             ? companyValues
                             : x.id === "medicalInfoAdd"
                             ? medicalSicknessesFlags
+                            : x.id === "taxesTypesView" || x.id === "taxesTypesEdit"
+                            ? taxesTypesFlags
                             : values;
-
                     return (
-                        <InputSelectMultiple
-                            withSelectAll
+                        <SelectWithAll
                             key={x.id}
                             label={x.title}
                             values={valueList}
@@ -158,5 +182,55 @@ export default function RolePermissions({
                 })}
             </Box>
         </FormControl>
+    );
+}
+
+function SelectWithAll({
+    label,
+    values,
+    value,
+    onChangeValue,
+}: {
+    label: string;
+    values: ISelectValue[];
+    value: number[];
+    onChangeValue: (v: number[]) => void;
+}) {
+    const allIsSelected = useMemo(() => {
+        return value.length === 1 && value[0] === -1;
+    }, [value]);
+    const toChangeAll = (v: boolean) => {
+        if (v) {
+            onChangeValue([-1]);
+        } else {
+            onChangeValue(values.map((x) => x.id));
+        }
+    };
+
+    return (
+        <Box
+            display="flex"
+            alignItems="center"
+            gap={1}
+        >
+            <InputSelectMultiple
+                withSelectAll
+                label={label}
+                values={values}
+                value={allIsSelected ? values.map((x) => x.id) : value}
+                onChangeValue={onChangeValue}
+                disabled={allIsSelected}
+                readOnly={allIsSelected}
+                limitSelectedItems={4}
+                sx={{ flexGrow: 10 }}
+            />
+            <Box>
+                <Switcher
+                    textValue={lang.all}
+                    value={allIsSelected}
+                    onChangeValue={toChangeAll}
+                />
+            </Box>
+        </Box>
     );
 }

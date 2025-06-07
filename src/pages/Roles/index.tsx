@@ -47,7 +47,7 @@ export default function Roles({ roles, icon }: IPageWithRoles) {
         for (const idName in newValue.params) {
             if (Object.prototype.hasOwnProperty.call(newValue.params, idName)) {
                 const element = (newValue.params as any)[idName];
-                if (element > 0) {
+                if (element > 0 || element === -1) {
                     newParams[idName] = element;
                 }
             }
@@ -98,6 +98,7 @@ export default function Roles({ roles, icon }: IPageWithRoles) {
                     { icon: "refresh", name: "refresh", onClick: refetch },
                     { icon: "add", name: "add", onClick: toAdd },
                 ]}
+                pagination={{ pageSize: 25, rowsPerPage: [10, 25, 100] }}
             />
         </Page>
     );

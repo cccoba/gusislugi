@@ -2,14 +2,14 @@ import { useMemo, useState } from "react";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 
 import { objCopyWithType } from "api/common/helper";
-import { IInputProps } from "api/interfaces/components/IInputProps";
+import type { IInputProps } from "api/interfaces/components/IInputProps";
 
 import lang from "lang";
 
-import { ISelectValue } from "../Select";
+import type { ISelectValue } from "../Select";
 
+import type { IInputSelectBaseProps } from "./helper";
 import {
-    IInputSelectBaseProps,
     inputSelectBaseProps,
     inputSelectBaseRenderMultiplyOption,
     inputSelectFilterOptions,

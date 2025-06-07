@@ -74,7 +74,8 @@ export default function Licenses({ userId }: IProps) {
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
             fields: [
                 { name: "id", title: lang.id, width: "30px" },
-                { name: "userName", title: lang.user },
+                { name: "image", title: lang.image, width: "30px", format: "image" },
+                { name: "userName", title: lang.user, wrap: true },
                 {
                     name: "type",
                     title: lang.type,
@@ -87,6 +88,7 @@ export default function Licenses({ userId }: IProps) {
             transform: (data: ILicenseDto) => ({
                 ...data,
                 userName: data.user?.firstName || lang.unknown,
+                image: data.user?.image || "",
             }),
         };
 

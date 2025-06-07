@@ -30,6 +30,7 @@ import MedicalSicknessAdapter, { type IFormFieldMedicalSickness } from "./Adapte
 import TaxesTypesAdapter, { type IFormFieldTaxesTypes } from "./Adapters/TaxesTypes";
 import type { IFormFieldHTML } from "./Adapters/HTML";
 import HTMLAdapter from "./Adapters/HTML";
+import CheckboxListAdapter, { type IFormFieldCheckboxList } from "./Adapters/CheckboxList";
 export interface IFormField {
     name: string;
     title: string;
@@ -65,6 +66,7 @@ export interface IFormAdapter {
 }
 
 export type TFormField =
+    | IFormFieldCheckboxList
     | IFormFieldCounter
     | IFormFieldCompany
     | IFormFieldDate
@@ -94,6 +96,7 @@ export type TFormField =
     | IFormFieldUser;
 
 const FormAdapters: IFormAdapter[] = [
+    CheckboxListAdapter,
     CounterAdapter,
     CompanyAdapter,
     DateAdapter,

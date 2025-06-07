@@ -31,6 +31,7 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
                 {
                     name: "title",
                     title: lang.title,
+                    wrap: true,
                 },
                 {
                     name: "money",
@@ -39,6 +40,7 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
                 {
                     name: "userName",
                     title: langPage.userId,
+                    wrap: true,
                 },
                 {
                     name: "deputyUserName",

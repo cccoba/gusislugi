@@ -21,6 +21,7 @@ const ru = {
     edit: "Редактировать",
     icon: "Иконка",
     id: "ID",
+    image: "Изображение",
     money: "%s dn",
     moneyValue: "dn",
     next: "Далее",

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import lang, { getEnumSelectValues, sprintf } from "lang";
+import lang, { sprintf } from "lang";
 import { CRUDAsync } from "components";
 import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
@@ -13,6 +13,7 @@ import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import type { IWanteds2Dto } from "api/interfaces/user/IWanteds2Dto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import { RolePermissionFlag, RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
 interface IProps {
     userId?: number;
@@ -82,7 +83,6 @@ export default function Wanteds2({ userId }: IProps) {
                 { name: "user", title: langPage.fields.uid },
                 { name: "status", title: lang.status },
                 { name: "created_at", title: lang.created_at, format: "date" },
-                { name: "updated_at", title: lang.updated_at, format: "date" },
                 { name: "nickname", title: "", hidden: true },
             ],
             transform: (data: IWanteds2Dto) => ({

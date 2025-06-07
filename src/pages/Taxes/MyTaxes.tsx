@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import lang, { getEnumSelectValues } from "lang";
 import { Form, GoodTable, Modal, Page } from "components";
@@ -34,7 +34,10 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             title: langPage.fields.value,
             format: "number",
         },
-
+        {
+            name: "taxesTypeName",
+            title: langPage.fields.taxesTypeId,
+        },
         {
             name: "endDate",
             title: langPage.fields.endDate,
@@ -99,6 +102,12 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             showError(error);
         }
     }, [error]);
+    const values = useMemo(() => {
+        return data?.map((item) => ({
+            ...item,
+            taxesTypeName: item.taxesType?.title,
+        }));
+    }, [data]);
     const toDetails = (data: ITaxeDto) => {
         if (data) {
             setSelectedData(data);
@@ -119,6 +128,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
                         open: true,
                         responsiveWidth: true,
                         withCloseButton: true,
+                        withOkButton: true,
                         onClose: hideDetails,
                         title: langPage.details,
                     }}
@@ -129,7 +139,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             )}
             <GoodTable
                 fields={fields}
-                values={data || []}
+                values={values || []}
                 onRowClick={toDetails}
                 actions={[{ icon: "refresh", name: "refresh", onClick: refetch }]}
             />

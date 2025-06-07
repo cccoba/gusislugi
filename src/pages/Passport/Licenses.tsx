@@ -1,7 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { Icon } from "components";
-import Licenses from "pages/Police/Licenses";
+import Licenses from "pages/Licenses";
 
 import type { IPassportItem } from ".";
 

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import MyLicenses from "pages/Police/Licenses/My";
+import MyLicenses from "pages/Licenses/My";
 
 import MyTaxes from "pages/Taxes/MyTaxes";
 
@@ -10,7 +10,7 @@ import MyClaims from "pages/Claims/MyClaims";
 
 import MyMessages from "pages/Messages/MyMessages";
 
-import MyWanteds2 from "pages/Police/Wanteds2/My";
+import MyWanteds2 from "pages/Wanteds2/My";
 
 import MyCompanies from "../Companies/My";
 

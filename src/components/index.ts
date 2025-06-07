@@ -34,6 +34,7 @@ export { default as PageOrModal } from "./Page/PageOrModal";
 export { default as RoleChecker } from "./RoleChecker";
 
 export { default as UserSelect } from "./Inputs/Async/UserSelect";
+export { default as CheckboxList } from "./Inputs/CheckboxList";
 export { default as ColorPicker } from "./Inputs/ColorPicker";
 export { default as Counter } from "./Inputs/Counter";
 export { default as Date } from "./Inputs/Date";

@@ -23,7 +23,7 @@ export interface ICRUDAsyncProps {
     initialValue?: any;
     roles?: TRoleCheckerRole[];
     backUrl?: string | null;
-    permissions?: RolePermissionFlag;
+    permissions?: RolePermissionFlag | -1;
     withOutPage?: boolean;
 }
 
@@ -57,7 +57,9 @@ function CRUDAsync(props: ICRUDAsyncProps) {
                         initialValue={props.initialValue}
                         backUrl={props.backUrl ?? undefined}
                         permissions={
-                            typeof props.permissions === "undefined" ? RolePermissionFlagAll : props.permissions
+                            typeof props.permissions === "undefined" || props.permissions === -1
+                                ? RolePermissionFlagAll
+                                : props.permissions
                         }
                     />
                 }

@@ -28,6 +28,10 @@ export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRo
     for (const [roleName, flagValue] of roles) {
         let defaultFlagValue = RolePermissionFlagAll;
         if (roleName in userRoleParams) {
+            if ((userRoleParams as any)[roleName] === -1) {
+                return true;
+            }
+
             switch (roleName) {
                 case "company":
                     defaultFlagValue = CompanyPermissionFlagAll;

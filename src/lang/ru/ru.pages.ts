@@ -219,7 +219,7 @@ const ruPages = {
             created_at: "Дата назначения",
             endDate: "Дата просрочки платежа",
             uid: "Пользователь",
-            taxesTypeId: "Получатель платежа",
+            taxesTypeId: "Категория платежа",
         },
     },
     taxesTypes: {

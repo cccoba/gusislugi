@@ -26,6 +26,9 @@ export function getFormModalActions({
 }: IProps) {
     const actions: ReactNode[] = [];
     actions.push();
+    if (submitBtnType === "no") {
+        return actions;
+    }
     if (submitBtnType === "cancel_save") {
         return [
             <Button

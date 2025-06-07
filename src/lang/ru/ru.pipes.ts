@@ -119,8 +119,7 @@ const ruPipes = {
         medicalPolicies: "Мед. полис",
         medicalSickness: "Болезни",
         medicalInfoAdd: "Заражение",
-        taxes: "Платежи",
-        fines: "Штрафы",
+        taxes: "Долги",
         wanteds: "Розыск",
         wanteds2: "Судебный розыск",
         company: "Компании",
@@ -128,6 +127,8 @@ const ruPipes = {
         medicineAdmin: "Болезни",
         licenses: "Лицензии",
         weapons: "Оружие",
+        taxesTypesView: "Долги (просмотр)",
+        taxesTypesEdit: "Долги (редактирование)",
     },
     rolePermissionAction: {
         view: "Просмотр",

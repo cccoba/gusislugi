@@ -69,19 +69,20 @@ export default function Companies({ userId, ...pageProps }: IProps) {
         if (!currentUserRoleParams) {
             return newActions;
         }
-        if (currentUserRoleParams & CompanyPermissionActionFlag.View) {
+        if (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.View) {
             newActions.push({ icon: "refresh", name: "refresh", onClick: loadList });
         }
         if (
+            currentUserRoleParams === -1 ||
             currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd ||
             currentUserRoleParams & CompanyPermissionActionFlag.MoneySubtract
         ) {
-            newActions.push({ icon: "history", name: "history", onClick: () => navigate("/company/history") });
+            newActions.push({ icon: "money", name: "history", onClick: () => navigate("/company/history") });
         }
-        if (currentUserRoleParams & CompanyPermissionActionFlag.Add) {
+        if (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.Add) {
             newActions.push({ icon: "add", name: "add", onClick: toAddRecord });
         }
-        if (currentUserRoleParams & CompanyPermissionActionFlag.Delete) {
+        if (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.Delete) {
             newActions.push({
                 icon: "delete",
                 name: "delete",
@@ -144,12 +145,20 @@ export default function Companies({ userId, ...pageProps }: IProps) {
         setNotificationData(null);
     };
     const toEditRecord = (record: ICompanyDto) => {
-        if (currentUserRoleParams && currentUserRoleParams & CompanyPermissionActionFlag.Edit) {
+        if (
+            currentUserRoleParams &&
+            (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.Edit)
+        ) {
             setSelectedRecord(record);
         }
     };
     const toDeleteRecord = (confirm: boolean, record: ICompanyDto) => {
-        if (confirm && record && currentUserRoleParams && currentUserRoleParams & CompanyPermissionActionFlag.Delete) {
+        if (
+            confirm &&
+            record &&
+            currentUserRoleParams &&
+            (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.Delete)
+        ) {
             setIsLoading(true);
             company
                 .crudDelete([record.id])
@@ -229,10 +238,14 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                     onSave={onAddMoneySave}
                     onCancel={() => setIsAddMoneyShowed(false)}
                     withAdd={
-                        !!currentUserRoleParams && !!(currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd)
+                        !!currentUserRoleParams &&
+                        (currentUserRoleParams === -1 ||
+                            !!(currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd))
                     }
                     withSubtract={
-                        !!currentUserRoleParams && !!(currentUserRoleParams & CompanyPermissionActionFlag.MoneySubtract)
+                        !!currentUserRoleParams &&
+                        (currentUserRoleParams === -1 ||
+                            !!(currentUserRoleParams & CompanyPermissionActionFlag.MoneySubtract))
                     }
                 />
             )}

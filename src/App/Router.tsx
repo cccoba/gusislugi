@@ -26,15 +26,15 @@ import Persons from "pages/Users/Persons";
 import Profile from "pages/Users/Profile";
 import Registration from "pages/Users/Registration";
 import UsersRouter from "pages/Users/Router";
-import Wanteds from "pages/Police/Wanteds";
+import Wanteds from "pages/Wanteds";
 
 import getConst from "api/common/getConst";
 import { useAppSelector } from "api/hooks/redux";
 import DocumentPrint from "pages/DocumentsPrint";
 import Maps from "pages/Maps";
-import Licenses from "pages/Police/Licenses";
+import Licenses from "pages/Licenses";
 import MedicalSickness from "pages/MedicalSickness";
-import Wanteds2 from "pages/Police/Wanteds2";
+import Wanteds2 from "pages/Wanteds2";
 import Taxes from "pages/Taxes";
 import TaxesTypes from "pages/Taxes/TaxesTypes";
 

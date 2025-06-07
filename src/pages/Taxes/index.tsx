@@ -30,7 +30,7 @@ export default function Taxes({ userId }: IProps) {
         orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
         fields: [
             { name: "id", title: langPage.fields.id, width: "30px" },
-            { name: "title", title: langPage.fields.title },
+            { name: "title", title: langPage.fields.title, wrap: true },
             {
                 name: "taxesType",
                 title: langPage.fields.taxesTypeId,
@@ -42,7 +42,7 @@ export default function Taxes({ userId }: IProps) {
                 formatProps: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
             },
             { name: "value", title: langPage.fields.value },
-            { name: "user", title: langPage.fields.uid },
+            { name: "user", title: langPage.fields.uid, wrap: true },
             { name: "endDate", title: langPage.fields.endDate, format: "date" },
             { name: "nickname", title: "", hidden: true },
         ],
@@ -73,6 +73,12 @@ export default function Taxes({ userId }: IProps) {
                 validateFn: (value) => {
                     return (!!value && value > 0) || lang.pages.money.send.errors.positiveCount;
                 },
+            },
+            {
+                name: "taxesTypeId",
+                title: langPage.fields.taxesTypeId,
+                type: "taxesTypes",
+                required: true,
             },
             {
                 name: "status",

@@ -13,14 +13,19 @@ export default function CompanyRouter({ roles, baseUrl }: IProps) {
         <Routes>
             <Route
                 path="/"
-                element={<Companies roles={roles} backUrl="/home" />}
+                element={
+                    <Companies
+                        roles={roles}
+                        backUrl="/home"
+                    />
+                }
             />
             <Route
                 path={`/history`}
                 element={
                     <CompanyHistory
                         roles={roles}
-                        icon="history"
+                        icon="money"
                         backUrl={baseUrl}
                     />
                 }
