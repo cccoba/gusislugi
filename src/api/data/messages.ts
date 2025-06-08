@@ -1,6 +1,6 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { IMessageDto } from "api/interfaces/Messages/IMessageDto";
-import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { IMessageDto } from "api/interfaces/Messages/IMessageDto";
+import type { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 import { dataProvider } from "./dataProvider";
 

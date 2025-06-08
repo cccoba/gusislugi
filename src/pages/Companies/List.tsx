@@ -1,3 +1,4 @@
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
 import { GoodTable } from "components";
 import type { IGoodTableToolbarAction } from "components/GoodTable";
@@ -29,6 +30,11 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
             values={values}
             fields={[
                 {
+                    name: "id",
+                    title: lang.id,
+                    format: "number",
+                },
+                {
                     name: "title",
                     title: lang.title,
                     wrap: true,
@@ -56,6 +62,7 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
             actions={actions}
             onRowClick={onRowClick}
             onRowDoubleClick={onRowDoubleClick}
+            order={{ direction: SortOrderEnum.Descending, sort: "id" }}
         />
     );
 }

@@ -68,6 +68,7 @@ import {
     FactCheck,
     Category,
     Gavel,
+    PersonSearch,
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -143,7 +144,8 @@ type TIconNameAdditional =
     | "licenses"
     | "weapons"
     | "right"
-    | "secrets";
+    | "secrets"
+    | "wanteds3";
 export type TIconName = TIconNameBase | TIconNameAdditional;
 export const IconList: TIconName[] = [
     "edit",
@@ -176,6 +178,7 @@ export const IconList: TIconName[] = [
     "fines",
     "wanteds",
     "wanteds2",
+    "wanteds3",
     "sgp",
     "qrScanner",
     "noCamera",
@@ -308,6 +311,8 @@ export default function Icon({ tooltip, name, color = "inherit", ...props }: IPr
             return <LocalPolice {...totalProps} />;
         case "wanteds2":
             return <Gavel {...totalProps} />;
+        case "wanteds3":
+            return <PersonSearch {...totalProps} />;
         case "sgp":
             return <CurrencyExchange {...totalProps} />;
         case "qrScanner":

@@ -1,36 +1,57 @@
-import { useEffect, useMemo } from "react";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { useEffect, useMemo, useRef } from "react";
+import { InputAdornment, TextField } from "@mui/material";
 
-import Icon from "components/Icon";
+import { getSum } from "api/common/helper";
 import type { IInputProps } from "api/interfaces/components/IInputProps";
 
-interface IProps extends IInputProps<number> {
+import IconButton from "components/Icon/IconButton";
+
+export interface ICounterProps extends IInputProps<number> {
     minValue?: number;
     maxValue?: number;
     step?: number;
     compact?: boolean;
+    defaultValue?: number;
+    withStopPropagation?: boolean;
+    placeholder?: string;
 }
 
-const counterSx: any = {
-    "& input": {
-        textAlign: "center",
-    },
-    "& input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button": {
-        appearance: "none",
-    },
-};
-function Counter({
+export default function Counter({
     fullWidth = true,
     value = 0,
     minValue = 0,
-    maxValue = 100000,
+    maxValue = 1000,
     step = 1,
-    onChangeValue,
     compact = false,
     sx = {},
-    variant = "standard",
+    defaultValue = 0,
+    placeholder,
+    variant = "outlined",
+    withStopPropagation = false,
+    onChangeValue,
     ...props
-}: IProps) {
+}: ICounterProps) {
+    const counterSx = useRef({
+        "& .MuiInputBase-root": {
+            px: 0,
+        },
+        "& input": {
+            textAlign: "center",
+            flexGrow: 10,
+        },
+        "& input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button": {
+            appearance: "none",
+        },
+    });
+    const localPlaceholder = useMemo(() => {
+        if (placeholder) {
+            return placeholder;
+        }
+        if (typeof defaultValue !== "undefined") {
+            return defaultValue.toString();
+        }
+        return "";
+    }, [placeholder, defaultValue]);
     useEffect(() => {
         if (isNaN(value) || !isFinite(value)) {
             toChangeValue(minValue);
@@ -58,6 +79,7 @@ function Counter({
 
     const toChange = (e: any) => {
         if (e.target.value === "") {
+            toChangeValue(defaultValue);
             return;
         }
         const floatValue = parseFloat(e.target.value);
@@ -68,55 +90,64 @@ function Counter({
         toChangeValue(floatValue);
     };
     const toChangeValue = (newValue: number) => {
+        if (Number.isInteger(step) && !Number.isInteger(newValue)) {
+            newValue = Math.round(newValue);
+        }
         if (newValue !== value) {
-            onChangeValue(newValue);
+            onChangeValue(typeof newValue === "undefined" ? defaultValue : newValue);
         }
     };
-    const toMinus = () => {
+    const toMinus = (e: any) => {
+        if (withStopPropagation) {
+            e.stopPropagation();
+        }
         if (value - step >= minValue) {
-            toChangeValue(value - step);
+            toChangeValue(getSum(value || 0, step || 1, false));
         }
     };
-    const toPlus = () => {
+    const toPlus = (e: any) => {
+        if (withStopPropagation) {
+            e.stopPropagation();
+        }
         if (value + step <= maxValue) {
-            toChangeValue(value + step);
+            toChangeValue(getSum(value || 0, step || 1));
         }
     };
     return (
         <TextField
             {...props}
-            variant={variant}
             type="number"
-            value={value}
+            variant={variant}
+            value={value === undefined || value === defaultValue ? "" : value}
+            placeholder={localPlaceholder}
             fullWidth={fullWidth}
-            sx={{ ...counterSx, ...sx }}
+            sx={{ ...counterSx.current, ...sx }}
             inputProps={{ step, min: minValue, max: maxValue }}
             onChange={toChange}
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">
-                        <Button
+                        <IconButton
                             sx={buttonSx}
+                            name="minus"
                             onClick={toMinus}
-                            disabled={value <= minValue}
-                        >
-                            <Icon name="minus" />
-                        </Button>
+                            color="primary"
+                            disabled={!!props?.disabled || value <= minValue}
+                        />
                     </InputAdornment>
                 ),
                 endAdornment: (
                     <InputAdornment position="end">
-                        <Button
+                        <IconButton
                             sx={buttonSx}
-                            disabled={value >= maxValue}
+                            name="add"
                             onClick={toPlus}
-                        >
-                            <Icon name="add" />
-                        </Button>
+                            color="primary"
+                            disabled={!!props?.disabled || value >= maxValue}
+                        />
                     </InputAdornment>
                 ),
             }}
         />
     );
 }
-export default Counter;

@@ -11,13 +11,16 @@ import { fromLonLat, toLonLat } from "ol/proj";
 import OLVectorLayer from "ol/layer/Vector";
 import { getCenter } from "ol/extent";
 import type { Coordinate } from "ol/coordinate";
+import { defaults as defaultControls } from "ol/control/defaults";
 
 import VectorSource from "ol/source/Vector";
 import { Point } from "ol/geom";
 import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import lang from "lang";
 
-import { colors, getLocalImageUrl, IFeatureProps } from "../Features/Styles";
+import { ScaleLine } from "ol/control";
+
+import { colors, getLocalImageUrl } from "../Features/Styles";
 
 import MapPopup from "./Popup";
 import MapContext from "./MapContext";
@@ -74,11 +77,12 @@ const Map = ({ children, zoom, center, popup, onClick, onZoomChange, userCoordin
         const options = {
             view: mapViewRef.current,
             layers: [],
-            controls: [],
+            controls: defaultControls({ attribution: false }),
             overlays: [mapPopupRef.current],
         };
 
         const mapObject = new ol.Map(options);
+        mapObject.addControl(new ScaleLine({ units: "metric" }));
         mapObject.on("click", mapClick);
         mapObject.on("moveend", moveEnd);
         mapObject.setTarget(mapRef.current);

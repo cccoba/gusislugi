@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -6,13 +6,11 @@ import lang from "lang";
 import { Icon, Page } from "components";
 import QrScanner, { qrResultParser } from "components/QrScanner";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import { isGuid } from "api/common/helper";
+import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import { useNotifier } from "api/hooks/useNotifier";
 
-const langPage = lang.pages.qrScanner;
-
-function QrScannerPage({ roles, icon }: IPageWithRoles) {
+export default function QrScannerPage({ roles, icon }: IPageWithRoles) {
+    const langPage = lang.pages.qrScanner;
     const [isShowedReader, setIsShowedReader] = useState(true);
     const navigate = useNavigate();
     const { showError } = useNotifier();
@@ -59,4 +57,3 @@ function QrScannerPage({ roles, icon }: IPageWithRoles) {
         </Page>
     );
 }
-export default QrScannerPage;

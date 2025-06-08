@@ -66,14 +66,14 @@ const menuList: INavigationMenu[] = [
         category: "administrative",
     },
 
-    /*{
-        name: "fines",
-        title: lang.pages.fines.title,
-        icon: "fines",
-        link: "/fines",
-        roles: [["fines"]],
-        category: "police",
-    },*/
+    {
+        name: "wanteds3",
+        title: lang.pages.wanteds3.title,
+        icon: "wanteds3",
+        link: "/wanteds3",
+        roles: [["wanteds3"]],
+        category: "administrative",
+    },
     {
         name: "taxes",
         title: lang.pages.taxes.title,

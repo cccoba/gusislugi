@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
-import lang, { getEnumSelectValues } from "lang";
-import { Form, GoodTable, Modal, Page } from "components";
+import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
+import type { IKeyValueListItem } from "components";
+import { Form, GoodTable, KeyValueList, Modal, Page } from "components";
 import type { IGoodTableField } from "components/GoodTable";
 import type { TFormField } from "components/Form/FormAdapters";
 
@@ -11,6 +12,8 @@ import type { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 import type { IPage } from "api/interfaces/components/Page/IPage";
+import dateTime from "api/common/dateTime";
+import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
 interface IProps extends IPage {
     userId?: number;
@@ -59,6 +62,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             name: "taxesTypeId",
             title: langPage.fields.taxesTypeId,
             type: "taxesTypes",
+            filterTypes: -1,
             fieldProps: {
                 readOnly: true,
             },
@@ -95,7 +99,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
         },
     ];
     const { showError } = useNotifier();
-    const [selectedData, setSelectedData] = useState<null | ITaxeDto>(null);
+    const [selectedData, setSelectedData] = useState<null | IKeyValueListItem[]>(null);
     const { data, isLoading, error, refetch } = useLoadApiData<ITaxeDto[]>(taxes.getMyData, []);
     useEffect(() => {
         if (error) {
@@ -103,6 +107,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
         }
     }, [error]);
     const values = useMemo(() => {
+        if (!data) return [];
         return data?.map((item) => ({
             ...item,
             taxesTypeName: item.taxesType?.title,
@@ -110,7 +115,18 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
     }, [data]);
     const toDetails = (data: ITaxeDto) => {
         if (data) {
-            setSelectedData(data);
+            setSelectedData([
+                { title: langPage.fields.taxesTypeId, value: data.taxesType?.title || 0 },
+                {
+                    title: langPage.fields.status,
+                    value: getEnumTitleValue(TaxeStatusEnum, "TaxeStatusEnum", data.status),
+                },
+                { title: langPage.fields.value, value: sprintf(lang.money, data.value) },
+                { title: langPage.fields.title, value: data.title },
+                { title: langPage.fields.created_at, value: dateTime(data.created_at) },
+                { title: langPage.fields.endDate, value: dateTime(data.endDate) },
+                { title: langPage.fields.taxesTypeDetails, value: data.taxesType?.description || "" },
+            ]);
         }
     };
     const hideDetails = () => {
@@ -123,25 +139,23 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             {...pageProps}
         >
             {!!selectedData && (
-                <Form
-                    modalProps={{
-                        open: true,
-                        responsiveWidth: true,
-                        withCloseButton: true,
-                        withOkButton: true,
-                        onClose: hideDetails,
-                        title: langPage.details,
-                    }}
-                    fields={formFields}
-                    values={selectedData}
-                    submitBtnType="no"
-                />
+                <Modal
+                    open
+                    responsiveWidth
+                    withCloseButton
+                    withOkButton
+                    onClose={hideDetails}
+                    title={langPage.details}
+                >
+                    <KeyValueList values={selectedData} />
+                </Modal>
             )}
             <GoodTable
                 fields={fields}
                 values={values || []}
                 onRowClick={toDetails}
                 actions={[{ icon: "refresh", name: "refresh", onClick: refetch }]}
+                order={{ direction: SortOrderEnum.Descending, sort: "endDate" }}
             />
         </Page>
     );

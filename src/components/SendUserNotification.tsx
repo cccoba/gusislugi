@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import lang from "lang";
 
-import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+import type { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { messages, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 
@@ -13,6 +13,7 @@ export interface ISendUserNotificationProps {
     text: string;
     title?: string;
     uid: number;
+    helperText?: string;
 }
 interface IProps extends ISendUserNotificationProps {
     status: MessageStatusEnum;
@@ -21,7 +22,7 @@ interface IProps extends ISendUserNotificationProps {
 
 const langPage = lang.components.sendUserNotification;
 
-function SendUserNotification({ text, title, uid, status, onClose }: IProps) {
+function SendUserNotification({ text, title, uid, status, onClose, helperText }: IProps) {
     const { showError } = useNotifier();
     const onSend = (data: any) => {
         messages
@@ -42,29 +43,28 @@ function SendUserNotification({ text, title, uid, status, onClose }: IProps) {
     };
 
     return (
-        <Modal
-            open
-            title={title || langPage.title}
-            responsiveWidth
-            withCloseButton
-            onClose={onCancel}
-        >
-            <Form
-                values={{ text }}
-                fields={[
-                    {
-                        name: "text",
-                        title: langPage.title,
-                        type: "text",
-                        required: true,
-                        fieldProps: { multiline: true },
-                    },
-                ]}
-                onCancel={onCancel}
-                onSubmit={onSend}
-                submitBtnText={lang.send}
-            />
-        </Modal>
+        <Form
+            modalProps={{
+                open: true,
+                title: title || langPage.title,
+                responsiveWidth: true,
+                withCloseButton: true,
+                onClose: onCancel,
+            }}
+            values={{ text }}
+            fields={[
+                {
+                    name: "text",
+                    title: langPage.title,
+                    type: "text",
+                    required: true,
+                    fieldProps: { multiline: true, helperText },
+                },
+            ]}
+            onCancel={onCancel}
+            onSubmit={onSend}
+            submitBtnText={lang.send}
+        />
     );
 }
 export default SendUserNotification;

@@ -10,4 +10,5 @@ export enum MessageStatusEnum {
     Company,
     Licenses,
     Weapons,
+    Wanteds3,
 }

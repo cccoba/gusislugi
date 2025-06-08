@@ -1,5 +1,5 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { ITaxeDto } from "api/interfaces/user/ITaxeDto";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 
 import { dataProvider } from "./dataProvider";
 
@@ -23,6 +23,9 @@ const TaxesProvider = {
     },
     getMyData: (): Promise<IWebDataResult<ITaxeDto[]>> => {
         return dataProvider(baseUrl + "getMyData");
+    },
+    add: (data: any): Promise<IWebDataResult<any>> => {
+        return dataProvider(baseUrl + "add", "post", data);
     },
 };
 export default TaxesProvider;

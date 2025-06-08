@@ -16,14 +16,17 @@ export interface IRoleDto {
         medicalInfoAdd?: RolePermissionFlag | -1;
         medicalSickness?: RolePermissionFlag | -1;
         taxes?: RolePermissionFlag | -1;
-        taxesTypes?: RolePermissionFlag | -1;
+        taxesTypesEdit?: RolePermissionFlag | -1;
+        taxesTypesView?: RolePermissionFlag | -1;
         licenses?: RolePermissionFlag | -1;
         fines?: RolePermissionFlag | -1;
         wanteds?: RolePermissionFlag | -1;
         wanteds2?: RolePermissionFlag | -1;
+        wanteds3?: RolePermissionFlag | -1;
         company?: CompanyPermissionActionFlag | -1;
         messages?: RolePermissionFlag | -1;
         shop?: RolePermissionFlag | -1;
+        shopUse?: 1 | 0;
         medicineAdmin?: RolePermissionFlag | -1;
         weapons?: RolePermissionFlag | -1;
         medicalAdd?: RolePermissionFlag | -1;

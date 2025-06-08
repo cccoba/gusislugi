@@ -141,6 +141,15 @@ export default function Passport({ roles, icon, idName, modalProps, userGuid }: 
                             icon="wanteds2"
                         />
                     )}
+                    {typeof userData.wanteds3 !== "undefined" && (
+                        <PassportWanteds
+                            subTitle={userData.wanteds3 ? langPage.haveData : langPage.notHaveData}
+                            title={lang.pages.wanteds3.title}
+                            userId={userData.user.id}
+                            type={3}
+                            icon="wanteds3"
+                        />
+                    )}
                     {typeof userData.companies !== "undefined" && (
                         <PassportCompanies
                             subTitle={userData.companies ? langPage.haveData : langPage.notHaveData}

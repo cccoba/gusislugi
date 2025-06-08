@@ -37,6 +37,8 @@ import MedicalSickness from "pages/MedicalSickness";
 import Wanteds2 from "pages/Wanteds2";
 import Taxes from "pages/Taxes";
 import TaxesTypes from "pages/Taxes/TaxesTypes";
+import TaxesPage from "pages/Taxes";
+import Wanteds3 from "pages/Wanteds3";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -184,7 +186,7 @@ export default function RouterPage() {
                         />
                         <Route
                             path="/taxes/*"
-                            element={<Taxes />}
+                            element={<TaxesPage />}
                         />
                         <Route
                             path="/taxesTypes/*"
@@ -214,6 +216,10 @@ export default function RouterPage() {
                         <Route
                             path="/wanteds2/*"
                             element={<Wanteds2 />}
+                        />
+                        <Route
+                            path="/wanteds3/*"
+                            element={<Wanteds3 />}
                         />
                         <Route
                             path="/company/*"

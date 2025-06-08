@@ -54,9 +54,11 @@ export default function RolePermissions({
         "taxesTypesEdit",
         "wanteds",
         "wanteds2",
+        "wanteds3",
         "company",
         "users",
         "shop",
+        "shopUse",
         "licenses",
         "weapons",
     ];
@@ -109,8 +111,10 @@ export default function RolePermissions({
             taxesTypesEdit: [],
             wanteds: [],
             wanteds2: [],
+            wanteds3: [],
             company: [],
             shop: [],
+            shopUse: [],
             medicineAdmin: [],
             licenses: [],
             weapons: [],
@@ -123,6 +127,7 @@ export default function RolePermissions({
                     } else {
                         switch (idName) {
                             case "users":
+                            case "qr":
                                 newValue[idName] = getRoleFlagToFlagValues((value as any)[idName], roleFlags);
                                 break;
                             case "company":
@@ -161,7 +166,7 @@ export default function RolePermissions({
             <Box sx={{ mx: 1 }}>
                 {permissions.map((x) => {
                     const valueList =
-                        x.id === "users"
+                        x.id === "users" || x.id === "qr"
                             ? roleFlags
                             : x.id === "company"
                             ? companyValues
@@ -170,6 +175,17 @@ export default function RolePermissions({
                             : x.id === "taxesTypesView" || x.id === "taxesTypesEdit"
                             ? taxesTypesFlags
                             : values;
+                    if (x.id === "shopUse") {
+                        return (
+                            <InputSelectMultiple
+                                values={[{ id: 1, title: lang.yes }]}
+                                value={inputValue[x.id]}
+                                onChangeValue={(v) => toChange(x.id, v as number[])}
+                                key={x.id}
+                                label={x.title}
+                            />
+                        );
+                    }
                     return (
                         <SelectWithAll
                             key={x.id}

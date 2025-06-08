@@ -171,3 +171,39 @@ export function updateUrl(newUrl: string, method: "replace" | "push" = "replace"
         window.history.replaceState(state, "", newUrl);
     }
 }
+
+/**
+ * складывает 2 числа (фикс для ошибки суммирования чисел с плавающей запятой)
+ * @param value число
+ * @param step что прибавляем
+ * @param isAdd - если false, то вычитаем
+ */
+export function getSum(value: number, step: number, isAdd = true) {
+    if (step >= 1) {
+        return isAdd ? value + step : value - step;
+    }
+    const stepCount = Math.pow(10, countDecimalPlaces(step));
+    const a = Math.round(value * stepCount);
+    const b = Math.round(step * stepCount);
+    if (isAdd) {
+        return (a + b) / stepCount;
+    }
+    return (a - b) / stepCount;
+}
+/**
+ * получаем кол-во знаков после запятой в числах
+ * 0,1 - 1
+ * 0,01 = 2
+ */
+export function countDecimalPlaces(decimal: number) {
+    if (decimal >= 1 || decimal <= 0) {
+        return 0;
+    }
+
+    let count = 0;
+    while (decimal < 1) {
+        decimal *= 10;
+        count++;
+    }
+    return count;
+}

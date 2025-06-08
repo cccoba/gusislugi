@@ -51,7 +51,7 @@ export default function TaxesTypes({ ...pageProps }: IPageWithRoles) {
         description: "",
     };
 
-    const currentUserRoleTaxesTypes = useAppSelector((s) => s.user.user?.role?.params?.taxesTypes);
+    const currentUserRoleTaxesTypes = useAppSelector((s) => s.user.user?.role?.params?.admins);
 
     const props = useMemo(() => {
         const newProps: {

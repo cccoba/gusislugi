@@ -1,7 +1,7 @@
 import Counter from "components/Inputs/Counter";
 import lang from "lang";
 
-import { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
+import type { IFormAdapter, IFormAdapterInputProps, IFormField } from "../FormAdapters";
 
 const langPage = lang.components.form;
 export interface IFormFieldCounter extends IFormField {
@@ -22,9 +22,13 @@ const CounterAdapter: IFormAdapter = {
     },
 };
 
-function FormInput({ fieldProps, fieldParams, ...props }: IFormAdapterInputProps) {
+function FormInput({ value, fieldProps, fieldParams, ...props }: IFormAdapterInputProps) {
+    if (typeof value !== "number") {
+        value = fieldParams?.defaultValue || 0;
+    }
     return (
         <Counter
+            value={value}
             {...props}
             {...fieldProps}
             {...fieldParams}

@@ -1,5 +1,5 @@
-import { IWebDataResult } from "api/interfaces/data/IWebDataResult";
-import { IPassportUser } from "api/interfaces/Passport/IPassportUser";
+import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
+import type { IPassportUser } from "api/interfaces/Passport/IPassportUser";
 
 import { dataProvider } from "./dataProvider";
 

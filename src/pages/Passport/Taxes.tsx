@@ -1,7 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { Icon } from "components";
-import Taxes from "pages/Taxes";
+import Taxes from "pages/Taxes/Taxes";
 
 import type { IPassportItem } from ".";
 

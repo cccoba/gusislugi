@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import lang, { getEnumSelectValues, sprintf } from "lang";
+import lang, { sprintf } from "lang";
 import { CRUDAsync } from "components";
 import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
@@ -8,20 +8,19 @@ import SendUserNotification from "components/SendUserNotification";
 import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
 import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
-import { wanteds } from "api/data";
+import { wanteds3 } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
-import type { IWantedDto } from "api/interfaces/user/IWantedDto";
-import { WantedTypeEnum } from "api/enums/WantedTypeEnum";
+import type { IWanteds3Dto } from "api/interfaces/user/IWanteds3Dto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 interface IProps {
     userId?: number;
 }
-export default function Wanteds({ userId }: IProps) {
-    const langPage = lang.pages.wanteds;
+export default function Wanteds3({ userId }: IProps) {
+    const langPage = lang.pages.wanteds3;
 
-    const wantedsEditConfig: ICRUDAsyncEditConfig = {
+    const wanteds3EditConfig: ICRUDAsyncEditConfig = {
         fields: [
             {
                 name: "uid",
@@ -30,22 +29,9 @@ export default function Wanteds({ userId }: IProps) {
                 required: true,
             },
             {
-                name: "type",
-                title: langPage.fields.type,
-                type: "select",
-                required: true,
-                values: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
-            },
-            {
                 name: "status",
                 title: "",
                 text: langPage.statusActive,
-                type: "switcher",
-            },
-            {
-                name: "travelBan",
-                title: "",
-                text: langPage.fields.travelBan,
                 type: "switcher",
             },
             {
@@ -56,12 +42,12 @@ export default function Wanteds({ userId }: IProps) {
             },
             {
                 name: "created_at",
-                title: langPage.fields.created_at,
+                title: lang.created_at,
                 type: "dateTime",
                 disabled: true,
             },
             {
-                name: "uid",
+                name: "creatorId",
                 title: langPage.fields.creatorId,
                 type: "user",
                 disabled: true,
@@ -69,18 +55,16 @@ export default function Wanteds({ userId }: IProps) {
         ],
     };
 
-    const currentUserRoleParams = useAppSelector((s) => s.user.user?.role?.params?.wanteds);
+    const currentUserRoleParams = useAppSelector((s) => s.user.user?.role?.params?.wanteds3);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
-        const defInitialData: IWantedDto = {
+        const defInitialData: IWanteds3Dto = {
             id: 0,
             uid: 0,
             status: true,
-            type: WantedTypeEnum.Minima,
             description: "",
-            travelBan: false,
         };
-        const wantedsListConfig: ICRUDAsyncListConfig = {
+        const wanteds3ListConfig: ICRUDAsyncListConfig = {
             isMultiSelection: false,
             withRefresh: true,
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
@@ -88,40 +72,32 @@ export default function Wanteds({ userId }: IProps) {
                 { name: "id", title: langPage.fields.id, width: "30px" },
                 { name: "image", title: langPage.fields.image, width: "30px", format: "image" },
                 { name: "user", title: langPage.fields.uid },
-                {
-                    name: "type",
-                    title: langPage.fields.type,
-                    format: "list",
-                    formatProps: getEnumSelectValues(WantedTypeEnum, "WantedTypeEnum"),
-                },
-                { name: "travelBanText", title: langPage.fields.travelBan },
                 { name: "status", title: lang.status },
-                { name: "created_at", title: langPage.fields.created_at, format: "date" },
+                { name: "created_at", title: lang.created_at, format: "date" },
                 { name: "nickname", title: "", hidden: true },
             ],
-            transform: (data: IWantedDto) => ({
+            transform: (data: IWanteds3Dto) => ({
                 ...data,
                 user: data.user?.firstName || lang.unknown,
                 nickname: data.user?.nickname || "",
                 image: data.user?.image || "",
-                travelBanText: data.travelBan ? lang.yes : lang.no,
                 status: data.status ? langPage.statusActive : langPage.statusNotActive,
             }),
         };
-        const newProps: { actions: ICRUDAsyncAction[]; initialData: IWantedDto; listConfig: ICRUDAsyncListConfig } = {
+        const newProps: { actions: ICRUDAsyncAction[]; initialData: IWanteds3Dto; listConfig: ICRUDAsyncListConfig } = {
             actions: [
-                { name: "getAll", cb: wanteds.crudList },
+                { name: "getAll", cb: wanteds3.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "getRecord", cb: wanteds.crudGet },
-                { name: "remove", cb: wanteds.crudDelete },
+                { name: "getRecord", cb: wanteds3.crudGet },
+                { name: "remove", cb: wanteds3.crudDelete },
             ],
             initialData: { ...defInitialData },
-            listConfig: { ...wantedsListConfig },
+            listConfig: { ...wanteds3ListConfig },
         };
 
         if (userId) {
             newProps.actions[0].cbArgs = [userId];
-            newProps.actions[0].cb = wanteds.crudUserList;
+            newProps.actions[0].cb = wanteds3.crudUserList;
             newProps.initialData.uid = userId;
             newProps.listConfig.fields = newProps.listConfig.fields.filter(
                 (x) => x.name !== "user" && x.name !== "image"
@@ -129,9 +105,9 @@ export default function Wanteds({ userId }: IProps) {
         }
         return newProps;
     }, [userId]);
-    function onSaveStart(data: IWantedDto) {
+    function onSaveStart(data: IWanteds3Dto) {
         return new Promise((resolve, reject) => {
-            wanteds.crudSave(data).then(resolve).catch(reject);
+            wanteds3.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
                 uid: data.uid,
                 title: langPage.message.title,
@@ -148,17 +124,17 @@ export default function Wanteds({ userId }: IProps) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    status={MessageStatusEnum.Wanteds}
+                    status={MessageStatusEnum.Wanteds3}
                     onClose={hideNotificationData}
                 />
             )}
             <CRUDAsync
-                roles={[["wanteds"]]}
-                icon="wanteds"
+                roles={[["wanteds3"]]}
+                icon="wanteds3"
                 backUrl="/"
                 title={langPage.title}
                 listConfig={props.listConfig}
-                editConfig={wantedsEditConfig}
+                editConfig={wanteds3EditConfig}
                 actions={props.actions}
                 permissions={currentUserRoleParams}
                 initialValue={props.initialData}

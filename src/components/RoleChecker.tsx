@@ -33,10 +33,14 @@ export const checkUserRoleAccess = (roles: IProps["roles"], userRoleParams?: IRo
             }
 
             switch (roleName) {
+                case "shopUse":
+                    defaultFlagValue = 1;
+                    break;
                 case "company":
                     defaultFlagValue = CompanyPermissionFlagAll;
                     break;
                 case "users":
+                case "qr":
                     return !!(userRoleParams as any)?.[roleName];
             }
 
