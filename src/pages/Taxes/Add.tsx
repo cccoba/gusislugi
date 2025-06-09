@@ -53,6 +53,12 @@ export default function TaxesAdd({ data, onSave, onCancel, filterTypes }: IProps
                 type: "dateTime",
                 required: true,
             },
+            {
+                name: "sendMessage",
+                title: "",
+                text: langPage.fields.sendMessage,
+                type: "switcher",
+            },
         ];
     }, [data.id, filterTypes]);
     return (
@@ -66,6 +72,7 @@ export default function TaxesAdd({ data, onSave, onCancel, filterTypes }: IProps
                 creatorId: 0,
                 endDate: data.endDate,
                 taxesTypeId: data.taxesTypeId,
+                sendMessage: false,
             }}
             fields={fields}
             onSubmit={onSave}

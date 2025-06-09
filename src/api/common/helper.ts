@@ -56,17 +56,6 @@ export function toArray<T>(obj: any): T[] {
     return [];
 }
 
-export function getCookie(name: string) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return "";
-}
-
 export function isGuid(value: string) {
     return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(value);
 }
@@ -103,31 +92,6 @@ export function isUrl(value: string) {
     }
 }
 
-export function stripTag(html: string) {
-    html = html.replace(/<(?:.|\n)*?>/gm, "");
-    html = html.replaceAll("&nbsp;", " ");
-    html = html.replaceAll("&quot;", '"');
-    html = html.replaceAll("&amp;", "&");
-    html = html.replaceAll("&laquo;", "«");
-    html = html.replaceAll("&raquo;", "»");
-    html = html.replaceAll("&ndash;", "–");
-    html = html.replaceAll("&mdash;", "–");
-    return html;
-}
-export function numberFixed(number: string | number, fixed: number): number | undefined {
-    if (typeof number === "number" || typeof number === "string" /*&& !isNaN(number - parseFloat(number))*/) {
-        number = String(number);
-        const split = number.split(".");
-        if (split.length > 1) {
-            const left = split[0];
-            const right = split[1].substr(0, !fixed ? 4 : fixed);
-            return Number(left + (fixed !== 0 ? "." + right : ""));
-        }
-        return Number(number);
-    }
-    return undefined;
-}
-
 export function checkDate(dateValue: any) {
     if (typeof dateValue === "object" && typeof dateValue?.getMonth === "function") {
         if (!!dateValue && !isNaN(dateValue)) {
@@ -137,25 +101,6 @@ export function checkDate(dateValue: any) {
         }
     }
     return false;
-}
-
-/**
- * обводка для текста
- * @param color - цвет обводки
- * @returns -
- */
-
-export function getTextStrokeSxProps(color = "#fff"): SxProps {
-    return {
-        textShadow: `1px 0 1px ${color}, 
-                        0 1px 1px ${color}, 
-                        -1px 0 1px ${color}, 
-                        0 -1px 1px ${color};`,
-    };
-}
-
-export function getUniqueValuesFromArray<T>(values: T[]) {
-    return Array.from(new Set(values));
 }
 
 /**

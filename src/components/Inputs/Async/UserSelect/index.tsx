@@ -83,17 +83,15 @@ export default function UserSelect({
                     }
 
                     setSelectedUserText(newSelectedUserText);
-                    onChangeValue(newUsers.find((u) => u.id === value)?.id || 0);
                 } else {
                     if (typeof value === "object") {
                         const newSelectedUsers = newUsers.filter((x) => value.includes(x.id));
                         setSelectedUsers(newSelectedUsers.map((x) => parseUserData(x, roleList, nationalityList)));
-                        onChangeValue(newSelectedUsers ? newSelectedUsers.map((u) => u.id) : []);
                     }
                 }
             }
         }
-    }, [data, value, roleList, nationalityList]);
+    }, [data, roleList, nationalityList, value]);
     const endAdornment = useMemo(() => {
         if (disabled) {
             return undefined;

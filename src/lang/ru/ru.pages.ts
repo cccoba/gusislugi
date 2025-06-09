@@ -73,6 +73,7 @@ const ruPages = {
             endDate: "Дата окончания",
             uid: "Больной",
             comments: "История болезни",
+            sendMessage: "Оповестить пользователя",
         },
         addUsersSuccess: "Больных заражено: %s",
         addUsersSuccess0: "Больных нет",
@@ -231,6 +232,7 @@ const ruPages = {
             taxesTypeId: "Категория платежа",
             description: "Комментарии",
             taxesTypeDetails: "Комментарии о способе оплаты",
+            sendMessage: "Оповестить пользователя",
         },
         errors: {
             taxesTypeNotAllowed: "У вас нет доступа к редактированию платежей данной категории!",

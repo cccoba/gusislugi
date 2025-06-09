@@ -14,8 +14,6 @@ interface IProps extends IFormField {
     pattern?: any;
 }
 
-const langPage = lang.components.form;
-
 function getInput(adapters: IFormAdapter[], adapterName: string) {
     const adapter = adapters.find((x) => x.name === adapterName);
     if (adapter) {
@@ -30,7 +28,7 @@ function getValidate(adapters: IFormAdapter[], adapterName: string) {
     }
     return () => true;
 }
-function FormInput({
+export default function FormInput({
     type,
     name,
     title,
@@ -46,6 +44,7 @@ function FormInput({
 
     ...fieldParams
 }: IProps) {
+    const langPage = lang.components.form;
     const variant = fieldParams?.variant ? fieldParams.variant : fieldsVariant;
     const rules = useMemo(() => {
         const newRules: any = {};
@@ -96,6 +95,7 @@ function FormInput({
                 control={control}
                 rules={rules}
                 render={({ field, fieldState }) => {
+                    const { validateFn, ...otherFieldParams } = fieldParams;
                     return (
                         <Input
                             onChangeValue={(v: any) => onInputChange(name, v)}
@@ -108,7 +108,7 @@ function FormInput({
                             variant={variant}
                             error={fieldState.invalid}
                             helperText={fieldState.error?.message}
-                            fieldParams={fieldParams}
+                            fieldParams={otherFieldParams}
                         />
                     );
                 }}
@@ -117,4 +117,3 @@ function FormInput({
     }
     return null;
 }
-export default FormInput;

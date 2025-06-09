@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 
+import "./polyfills"; // Полифиллы для старых браузеров
 import Loader from "./components/Loader";
 
 import "./reportWebVitals";

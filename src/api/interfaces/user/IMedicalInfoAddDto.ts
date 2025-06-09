@@ -5,4 +5,5 @@ export interface IMedicalInfoAddDto {
     uids: number[];
     status: MedicalInfoStatusEnum;
     comments: string;
+    sendMessage: boolean;
 }

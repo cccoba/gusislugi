@@ -31,6 +31,7 @@ export default function Shop({ roles, ...pageProps }: IPageWithRoles) {
             },
             listConfig: {
                 fields: [
+                    { name: "id", title: langPage.fields.id, type: "number" },
                     { name: "userName", title: langPage.fields.user },
                     { name: "sum", title: langPage.fields.sum, format: "number" },
                     { name: "count", title: langPage.fields.count },

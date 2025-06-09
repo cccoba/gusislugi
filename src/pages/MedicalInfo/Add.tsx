@@ -42,6 +42,7 @@ export default function MedicalInfoAdd({ needRefresh }: IProps) {
         uids: [],
         status: MedicalInfoStatusEnum.Active,
         comments: "",
+        sendMessage: false,
     });
     const hideModal = () => {
         setIsOpen(false);
@@ -61,7 +62,7 @@ export default function MedicalInfoAdd({ needRefresh }: IProps) {
                         hideModal();
                         needRefresh();
                     } else {
-                        showSuccess(sprintf(langPage.addUsersSuccess0));
+                        showError(sprintf(langPage.addUsersSuccess0));
                     }
                 }
             })
@@ -123,6 +124,12 @@ export default function MedicalInfoAdd({ needRefresh }: IProps) {
                             title: langPage.fields.comments,
                             type: "text",
                             multiline: true,
+                        },
+                        {
+                            name: "sendMessage",
+                            title: "",
+                            text: langPage.fields.sendMessage,
+                            type: "switcher",
                         },
                     ]}
                 />
