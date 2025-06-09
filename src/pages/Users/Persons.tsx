@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang from "lang";
-import { GoodTable, Page, Switcher } from "components";
+import { type IGoodTableField, GoodTable, Page, Switcher } from "components";
 import type { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
-import type { IGoodTableField } from "components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import { users } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";

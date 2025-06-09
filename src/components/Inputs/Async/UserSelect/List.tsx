@@ -164,7 +164,7 @@ export default function UserSelectList({
                 <>
                     <GoodTable<IUserRowDto>
                         values={filteredUsers}
-                        isMultiSelection={multiple}
+                        typeSelection={multiple ? "multiple" : "single"}
                         onSelectedRows={onSelected}
                         fields={props.userFields}
                         autoFocus="simpleSearchInput"

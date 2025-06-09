@@ -1,11 +1,11 @@
-import { alpha, Box, Chip, FilterOptionsState, StandardTextFieldProps, SxProps, Tooltip } from "@mui/material";
+import type { FilterOptionsState, StandardTextFieldProps, SxProps } from "@mui/material";
+import { alpha, Box, Chip, Tooltip } from "@mui/material";
 
-import Image, { IImageProps } from "components/Image";
 import Icon from "components/Icon";
 
 import { textFilter } from "api/common/filters";
 
-import { ISelectValue } from "../Select";
+import type { ISelectValue } from "../Select";
 
 import InputSelectAll from "./SelectAll";
 
@@ -23,21 +23,7 @@ export function inputSelectBaseRenderOption(data: React.HTMLAttributes<HTMLLIEle
     if (option?.key === "undefinedData") {
         return null;
     }
-    let imageProps: IImageProps | undefined = undefined;
     const boxSx: SxProps = { "&  img": { mr: 2, flexShrink: 0 } };
-    if (option?.image) {
-        const defImageProps: IImageProps = {
-            width: "24px",
-            height: "24px",
-
-            style: { marginRight: "4px" },
-        };
-        switch (typeof option.image) {
-            case "string":
-                imageProps = { ...defImageProps, image: option.image };
-                break;
-        }
-    }
     return (
         <Box
             component="li"
@@ -45,7 +31,6 @@ export function inputSelectBaseRenderOption(data: React.HTMLAttributes<HTMLLIEle
             sx={boxSx}
             key={option?.key ? option?.key : option.id}
         >
-            {!!imageProps && <Image {...imageProps} />}
             {!!option?.icon && (
                 <Icon
                     name={option.icon}
@@ -78,21 +63,8 @@ export function inputSelectBaseRenderMultiplyOption(
         valuesCount: number;
     }
 ) {
-    let imageProps: IImageProps | undefined = undefined;
     const boxSx: SxProps = { "&  img": { mr: 2, flexShrink: 0 } };
-    if (option?.image) {
-        const defImageProps: IImageProps = {
-            width: "24px",
-            height: "24px",
 
-            style: { marginRight: "4px" },
-        };
-        switch (typeof option.image) {
-            case "string":
-                imageProps = { ...defImageProps, image: option.image };
-                break;
-        }
-    }
     if (selectedIds?.includes(option.id)) {
         boxSx.bgcolor = (theme: any) => alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity);
     }
@@ -118,7 +90,6 @@ export function inputSelectBaseRenderMultiplyOption(
             sx={boxSx}
             key={option?.key ? option?.key : option.id}
         >
-            {!!imageProps && <Image {...imageProps} />}
             {!!option?.icon && (
                 <Icon
                     name={option.icon}

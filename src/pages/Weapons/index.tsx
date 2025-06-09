@@ -5,13 +5,13 @@ import lang, { getEnumTitleValue, sprintf } from "lang";
 
 import { checkFlagIncludes } from "api/common/enumHelper";
 
+import type { IGoodTableField } from "components";
 import { GoodTable } from "components";
 
 import type { IWeaponHistoryDto } from "api/interfaces/user/IWeaponHistoryDto";
 
 import { useMemo, useState } from "react";
 
-import type { IGoodTableField } from "components/GoodTable";
 import { WeaponEnum } from "api/enums/WeaponEnum";
 
 import type { ISendUserNotificationProps } from "components/SendUserNotification";

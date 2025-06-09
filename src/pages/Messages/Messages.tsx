@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
-import { Modal, GoodTable, Icon } from "components";
-import type { IGoodTableField } from "components/GoodTable";
+import { Modal, GoodTable, type IGoodTableField, Icon, type TIconName } from "components";
 import lang, { sprintf } from "lang";
 
 import dateTime from "api/common/dateTime";
@@ -13,9 +12,8 @@ import type { IMessageDto } from "api/interfaces/Messages/IMessageDto";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { getEnumValue } from "api/common/enumHelper";
 import { cutText } from "api/common/helper";
-import type { TIconName } from "components/Icon";
 
-function getIconName(status: MessageStatusEnum): TIconName {
+export function getMessageIconName(status: MessageStatusEnum): TIconName {
     const result = getEnumValue(MessageStatusEnum, status) || "";
     if (result?.length) {
         return (result.charAt(0).toLowerCase() + result.slice(1)) as TIconName;
@@ -28,8 +26,8 @@ export default function ProfileMessages() {
 
     const fields: IGoodTableField[] = [
         { name: "statusComponent", title: "", format: "component" },
-        { name: "shortMessage", title: langPage.fields.message, wrap: true },
-        { name: "created_at", title: langPage.fields.date, format: "date" },
+        { name: "shortMessage", title: langPage.message, wrap: true },
+        { name: "created_at", title: langPage.date, format: "date" },
     ];
     const { data = [], isLoading, refetch } = useLoadApiData(messages.getMyMessages, []);
     const [details, setDetails] = useState<IMessageDto | null>(null);
@@ -42,7 +40,7 @@ export default function ProfileMessages() {
                     shortMessage: cutText(x.message, 100),
                     statusComponent: (
                         <Icon
-                            name={getIconName(x.status)}
+                            name={getMessageIconName(x.status)}
                             fontSize="small"
                             color="primary"
                         />

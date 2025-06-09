@@ -1,9 +1,9 @@
-import { PaperProps } from "@mui/material";
+import type { PaperProps } from "@mui/material";
 
-import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
-import { TIconName } from "components/Icon";
+import type { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import type { TIconName } from "components/Icon";
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface IPage {
     icon?: TIconName | "";

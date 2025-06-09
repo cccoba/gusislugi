@@ -1,9 +1,9 @@
+import { ReactNode } from "react";
 import { Typography } from "@mui/material";
 
 import lang from "lang";
-
 interface IProps {
-    noRecordsText?: string;
+    noRecordsText?: string | ReactNode;
 }
 const langPage = lang.components.goodTable;
 function GoodTableMobileNoRecordsRow({ noRecordsText }: IProps) {

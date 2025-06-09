@@ -1,26 +1,31 @@
-import { useMemo } from "react";
+import type { SxProps } from "@mui/material";
 import { TableBody as MuiTableBody } from "@mui/material";
+import type { ReactNode } from "react";
+import { useMemo } from "react";
 
 import GoodTableLoader from "./TableLoader";
-import GoodTableRow from "./TableRow";
 import GoodTableNoRecordsRow from "./TableNoRecordsRow";
+import GoodTableRow from "./TableRow";
 
-import { IGoodTableField } from ".";
+import type { IGoodTableField } from ".";
 
 interface IProps<T> {
     fields: IGoodTableField[];
     values: T[];
     idName: string;
     loading: boolean;
-    noRecordsText?: string;
+    noRecordsText?: string | ReactNode;
     isMultiSelection?: boolean;
     selectedRows: T[];
+    sxRowConditions?: { predicate: (row: T) => boolean; sx: SxProps }[];
+    sxCellsProps?: { [key: string]: SxProps };
     onSelectRow: (data: T) => void;
     onRowClick?: (data: T) => void;
     onRowDoubleClick?: (data: T) => void;
+    onRowMiddleClick?: (data: T) => void;
 }
 
-function GoodTableBody<T>({
+export default function GoodTableBody<T>({
     fields = [],
     values = [],
     idName = "id",
@@ -28,8 +33,11 @@ function GoodTableBody<T>({
     noRecordsText,
     isMultiSelection = false,
     selectedRows = [],
+    sxRowConditions,
+    sxCellsProps,
     onSelectRow,
     onRowDoubleClick,
+    onRowMiddleClick,
     onRowClick,
 }: IProps<T>) {
     const cursor = useMemo(() => {
@@ -37,7 +45,7 @@ function GoodTableBody<T>({
     }, [onRowClick, isMultiSelection]);
     const fieldsLength = useMemo(() => {
         let newFieldsLength = 1;
-        if (!!fields?.length) {
+        if (fields?.length) {
             newFieldsLength = fields.length;
             if (isMultiSelection) {
                 newFieldsLength++;
@@ -53,25 +61,19 @@ function GoodTableBody<T>({
         return index > -1;
     };
     const toRowClick = (data: any) => {
-        if (isMultiSelection) {
-            onSelectRow(data);
-        } else {
-            onSelectRow(data);
-        }
-        if (!!onRowClick) {
-            onRowClick(data);
-        }
+        onSelectRow(data);
+        onRowClick?.(data);
     };
     return (
         <MuiTableBody>
-            {!!loading ? (
+            {loading ? (
                 <GoodTableLoader
                     colSpan={fields.length}
                     responsiveView={false}
                 />
             ) : (
                 <>
-                    {!!values?.length ? (
+                    {values?.length ? (
                         values.map((row: any, index: number) => {
                             let key = index;
                             if (idName in row) {
@@ -83,7 +85,10 @@ function GoodTableBody<T>({
                                     row={row}
                                     fields={fields}
                                     onClick={toRowClick}
+                                    sxConditions={sxRowConditions}
+                                    sxCellsProps={sxCellsProps}
                                     onDoubleClick={onRowDoubleClick}
+                                    onMiddleClick={onRowMiddleClick}
                                     isMultiSelection={isMultiSelection}
                                     isSelected={isSelected(key)}
                                     cursor={cursor}
@@ -101,4 +106,3 @@ function GoodTableBody<T>({
         </MuiTableBody>
     );
 }
-export default GoodTableBody;

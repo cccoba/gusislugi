@@ -124,7 +124,7 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
                     },
                 ]}
                 values={data || []}
-                onRowDoubleClick={(x) => toEdit([x])}
+                onRowDoubleClick={(x: IDocumentPrintDto) => toEdit([x])}
                 actions={[
                     { name: "refresh", icon: "refresh", onClick: refetch },
                     { name: "print", icon: "print", onClick: toPrint },
@@ -133,14 +133,14 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
                         name: "edit",
                         icon: "edit",
                         onClick: toEdit,
-                        disable: (selectedRows) => selectedRows.length !== 1,
+                        disable: (selectedRows: IDocumentPrintDto[]) => selectedRows.length !== 1,
                     },
                     {
                         name: "delete",
                         icon: "delete",
                         color: "error",
                         onClick: toDelete,
-                        disable: (selectedRows) => selectedRows.length !== 1,
+                        disable: (selectedRows: IDocumentPrintDto[]) => selectedRows.length !== 1,
                     },
                 ]}
                 pagination={{

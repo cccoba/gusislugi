@@ -7,7 +7,6 @@ import Header from "components/Header";
 import NavigationMenu from "components/NavigationMenu";
 import Claims from "pages/Claims";
 import CompanyRouter from "pages/Companies/Router";
-import Fines from "pages/Fines";
 import Home from "pages/Home";
 import Links from "pages/Links";
 import LinksLink from "pages/Links/Link";
@@ -35,10 +34,10 @@ import Maps from "pages/Maps";
 import Licenses from "pages/Licenses";
 import MedicalSickness from "pages/MedicalSickness";
 import Wanteds2 from "pages/Wanteds2";
-import Taxes from "pages/Taxes";
 import TaxesTypes from "pages/Taxes/TaxesTypes";
 import TaxesPage from "pages/Taxes";
 import Wanteds3 from "pages/Wanteds3";
+import Messages from "pages/Messages";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -137,10 +136,6 @@ export default function RouterPage() {
                             path="/claims/*"
                             element={<Claims />}
                         />
-                        {/*<Route
-                            path="/myFines"
-                            element={<MyFines />}
-                        />*/}
                         <Route
                             path="/my/*"
                             element={<MyRouter baseUrl="/my" />}
@@ -206,10 +201,6 @@ export default function RouterPage() {
                             element={<MedicalSickness />}
                         />
                         <Route
-                            path="/fines/*"
-                            element={<Fines />}
-                        />
-                        <Route
                             path="/wanteds/*"
                             element={<Wanteds />}
                         />
@@ -237,6 +228,16 @@ export default function RouterPage() {
                                     icon="shop"
                                     backUrl="/"
                                     roles={[["shop"]]}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/messages"
+                            element={
+                                <Messages
+                                    icon="messages"
+                                    backUrl="/"
+                                    roles={[["messages"]]}
                                 />
                             }
                         />
@@ -288,6 +289,7 @@ export default function RouterPage() {
                                 <Roles
                                     roles={[["admins"]]}
                                     icon="roles"
+                                    backUrl="/"
                                 />
                             }
                         />

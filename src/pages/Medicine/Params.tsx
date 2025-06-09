@@ -1,18 +1,19 @@
 import lang, { getEnumSelectValues } from "lang";
 import { CRUDAsync } from "components";
-import { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
+import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
-import { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
+import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { medicine } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { useAppSelector } from "api/hooks/redux";
 import { useMemo } from "react";
-import { getCRUDActions, ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
+import { getCRUDActions } from "components/CRUDAsync/Main";
 
-import { IPage } from "api/interfaces/components/Page/IPage";
+import type { IPage } from "api/interfaces/components/Page/IPage";
 
 import { MedicineParamsTypeEnum } from "api/enums/MedicineParamsTypeEnum";
-import { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
+import type { IMedicineParam } from "api/interfaces/Medicine/IMedicineParam";
 
 export default function MedicineParams({ ...pageProps }: IPage) {
     const langPage = lang.pages.medicine.params;
@@ -37,12 +38,6 @@ export default function MedicineParams({ ...pageProps }: IPage) {
         },
         fields: [
             { name: "id", title: lang.id, width: "30px" },
-            {
-                name: "icon",
-                title: lang.icon,
-                format: "icon",
-                maxWidth: "30px",
-            },
             {
                 name: "title",
                 title: lang.title,

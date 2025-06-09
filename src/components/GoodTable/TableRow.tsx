@@ -1,8 +1,11 @@
-import { Checkbox, TableCell as MuiTableCell, TableRow as MuiTableRow, TableRowProps } from "@mui/material";
+import type { SxProps, TableRowProps } from "@mui/material";
+import { Checkbox, TableCell as MuiTableCell, TableRow as MuiTableRow } from "@mui/material";
+import DoubleClickProvider from "components/DoubleClickProvider";
+import { useMemo } from "react";
 
-import GoodTableCell from "./TableCell";
+import GoodTableCell from "./Cell";
 
-import { IGoodTableField } from ".";
+import type { IGoodTableField } from ".";
 
 interface IProps<T> {
     fields: IGoodTableField[];
@@ -12,11 +15,14 @@ interface IProps<T> {
     isMultiSelection?: boolean;
     cursor?: string;
     isSelected?: boolean;
+    sxConditions?: { predicate: (row: T) => boolean; sx: SxProps }[];
+    sxCellsProps?: { [key: string]: SxProps };
     onClick?: (row: T) => void;
     onDoubleClick?: (row: T) => void;
+    onMiddleClick?: (row: T) => void;
 }
 
-function GoodTableRow<T>({
+export default function GoodTableRow<T>({
     fields,
     row,
     hover = true,
@@ -24,29 +30,56 @@ function GoodTableRow<T>({
     isMultiSelection = false,
     isSelected = false,
     cursor,
+    sxConditions = [],
+    sxCellsProps,
     onClick,
+    onMiddleClick,
     onDoubleClick,
 }: IProps<T>) {
+    const sxConditionedProps = useMemo<SxProps>(() => {
+        return (
+            sxConditions.reduce(
+                (sxCondition, { predicate, sx }) => {
+                    if (predicate(row)) {
+                        sxCondition = {
+                            ...sxCondition,
+                            sx: { ...sxCondition.sx, ...sx } as SxProps,
+                        };
+                    }
+                    return sxCondition;
+                },
+                { predicate: (row: T) => !row, sx: {} }
+            ).sx ?? {}
+        );
+    }, [row, sxConditions]);
     const onRowClick = () => {
-        if (!!onClick) {
-            onClick(row);
-        }
+        onClick?.(row);
     };
     const toDoubleClick = () => {
-        if (!!onDoubleClick) {
-            onDoubleClick(row);
+        onDoubleClick?.(row);
+    };
+    const handleMiddleClick = (e: any) => {
+        if (!!onMiddleClick && e?.button === 1) {
+            e.preventDefault();
+            onMiddleClick(row);
         }
     };
+
     return (
-        <MuiTableRow
+        <DoubleClickProvider
+            component={MuiTableRow}
             hover={hover}
             onClick={onRowClick}
             onDoubleClick={toDoubleClick}
+            onMouseDown={handleMiddleClick}
             selected={isSelected}
             {...rowProps}
         >
             {!!isMultiSelection && (
-                <MuiTableCell padding="checkbox">
+                <MuiTableCell
+                    padding="checkbox"
+                    sx={{ textAlign: "center" }}
+                >
                     <Checkbox
                         color="primary"
                         checked={isSelected}
@@ -60,15 +93,16 @@ function GoodTableRow<T>({
                 }
                 return (
                     <GoodTableCell
+                        sx={sxConditionedProps}
                         key={field.name}
                         value={value}
                         field={field}
                         cursor={cursor}
-                        responsiveView={false}
+                        rowValues={row}
+                        sxCellsProps={sxCellsProps}
                     />
                 );
             })}
-        </MuiTableRow>
+        </DoubleClickProvider>
     );
 }
-export default GoodTableRow;

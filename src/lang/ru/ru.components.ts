@@ -109,12 +109,16 @@ const ruComponents = {
         loading: "Загрузка...",
         rowsPerPage: "Записей на странице",
         noRecords: "Нет записей",
+        noCsvExportData: "Нет записей для скачивания",
         filters: {
             value: "Значение",
             searchType: "Фильтр",
+            asc: "По возрастанию",
+            desc: "По убыванию",
         },
         toolbar: {
             search: "Введите текст для поиска",
+            csvExport: "Скачать",
         },
     },
     image: {

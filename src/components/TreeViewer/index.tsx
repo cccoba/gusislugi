@@ -1,12 +1,15 @@
 import { useMemo, useState } from "react";
 import { Box, List, ListSubheader } from "@mui/material";
 
-import { IListItem } from "components/List";
-import { IGoodTableToolbarAction } from "components/GoodTable";
-import GoodTableToolbar from "components/GoodTable/TableToolbar";
+import type { IListItem } from "components/List";
+import type { IGoodTableToolbarAction } from "components";
 
 import useDebounce from "api/hooks/useDebounce";
 import { textFilter } from "api/common/filters";
+
+import GoodTableToolbar from "components/GoodTable/Toolbar";
+
+import { isMobile } from "react-device-detect";
 
 import TreeItem from "./Item";
 export interface ITreeItem extends IListItem {
@@ -51,10 +54,12 @@ function TreeViewer({ type = "table", isNotRoot = false, values = [], label, val
     return (
         <>
             {!!actions && type === "table" && !isNotRoot && (
-                <GoodTableToolbar
+                <GoodTableToolbar<ITreeItem>
                     actions={actions}
-                    selectedRows={!!value ? [{ id: value, title: "" }] : []}
+                    selectedRows={value ? [{ id: value, title: "" }] : []}
                     onChangeSimpleSearchText={setSearch}
+                    isMobileView={isMobile}
+                    onCsvExportClick={() => {}}
                 />
             )}
             <List

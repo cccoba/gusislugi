@@ -134,18 +134,18 @@ export default function DocumentPrintParamsInput({
                             name: "edit",
                             icon: "edit",
                             onClick: toEdit,
-                            disable: (selectedRows) => selectedRows.length !== 1,
+                            disable: (selectedRows: IDocumentPrintParamDto[]) => selectedRows.length !== 1,
                         },
                         {
                             name: "delete",
                             color: "error",
                             icon: "delete",
                             onClick: toDelete,
-                            disable: (selectedRows) => selectedRows.length !== 1,
+                            disable: (selectedRows: IDocumentPrintParamDto[]) => selectedRows.length !== 1,
                         },
                     ]}
                     values={value}
-                    onRowDoubleClick={(x) => toEdit([x])}
+                    onRowDoubleClick={(x: IDocumentPrintParamDto) => toEdit([x])}
                 />
                 <Box
                     sx={{

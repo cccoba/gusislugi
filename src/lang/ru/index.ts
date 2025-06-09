@@ -30,6 +30,7 @@ const ru = {
     or: "или",
     save: "Сохранить",
     search: "Поиск",
+    selectValue: "Укажите значение",
     send: "Отправить",
     status: "Статус",
     title: "Название",

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
 import lang, { getEnumSelectValues } from "lang";
-import { Form, GoodTable, Modal, Page } from "components";
-import type { IGoodTableField } from "components/GoodTable";
-import type { TFormField } from "components/Form/FormAdapters";
+import { Form, GoodTable, Modal, Page, type IGoodTableField, type TFormField } from "components";
 
 import { licenses } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";

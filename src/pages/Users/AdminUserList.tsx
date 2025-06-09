@@ -3,8 +3,7 @@ import { Box, Menu, MenuItem, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import lang, { sprintf } from "lang";
-import { Form, GoodTable, IconButton, Modal, Page, RoleChecker, Switcher } from "components";
-import type { IGoodTableField } from "components/GoodTable";
+import { Form, GoodTable, type IGoodTableField, IconButton, Modal, Page, RoleChecker, Switcher } from "components";
 import useGetData from "store/rtkProvider";
 import SendUserNotification from "components/SendUserNotification";
 import type { TFormField } from "components/Form/FormAdapters";
@@ -62,10 +61,10 @@ export default function AdminUserList({ roles }: IPageWithRoles) {
     const [withImage, setWithImage] = useState(false);
     const fields = useMemo(() => {
         const defFields: IGoodTableField[] = [
-            { name: "id", title: langPage.fields.id, format: "number", maxWidth: "20px" },
+            { name: "id", title: langPage.fields.id, format: "number", maxWidth: "50px" },
             { name: "actions", title: langPage.fields.actions, format: "component" },
             { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
-            { name: "firstName", title: langPage.fields.firstName },
+            { name: "firstName", title: langPage.fields.firstName, wrap: true },
             { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
             { name: "nickname", title: langPage.fields.nickname },
             { name: "roleId", title: langPage.fields.roleId, format: "list" },

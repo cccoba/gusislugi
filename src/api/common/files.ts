@@ -43,13 +43,13 @@ export function dataURLtoBlob(dataURL: any) {
 }
 
 export function getFileType(file: any): "image" | "video" | "unknown" {
-    if (!!file) {
+    if (file) {
         if (typeof file == "object") {
             if (
                 (!!file.mimeType && typeof file.mimeType == "string") ||
                 (!!file.type && typeof file.type == "string")
             ) {
-                const mimeType = !!file.mimeType ? file.mimeType : file.type;
+                const mimeType = file.mimeType ? file.mimeType : file.type;
                 if (mimeType.startsWith("image/")) {
                     return "image";
                 }
@@ -57,17 +57,17 @@ export function getFileType(file: any): "image" | "video" | "unknown" {
                     return "video";
                 }
             }
-            if (!!file.originalFileName) {
+            if (file.originalFileName) {
                 return getFileType(file.originalFileName);
             }
         }
         let ext = "";
-        if (!!file?.name) {
+        if (file?.name) {
             ext = getFileExt(file.name);
         } else if (typeof file == "string" && file.indexOf(".") > -1) {
             ext = getFileExt(file);
         }
-        if (!!ext) {
+        if (ext) {
             switch (ext) {
                 case "png":
                 case "jpg":
@@ -106,4 +106,32 @@ export function getFileTypeIconName(filename: string) {
 
 export function getFileName(url: string) {
     return url.substring(url.lastIndexOf("/") + 1);
+}
+export function arrayToCSV(data: string[][], delimiter: string = ";"): string {
+    return data
+        .map((row) =>
+            row
+                .map((value) =>
+                    // Экранируем данные, если они содержат специальные символы
+                    value.includes(delimiter) || value.includes('"') ? `"${value.replace(/"/g, '""')}"` : value
+                )
+                .join(delimiter)
+        )
+        .join("\n");
+}
+
+export function downloadCsv(csvString: string, fileName: string) {
+    const blob = new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csvString], {
+        type: "text/plain;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+    }, 1000);
 }

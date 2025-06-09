@@ -1,7 +1,6 @@
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import type { ICompanyDto } from "api/interfaces/user/ICompanyDto";
-import { GoodTable } from "components";
-import type { IGoodTableToolbarAction } from "components/GoodTable";
+import { GoodTable, type IGoodTableToolbarAction } from "components";
 import lang from "lang";
 import { useMemo } from "react";
 

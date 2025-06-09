@@ -25,22 +25,6 @@ const ruPages = {
             download: "Скачать архив",
         },
     },
-    fines: {
-        title: "Штрафы",
-        message: {
-            title: "Штрафы",
-            text: 'Штраф "%s" на сумму %s в статусе "%s"',
-        },
-        fields: {
-            id: "ID",
-            title: "Название",
-            status: "Статус",
-            value: "Сумма ( dn )",
-            created_at: "Дата назначения",
-            endDate: "Дата просрочки",
-            uid: "Пользователь",
-        },
-    },
     links: {
         title: "ГусиЛинкс",
         download: "Скачать",
@@ -55,11 +39,12 @@ const ruPages = {
     },
     messages: {
         title: "Оповещения",
+        myTitle: "Мои оповещения",
         detailsTitle: "Оповещения от %s",
-        fields: {
-            message: "Сообщение",
-            date: "Дата",
-        },
+        defails: "Оповещение",
+        toUser: "Получатель",
+        message: "Сообщение",
+        date: "Дата",
     },
     medicalInfo: {
         title: "Больные",
@@ -498,8 +483,6 @@ const ruPages = {
             helperText: "Не отправляйте сообщение, если хотите чтобы пользователь не узнал о вашем розыске",
         },
         fields: {
-            id: "ID",
-            image: "Фото",
             type: "Уровень",
             created_at: "Дата создания",
             uid: "Разыскиваемый",
@@ -519,8 +502,6 @@ const ruPages = {
             text: 'Статус вашего судебного розыска "%s". %s',
         },
         fields: {
-            id: "ID",
-            image: "Фото",
             uid: "Разыскиваемый",
             description: "Описание (для судьи)",
             userDescription: "Сообщение для пользователя",
@@ -537,8 +518,6 @@ const ruPages = {
             helperText: "Не отправляйте сообщение, если хотите чтобы пользователь не узнал о вашем розыске",
         },
         fields: {
-            id: "ID",
-            image: "Фото",
             uid: "Разыскиваемый",
             description: "Заметки",
             creatorId: "Кто подал",

@@ -139,6 +139,14 @@ const menuList: INavigationMenu[] = [
         category: "administrative",
     },
     {
+        name: "messages",
+        title: lang.pages.messages.title,
+        icon: "messages",
+        link: "/messages",
+        roles: [["messages"]],
+        category: "administrative",
+    },
+    {
         name: "shop",
         title: lang.pages.shop.title,
         icon: "shop",

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
-import { Confirm, GoodTable, Modal } from "components";
+import { Confirm, GoodTable, type IGoodTableField, type IGoodTableToolbarAction } from "components";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
 import SendUserNotification from "components/SendUserNotification";
 
@@ -12,7 +12,6 @@ import { useAppSelector, useLoader } from "api/hooks/redux";
 import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 import type { ITaxeDto } from "api/interfaces/user/ITaxeDto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
-import type { IGoodTableField, IGoodTableToolbarAction } from "components/GoodTable";
 import { useNotifier } from "api/hooks/useNotifier";
 import { checkFlagIncludes, getValuesByFlag } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
@@ -85,8 +84,8 @@ export default function Taxes({ userId }: IProps) {
                 newActions.push({
                     name: "edit",
                     icon: "edit",
-                    onClick: (items) => toEdit(items[0] as ITaxeDto),
-                    disable: (items) => items.length !== 1,
+                    onClick: (items: ITaxeDto[]) => toEdit(items[0]),
+                    disable: (items: ITaxeDto[]) => items.length !== 1,
                 });
             }
             if (checkFlagIncludes(currentUserParams.taxes, RolePermissionFlag.Delete)) {
@@ -94,8 +93,8 @@ export default function Taxes({ userId }: IProps) {
                     name: "delete",
                     icon: "delete",
                     color: "error",
-                    onClick: (items) => toDeleteConfirm(items[0] as ITaxeDto),
-                    disable: (items) => items.length !== 1,
+                    onClick: (items: ITaxeDto[]) => toDeleteConfirm(items[0]),
+                    disable: (items: ITaxeDto[]) => items.length !== 1,
                 });
             }
         }

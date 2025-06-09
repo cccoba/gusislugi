@@ -109,11 +109,6 @@ export default function Home() {
                     title={lang.pages.wanteds2.myTitle}
                     icon="wanteds2"
                 />
-                {/*<HomeItem
-                    url="/myFines"
-                    title={lang.pages.fines.title}
-                    icon="fines"
-                />*/}
                 <HomeItem
                     url="/my/companies"
                     title={lang.pages.companies.myTitle}

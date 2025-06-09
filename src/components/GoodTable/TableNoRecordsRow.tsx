@@ -1,13 +1,14 @@
 import { TableCell, TableRow } from "@mui/material";
+import type { ReactNode } from "react";
 
 import lang from "lang";
-
 interface IProps {
-    noRecordsText?: string;
+    noRecordsText?: string | ReactNode;
     fieldsLength?: number;
 }
-const langPage = lang.components.goodTable;
-function GoodTableNoRecordsRow({ noRecordsText, fieldsLength = 1 }: IProps) {
+
+export default function GoodTableNoRecordsRow({ noRecordsText, fieldsLength = 1 }: IProps) {
+    const langPage = lang.components.goodTable;
     if (noRecordsText === "") {
         return null;
     }
@@ -22,4 +23,3 @@ function GoodTableNoRecordsRow({ noRecordsText, fieldsLength = 1 }: IProps) {
         </TableRow>
     );
 }
-export default GoodTableNoRecordsRow;

@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
-import { IMoneyDto } from "api/interfaces/user/IMoneyDto";
-import { IUserShortDto } from "api/interfaces/user/IUserShortDto";
-import { Icon } from "components";
-import GoodTable, { IGoodTableField } from "components/GoodTable";
+import type { IMoneyDto } from "api/interfaces/user/IMoneyDto";
+import type { IUserShortDto } from "api/interfaces/user/IUserShortDto";
+import type { IGoodTableField } from "components";
+import { GoodTable, Icon } from "components";
+
 import lang, { sprintf } from "lang";
 import { useMemo } from "react";
 

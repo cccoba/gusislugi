@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
-import { Confirm, Page } from "components";
+import { Confirm, Page, type IGoodTableToolbarAction } from "components";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
 import SendUserNotification from "components/SendUserNotification";
-import type { IGoodTableToolbarAction } from "components/GoodTable";
 
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { company, webApiResultData } from "api/data";
@@ -88,7 +87,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                 name: "delete",
                 color: "error",
                 onClick: toDeleteRecordConfirm,
-                disable: (selectedRows) => !selectedRows?.length,
+                disable: (selectedRows: ICompanyDto[]) => !selectedRows?.length,
             });
         }
         return newActions;

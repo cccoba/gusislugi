@@ -1,19 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 
 import lang, { sprintf } from "lang";
-import GoodTable, { IGoodTableToolbarAction, IGoodTableField, ITablePagination } from "components/GoodTable";
-import TreeViewer, { ITreeItem } from "components/TreeViewer";
+import type { IGoodTableToolbarAction, IGoodTableField, IGoodTablePagination } from "components/GoodTable";
+import GoodTable from "components/GoodTable";
+import type { ITreeItem } from "components/TreeViewer";
+import TreeViewer from "components/TreeViewer";
 
 import { useNotifier } from "api/hooks/useNotifier";
-import { ISortData } from "api/interfaces/components/GoodTable";
+import type { ISortData } from "api/interfaces/components/GoodTable";
 import { webApiResultData } from "api/data";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { checkFlagIncludes } from "api/common/enumHelper";
 
-import Confirm, { IConfirmProps } from "../Confirm";
+import type { TIconName } from "components/Icon";
 
-import { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
-import { TIconName } from "components/Icon";
+import type { IConfirmProps } from "../Confirm";
+import Confirm from "../Confirm";
+
+import type { ICRUDAsyncAction, TCRUDAsyncActionCbName } from "./Main";
 
 const langPage = lang.components.crud;
 
@@ -22,7 +26,7 @@ export interface ICRUDAsyncListConfig {
     fields: IGoodTableField[];
     orderBy: ISortData;
     withRefresh?: boolean;
-    pagination?: ITablePagination;
+    pagination?: IGoodTablePagination;
     toTreeView?: (data: any[]) => ITreeItem[];
     transform?: (data: any) => any;
 }
@@ -142,7 +146,7 @@ export default function CRUDAsyncList({
         const action = actions.find((x) => x.name === "getAll");
         if (action && checkFlagIncludes(permissions, RolePermissionFlag.View)) {
             onIsLoading(true);
-            const cb = !!action.cbArgs ? action.cb(...action.cbArgs) : action.cb();
+            const cb = action.cbArgs ? action.cb(...action.cbArgs) : action.cb();
 
             cb.then((res) => {
                 const { error, result } = webApiResultData<any>(res);
@@ -215,7 +219,7 @@ export default function CRUDAsyncList({
                     pagination={config?.pagination}
                     order={config.orderBy}
                     onSelectedRows={onSelected}
-                    isMultiSelection={config.isMultiSelection}
+                    typeSelection={config.isMultiSelection ? "multiple" : "single"}
                     actions={actionsList}
                     onRowDoubleClick={onRowDoubleClick}
                 />

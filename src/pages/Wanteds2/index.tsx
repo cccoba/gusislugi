@@ -78,8 +78,8 @@ export default function Wanteds2({ userId }: IProps) {
             withRefresh: true,
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
             fields: [
-                { name: "id", title: langPage.fields.id, width: "30px" },
-                { name: "image", title: langPage.fields.image, width: "30px", format: "image" },
+                { name: "id", title: lang.id, width: "30px" },
+                { name: "image", title: lang.image, width: "30px", format: "image" },
                 { name: "user", title: langPage.fields.uid },
                 { name: "status", title: lang.status },
                 { name: "created_at", title: lang.created_at, format: "date" },

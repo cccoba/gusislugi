@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import lang, { sprintf } from "lang";
-import { GoodTable, Page } from "components";
+import { GoodTable, Page, type IGoodTableToolbarAction } from "components";
 import useGetData from "store/rtkProvider";
 import SendUserNotification, { type ISendUserNotificationProps } from "components/SendUserNotification";
 
@@ -9,7 +9,7 @@ import { company, webApiResultData } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import { type ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
-import { type IGoodTableToolbarAction } from "components/GoodTable";
+
 import { CompanyPermissionActionFlag } from "api/enums/CompanyPermissionActionFlag";
 import { useNotifier } from "api/hooks/useNotifier";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";

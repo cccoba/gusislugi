@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
 import type { IKeyValueListItem } from "components";
-import { Form, GoodTable, KeyValueList, Modal, Page } from "components";
-import type { IGoodTableField } from "components/GoodTable";
+import { type IGoodTableField, GoodTable, KeyValueList, Modal, Page } from "components";
 import type { TFormField } from "components/Form/FormAdapters";
 
 import { taxes } from "api/data";

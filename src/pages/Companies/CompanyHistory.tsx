@@ -4,8 +4,7 @@ import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 import { type ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 
-import { GoodTable } from "components";
-import { type IGoodTableProps } from "components/GoodTable";
+import { GoodTable, type IGoodTableProps } from "components";
 import lang, { getEnumSelectValues, sprintf } from "lang";
 
 interface IProps {

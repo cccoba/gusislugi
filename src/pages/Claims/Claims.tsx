@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Confirm, IconButton, PageOrModal, GoodTable } from "components";
-import { IGoodTableField } from "components/GoodTable";
+import { Confirm, IconButton, PageOrModal, GoodTable, type IGoodTableField } from "components";
+
 import lang, { getEnumTitle, sprintf } from "lang";
 
 import { getEnumValue } from "api/common/enumHelper";
@@ -9,8 +9,8 @@ import { claims, users } from "api/data";
 import { ClaimStatusEnum } from "api/enums/ClaimStatusEnum";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import { useNotifier } from "api/hooks/useNotifier";
-import { IClaimDto } from "api/interfaces/user/IClaimDto";
-import { IConfirmProps } from "components/Confirm";
+import type { IClaimDto } from "api/interfaces/user/IClaimDto";
+import type { IConfirmProps } from "components/Confirm";
 import { webApiResultData } from "api/data/dataProvider";
 
 import ClaimEdit from "pages/Claims/ClaimEdit";

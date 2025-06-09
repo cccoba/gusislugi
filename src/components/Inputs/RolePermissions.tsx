@@ -14,6 +14,10 @@ import useGetData from "store/rtkProvider";
 
 import type { ITaxesTypesDto } from "api/interfaces/user/ITaxesTypesDto";
 
+import { messages } from "api/data";
+
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+
 import FormControl from "./FormControl";
 import type { ISelectValue } from "./Select";
 import InputSelectMultiple from "./InputSelect/InputSelectMultiple";
@@ -61,6 +65,8 @@ export default function RolePermissions({
         "shopUse",
         "licenses",
         "weapons",
+        "messages",
+        "messageStatuses",
     ];
     const permissions = permissionList.map((x) => ({
         id: x,
@@ -84,6 +90,14 @@ export default function RolePermissions({
             title: x.title,
         }));
     }, [roles]);
+    const messageStatusesFlags = useMemo<ISelectValue[]>(() => {
+        return getEnumSelectValues(MessageStatusEnum, "MessageStatusEnum")
+            .filter((x) => !!x.id)
+            .map((x) => ({
+                id: getFlagByValue(x.id),
+                title: x.title,
+            }));
+    }, [messages]);
     const medicalSicknessesFlags = useMemo<ISelectValue[]>(() => {
         return (medicalSicknesses || []).map((x) => ({
             id: getFlagByValue(x.id),
@@ -118,6 +132,8 @@ export default function RolePermissions({
             medicineAdmin: [],
             licenses: [],
             weapons: [],
+            messages: [],
+            messageStatuses: [],
         };
         if (toArray(value).length > 0) {
             for (const idName in value) {
@@ -129,6 +145,12 @@ export default function RolePermissions({
                             case "users":
                             case "qr":
                                 newValue[idName] = getRoleFlagToFlagValues((value as any)[idName], roleFlags);
+                                break;
+                            case "messageStatuses":
+                                newValue[idName] = getRoleFlagToFlagValues(
+                                    (value as any)[idName],
+                                    messageStatusesFlags
+                                );
                                 break;
                             case "company":
                                 newValue[idName] = getFlagToFlagValues(
@@ -174,6 +196,10 @@ export default function RolePermissions({
                             ? medicalSicknessesFlags
                             : x.id === "taxesTypesView" || x.id === "taxesTypesEdit"
                             ? taxesTypesFlags
+                            : x.id === "messageStatuses"
+                            ? messageStatusesFlags
+                            : x.id === "messages"
+                            ? values.filter((x) => x.id === 1 || x.id === 2)
                             : values;
                     if (x.id === "shopUse") {
                         return (

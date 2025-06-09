@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
 
 import lang from "lang";
-import { GoodTable, Page } from "components";
-import type { IGoodTableField } from "components/GoodTable";
+import { type IGoodTableField, GoodTable, Page } from "components";
 import { setRoles } from "store/reducers/UserSlice";
 
 import { roles as rolesService, webApiResultData } from "api/data";
@@ -14,7 +13,7 @@ import { useAppDispatch } from "api/hooks/redux";
 
 import RoleForm from "./Form";
 
-export default function Roles({ roles, icon }: IPageWithRoles) {
+export default function Roles({ ...pageProps }: IPageWithRoles) {
     const langPage = lang.pages.roles;
 
     const fields: IGoodTableField[] = [
@@ -79,9 +78,7 @@ export default function Roles({ roles, icon }: IPageWithRoles) {
         <Page
             title={langPage.title}
             isLoading={isLoading || initLoading}
-            roles={roles}
-            icon={icon}
-            backUrl="/"
+            {...pageProps}
         >
             {!!selectedRole && (
                 <RoleForm

@@ -1,10 +1,10 @@
 export enum MessageStatusEnum {
+    None,
     Claims,
-    Fines,
     Messages,
-    MedicalPolicies,
-    MedicalSickness,
     Taxes,
+    MedicalPolicies,
+    Secrets,
     Wanteds,
     Wanteds2,
     Company,

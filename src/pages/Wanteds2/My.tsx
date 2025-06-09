@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
 import lang from "lang";
-import { Form, GoodTable, KeyValueList, Modal, Page } from "components";
-import type { IGoodTableField } from "components/GoodTable";
+import { type IGoodTableField, GoodTable, KeyValueList, Modal, Page } from "components";
 
 import { wanteds2 } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";

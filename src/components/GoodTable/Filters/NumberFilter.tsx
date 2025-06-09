@@ -1,11 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import lang, { getEnumSelectValues } from "lang";
 
 import Fieldset from "components/Fieldset";
 import InputSearch from "components/Inputs/InputSearch";
 import Select from "components/Inputs/Select";
 
-import { IFilterNumberValue } from "api/interfaces/components/GoodTable";
+import type { IFilterNumberValue } from "api/interfaces/components/GoodTable";
 import { FilterNumberEqualsEnum } from "api/common/filters";
 
 interface IProps {
@@ -16,40 +16,64 @@ interface IProps {
     onCloseSearchFilter: () => void;
 }
 
-const langPage = lang.components.goodTable.filters;
-
-function GoodTableSearchNumberFilter({ label, fieldName, filter, onChangeValue, onCloseSearchFilter }: IProps) {
-    const defFilterValue = useMemo<IFilterNumberValue>(() => {
-        if (filter) {
-            return filter;
-        }
-        return { name: fieldName, value: undefined, searchType: FilterNumberEqualsEnum.Contains };
+export default function GoodTableSearchNumberFilter({
+    label,
+    fieldName,
+    filter,
+    onChangeValue,
+    onCloseSearchFilter,
+}: IProps) {
+    const langPage = lang.components.goodTable.filters;
+    const defFilterType = FilterNumberEqualsEnum.Contains;
+    const defFilterValue: string = "";
+    const [filterType, setFilterType] = useState<FilterNumberEqualsEnum>(defFilterType);
+    const [filterValue, setFilterValue] = useState<string>(defFilterValue);
+    useEffect(() => {
+        setFilterType(typeof filter?.searchType !== "undefined" ? filter.searchType : defFilterType);
+        setFilterValue(typeof filter?.value === "number" ? filter.value.toString() : defFilterValue);
     }, [filter, fieldName]);
     const toClear = () => {
         onChangeValue(null);
         onCloseSearchFilter();
     };
+    const onTypeChanged = (newType: FilterNumberEqualsEnum) => {
+        setFilterType(newType);
+        if (typeof filterValue === "string" && filterValue.length) {
+            onChangeValue({
+                name: fieldName,
+                value: parseFloat(filterValue),
+                searchType: filterType,
+            });
+        }
+    };
+    const onValueChanged = (newValue: string) => {
+        onChangeValue({
+            name: fieldName,
+            value: newValue?.length ? parseFloat(newValue) : undefined,
+            searchType: filterType,
+        });
+    };
+
     return (
         <Fieldset
             label={label}
             sx={{ display: "flex" }}
         >
             <Select
-                value={defFilterValue.searchType}
-                onChangeValue={(v) => onChangeValue({ ...defFilterValue, searchType: v })}
-                variant="standard"
+                value={filterType}
+                onChangeValue={onTypeChanged}
+                variant="outlined"
                 label={langPage.searchType}
                 values={getEnumSelectValues(FilterNumberEqualsEnum, "FilterNumberEqualsEnum")}
             />
             <InputSearch
-                value={defFilterValue.value as any}
+                value={filterValue}
                 autoComplete="off"
-                onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: parseFloat(v) || "" })}
+                onChangeValue={onValueChanged}
                 onClearButtonClick={toClear}
-                variant="standard"
+                variant="outlined"
                 label={langPage.value}
             />
         </Fieldset>
     );
 }
-export default GoodTableSearchNumberFilter;

@@ -6,7 +6,7 @@ import Select from "components/Inputs/Select";
 import lang, { getEnumSelectValues } from "lang";
 
 import { FilterTextEqualsEnum } from "api/common/filters";
-import { IFilterTextValue } from "api/interfaces/components/GoodTable";
+import type { IFilterTextValue } from "api/interfaces/components/GoodTable";
 
 interface IProps {
     label?: string;
@@ -29,7 +29,7 @@ export default function GoodTableSearchTextFilter({
             return filter;
         }
         return { name: fieldName, value: "", searchType: FilterTextEqualsEnum.Contains };
-    }, [filter]);
+    }, [filter, fieldName]);
     const toClear = () => {
         onChangeValue(null);
     };
@@ -41,7 +41,7 @@ export default function GoodTableSearchTextFilter({
             <Select
                 value={defFilterValue.searchType}
                 onChangeValue={(v) => onChangeValue({ ...defFilterValue, searchType: v })}
-                variant="standard"
+                variant="outlined"
                 label={langPage.searchType}
                 values={getEnumSelectValues(FilterTextEqualsEnum, "FilterTextEqualsEnum")}
             />
@@ -53,7 +53,7 @@ export default function GoodTableSearchTextFilter({
                     autoFocus={true}
                     onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: v })}
                     onClearButtonClick={toClear}
-                    variant="standard"
+                    variant="outlined"
                     label={langPage.value}
                 />
             ) : null}

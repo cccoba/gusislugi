@@ -5,9 +5,9 @@ import lang, { getEnumSelectValues } from "lang";
 import { GoodTable, Page } from "components";
 
 import { medicine, webApiResultData } from "api/data";
-import { IPage } from "api/interfaces/components/Page/IPage";
+import type { IPage } from "api/interfaces/components/Page/IPage";
 import useLoadApiData from "api/hooks/useLoadApiData";
-import { IMedicinePatient } from "api/interfaces/Medicine/IMedicinePatient";
+import type { IMedicinePatient } from "api/interfaces/Medicine/IMedicinePatient";
 import { MedicinePatientStatusEnum } from "api/enums/MedicinePatientStatusEnum";
 import { useNotifier } from "api/hooks/useNotifier";
 import { useLoader } from "api/hooks/redux";
@@ -78,7 +78,7 @@ export default function MedicinePatientList({ ...pageProps }: IPage) {
                     }}
                 />
             )}
-            <GoodTable
+            <GoodTable<IMedicinePatient>
                 values={values}
                 loading={isLoading}
                 fields={[
@@ -112,8 +112,8 @@ export default function MedicinePatientList({ ...pageProps }: IPage) {
                     {
                         name: "edit",
                         icon: "edit",
-                        onClick: ([selectedRow]) => showEdit(selectedRow),
-                        disable: (selectedRows) => selectedRows.length !== 1,
+                        onClick: (selectedRows: IMedicinePatient[]) => showEdit(selectedRows[0]),
+                        disable: (selectedRows: IMedicinePatient[]) => selectedRows.length !== 1,
                     },
                 ]}
             />

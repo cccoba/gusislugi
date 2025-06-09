@@ -3,7 +3,7 @@ import { checkFlagIncludes } from "api/common/enumHelper";
 import { users, webApiResultData } from "api/data";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { WeaponEnum } from "api/enums/WeaponEnum";
-import { useAppSelector, useLoader } from "api/hooks/redux";
+import { useLoader } from "api/hooks/redux";
 import { useNotifier } from "api/hooks/useNotifier";
 import type { IUserDto } from "api/interfaces/user/IUserDto";
 import type { IWeaponUpdaterDto } from "api/interfaces/user/IWeaponUpdaterDto";

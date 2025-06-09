@@ -4,10 +4,12 @@ export { default as CRUDAsync } from "./CRUDAsync";
 export { default as CutText } from "./CutText";
 
 export { default as GoodTable } from "./GoodTable";
+export type { IGoodTableField, IGoodTableProps, IGoodTableToolbarAction } from "./GoodTable";
 
 export { default as Icon } from "./Icon";
 export { default as IconButton } from "./Icon/IconButton";
 export { default as FabIcon } from "./Icon/FabIcon";
+export type { TIconName } from "./Icon";
 
 export { default as Alert } from "./Alert";
 export { default as Confirm } from "./Confirm";
@@ -17,6 +19,9 @@ export { default as Fieldset } from "./Fieldset";
 export { default as Image } from "./Image";
 
 export { default as Form } from "./Form";
+export type { TFormField } from "./Form/FormAdapters";
+export type { IFormProps } from "./Form";
+export type { IFormFieldSelect } from "./Form/Adapters/Select";
 export { default as Loader } from "./Loader";
 export { default as MenuList } from "./MenuList";
 export { default as KeyValueList } from "./KeyValueList";

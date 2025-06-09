@@ -1,4 +1,4 @@
-import { FilterDateEqualsEnum, FilterNumberEqualsEnum, FilterTextEqualsEnum } from "api/common/filters";
+import type { FilterDateEqualsEnum, FilterNumberEqualsEnum, FilterTextEqualsEnum } from "api/common/filters";
 
 export interface IPaginationData {
     pageNumber: number;
@@ -6,11 +6,9 @@ export interface IPaginationData {
     totalItemCount?: number;
 }
 
-export type TTableDirection = "asc" | "desc";
-
 export interface ISortData {
     sort: string;
-    direction: SortOrderEnum;
+    direction: SortOrderEnum | "asc" | "desc";
 }
 
 export enum SortOrderEnum {
@@ -28,10 +26,25 @@ export interface IFilterNumberValue {
     value?: number | "";
     searchType: FilterNumberEqualsEnum;
 }
+export interface IFilterListValue {
+    name: string;
+    value?: string[] | number[];
+    searchType: FilterNumberEqualsEnum;
+}
 export interface IFilterDateValue {
     name: string;
     value?: Date;
     searchType: FilterDateEqualsEnum;
 }
+export interface IFilterBooleanValue {
+    name: string;
+    value?: boolean;
+    searchType: FilterNumberEqualsEnum;
+}
 
-export type TFilterValue = IFilterTextValue | IFilterNumberValue | IFilterDateValue;
+export type TFilterValue =
+    | IFilterTextValue
+    | IFilterNumberValue
+    | IFilterDateValue
+    | IFilterBooleanValue
+    | IFilterListValue;

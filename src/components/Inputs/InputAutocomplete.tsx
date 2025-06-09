@@ -1,24 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-    Autocomplete,
-    TextField,
-    StandardTextFieldProps,
-    Box,
-    SxProps,
-    FilterOptionsState,
-    Checkbox,
-    AutocompleteRenderOptionState,
-    InputAdornment,
-} from "@mui/material";
+import type { StandardTextFieldProps, SxProps, FilterOptionsState, AutocompleteRenderOptionState } from "@mui/material";
+import { Autocomplete, TextField, Box, Checkbox, InputAdornment } from "@mui/material";
 
-import Icon, { TIconName } from "components/Icon";
+import type { TIconName } from "components/Icon";
+import Icon from "components/Icon";
 import { textFilter } from "api/common/filters";
 
 import lang from "lang";
 
-import Image from "../Image";
-
-import { ISelectValue } from "./Select";
+import type { ISelectValue } from "./Select";
 
 const langPage = lang.components.inputAutocomplete;
 
@@ -130,7 +120,7 @@ export default function InputAutocomplete({
         }
     };
     const onSearchTextClear = () => {
-        onSelectValue?.(!!multiple ? [] : null);
+        onSelectValue?.(multiple ? [] : null);
     };
     const onStartSearch = (data: ISelectValue[], { inputValue }: FilterOptionsState<any>) => {
         if (onSearch) {
@@ -157,13 +147,6 @@ export default function InputAutocomplete({
                 {...data}
                 key={option?.key ? option?.key : option.id}
             >
-                {option.image ? (
-                    <Image
-                        avatar
-                        image={option.image}
-                        style={{ marginRight: "4px" }}
-                    />
-                ) : null}
                 {option.icon ? (
                     <Icon
                         name={option.icon}

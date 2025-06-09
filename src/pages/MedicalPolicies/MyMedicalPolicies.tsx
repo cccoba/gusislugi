@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 import lang, { getEnumSelectValues } from "lang";
-import { Form, GoodTable, Modal, Page } from "components";
+import { Form, GoodTable, type IGoodTableField, Modal, Page } from "components";
 import { medicalPolicies } from "api/data";
 import useLoadApiData from "api/hooks/useLoadApiData";
 import type { IMedicalPoliciesDto } from "api/interfaces/user/IMedicalPoliciesDto";
 import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { useNotifier } from "api/hooks/useNotifier";
-import type { IGoodTableField } from "components/GoodTable";
+
 import type { TFormField } from "components/Form/FormAdapters";
 
 const langPage = lang.pages.medicalPolicies;

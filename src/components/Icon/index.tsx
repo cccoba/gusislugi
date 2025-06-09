@@ -209,12 +209,12 @@ export const IconList: TIconName[] = [
     "right",
 ];
 
-interface IProps extends SvgIconProps {
+export interface IIconProps extends SvgIconProps {
     name: TIconName;
     tooltip?: string;
 }
 
-export default function Icon({ tooltip, name, color = "inherit", ...props }: IProps) {
+export default function Icon({ tooltip, name, color = "inherit", ...props }: IIconProps) {
     const totalProps = { ...props, color };
     totalProps.className = `iconName-${name}`;
     if (tooltip) {

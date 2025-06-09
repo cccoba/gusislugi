@@ -1,17 +1,11 @@
-import { useState } from "react";
-
 import lang from "lang";
 import { Page } from "components";
 import ProfileMessages from "pages/Messages/Messages";
 
-const langPage = lang.pages.messages;
-
-function MyMessages() {
-    const [isLoading, setIsLoading] = useState(false);
+export default function MyMessages() {
     return (
         <Page
-            title={langPage.title}
-            isLoading={isLoading}
+            title={lang.pages.messages.myTitle}
             icon="messages"
             backUrl="/"
         >
@@ -19,4 +13,3 @@ function MyMessages() {
         </Page>
     );
 }
-export default MyMessages;

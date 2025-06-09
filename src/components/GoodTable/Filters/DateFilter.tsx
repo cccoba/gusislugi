@@ -4,7 +4,7 @@ import lang, { getEnumSelectValues } from "lang";
 import Fieldset from "components/Fieldset";
 import Select from "components/Inputs/Select";
 
-import { IFilterDateValue } from "api/interfaces/components/GoodTable";
+import { type IFilterDateValue } from "api/interfaces/components/GoodTable";
 import { FilterDateEqualsEnum } from "api/common/filters";
 import { Date } from "components";
 
@@ -13,12 +13,10 @@ interface IProps {
     fieldName: string;
     filter?: IFilterDateValue;
     onChangeValue: (newValue: IFilterDateValue | null) => void;
-    onCloseSearchFilter: () => void;
 }
 
-const langPage = lang.components.goodTable.filters;
-
-function GoodTableSearchDateFilter({ label, fieldName, filter, onChangeValue, onCloseSearchFilter }: IProps) {
+export default function GoodTableSearchDateFilter({ label, fieldName, filter, onChangeValue }: IProps) {
+    const langPage = lang.components.goodTable.filters;
     const defFilterValue = useMemo<IFilterDateValue>(() => {
         if (filter) {
             return filter;
@@ -33,17 +31,16 @@ function GoodTableSearchDateFilter({ label, fieldName, filter, onChangeValue, on
             <Select
                 value={defFilterValue.searchType}
                 onChangeValue={(v) => onChangeValue({ ...defFilterValue, searchType: v })}
-                variant="standard"
+                variant="outlined"
                 label={langPage.searchType}
                 values={getEnumSelectValues(FilterDateEqualsEnum, "FilterDateEqualsEnum")}
             />
             <Date
-                value={defFilterValue.value as any}
+                value={defFilterValue.value || null}
                 onChangeValue={(v) => onChangeValue({ ...defFilterValue, value: v || undefined })}
-                variant="standard"
+                variant="outlined"
                 label={langPage.value}
             />
         </Fieldset>
     );
 }
-export default GoodTableSearchDateFilter;

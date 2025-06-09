@@ -1,6 +1,6 @@
-import { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
+import type { TRoleCheckerRole } from "api/interfaces/user/IRoleDto";
 
-import { IPage } from "./IPage";
+import type { IPage } from "./IPage";
 
 export interface IPageWithRoles extends IPage {
     roles: TRoleCheckerRole[];
