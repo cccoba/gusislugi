@@ -17,7 +17,8 @@ export default function LoginExtra() {
             } else {
                 setCookie(getConst("auth-token-name"), code);
             }
-            window.location.href = "/";
+
+            window.location.href = "/gusislugi_site/#";
         }
     };
     return (
