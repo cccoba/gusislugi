@@ -396,7 +396,7 @@ const ruPages = {
         text: "Вы не зарегистрированы в системе. Введите:",
         fields: {
             firstName: "Имя Фамилия",
-            passport: "Серия-номер паспорта",
+            passport: "Номер паспорта",
         },
         success: {
             registration: "Вы успешно зарегистрированы",
