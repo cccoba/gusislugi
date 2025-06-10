@@ -13,6 +13,8 @@ import type { ICompanyMoneyDto } from "api/interfaces/user/ICompanyMoneyDto";
 
 import type { IPage } from "api/interfaces/components/Page/IPage";
 
+import { isMobile } from "react-device-detect";
+
 import CompanyList from "./List";
 import CompanyMoneyHistory from "./CompanyHistory";
 
@@ -86,6 +88,7 @@ export default function MyCompanies({ ...pageProps }: IPage) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

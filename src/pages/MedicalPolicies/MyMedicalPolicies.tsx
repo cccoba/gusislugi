@@ -9,6 +9,7 @@ import { MedicalPoliciesTypeEnum } from "api/enums/MedicalPoliciesTypeEnum";
 import { useNotifier } from "api/hooks/useNotifier";
 
 import type { TFormField } from "components/Form/FormAdapters";
+import { isMobile } from "react-device-detect";
 
 const langPage = lang.pages.medicalPolicies;
 
@@ -107,6 +108,7 @@ function MyMedicalPolicies() {
             isLoading={isLoading}
             backUrl={"/"}
             icon="medicalPolicies"
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

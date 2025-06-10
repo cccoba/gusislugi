@@ -26,9 +26,13 @@ import TaxesAdd from "./Add";
 interface IProps {
     userId?: number;
 }
+
+interface ISendUserNotificationPropsWithStatus extends ISendUserNotificationProps {
+    status: MessageStatusEnum;
+}
 export default function Taxes({ userId }: IProps) {
     const langPage = lang.pages.taxes;
-    const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
+    const [notificationData, setNotificationData] = useState<null | ISendUserNotificationPropsWithStatus>(null);
     const { setIsLoading } = useLoader();
     const { showError, showSuccess } = useNotifier();
     const [tableValue, setTableValue] = useState<ITaxeDto[]>([]);
@@ -215,9 +219,19 @@ export default function Taxes({ userId }: IProps) {
                     throw error;
                 }
                 if (result) {
+                    let status = MessageStatusEnum.Taxes;
+                    switch (data.taxesTypeId) {
+                        case 2:
+                            status = MessageStatusEnum.Taxes2;
+                            break;
+                        case 3:
+                            status = MessageStatusEnum.Taxes3;
+                            break;
+                    }
                     setNotificationData({
                         uid: data.uid,
                         title: langPage.message.title,
+                        status: status,
                         text: sprintf(
                             langPage.message.text,
                             data.title,
@@ -283,7 +297,6 @@ export default function Taxes({ userId }: IProps) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    status={MessageStatusEnum.Taxes}
                     onClose={hideNotificationData}
                 />
             )}

@@ -29,6 +29,8 @@ export default function Maps() {
             isLoading={isLoading}
             backUrl="/"
             icon="map"
+            fabMargin={false}
+            scrollTop={false}
         >
             {isLoading ? (
                 <Loader />

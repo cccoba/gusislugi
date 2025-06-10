@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { isMobile } from "react-device-detect";
 
 import lang from "lang";
 import { Page } from "components";
@@ -12,6 +12,7 @@ export default function MyClaims() {
             title={langPage.myTitle}
             icon="claims"
             backUrl="/"
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             <ProfileClaims />
         </Page>

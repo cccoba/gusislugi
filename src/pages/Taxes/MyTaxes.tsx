@@ -13,6 +13,7 @@ import { TaxeStatusEnum } from "api/enums/TaxeStatusEnum";
 import type { IPage } from "api/interfaces/components/Page/IPage";
 import dateTime from "api/common/dateTime";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
+import { isMobile } from "react-device-detect";
 
 interface IProps extends IPage {
     userId?: number;
@@ -44,57 +45,6 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             name: "endDate",
             title: langPage.fields.endDate,
             format: "date",
-        },
-    ];
-    const formFields: TFormField[] = [
-        {
-            name: "title",
-            title: langPage.fields.title,
-            type: "text",
-            fieldProps: {
-                inputProps: {
-                    readOnly: true,
-                },
-            },
-        },
-        {
-            name: "taxesTypeId",
-            title: langPage.fields.taxesTypeId,
-            type: "taxesTypes",
-            filterTypes: -1,
-            fieldProps: {
-                readOnly: true,
-            },
-        },
-        {
-            name: "status",
-            title: langPage.fields.status,
-            type: "select",
-            values: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
-            fieldProps: { readOnly: true },
-        },
-        {
-            name: "value",
-            title: langPage.fields.value,
-            type: "number",
-            fieldProps: {
-                inputProps: {
-                    readOnly: true,
-                },
-            },
-        },
-        {
-            name: "created_at",
-            title: langPage.fields.created_at,
-            type: "dateTime",
-            fieldProps: { readOnly: true },
-        },
-
-        {
-            name: "endDate",
-            title: langPage.fields.endDate,
-            type: "dateTime",
-            fieldProps: { readOnly: true },
         },
     ];
     const { showError } = useNotifier();
@@ -136,6 +86,7 @@ export default function MyTaxes({ userId, ...pageProps }: IProps) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

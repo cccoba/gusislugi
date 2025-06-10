@@ -8,6 +8,8 @@ import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { checkFlagIncludes } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
 import { WeaponEnum } from "api/enums/WeaponEnum";
+import { useLocation } from "react-router-dom";
+import { useMemo } from "react";
 
 interface IProps {
     user: IUserDto;
@@ -21,6 +23,10 @@ export default function PassportUser({ user, hideEdit }: IProps) {
     const roles = useAppSelector((s) => s.user.roles);
     const currentUserIsAdmin = useAppSelector((s) => s.user.tg?.isAdmin);
     const adminPermissions = useAppSelector((s) => s.user.user?.role.params.admins);
+    const { state } = useLocation();
+    const showAll = useMemo(() => {
+        return !!state?.showAll;
+    }, [state]);
     return (
         <>
             {!hideEdit && checkFlagIncludes(adminPermissions || 0, RolePermissionFlag.Edit) && (
@@ -49,9 +55,11 @@ export default function PassportUser({ user, hideEdit }: IProps) {
                     <Typography>
                         {langUser.firstName}: {user.firstName}
                     </Typography>
-                    <Typography>
-                        {langUser.weapon}: {getEnumTitleValue(WeaponEnum, "WeaponEnum", user.weapon)}
-                    </Typography>
+                    {!!showAll /*|| currentUserIsAdmin*/ && (
+                        <Typography>
+                            {langUser.weapon}: {getEnumTitleValue(WeaponEnum, "WeaponEnum", user.weapon)}
+                        </Typography>
+                    )}
                     {!!currentUserIsAdmin && (
                         <Typography>
                             {langUser.role}: {roles.find((x) => x.id === user.roleId)?.title || lang.unknown}

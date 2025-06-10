@@ -15,6 +15,7 @@ export interface IPage {
     redirectLink?: string;
     loadingText?: string;
     scrollTop?: boolean;
+    scrollTopBottom?: number;
     fabMargin?: boolean;
     roles?: TRoleCheckerRole[];
 }

@@ -19,6 +19,8 @@ import { CompanyMoneyTypeEnum } from "api/enums/CompanyMoneyTypeEnum";
 import { useNavigate } from "react-router-dom";
 import type { IPage } from "api/interfaces/components/Page/IPage";
 
+import { isMobile } from "react-device-detect";
+
 import CompanyMoneyAdd from "./AddMoney";
 import CompaniesEdit from "./Edit";
 import CompanyList from "./List";
@@ -224,6 +226,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
             title={langPage.title}
             icon="company"
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!deleteConfirm && (
                 <Confirm

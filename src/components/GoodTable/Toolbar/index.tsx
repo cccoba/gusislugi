@@ -80,6 +80,7 @@ export default function GoodTableToolbar<T>({
                             placeholder={langPage.search}
                             variant="standard"
                             autoFocus={!!autoFocus}
+                            debounceTime={300}
                             sx={{
                                 my: 0,
                             }}

@@ -9,6 +9,7 @@ import type { ILicenseDto } from "api/interfaces/user/ILicenseDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import { LicenseTypeEnum } from "api/enums/LicenseTypeEnum";
 import type { IPage } from "api/interfaces/components/Page/IPage";
+import { isMobile } from "react-device-detect";
 
 export default function MyLicenses({ ...pageProps }: IPage) {
     const langPage = lang.pages.licenses;
@@ -68,6 +69,7 @@ export default function MyLicenses({ ...pageProps }: IPage) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

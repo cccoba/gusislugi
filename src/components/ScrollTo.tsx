@@ -1,4 +1,5 @@
-import { Box, FabProps, Fab, Zoom } from "@mui/material";
+import type { FabProps } from "@mui/material";
+import { Box, Fab, Zoom } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 import useIntersectionObserver from "api/hooks/useIntersectionObserver";
@@ -29,6 +30,7 @@ export default function ScrollTo({ color = "secondary", id = "scrollTo", bottom 
     useEffect(() => {
         setIsVisible(!!entry?.isIntersecting);
     }, [entry]);
+
     return (
         <>
             <Box

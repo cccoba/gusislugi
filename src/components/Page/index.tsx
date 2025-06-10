@@ -1,12 +1,13 @@
 import { Button, Paper } from "@mui/material";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 
 import { setHeaderAll, loaderChange } from "store/reducers/ComponentsSlice";
 import lang from "lang";
 
 import { type IPage } from "api/interfaces/components/Page/IPage";
-import { useAppDispatch, useAppSelector } from "api/hooks/redux";
+import { useAppDispatch } from "api/hooks/redux";
 
 import { Icon, RoleChecker } from "..";
 import ScrollTo from "../ScrollTo";
@@ -22,9 +23,9 @@ export default function Page({
     isLoading = false,
     loadingText = undefined,
     scrollTop = true,
+    scrollTopBottom,
     fabMargin = true,
 }: IPage) {
-    const isMobile = useAppSelector((s) => s.device.isMobile);
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(
@@ -65,7 +66,12 @@ export default function Page({
                     sx={fabMargin ? { mb: 8 } : {}}
                     {...paperProps}
                 >
-                    {scrollTop && <ScrollTo id={"ModalScrollTop"} />}
+                    {scrollTop && (
+                        <ScrollTo
+                            id={"ModalScrollTop"}
+                            bottom={scrollTopBottom}
+                        />
+                    )}
                     {children}
                 </Paper>
             </>

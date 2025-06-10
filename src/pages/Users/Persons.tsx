@@ -9,6 +9,7 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import type { IUserDto } from "api/interfaces/user/IUserDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import Passport from "pages/Passport";
+import { isMobile } from "react-device-detect";
 
 export default function Persons({ roles, icon }: IPageWithRoles) {
     const langPage = lang.pages.users;
@@ -59,6 +60,7 @@ export default function Persons({ roles, icon }: IPageWithRoles) {
             icon={icon}
             title={langPage.persons}
             isLoading={isLoading}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedUer && (
                 <Passport
@@ -82,6 +84,7 @@ export default function Persons({ roles, icon }: IPageWithRoles) {
                 fields={fields}
                 values={data || []}
                 actions={[{ name: "refresh", icon: "refresh", onClick: refetch }]}
+                autoFocus="simpleSearchInput"
                 onRowClick={toPassport}
             />
         </Page>

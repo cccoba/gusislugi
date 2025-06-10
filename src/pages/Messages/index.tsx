@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import lang from "lang";
+import lang, { getEnumSelectValues, getEnumTitleValue } from "lang";
 import type { IGoodTableToolbarAction } from "components";
-import { GoodTable, Icon, Page } from "components";
+import { GoodTable, Icon, InputSelect, Page } from "components";
 
 import { messages } from "api/data";
 
@@ -13,8 +13,14 @@ import { cutText } from "api/common/helper";
 
 import { useAppSelector } from "api/hooks/redux";
 
-import { checkFlagIncludes } from "api/common/enumHelper";
+import { checkFlagIncludes, getValuesByFlag } from "api/common/enumHelper";
 import { RolePermissionFlag } from "api/enums/RolePermissionFlag";
+
+import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
+
+import type { ISelectValue } from "components/Inputs/Select";
+
+import { isMobile } from "react-device-detect";
 
 import { getMessageIconName } from "./Messages";
 import MessageView from "./View";
@@ -26,7 +32,8 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
     const currentUserParams = useAppSelector((s) => s.user.user?.role.params);
     const [isAddShowed, setIsAddShowed] = useState(false);
     const [selectedMessage, setSelectedMessage] = useState<IMessageDto | null>(null);
-    const actions = useMemo<IGoodTableToolbarAction<IMessageDto>[]>(() => {
+    const [status, setStatus] = useState<MessageStatusEnum>(0);
+    const roleProps = useMemo<{ actions: IGoodTableToolbarAction<IMessageDto>[]; statusList: ISelectValue[] }>(() => {
         const newActions: IGoodTableToolbarAction<IMessageDto>[] = [];
         if (currentUserParams?.messages) {
             if (checkFlagIncludes(currentUserParams.messages, RolePermissionFlag.View)) {
@@ -44,11 +51,24 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
                 });
             }
         }
-        return newActions;
+        let statusList = getEnumSelectValues(MessageStatusEnum, "MessageStatusEnum").map((x) => {
+            if (x.id !== 0) {
+                x.icon = getMessageIconName(x.id);
+            }
+            return x;
+        });
+        statusList[0].title = lang.all;
+        if (currentUserParams?.messageStatuses && currentUserParams.messageStatuses > 0) {
+            const availableStatuses = getValuesByFlag(currentUserParams.messageStatuses);
+            availableStatuses.push(0);
+            statusList = statusList.filter((x) => availableStatuses.includes(x.id));
+        }
+        return { actions: newActions, statusList };
     }, [currentUserParams]);
+
     const values = useMemo<any[]>(() => {
         if (!data?.length) return [];
-        return data.map((x) => ({
+        const result = data.map((x) => ({
             ...x,
             toUserName: x.to_user?.firstName,
             shortText: cutText(x.message, 50),
@@ -57,10 +77,15 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
                     name={getMessageIconName(x.status)}
                     fontSize="small"
                     color="primary"
+                    tooltip={getEnumTitleValue(MessageStatusEnum, "MessageStatusEnum", x.status)}
                 />
             ),
         }));
-    }, [data]);
+        if (status) {
+            return result.filter((x) => x.status === status);
+        }
+        return result;
+    }, [data, status]);
     function toAdd() {
         setIsAddShowed(true);
     }
@@ -77,12 +102,26 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
         <Page
             title={langPage.title}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
-            {!!isAddShowed && <MessageAdd onClose={onAddClosed} />}
+            {!!isAddShowed && (
+                <MessageAdd
+                    onClose={onAddClosed}
+                    statusList={roleProps.statusList.filter((x) => x.id !== 0)}
+                />
+            )}
             {!!selectedMessage && (
                 <MessageView
                     message={selectedMessage}
                     onClose={() => setSelectedMessage(null)}
+                />
+            )}
+            {!!currentUserParams?.messageStatuses && (
+                <InputSelect
+                    values={roleProps.statusList}
+                    value={status}
+                    onChangeValue={setStatus}
+                    label={lang.type}
                 />
             )}
             <GoodTable<IMessageDto>
@@ -94,7 +133,7 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
                     { name: "shortText", title: langPage.message, wrap: true },
                 ]}
                 values={values}
-                actions={actions}
+                actions={roleProps.actions}
                 onRowClick={toView}
             />
         </Page>

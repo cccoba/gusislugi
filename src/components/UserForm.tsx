@@ -88,7 +88,7 @@ export default function UserForm({ user, onChangeValue }: IProps) {
             {!!isEditable && (
                 <>
                     <ShowQR user={user} />
-                    <ShowPasport user={user} />
+                    <ShowPassport user={user} />
                 </>
             )}
             <Form
@@ -153,7 +153,7 @@ function ShowQR({ user }: IShowQRProps) {
         </>
     );
 }
-function ShowPasport({ user }: IShowQRProps) {
+function ShowPassport({ user }: IShowQRProps) {
     const langPage = lang.components.userForm;
     const [isIdShowed, setIsIdShowed] = useState(false);
     const showMyId = () => {

@@ -39,12 +39,17 @@ const ruPages = {
     },
     messages: {
         title: "Оповещения",
+        addTitle: "Добавить оповещение",
         myTitle: "Мои оповещения",
         detailsTitle: "Оповещения от %s",
-        defails: "Оповещение",
+        details: "Оповещение",
         toUser: "Получатель",
         message: "Сообщение",
         date: "Дата",
+        add: {
+            error: "Не удалось отправить оповещение!",
+            success: "%s оповещений отправлено!",
+        },
     },
     medicalInfo: {
         title: "Больные",
@@ -197,7 +202,7 @@ const ruPages = {
         details: "Долги",
         message: {
             title: "Долги",
-            text: 'Платеж "%s" на сумму %s в статусе "%s"',
+            text: 'Долг "%s" на сумму %s в статусе "%s"',
         },
         delete: {
             title: "Удалить долг",
@@ -207,26 +212,26 @@ const ruPages = {
         },
         fields: {
             id: "ID",
-            title: "Название платежа",
+            title: "Название долга",
             status: "Статус",
             value: "Сумма ( dn )",
             created_at: "Дата назначения",
-            endDate: "Дата просрочки платежа",
+            endDate: "Дата просрочки долга",
             uids: "Пользователи",
             uid: "Пользователь",
-            taxesTypeId: "Категория платежа",
+            taxesTypeId: "Категория долга",
             description: "Комментарии",
             taxesTypeDetails: "Комментарии о способе оплаты",
             sendMessage: "Оповестить пользователя",
         },
         errors: {
-            taxesTypeNotAllowed: "У вас нет доступа к редактированию платежей данной категории!",
+            taxesTypeNotAllowed: "У вас нет доступа к редактированию долгов данной категории!",
             delete: "Не удалось удалить долг!",
             save: "Не удалось отредактировать долг!",
         },
     },
     taxesTypes: {
-        title: "Типы платежей",
+        title: "Типы долгов",
     },
     claims: {
         title: "Заявки в администрацию",

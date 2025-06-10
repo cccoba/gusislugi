@@ -11,6 +11,8 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import { useNotifier } from "api/hooks/useNotifier";
 import { useAppDispatch } from "api/hooks/redux";
 
+import { isMobile } from "react-device-detect";
+
 import RoleForm from "./Form";
 
 export default function Roles({ ...pageProps }: IPageWithRoles) {
@@ -79,6 +81,7 @@ export default function Roles({ ...pageProps }: IPageWithRoles) {
             title={langPage.title}
             isLoading={isLoading || initLoading}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedRole && (
                 <RoleForm

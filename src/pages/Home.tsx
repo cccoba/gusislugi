@@ -81,7 +81,7 @@ export default function Home() {
                 />*/}
                 <HomeItem
                     url="/my/messages"
-                    title={lang.pages.messages.title}
+                    title={lang.pages.messages.myTitle}
                     icon="messages"
                 />
                 <HomeItem

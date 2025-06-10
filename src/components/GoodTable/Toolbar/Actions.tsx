@@ -1,10 +1,11 @@
 import { Box, ButtonGroup, Divider } from "@mui/material";
-import { Fragment, ReactNode } from "react";
+import type { ReactNode } from "react";
+import { Fragment } from "react";
 
 import IconButton from "components/Icon/IconButton";
 import lang from "lang";
 
-import { IGoodTableToolbarAction } from "..";
+import type { IGoodTableToolbarAction } from "..";
 
 interface IProps<T> {
     selectedRows: T[];
@@ -35,7 +36,7 @@ export default function GoodTableToolbarActions<T>({
                 <ButtonGroup
                     orientation="horizontal"
                     variant="contained"
-                    sx={{ bgcolor: "secondary.light", borderRadius: "4px 0px 0px 4px" }}
+                    sx={{ bgcolor: "primary.contrastText", borderRadius: "4px 0px 0px 4px" }}
                 >
                     {actions.map((action: any, index) => {
                         return (
@@ -52,9 +53,7 @@ export default function GoodTableToolbarActions<T>({
                                         name={action.icon}
                                         onClick={() => onClick(action.name)}
                                         color={action?.color || "primary"}
-                                        disabled={
-                                            action?.disable ? action.disable(selectedRows) : false
-                                        }
+                                        disabled={action?.disable ? action.disable(selectedRows) : false}
                                         tooltip={action?.tooltip}
                                         size="large"
                                     />

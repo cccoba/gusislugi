@@ -19,10 +19,10 @@ export default function QrScannerPage({ roles, icon }: IPageWithRoles) {
         const result = qrResultParser(message);
         switch (result.type) {
             case "guid":
-                navigate(`/passport/${result.value}`);
+                navigate(`/passport/${result.value}`, { state: { showAll: true } });
                 break;
             case "telegram":
-                navigate(`/passport-tg/${result.value}`);
+                navigate(`/passport-tg/${result.value}`, { state: { showAll: true } });
                 break;
             default:
                 showError(langPage.errors.notDetect);

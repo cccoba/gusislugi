@@ -1,5 +1,5 @@
 import { enumToArray, enumToValuesArray, getEnumValue } from "api/common/enumHelper";
-import { ISelectValue } from "components/Inputs/Select";
+import type { ISelectValue } from "components/Inputs/Select";
 
 import ruLang from "./ru";
 type TLangTypes = "ru";
@@ -52,7 +52,7 @@ export function getEnumTitle(enumName: string, valueName: string) {
     }
     valueName = valueName.charAt(0).toLocaleLowerCase() + valueName.slice(1);
     const langPipes = lang.pipes as ILangPipes;
-    return !!langPipes?.[enumName]?.[valueName] ? langPipes?.[enumName]?.[valueName] : valueName;
+    return langPipes?.[enumName]?.[valueName] ? langPipes?.[enumName]?.[valueName] : valueName;
 }
 
 export function sortArray(arr: any[], fieldName: string, options = { numeric: true }) {

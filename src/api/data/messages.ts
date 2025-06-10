@@ -19,5 +19,8 @@ const MessagesDataProvider = {
     getMyMessages: (): Promise<IWebDataResult<IMessageDto[]>> => {
         return dataProvider(baseUrl + "getMyMessages");
     },
+    add: (data: any): Promise<IWebDataResult<number>> => {
+        return dataProvider(baseUrl + "add", "post", data);
+    },
 };
 export default MessagesDataProvider;

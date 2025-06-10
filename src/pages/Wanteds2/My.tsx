@@ -9,6 +9,7 @@ import { useNotifier } from "api/hooks/useNotifier";
 import type { IPage } from "api/interfaces/components/Page/IPage";
 import type { IWanteds2Dto } from "api/interfaces/user/IWanteds2Dto";
 import dateTime from "api/common/dateTime";
+import { isMobile } from "react-device-detect";
 
 interface IProps extends IPage {
     userId?: number;
@@ -45,6 +46,7 @@ export default function MyWanteds2({ userId, ...pageProps }: IProps) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

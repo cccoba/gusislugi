@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { Modal, GoodTable, type IGoodTableField, Icon, type TIconName } from "components";
-import lang, { sprintf } from "lang";
+import lang, { getEnumTitleValue, sprintf } from "lang";
 
 import dateTime from "api/common/dateTime";
 import { messages } from "api/data";
@@ -16,6 +16,12 @@ import { cutText } from "api/common/helper";
 export function getMessageIconName(status: MessageStatusEnum): TIconName {
     const result = getEnumValue(MessageStatusEnum, status) || "";
     if (result?.length) {
+        switch (result) {
+            case "Taxes2":
+                return "wanteds2";
+            case "Taxes3":
+                return "wanteds";
+        }
         return (result.charAt(0).toLowerCase() + result.slice(1)) as TIconName;
     }
     return "messages";
@@ -43,6 +49,7 @@ export default function ProfileMessages() {
                             name={getMessageIconName(x.status)}
                             fontSize="small"
                             color="primary"
+                            tooltip={getEnumTitleValue(MessageStatusEnum, "MessageStatusEnum", x.status)}
                         />
                     ),
                 }))

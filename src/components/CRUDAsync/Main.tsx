@@ -6,6 +6,8 @@ import type { IWebDataResult } from "api/interfaces/data/IWebDataResult";
 import { generateGuid } from "api/common/helper";
 import { RolePermissionFlagAll } from "api/enums/RolePermissionFlag";
 
+import { isMobile } from "react-device-detect";
+
 import CRUDAsyncEdit from "./Edit";
 import CRUDAsyncList from "./List";
 
@@ -84,6 +86,8 @@ export default function CRUDAsyncMain({
             isLoading={isLoading}
             roles={roles}
             backUrl={backUrl}
+            scrollTop
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {activeId !== null && (
                 <CRUDAsyncEdit

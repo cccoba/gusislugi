@@ -9,6 +9,8 @@ import useLoadApiData from "api/hooks/useLoadApiData";
 import { users } from "api/data";
 import type { IUserSecretsDto } from "api/interfaces/user/IUserSecretsDto";
 
+import { isMobile } from "react-device-detect";
+
 import SecretsMedicalInfo from "./MedicalInfo";
 
 interface IProps extends IPage {

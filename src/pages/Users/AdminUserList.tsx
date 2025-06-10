@@ -16,6 +16,7 @@ import { users, webApiResultData } from "api/data";
 import { useNotifier } from "api/hooks/useNotifier";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 import { WeaponEnum } from "api/enums/WeaponEnum";
+import { isMobile } from "react-device-detect";
 
 type TUserAction = "edit" | "message" | "money" | "passport";
 interface IUserActions {
@@ -176,6 +177,7 @@ export default function AdminUserList({ roles }: IPageWithRoles) {
             icon="users"
             roles={roles}
             isLoading={isLoading || initLoading}
+            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!messageUser && (
                 <SendUserNotification
