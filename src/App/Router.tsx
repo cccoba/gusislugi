@@ -38,6 +38,7 @@ import TaxesTypes from "pages/Taxes/TaxesTypes";
 import TaxesPage from "pages/Taxes";
 import Wanteds3 from "pages/Wanteds3";
 import Messages from "pages/Messages";
+import LoginExtra from "pages/Users/LoginExtra";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -66,6 +67,10 @@ export default function RouterPage() {
                     element={<Login />}
                 />
                 <Route
+                    path="/extra-login"
+                    element={<LoginExtra />}
+                />
+                <Route
                     path="*"
                     element={
                         <Navigate
@@ -84,6 +89,10 @@ export default function RouterPage() {
                 <Route
                     path="/registration"
                     element={<Registration />}
+                />
+                <Route
+                    path="/extra-login"
+                    element={<LoginExtra />}
                 />
                 <Route
                     path="*"
@@ -211,6 +220,10 @@ export default function RouterPage() {
                         <Route
                             path="/wanteds3/*"
                             element={<Wanteds3 />}
+                        />
+                        <Route
+                            path="/extra-login"
+                            element={<LoginExtra />}
                         />
                         <Route
                             path="/company/*"
