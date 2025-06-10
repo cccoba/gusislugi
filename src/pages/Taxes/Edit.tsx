@@ -23,6 +23,13 @@ export default function TaxesEdit({ data, onSave, onCancel, filterTypes }: IProp
                 required: true,
             },
             {
+                name: "uid",
+                title: langPage.fields.uid,
+                type: "user",
+                required: true,
+                disabled: true,
+            },
+            {
                 name: "value",
                 title: langPage.fields.value,
                 type: "counter",
@@ -48,13 +55,6 @@ export default function TaxesEdit({ data, onSave, onCancel, filterTypes }: IProp
                 disabled: !data.id,
             },
 
-            {
-                name: "uid",
-                title: langPage.fields.uid,
-                type: "user",
-                required: true,
-                disabled: true,
-            },
             {
                 name: "created_at",
                 title: langPage.fields.created_at,

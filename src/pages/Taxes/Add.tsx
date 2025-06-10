@@ -23,6 +23,13 @@ export default function TaxesAdd({ data, onSave, onCancel, filterTypes }: IProps
                 required: true,
             },
             {
+                name: "uids",
+                title: langPage.fields.uids,
+                type: "user",
+                required: true,
+                multiple: true,
+            },
+            {
                 name: "value",
                 title: langPage.fields.value,
                 type: "counter",
@@ -40,13 +47,6 @@ export default function TaxesAdd({ data, onSave, onCancel, filterTypes }: IProps
                 filterTypes,
             },
 
-            {
-                name: "uids",
-                title: langPage.fields.uids,
-                type: "user",
-                required: true,
-                multiple: true,
-            },
             {
                 name: "endDate",
                 title: langPage.fields.endDate,

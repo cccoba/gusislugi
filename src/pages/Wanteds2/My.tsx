@@ -46,7 +46,6 @@ export default function MyWanteds2({ userId, ...pageProps }: IProps) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

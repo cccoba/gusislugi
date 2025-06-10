@@ -55,7 +55,7 @@ export default function PassportUser({ user, hideEdit }: IProps) {
                     <Typography>
                         {langUser.firstName}: {user.firstName}
                     </Typography>
-                    {!!showAll /*|| currentUserIsAdmin*/ && (
+                    {(!!showAll || currentUserIsAdmin) && (
                         <Typography>
                             {langUser.weapon}: {getEnumTitleValue(WeaponEnum, "WeaponEnum", user.weapon)}
                         </Typography>

@@ -64,7 +64,7 @@ export default function AdminUserList({ roles }: IPageWithRoles) {
         const defFields: IGoodTableField[] = [
             { name: "id", title: langPage.fields.id, format: "number", maxWidth: "50px" },
             { name: "actions", title: langPage.fields.actions, format: "component" },
-            { name: "image", title: langPage.fields.image, format: "image", noSort: true, maxWidth: "30px" },
+            { name: "image", title: langPage.fields.image, format: "image", noSort: true, width: "30px" },
             { name: "firstName", title: langPage.fields.firstName, wrap: true },
             { name: "nationalityId", title: langPage.fields.nationalityId, format: "list" },
             { name: "nickname", title: langPage.fields.nickname },
@@ -177,7 +177,6 @@ export default function AdminUserList({ roles }: IPageWithRoles) {
             icon="users"
             roles={roles}
             isLoading={isLoading || initLoading}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!messageUser && (
                 <SendUserNotification

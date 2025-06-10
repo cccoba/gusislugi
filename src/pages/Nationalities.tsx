@@ -36,7 +36,7 @@ export default function Nationalities({ roles }: IPageWithRoles) {
     return (
         <>
             <CRUDAsync
-                backUrl={"/nationalities"}
+                backUrl={"/"}
                 roles={roles}
                 title={langPage.title}
                 icon="list"

@@ -148,7 +148,10 @@ export default function Companies({ userId, ...pageProps }: IProps) {
     const toEditRecord = (record: ICompanyDto) => {
         if (
             currentUserRoleParams &&
-            (currentUserRoleParams === -1 || currentUserRoleParams & CompanyPermissionActionFlag.Edit)
+            (currentUserRoleParams === -1 ||
+                currentUserRoleParams & CompanyPermissionActionFlag.Edit ||
+                currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd ||
+                currentUserRoleParams & CompanyPermissionActionFlag.MoneySubtract)
         ) {
             setSelectedRecord(record);
         }
@@ -226,7 +229,6 @@ export default function Companies({ userId, ...pageProps }: IProps) {
             title={langPage.title}
             icon="company"
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!deleteConfirm && (
                 <Confirm
@@ -264,6 +266,7 @@ export default function Companies({ userId, ...pageProps }: IProps) {
                     onCancel={() => setSelectedRecord(null)}
                     onSave={onSaveStart}
                     onAddClick={toAddClick}
+                    editable={!!currentUserRoleParams && !!(currentUserRoleParams & CompanyPermissionActionFlag.Edit)}
                     withAdd={
                         !!currentUserRoleParams && !!(currentUserRoleParams & CompanyPermissionActionFlag.MoneyAdd)
                     }

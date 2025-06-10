@@ -93,7 +93,6 @@ export default function DocumentsPrint({ ...pageProps }: IPage) {
             title={langPage.title}
             isLoading={isLoading}
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {isGeneratorShowed !== false && (
                 <DocumentPrintGenerator

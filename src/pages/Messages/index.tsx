@@ -102,7 +102,6 @@ export default function Messages({ ...pageProps }: IPageWithRoles) {
         <Page
             title={langPage.title}
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!isAddShowed && (
                 <MessageAdd

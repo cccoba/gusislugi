@@ -87,7 +87,6 @@ export default function CRUDAsyncMain({
             roles={roles}
             backUrl={backUrl}
             scrollTop
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {activeId !== null && (
                 <CRUDAsyncEdit

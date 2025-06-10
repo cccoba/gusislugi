@@ -27,6 +27,7 @@ export interface ICRUDAsyncListConfig {
     orderBy: ISortData;
     withRefresh?: boolean;
     pagination?: IGoodTablePagination;
+    mobileBottomAction?: boolean;
     toTreeView?: (data: any[]) => ITreeItem[];
     transform?: (data: any) => any;
 }
@@ -218,6 +219,7 @@ export default function CRUDAsyncList({
                     values={listData}
                     pagination={config?.pagination}
                     order={config.orderBy}
+                    mobileBottomAction={config.mobileBottomAction}
                     onSelectedRows={onSelected}
                     typeSelection={config.isMultiSelection ? "multiple" : "single"}
                     actions={actionsList}

@@ -81,7 +81,6 @@ export default function Roles({ ...pageProps }: IPageWithRoles) {
             title={langPage.title}
             isLoading={isLoading || initLoading}
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedRole && (
                 <RoleForm

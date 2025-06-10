@@ -15,8 +15,9 @@ import type { ISelectValue } from "components/Inputs/Select";
 
 interface IProps {
     needRefresh: () => void;
+    userId?: number;
 }
-export default function MedicalInfoAdd({ needRefresh }: IProps) {
+export default function MedicalInfoAdd({ needRefresh, userId }: IProps) {
     const langPage = lang.pages.medicalInfo;
     const [isOpen, setIsOpen] = useState(false);
     const { setIsLoading } = useLoader();
@@ -39,7 +40,7 @@ export default function MedicalInfoAdd({ needRefresh }: IProps) {
     }, [currentUserRoleParams]);
     const values = useRef<IMedicalInfoAddDto>({
         medicalSicknessId: 0,
-        uids: [],
+        uids: userId ? [userId] : [],
         status: MedicalInfoStatusEnum.Active,
         comments: "",
         sendMessage: false,

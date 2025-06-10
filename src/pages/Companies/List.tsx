@@ -62,6 +62,7 @@ export default function CompanyList({ data, onRowClick, onRowDoubleClick, action
             onRowClick={onRowClick}
             onRowDoubleClick={onRowDoubleClick}
             order={{ direction: SortOrderEnum.Descending, sort: "id" }}
+            mobileBottomAction={false}
         />
     );
 }

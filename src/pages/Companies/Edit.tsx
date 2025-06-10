@@ -14,11 +14,12 @@ interface IProps {
     onCancel: () => void;
     onSave: (data: ICompanyDto) => void;
     withAdd?: boolean;
+    editable?: boolean;
     withSubtract?: boolean;
     onAddClick: () => void;
 }
 
-export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSubtract, onAddClick }: IProps) {
+export default function CompaniesEdit({ data, onCancel, onSave, withAdd, editable, withSubtract, onAddClick }: IProps) {
     const langPage = lang.pages.companies;
     const formProps = useMemo<IFormProps>(() => {
         return {
@@ -29,18 +30,21 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                     title: lang.title,
                     type: "text",
                     required: true,
+                    disabled: !editable,
                 },
                 {
                     name: "address",
                     title: langPage.address,
                     type: "text",
                     required: true,
+                    disabled: !editable,
                 },
                 {
                     name: "description",
                     title: lang.description,
                     type: "text",
                     fieldProps: { multiline: true },
+                    disabled: !editable,
                 },
                 {
                     name: "money",
@@ -54,11 +58,13 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                     title: langPage.userId,
                     type: "user",
                     required: true,
+                    disabled: !editable,
                 },
                 {
                     name: "deputyUserId",
                     title: langPage.deputyUserId,
                     type: "user",
+                    disabled: !editable,
                 },
                 {
                     name: "created_at",
@@ -76,7 +82,7 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                 },
             ],
         };
-    }, [data]);
+    }, [data, editable]);
     return (
         <Modal
             open
@@ -93,7 +99,7 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                 />
             ) : (
                 <Accordion
-                    defaultId="edit"
+                    defaultId={editable ? "edit" : "money"}
                     values={[
                         {
                             id: "edit",
@@ -103,6 +109,7 @@ export default function CompaniesEdit({ data, onCancel, onSave, withAdd, withSub
                                     {...formProps}
                                     onSubmit={onSave}
                                     onCancel={onCancel}
+                                    submitBtnType={!editable ? "no" : "cancel_save"}
                                 />
                             ),
                         },

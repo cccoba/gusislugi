@@ -47,19 +47,20 @@ export default function Taxes({ userId }: IProps) {
     const tableFields = useMemo<IGoodTableField[]>(() => {
         const newFields: IGoodTableField[] = [
             { name: "id", title: langPage.fields.id, width: "30px" },
+            { name: "userName", title: langPage.fields.uid, wrap: true, hidden: !!userId },
+            { name: "money", title: langPage.fields.value },
             { name: "title", title: langPage.fields.title, wrap: true },
             {
                 name: "taxesTypeName",
                 title: langPage.fields.taxesTypeId,
             },
+
             {
                 name: "status",
                 title: langPage.fields.status,
                 format: "list",
                 formatProps: getEnumSelectValues(TaxeStatusEnum, "TaxeStatusEnum"),
             },
-            { name: "money", title: langPage.fields.value },
-            { name: "userName", title: langPage.fields.uid, wrap: true, hidden: !!userId },
             { name: "endDate", title: langPage.fields.endDate, format: "date" },
         ];
         if (currentUserIsAdmin) {
@@ -307,6 +308,7 @@ export default function Taxes({ userId }: IProps) {
                 actions={tableActions}
                 onRowDoubleClick={toEdit}
                 order={{ direction: SortOrderEnum.Descending, sort: "id" }}
+                mobileBottomAction={!userId}
             />
         </>
     );

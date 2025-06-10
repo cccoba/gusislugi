@@ -257,7 +257,7 @@ export default function GoodTable<T>({
     loading = false,
     noRecordsText,
     responsive = true,
-    mobileBottomAction = true,
+    mobileBottomAction = false,
     title,
     actions = [],
     withoutSimpleTextFilter = false,

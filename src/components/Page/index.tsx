@@ -50,6 +50,12 @@ export default function Page({
             redirectLink={redirectLink}
         >
             <>
+                {scrollTop && (
+                    <ScrollTo
+                        id={"ModalScrollTop"}
+                        bottom={scrollTopBottom}
+                    />
+                )}
                 {isMobile && backUrl && (
                     <Button
                         variant="outlined"
@@ -66,12 +72,6 @@ export default function Page({
                     sx={fabMargin ? { mb: 8 } : {}}
                     {...paperProps}
                 >
-                    {scrollTop && (
-                        <ScrollTo
-                            id={"ModalScrollTop"}
-                            bottom={scrollTopBottom}
-                        />
-                    )}
                     {children}
                 </Paper>
             </>

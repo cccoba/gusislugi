@@ -26,6 +26,7 @@ export default function MedicalInfo({ userId }: IProps) {
         isMultiSelection: false,
         withRefresh: true,
         orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+        mobileBottomAction: !userId,
         fields: [
             { name: "id", title: lang.id, width: "30px" },
 
@@ -131,7 +132,10 @@ export default function MedicalInfo({ userId }: IProps) {
 
     return (
         <Fragment key={id}>
-            <MedicalInfoAdd needRefresh={toUpdate} />
+            <MedicalInfoAdd
+                needRefresh={toUpdate}
+                userId={userId}
+            />
             <CRUDAsync
                 roles={[["medicalInfo"]]}
                 icon="medicalInfo"

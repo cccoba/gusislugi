@@ -3,12 +3,10 @@ import { useMemo, useState } from "react";
 import lang, { getEnumTitleValue, getEnumSelectValues, sprintf } from "lang";
 import { CRUDAsync } from "components";
 import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
-import { TCRUDAsyncActionCb } from "components/CRUDAsync/Main";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
 import SendUserNotification from "components/SendUserNotification";
 import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 
-import { IPageWithRoles } from "api/interfaces/components/Page/IPageWithRoles";
 import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
 import { claims } from "api/data";
 import type { IClaimDto } from "api/interfaces/user/IClaimDto";
@@ -27,6 +25,7 @@ export default function Claims({ userId }: IProps) {
         isMultiSelection: false,
         withRefresh: true,
         orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+        mobileBottomAction: !userId,
         fields: [
             { name: "id", title: langPage.fields.id },
             { name: "title", title: langPage.fields.title },

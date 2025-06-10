@@ -9,7 +9,6 @@ export default function MyMessages() {
             title={lang.pages.messages.myTitle}
             icon="messages"
             backUrl="/"
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             <ProfileMessages />
         </Page>

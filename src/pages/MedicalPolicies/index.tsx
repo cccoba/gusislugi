@@ -19,31 +19,6 @@ import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
 
 const langPage = lang.pages.medicalPolicies;
 
-const listConfig: ICRUDAsyncListConfig = {
-    isMultiSelection: false,
-    withRefresh: true,
-    orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-    fields: [
-        { name: "id", title: langPage.fields.id, width: "30px" },
-        {
-            name: "type",
-            title: langPage.fields.type,
-            format: "list",
-            formatProps: getEnumSelectValues(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum"),
-        },
-        { name: "status", title: langPage.fields.status },
-        { name: "user", title: langPage.fields.uid },
-        { name: "endDate", title: langPage.fields.endDate, format: "date" },
-        { name: "nickname", title: "", hidden: true },
-    ],
-    transform: (data: IMedicalPoliciesDto) => ({
-        ...data,
-        status: data.status ? langPage.statusActive : langPage.statusNotActive,
-        user: data.user?.firstName || lang.unknown,
-        nickname: data.user?.nickname || "",
-    }),
-};
-
 const editConfig: ICRUDAsyncEditConfig = {
     fields: [
         {
@@ -109,6 +84,31 @@ export default function MedicalPolicies({ userId }: IProps) {
     const currentUserRoleMedicalPolicies = useAppSelector((s) => s.user.user?.role?.params?.medicalPolicies);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const props = useMemo(() => {
+        const listConfig: ICRUDAsyncListConfig = {
+            isMultiSelection: false,
+            withRefresh: true,
+            orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+            fields: [
+                { name: "id", title: langPage.fields.id, width: "30px" },
+                {
+                    name: "type",
+                    title: langPage.fields.type,
+                    format: "list",
+                    formatProps: getEnumSelectValues(MedicalPoliciesTypeEnum, "MedicalPoliciesTypeEnum"),
+                },
+                { name: "status", title: langPage.fields.status },
+                { name: "user", title: langPage.fields.uid },
+                { name: "endDate", title: langPage.fields.endDate, format: "date" },
+                { name: "nickname", title: "", hidden: true },
+            ],
+            mobileBottomAction: !userId,
+            transform: (data: IMedicalPoliciesDto) => ({
+                ...data,
+                status: data.status ? langPage.statusActive : langPage.statusNotActive,
+                user: data.user?.firstName || lang.unknown,
+                nickname: data.user?.nickname || "",
+            }),
+        };
         const newProps: {
             actions: ICRUDAsyncAction[];
             initialData: IMedicalPoliciesDto;

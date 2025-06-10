@@ -88,7 +88,6 @@ export default function MyCompanies({ ...pageProps }: IPage) {
             title={langPage.myTitle}
             isLoading={isLoading}
             {...pageProps}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

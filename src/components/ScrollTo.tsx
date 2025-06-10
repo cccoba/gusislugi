@@ -22,7 +22,7 @@ export default function ScrollTo({ color = "secondary", id = "scrollTo", bottom 
             const anchor = scrollRef.current as HTMLSpanElement;
             anchor.scrollIntoView({
                 behavior: "smooth",
-                block: "start",
+                block: "end",
             });
         }
     };

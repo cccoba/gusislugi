@@ -108,7 +108,6 @@ function MyMedicalPolicies() {
             isLoading={isLoading}
             backUrl={"/"}
             icon="medicalPolicies"
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedData && (
                 <Modal

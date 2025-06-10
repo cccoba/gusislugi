@@ -68,6 +68,7 @@ export default function Wanteds3({ userId }: IProps) {
             isMultiSelection: false,
             withRefresh: true,
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
+            mobileBottomAction: !userId,
             fields: [
                 { name: "id", title: lang.id, width: "30px" },
                 { name: "image", title: lang.image, width: "30px", format: "image" },

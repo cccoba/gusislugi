@@ -60,7 +60,6 @@ export default function Persons({ roles, icon }: IPageWithRoles) {
             icon={icon}
             title={langPage.persons}
             isLoading={isLoading}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             {!!selectedUer && (
                 <Passport

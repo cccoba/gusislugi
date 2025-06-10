@@ -12,7 +12,6 @@ export default function MyClaims() {
             title={langPage.myTitle}
             icon="claims"
             backUrl="/"
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             <ProfileClaims />
         </Page>

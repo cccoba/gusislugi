@@ -85,6 +85,7 @@ export default function Wanteds2({ userId }: IProps) {
                 { name: "created_at", title: lang.created_at, format: "date" },
                 { name: "nickname", title: "", hidden: true },
             ],
+            mobileBottomAction: !userId,
             transform: (data: IWanteds2Dto) => ({
                 ...data,
                 user: data.user?.firstName || lang.unknown,

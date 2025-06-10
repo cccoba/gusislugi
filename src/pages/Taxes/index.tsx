@@ -13,7 +13,6 @@ export default function TaxesPage() {
             title={langPage.title}
             backUrl={"/"}
             roles={[["taxes"]]}
-            scrollTopBottom={isMobile ? 72 : undefined}
         >
             <Taxes />
         </Page>
