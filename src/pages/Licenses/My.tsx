@@ -9,7 +9,6 @@ import type { ILicenseDto } from "api/interfaces/user/ILicenseDto";
 import { useNotifier } from "api/hooks/useNotifier";
 import { LicenseTypeEnum } from "api/enums/LicenseTypeEnum";
 import type { IPage } from "api/interfaces/components/Page/IPage";
-import { isMobile } from "react-device-detect";
 
 export default function MyLicenses({ ...pageProps }: IPage) {
     const langPage = lang.pages.licenses;
@@ -21,6 +20,7 @@ export default function MyLicenses({ ...pageProps }: IPage) {
             format: "list",
             formatProps: getEnumSelectValues(LicenseTypeEnum, "LicenseTypeEnum"),
         },
+        { name: "comments", title: lang.comments, wrap: true },
         { name: "created_at", title: langPage.created_at, format: "date" },
         { name: "endDate", title: langPage.endDate, format: "date" },
     ];
@@ -31,6 +31,13 @@ export default function MyLicenses({ ...pageProps }: IPage) {
             type: "select",
             required: true,
             values: getEnumSelectValues(LicenseTypeEnum, "LicenseTypeEnum"),
+            disabled: true,
+        },
+        {
+            name: "comments",
+            title: lang.comments,
+            type: "text",
+            multiline: true,
             disabled: true,
         },
         {

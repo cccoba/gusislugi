@@ -23,11 +23,11 @@ export default function MedicalSickness({ userId }: IProps) {
         withRefresh: true,
         orderBy: { direction: SortOrderEnum.Ascending, sort: "title" },
         fields: [
-            { name: "id", title: langPage.fields.id, width: "30px" },
-            { name: "title", title: langPage.fields.title },
+            { name: "id", title: lang.id, width: "30px" },
+            { name: "title", title: lang.title },
             {
                 name: "public",
-                title: langPage.fields.public,
+                title: langPage.public,
                 format: "list",
                 formatProps: [
                     { id: true, title: "Да" },
@@ -42,25 +42,25 @@ export default function MedicalSickness({ userId }: IProps) {
         fields: [
             {
                 name: "title",
-                title: langPage.fields.title,
+                title: lang.title,
                 type: "text",
                 required: true,
             },
             {
                 name: "description",
-                title: langPage.fields.description,
+                title: lang.description,
                 type: "text",
                 multiline: true,
             },
             {
                 name: "userDescription",
-                title: langPage.fields.userDescription,
+                title: langPage.userDescription,
                 type: "html",
             },
             {
                 name: "public",
                 title: "",
-                text: langPage.fields.public,
+                text: langPage.public,
                 type: "switcher",
             },
         ],

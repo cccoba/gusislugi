@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
-import dayjs from "dayjs";
 
-import lang, { getEnumSelectValues, getEnumTitleValue, sprintf } from "lang";
+import lang from "lang";
 import { CRUDAsync } from "components";
 import type { ICRUDAsyncEditConfig } from "components/CRUDAsync/Edit";
 import type { ISendUserNotificationProps } from "components/SendUserNotification";
@@ -9,39 +8,34 @@ import SendUserNotification from "components/SendUserNotification";
 import type { ICRUDAsyncAction } from "components/CRUDAsync/Main";
 
 import type { ICRUDAsyncListConfig } from "components/CRUDAsync/List";
-import { licenses } from "api/data";
+import { personalities } from "api/data";
 import { SortOrderEnum } from "api/interfaces/components/GoodTable";
 
-import { useAppSelector } from "api/hooks/redux";
-import { LicenseTypeEnum } from "api/enums/LicenseTypeEnum";
-import type { ILicenseDto } from "api/interfaces/user/ILicenseDto";
 import { MessageStatusEnum } from "api/enums/MessageStatusEnum";
-import dateTime from "api/common/dateTime";
-import { cutText } from "api/common/helper";
+import type { IPersonalityDto } from "api/interfaces/user/IPersonalityDto";
 
-const defInitialData: ILicenseDto = {
-    id: 0,
-    type: LicenseTypeEnum.SelfDefense,
-    endDate: dayjs().add(2, "day").endOf("day").toDate(),
-    uid: 0,
-    comments: "",
-};
 interface IProps {
     userId?: number;
 }
-export default function Licenses({ userId }: IProps) {
-    const langPage = lang.pages.licenses;
+export default function Personalities({ userId }: IProps) {
+    const langPage = lang.pages.personalities;
+    const defInitialData: IPersonalityDto = {
+        id: 0,
+        title: "",
+        description: "",
+        isCompleted: false,
+        userDescription: "",
+        uid: 0,
+    };
 
-    const currentUserRoleLicenses = useAppSelector((s) => s.user.user?.role?.params?.licenses);
     const [notificationData, setNotificationData] = useState<null | ISendUserNotificationProps>(null);
     const editConfig: ICRUDAsyncEditConfig = {
         fields: [
             {
-                name: "type",
-                title: lang.type,
-                type: "select",
+                name: "title",
+                title: lang.title,
+                type: "text",
                 required: true,
-                values: getEnumSelectValues(LicenseTypeEnum, "LicenseTypeEnum"),
             },
             {
                 name: "uid",
@@ -50,26 +44,33 @@ export default function Licenses({ userId }: IProps) {
                 required: true,
             },
             {
-                name: "endDate",
-                title: langPage.endDate,
-                type: "dateTime",
-                required: true,
+                name: "isCompleted",
+                title: "",
+                text: langPage.isCompleted,
+                type: "switcher",
             },
             {
-                name: "comments",
-                title: lang.comments,
+                name: "description",
+                title: lang.description,
                 type: "text",
                 multiline: true,
             },
             {
+                name: "userDescription",
+                title: langPage.userDescription,
+                type: "text",
+                multiline: true,
+            },
+
+            {
                 name: "created_at",
-                title: langPage.created_at,
+                title: lang.created_at,
                 type: "dateTime",
                 disabled: true,
             },
             {
                 name: "creatorId",
-                title: langPage.creator,
+                title: lang.creator,
                 type: "user",
                 disabled: true,
             },
@@ -80,36 +81,29 @@ export default function Licenses({ userId }: IProps) {
             isMultiSelection: false,
             withRefresh: true,
             orderBy: { direction: SortOrderEnum.Descending, sort: "id" },
-            mobileBottomAction: !userId,
             fields: [
                 { name: "id", title: lang.id, maxWidth: "50px" },
-                { name: "image", title: lang.image, maxWidth: "110px", format: "image" },
+                { name: "title", title: lang.title, wrap: true },
                 { name: "userName", title: lang.user, wrap: true },
-                {
-                    name: "type",
-                    title: lang.type,
-                    format: "list",
-                    formatProps: getEnumSelectValues(LicenseTypeEnum, "LicenseTypeEnum"),
-                    wrap: true,
-                },
-                { name: "descriptionShort", title: lang.comments, wrap: true },
-                { name: "created_at", title: langPage.created_at, format: "date" },
-                { name: "endDate", title: langPage.endDate, format: "date" },
+                { name: "isCompleted", title: langPage.isCompleted, format: "boolean" },
+                { name: "created_at", title: lang.created_at, format: "date" },
             ],
-            transform: (data: ILicenseDto) => ({
+            transform: (data: IPersonalityDto) => ({
                 ...data,
                 userName: data.user?.firstName || lang.unknown,
-                image: data.user?.image || "",
-                descriptionShort: cutText(data.comments, 50),
             }),
         };
 
-        const newProps: { actions: ICRUDAsyncAction[]; initialData: ILicenseDto; listConfig: ICRUDAsyncListConfig } = {
+        const newProps: {
+            actions: ICRUDAsyncAction[];
+            initialData: IPersonalityDto;
+            listConfig: ICRUDAsyncListConfig;
+        } = {
             actions: [
-                { name: "getAll", cb: licenses.crudList },
+                { name: "getAll", cb: personalities.crudList },
                 { name: "save", cb: onSaveStart as any },
-                { name: "getRecord", cb: licenses.crudGet },
-                { name: "remove", cb: licenses.crudDelete },
+                { name: "getRecord", cb: personalities.crudGet },
+                { name: "remove", cb: personalities.crudDelete },
             ],
             initialData: { ...defInitialData },
             listConfig: { ...listConfig },
@@ -117,23 +111,19 @@ export default function Licenses({ userId }: IProps) {
 
         if (userId) {
             newProps.actions[0].cbArgs = [userId];
-            newProps.actions[0].cb = licenses.crudUserList;
+            newProps.actions[0].cb = personalities.crudUserList;
             newProps.initialData.uid = userId;
             newProps.listConfig.fields = newProps.listConfig.fields.filter((x) => x.name !== "userName");
         }
         return newProps;
     }, [userId]);
-    function onSaveStart(data: ILicenseDto) {
+    function onSaveStart(data: IPersonalityDto) {
         return new Promise((resolve, reject) => {
-            licenses.crudSave(data).then(resolve).catch(reject);
+            personalities.crudSave(data).then(resolve).catch(reject);
             setNotificationData({
                 uid: data.uid,
                 title: langPage.message.title,
-                text: sprintf(
-                    langPage.message.text,
-                    getEnumTitleValue(LicenseTypeEnum, "LicenseTypeEnum", data.type),
-                    dateTime(data.endDate)
-                ),
+                text: langPage.message.text,
             });
         });
     }
@@ -145,19 +135,18 @@ export default function Licenses({ userId }: IProps) {
             {!!notificationData && (
                 <SendUserNotification
                     {...notificationData}
-                    status={MessageStatusEnum.Licenses}
+                    status={MessageStatusEnum.Personalities}
                     onClose={hideNotificationData}
                 />
             )}
             <CRUDAsync
                 backUrl="/"
-                roles={[["licenses"]]}
-                icon="licenses"
+                roles={[["admins"]]}
+                icon="secrets"
                 title={langPage.title}
                 listConfig={props.listConfig}
                 editConfig={editConfig}
                 actions={props.actions}
-                permissions={currentUserRoleLicenses}
                 initialValue={props.initialData}
                 withOutPage={!!userId}
             />

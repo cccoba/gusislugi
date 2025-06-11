@@ -99,17 +99,12 @@ const ruPages = {
         title: "Болезни",
         message: {
             title: "Болезни",
-            text: 'Заболевание "%s" обновлено (%s)',
-            public: "публично",
-            private: "приватно",
+            text: 'Болезнь "%s" изменена (%s)',
+            public: "публичная",
+            private: "приватная",
         },
-        fields: {
-            id: "ID",
-            title: "Название",
-            description: "Описание",
-            userDescription: "Описание для пользователя (если публичный)",
-            public: "Публичный",
-        },
+        userDescription: "Описание для пользователя (если публичная)",
+        public: "Публичная",
     },
     medicine: {
         title: "Болезни",
@@ -192,6 +187,16 @@ const ruPages = {
         fields: {
             id: "ID",
             title: "Название",
+        },
+    },
+    personalities: {
+        title: "Персоналки",
+        userDescription: "Сообщение для пользователя",
+        isCompleted: "Выполнено",
+        isActive: "Выполняется",
+        message: {
+            title: "Персоналка",
+            text: 'В разделе "Мои персоналки" появились новые данные',
         },
     },
     taxes: {
@@ -352,8 +357,7 @@ const ruPages = {
         noData: "Нет данных по вашим персоналкам",
         medicalInfo: {
             title: "Болезнь",
-            description: "Симптомы",
-            label: "Симптомы",
+            label: "Болезни",
         },
     },
     profile: {

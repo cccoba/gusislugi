@@ -61,7 +61,7 @@ export default function MedicalInfo({ userId }: IProps) {
                 title: langPage.fields.medicalSickness,
                 type: "medicalSickness",
                 required: true,
-                disabled: true,
+                withPublic: true,
             },
             {
                 name: "uid",

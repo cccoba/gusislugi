@@ -32,7 +32,7 @@ export default function InputUser({
 }: IProps) {
     const langPage = lang.components.inputUser;
     const [search, setSearch] = useState("");
-    const [showScaner, setShowScaner] = useState(false);
+    const [showScanner, setShowScanner] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { showError } = useNotifier();
     const InputProps = useMemo(() => {
@@ -52,16 +52,16 @@ export default function InputUser({
         return undefined;
     }, [withScan]);
     function toShowScan() {
-        setShowScaner(true);
+        setShowScanner(true);
     }
     const toHideScan = () => {
-        setShowScaner(false);
+        setShowScanner(false);
     };
     const toChange = (e: any) => {
         const newValue = e.target.value;
         setSearch(newValue);
     };
-    const toScanerResult = (message: string) => {
+    const toScannerResult = (message: string) => {
         toHideScan();
         const result = qrResultParser(message);
         switch (result.type) {
@@ -70,7 +70,7 @@ export default function InputUser({
                 searchByText(result.value, result.type);
                 break;
             default:
-                showError(langPage.errors.scanerFormat);
+                showError(langPage.errors.scannerFormat);
         }
     };
     const startSearch = () => {
@@ -101,10 +101,10 @@ export default function InputUser({
     return (
         <>
             <Loader isLoading={isLoading} />
-            {!!showScaner && (
+            {!!showScanner && (
                 <QrScanner
                     onCancel={toHideScan}
-                    onRead={toScanerResult}
+                    onRead={toScannerResult}
                 />
             )}
             <Box display="flex">

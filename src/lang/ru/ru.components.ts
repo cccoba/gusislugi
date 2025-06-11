@@ -172,7 +172,7 @@ const ruComponents = {
         scan: "Считать QR",
         errors: {
             searchByName: "Пользователь с такими данными не найден",
-            scanerFormat: "Данный код сюда не подходит",
+            scannerFormat: "Данный код сюда не подходит",
         },
     },
     medicineDisease: {

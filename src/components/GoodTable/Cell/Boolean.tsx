@@ -24,22 +24,23 @@ interface IGoodTableCellBooleanConfigValue {
     };
 }
 
-const goodTableCellBooleanConfig = {
-    true: {
-        title: lang.yes,
-        icon: {
-            name: "check_circle",
-            color: "success",
+const goodTableCellBooleanConfig: { true: IGoodTableCellBooleanConfigValue; false: IGoodTableCellBooleanConfigValue } =
+    {
+        true: {
+            title: lang.yes,
+            icon: {
+                name: "ok",
+                color: "success",
+            },
         },
-    },
-    false: {
-        title: lang.no,
-        icon: {
-            color: "error",
-            name: "cancel",
+        false: {
+            title: lang.no,
+            icon: {
+                color: "error",
+                name: "close",
+            },
         },
-    },
-};
+    };
 export function getGoodTableCellBooleanConfig(
     value: boolean,
     config?: IGoodTableCellBooleanConfig

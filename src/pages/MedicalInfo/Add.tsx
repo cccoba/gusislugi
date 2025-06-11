@@ -105,6 +105,7 @@ export default function MedicalInfoAdd({ needRefresh, userId }: IProps) {
                             type: "medicalSickness",
                             required: true,
                             availableIds: typeof addProps.flag === "object" ? addProps.flag : undefined,
+                            withPublic: true,
                         },
                         {
                             name: "uids",

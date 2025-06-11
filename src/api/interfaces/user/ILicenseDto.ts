@@ -12,4 +12,5 @@ export interface ILicenseDto {
     addUser?: IUserShopDto;
     user?: IUserShopDto;
     creator?: IUserShopDto;
+    comments: string;
 }

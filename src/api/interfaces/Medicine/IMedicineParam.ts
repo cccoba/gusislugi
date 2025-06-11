@@ -1,5 +1,5 @@
-import { MedicineParamsTypeEnum } from "api/enums/MedicineParamsTypeEnum";
-import { TIconName } from "components/Icon";
+import type { MedicineParamsTypeEnum } from "api/enums/MedicineParamsTypeEnum";
+import type { TIconName } from "components/Icon";
 
 export interface IMedicineParam {
     id: number;

@@ -13,4 +13,5 @@ export enum MessageStatusEnum {
     Taxes,
     Taxes2,
     Taxes3,
+    Personalities,
 }

@@ -11,6 +11,7 @@ export { default as messages } from "./messages";
 export { default as money } from "./money";
 export { default as nationalities } from "./nationalities";
 export { default as passport } from "./passport";
+export { default as personalities } from "./personalities";
 export { default as roles } from "./roles";
 export { default as taxes } from "./taxes";
 export { default as taxesTypes } from "./taxesTypes";

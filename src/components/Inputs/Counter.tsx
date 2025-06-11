@@ -20,7 +20,7 @@ export default function Counter({
     fullWidth = true,
     value = 0,
     minValue = 0,
-    maxValue = 1000,
+    maxValue = 100000,
     step = 1,
     compact = false,
     sx = {},

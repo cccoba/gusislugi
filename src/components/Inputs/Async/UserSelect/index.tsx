@@ -158,6 +158,11 @@ export default function UserSelect({
             }
         }
     };
+    const toInputClick = (e: any) => {
+        if (!selectedUserText && !disabled) {
+            toAdd();
+        }
+    };
     if (!multiple) {
         return (
             <>
@@ -174,6 +179,7 @@ export default function UserSelect({
                         readOnly
                         value={selectedUserText}
                         endAdornment={endAdornment}
+                        onClick={toInputClick}
                     />
                 </FormControl>
                 <UserSelectList

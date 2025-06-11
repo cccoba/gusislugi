@@ -154,6 +154,14 @@ const menuList: INavigationMenu[] = [
         roles: [["shop"]],
         category: "admin",
     },
+    {
+        name: "personalities",
+        title: lang.pages.personalities.title,
+        icon: "secrets",
+        link: "/personalities",
+        roles: [["admins"]],
+        category: "admin",
+    },
 
     {
         name: "documentPrint",

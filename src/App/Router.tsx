@@ -39,6 +39,7 @@ import TaxesPage from "pages/Taxes";
 import Wanteds3 from "pages/Wanteds3";
 import Messages from "pages/Messages";
 import LoginExtra from "pages/Users/LoginExtra";
+import Personalities from "pages/Personalities";
 
 export default function RouterPage() {
     const userIsAuth = useAppSelector((s) => s.user?.isAuth);
@@ -305,6 +306,10 @@ export default function RouterPage() {
                                     backUrl="/"
                                 />
                             }
+                        />
+                        <Route
+                            path="/personalities"
+                            element={<Personalities />}
                         />
 
                         <Route

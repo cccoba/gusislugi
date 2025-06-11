@@ -12,6 +12,7 @@ import type { IUserSecretsDto } from "api/interfaces/user/IUserSecretsDto";
 import { isMobile } from "react-device-detect";
 
 import SecretsMedicalInfo from "./MedicalInfo";
+import SecretsPersonalities from "./Personalities";
 
 interface IProps extends IPage {
     userId?: number;
@@ -57,6 +58,7 @@ export default function Secrets({ userId, ...pageProps }: IProps) {
                 </Box>
                 {!data?.medicalSickness?.length && <Typography variant="body1">{langPage.noData}</Typography>}
                 {!!data?.medicalSickness?.length && <SecretsMedicalInfo data={data.medicalSickness} />}
+                {!!data?.personalities?.length && <SecretsPersonalities data={data.personalities} />}
             </Box>
         </Page>
     );
